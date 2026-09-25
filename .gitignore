@@ -2,9 +2,8 @@
 .godot/
 /android/
 
-# Generated local tooling and isolated private-review publishing workspace.
+# Generated local tooling. Publishing copies must live outside the project.
 /tools/__pycache__/
-/.review-publish/
 
 # Local secrets, if introduced. Keep ordinary export settings and examples.
 /.env

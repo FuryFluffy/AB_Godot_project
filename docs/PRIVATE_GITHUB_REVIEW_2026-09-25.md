@@ -12,7 +12,7 @@ Reviewers should use their own Godot 4.7.2 installation.
 godot4 --editor --path .
 godot4 --path .
 python3 tools/validate_project.py --allow-generated-cache
-python3 tools/test_run_regression_suite.py
+python3 -B tools/test_run_regression_suite.py
 python3 tools/run_regression_suite.py --godot /path/to/godot4
 ```
 
@@ -37,8 +37,8 @@ Untracking a file only removes it from the new snapshot: it does **not** remove
 the old blob from commits that a push would upload.
 
 Consequently the development checkpoint remains local, with its ancestry
-unchanged. `.review-publish/repository/` is a separate ignored publishing copy
-with a fresh `main` history, made from the committed snapshot. Only that
+unchanged. The sibling `abyssal-bloom-private-review/repository/` is a separate
+publishing copy with a fresh `main` history, made from the committed snapshot. Only that
 repository is intended for GitHub. The tradeoff is that online review starts
 with this snapshot rather than the earlier milestone history. The full old
 history remains available in the original development repository. No force
@@ -49,6 +49,12 @@ is a review snapshot; do not edit both copies independently. Later snapshots
 must synchronize committed files, including removals, and be reviewed in the
 publishing copy before committing and pushing. Never merge the development
 ancestry into the publishing copy: that would reintroduce the oversized ZIPs.
+
+The publishing repository, verification checkout, logs and helper downloads
+are stored beside the project at `../abyssal-bloom-private-review/`. They are
+outside the Godot project because the existing validator recursively scans
+ignored folders too. `-B` on the Python runner tests prevents generated
+`__pycache__` files from introducing an additional validator diagnostic.
 
 ## Included and excluded
 
@@ -63,8 +69,6 @@ The exact exclusions are in `.gitignore`:
 - `.godot/`: generated imports, shader/editor cache and local editor state.
 - Existing `/android/`: generated Godot Android build workspace.
 - `/tools/__pycache__/`: generated Python bytecode from tooling.
-- `/.review-publish/`: local publishing copy, fresh-checkout verification and
-  evidence; nesting it here must not upload a second copy of the project.
 - `/.env`, `/.env.local`, `/.env.*.local`, `/.godot/export_credentials.cfg`,
   `/export_credentials.cfg`: local secrets, if introduced later. No current
   credential file was discovered. Ordinary export settings are retained.
@@ -109,23 +113,69 @@ documents contain no sensitive information. No token values were printed.
 Before packaging, Python runner isolation tests passed 4/4 and `git diff
 --check` was clean. Structural validation already failed on the legacy Quiet
 Cell Blanket's omitted explicit false flag, room identity/order parsing and
-background registry discrepancies. The normal regression command stops at
-that prerequisite. These are preserved review findings, not packaging fixes.
+background registry discrepancies (25 diagnostics). The normal regression
+command stops at that prerequisite. These are preserved review findings,
+not packaging fixes. All 47 directly executed Godot scripts passed in isolated
+save/config/cache environments in the development project on 2026-09-25.
 
-Fresh import, isolated Godot script results and source/checkout equality will
-be recorded after the clean publishing checkout is tested. Interactive
-gameplay and the visual acceptance checklist in `REVIEW_CHECKPOINT_2026-09-25.md`
-remain necessary.
+The development Main Menu headless smoke exited 0, with existing shutdown
+warnings about five leaked ObjectDB instances and three resources still in
+use. This is recorded as a known issue, not a warning-free runtime result.
+
+The development change diff is whitespace-clean. Treating every existing file
+as newly added in the fresh publishing root reveals 176 inherited whitespace
+diagnostics (including Markdown hard breaks and existing script whitespace).
+They are retained to preserve the source exactly; no formatting sweep was
+mixed into this preparation.
+
+Fresh-checkout verification completed on 2026-09-25 using a `git clone
+--no-local` of the publishing repository, with no copied `.godot/` directory:
+
+| Check | Development project | Fresh review checkout |
+| --- | --- | --- |
+| Godot version | 4.7.2 official | Same executable |
+| Fresh headless editor import | Existing cache | Exit 0; shutdown warnings below |
+| Python runner tests | 4/4 passed | 4/4 passed |
+| Direct isolated Godot scripts | 47/47 passed | 47/47 passed |
+| Structural validator | 25 diagnostics; exit 1 | Identical 25 diagnostics; exit 1 |
+| Official cumulative runner | Stops at validator | Identical prerequisite failure |
+| Main Menu headless smoke | Exit 0 | Exit 0 |
+
+The fresh editor import also reports the existing five ObjectDB/three-resource
+shutdown warnings, with no missing-resource or parse errors. Fresh-checkout
+Godot import and tests leave tracked files unchanged. Runtime files and asset
+bytes match the development snapshot. Two reference CSV files receive only
+CRLF-to-LF normalization under the pre-existing `.gitattributes` rule.
+The complete publishing tree is checked against the development commit tree.
+
+All 14 excluded archives remain on disk with the same Git object hashes as
+their historical originals. Publishing history has no blobs over 100 MiB;
+the largest is 3,844,985 bytes. The 1,945-file snapshot includes 731 UID/import
+sidecar files. No LFS pointers or missing LFS content are involved.
+
+The sync helper passed five temporary-repository checks: first snapshot with
+independent history, refusal of dirty development files, refusal of dirty
+publishing files, correct add/change/removal synchronization, and subsequent
+commits retaining independent history. Detailed local logs and the exact
+checkpoint file manifest live in `../abyssal-bloom-private-review/evidence/`.
+
+Interactive gameplay and the visual acceptance checklist in
+`REVIEW_CHECKPOINT_2026-09-25.md` remain necessary. No new interactive
+playthrough is claimed by these automated checks.
 
 ## Authentication and private destination
 
-No destination is configured yet. Use normal GitHub browser/device login via
+No destination is configured yet and nothing has been uploaded. GitHub CLI
+2.101.0 was downloaded from the official release, checked against its published
+SHA-256 list, and installed at `/home/fluffy56/.local/bin/gh`. It reports no
+authenticated accounts. Use normal GitHub browser/device login via
 `gh auth login --hostname github.com --git-protocol https --web` on the local
 machine. Never paste access tokens or passwords into chat or project files.
 
 Once the owner/repository is chosen, create or verify a **private** repository
-and set `origin` only in `.review-publish/repository/`. Confirm its visibility
-before pushing `main`, then verify the remote commit equals local `HEAD`.
+and set `origin` only in the sibling `abyssal-bloom-private-review/repository/`.
+Confirm its visibility before pushing `main`, then verify the remote commit
+equals local `HEAD`.
 Do not push all branches or use `--mirror` from the development repository.
 
 For subsequent changes, review in the original project, run relevant checks,
@@ -136,6 +186,28 @@ source or publishing copy, checks file sizes and exports committed files only.
 It also removes formerly tracked publishing files when the source commit
 removed them; it never deletes files in the development project.
 
-Then, from `.review-publish/repository/`, review `git diff --cached --stat`
-and `git diff --cached`, commit there, and run `git push origin main`.
+Then, from the sibling `abyssal-bloom-private-review/repository/`, review
+`git diff --cached --stat` and `git diff --cached`, commit there, and run
+`git push origin main`.
 The two repositories deliberately have different commit IDs and histories.
+
+Example update routine from the original project's terminal:
+
+```bash
+git status
+git diff
+# Run the relevant checks and inspect their output before committing.
+git add path/to/the/files/you/intend/to/change
+git diff --cached
+git commit -m "Describe the change"
+python3 tools/sync_private_review.py
+git -C ../abyssal-bloom-private-review/repository diff --cached --stat
+git -C ../abyssal-bloom-private-review/repository diff --cached
+git -C ../abyssal-bloom-private-review/repository commit -m "Update review snapshot"
+git -C ../abyssal-bloom-private-review/repository push origin main
+```
+
+The final push requires the private remote setup to be completed first. Use
+specific file paths with `git add`; inspect unexpected files before including
+them. A commit is a local checkpoint. A push uploads committed history.
+Ignored local files are neither committed nor uploaded.

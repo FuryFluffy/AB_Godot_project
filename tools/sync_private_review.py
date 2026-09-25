@@ -2,7 +2,7 @@
 """Stage the current committed game in a separate, history-free review repo.
 
 No network access, commits, pushes, or changes to the development repository.
-Only the fixed ignored .review-publish/repository destination is written.
+Only the separate sibling abyssal-bloom-private-review/repository is written.
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-WORKSPACE = ROOT / ".review-publish"
+WORKSPACE = ROOT.parent / "abyssal-bloom-private-review"
 DESTINATION = WORKSPACE / "repository"
 LIMIT = 100 * 1024 * 1024
 
@@ -118,7 +118,7 @@ def main() -> None:
         (DESTINATION / ".git" / "review-source-commit").write_text(source_commit + "\n")
     print(f"Source commit: {source_commit}")
     print(f"Publishing copy: {DESTINATION}")
-    print(git(DESTINATION, "diff", "--cached", "--stat").decode())
+    print(git(DESTINATION, "diff", "--cached", "--shortstat").decode())
     print("Review git diff --cached there, commit, then push only to a verified private repository.")
 
 
