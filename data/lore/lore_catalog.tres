@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LoreCatalogDefinition" format=3 uid="uid://m1ssq53qn7ge"]
+
+[ext_resource type="Script" uid="uid://b2yl7c8kvert4" path="res://scripts/data/lore/lore_entry_definition.gd" id="1_5q4dg"]
+[ext_resource type="Script" uid="uid://ic2tyaab40w6" path="res://scripts/data/lore/lore_catalog_definition.gd" id="2_ct1hb"]
+[ext_resource type="Resource" uid="uid://7oi7gkmu5a1k" path="res://data/lore/layer1/butler_records.tres" id="2_tgpca"]
+
+[resource]
+script = ExtResource("2_ct1hb")
+entries = Array[ExtResource("1_5q4dg")]([ExtResource("2_tgpca")])
+metadata/_custom_type_script = "uid://ic2tyaab40w6"

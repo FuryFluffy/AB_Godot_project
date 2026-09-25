@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EncounterTemplateDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounters/encounter_template_definition.gd" id="1_template"]
+[ext_resource type="PackedScene" path="res://scenes/battle/battlefields/dining_service_hall_battlefield.tscn" id="2_field"]
+[ext_resource type="Resource" path="res://data/enemy_ai/ruined_chapel_group_rulebook.tres" id="3_rulebook"]
+
+[resource]
+script = ExtResource("1_template")
+template_id = &"dining_service_hall_regular"
+display_name = "Dining Service Hall Encounter"
+battlefield_scene = ExtResource("2_field")
+enemy_group_rulebook = ExtResource("3_rulebook")
+preview_enemy_ids = Array[StringName]([&"hollow_servant", &"knife_footman"])
+party_spawn_slot_ids = Array[StringName]([&"party_1", &"party_2", &"party_3"])
+enemy_spawn_slot_ids = Array[StringName]([&"enemy_1", &"enemy_2"])

@@ -1,0 +1,89 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://dsgusfnju2ic5"]
+
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="1_battler"]
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="2_attributes"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="5_specialty"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="6_ability_script"]
+[ext_resource type="Resource" uid="uid://bjxs335jodqok" path="res://scripts/data/equipment/loadouts/lysandra_loadout.tres" id="7_loadout"]
+[ext_resource type="Resource" path="res://data/abilities/lysandra_blood_riposte.tres" id="8_blood_riposte"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/forced_blade.tres" id="9_forced_blade"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("2_attributes")
+might = 4
+agility = 2
+endurance = 4
+personality = 4
+
+[sub_resource type="Resource" id="Chain"]
+script = ExtResource("4_protection")
+protection_type = 2
+level = 4
+tier = 1
+
+[sub_resource type="Resource" id="Shield"]
+script = ExtResource("4_protection")
+protection_type = 4
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Sword"]
+script = ExtResource("3_skill")
+skill = 5
+level = 4
+tier = 1
+
+[sub_resource type="Resource" id="Dagger"]
+script = ExtResource("3_skill")
+skill = 8
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Athletics"]
+script = ExtResource("3_skill")
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 1
+tier = 1
+
+[sub_resource type="Resource" id="Medicine"]
+script = ExtResource("3_skill")
+skill = 3
+level = 1
+tier = 1
+
+[sub_resource type="Resource" id="Armorer"]
+script = ExtResource("5_specialty")
+tier = 1
+
+[sub_resource type="Resource" id="Armsmaster"]
+script = ExtResource("5_specialty")
+specialty = 1
+tier = 1
+
+[sub_resource type="Resource" id="Bodybuilding"]
+script = ExtResource("5_specialty")
+specialty = 2
+tier = 1
+
+[resource]
+script = ExtResource("1_battler")
+battler_id = &"lysandra"
+display_name = "Lysandra"
+faction = 0
+category = 0
+attributes = SubResource("Attributes")
+max_hp = 8
+max_mp = 8
+skills = Array[ExtResource("3_skill")]([SubResource("Sword"), SubResource("Dagger"), SubResource("Athletics"), SubResource("Awareness"), SubResource("Medicine")])
+specialties = Array[ExtResource("5_specialty")]([SubResource("Armorer"), SubResource("Armsmaster"), SubResource("Bodybuilding")])
+abilities = Array[ExtResource("6_ability_script")]([ExtResource("8_blood_riposte")])
+unlockable_abilities = Array[ExtResource("6_ability_script")]([ExtResource("9_forced_blade")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Chain"), SubResource("Shield")])
+default_loadout = ExtResource("7_loadout")

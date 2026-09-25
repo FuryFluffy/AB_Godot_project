@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BattlerCatalogDefinition" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/battler_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/data/battler_definition.gd" id="2_battler"]
+[ext_resource type="Resource" path="res://data/battlers/heroines/lysandra.tres" id="2_lysandra"]
+[ext_resource type="Resource" path="res://data/battlers/heroines/mira.tres" id="3_mira"]
+[ext_resource type="Resource" path="res://data/battlers/heroines/seraphine.tres" id="4_seraphine"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/hollow_servant.tres" id="5_hollow"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/knife_footman.tres" id="6_footman"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/prayer_rag_novice.tres" id="7_prayer"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/corrupted_butler.tres" id="8_butler"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/red_wax_acolyte.tres" id="9_acolyte"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/blood_nun.tres" id="10_nun"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/jailer.tres" id="11_jailer"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/chain_thrall.tres" id="12_chain_thrall"]
+[ext_resource type="Resource" path="res://data/battlers/enemies/iron_masked_guard.tres" id="13_iron_guard"]
+
+[resource]
+script = ExtResource("1_catalog")
+battlers = Array[ExtResource("2_battler")]([ExtResource("2_lysandra"), ExtResource("3_mira"), ExtResource("4_seraphine"), ExtResource("5_hollow"), ExtResource("6_footman"), ExtResource("7_prayer"), ExtResource("8_butler"), ExtResource("9_acolyte"), ExtResource("10_nun"), ExtResource("11_jailer"), ExtResource("12_chain_thrall"), ExtResource("13_iron_guard")])

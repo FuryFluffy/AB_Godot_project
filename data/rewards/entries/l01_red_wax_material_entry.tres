@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_entry"]
+[ext_resource type="Resource" path="res://data/materials/layer_1/red_wax.tres" id="2_material"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/mat_l01_red_wax.png" id="3_texture"]
+
+[resource]
+script = ExtResource("1_entry")
+entry_id = &"red_wax_material"
+item = ExtResource("2_material")
+world_texture = ExtResource("3_texture")
+required_anchor_tag = &"material"
+quantity = 1
+guaranteed_once = true

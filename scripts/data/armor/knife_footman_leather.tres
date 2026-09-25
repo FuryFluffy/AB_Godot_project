@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmorDefinition" format=3 uid="uid://1aymmvvi81j2"]
+
+[ext_resource type="Script" uid="uid://hcuscl12ao6" path="res://scripts/data/armor_definition.gd" id="1_ycy07"]
+
+[resource]
+script = ExtResource("1_ycy07")
+equipment_id = &"knife_footman_leather"
+display_name = "Foorman's Leather"
+allowed_slots = Array[int]([2])
+condition_maximum = 3
+destructible = false
+armor_type = 1
+metadata/_custom_type_script = "uid://hcuscl12ao6"

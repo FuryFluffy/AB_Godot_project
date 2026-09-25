@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/blood_riposte_once.tres" id="3_effect"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"lysandra_blood_riposte"
+display_name = "Blood Riposte"
+description = "Passive. Once per round, if Dodge prevents all incoming damage, immediately make one free Sword Attack against the attacker."
+tags = 8
+targeting_mode = 4
+is_magic = false
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_effect")])

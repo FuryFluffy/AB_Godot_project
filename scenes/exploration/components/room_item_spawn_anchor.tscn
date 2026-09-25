@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bpdam0qddyyfi"]
+
+[ext_resource type="Script" uid="uid://bds56go50f6va" path="res://scripts/exploration/items/room_item_spawn_anchor.gd" id="1_jgxqn"]
+[ext_resource type="Script" uid="uid://5r5d6cddoggc" path="res://scripts/exploration/items/room_item_anchor_editor_preview.gd" id="2_qjiml"]
+
+[node name="RoomItemSpawnAnchor" type="Marker2D" unique_id=371311837]
+script = ExtResource("1_jgxqn")
+
+[node name="EditorPreview" type="Node2D" parent="." unique_id=263363763]
+script = ExtResource("2_qjiml")
+
+[node name="PreviewSprite" type="Sprite2D" parent="EditorPreview" unique_id=1382668206]

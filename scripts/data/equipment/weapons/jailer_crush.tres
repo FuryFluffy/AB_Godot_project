@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Resource" path="res://data/weapon_effects/unique/jailer_crush_flat_damage.tres" id="2_damage"]
+
+[resource]
+script = ExtResource("1_weapon")
+equipment_id = &"jailer_crush"
+display_name = "Containment Crush"
+allowed_slots = Array[int]([0])
+condition_maximum = 20
+destructible = false
+unique_effects = Array[WeaponEffectDefinition]([ExtResource("2_damage")])
+skill = 22
+attribute = 0
+dice_modifier = 0
+property = 2
+attack_range = 1
+maximum_zone_distance = 1
+can_parry = false
+is_two_handed = true

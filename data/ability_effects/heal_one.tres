@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HealAbilityEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/heal_ability_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"heal_one"
+fixed_amount = 1
+

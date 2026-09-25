@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnemyRulebookDefinition" format=3 uid="uid://d3honnbo84j7e"]
+
+[ext_resource type="Script" uid="uid://uqw71glrm6lx" path="res://scripts/data/ai/enemy_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://jdqyagtsapyh" path="res://scripts/data/ai/enemy_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="Attack"]
+script = ExtResource("1_rule")
+rule_id = &"containment_crush"
+display_name = "Containment Crush"
+condition = 1
+action = 0
+target_policy = 1
+
+[sub_resource type="Resource" id="Move"]
+script = ExtResource("1_rule")
+rule_id = &"close_the_door"
+display_name = "Close the Door"
+condition = 2
+action = 1
+target_policy = 1
+
+[sub_resource type="Resource" id="Wait"]
+script = ExtResource("1_rule")
+rule_id = &"wait"
+display_name = "Keep Watch"
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"jailer_first_containment_rules"
+display_name = "The Jailer — Hard Containment"
+rules = Array[ExtResource("1_rule")]([SubResource("Attack"), SubResource("Move"), SubResource("Wait")])
+attack_reaction_policy = 1
+defense_preference = 1
+break_policy = 1
+move_reaction_priority = 100

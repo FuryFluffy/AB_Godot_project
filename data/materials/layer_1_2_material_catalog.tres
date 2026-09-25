@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MaterialCatalogDefinition" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/items/material_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/data/items/material_definition.gd" id="2_material"]
+[ext_resource type="Resource" path="res://data/materials/layer_1/red_wax.tres" id="3_red_wax"]
+[ext_resource type="Resource" path="res://data/materials/layer_1/servant_cloth.tres" id="4_cloth"]
+[ext_resource type="Resource" path="res://data/materials/layer_2/chain_links.tres" id="5_chain"]
+[ext_resource type="Resource" path="res://data/materials/layer_2/prison_iron.tres" id="6_iron"]
+
+[resource]
+script = ExtResource("1_catalog")
+materials = Array[ExtResource("2_material")]([ExtResource("3_red_wax"), ExtResource("4_cloth"), ExtResource("5_chain"), ExtResource("6_iron")])

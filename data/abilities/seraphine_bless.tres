@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/bless_minimum_one.tres" id="3_effect"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"seraphine_bless"
+display_name = "Bless"
+description = "Spend 2 MP to bless one adjacent ally. Their next Attack is guaranteed to deal at least 1 damage."
+school = 5
+tier = 1
+tags = 1
+action_cost = 1
+mp_cost = 2
+targeting_mode = 1
+requires_same_anchor = true
+is_magic = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_effect")])

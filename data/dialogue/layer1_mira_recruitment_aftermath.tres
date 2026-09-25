@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://crfyhh5marljk"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="2_8ookp"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="5_ew2oq"]
+[ext_resource type="Texture2D" uid="uid://bgoh5rb2em84w" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="5_lysandra_stage"]
+[ext_resource type="Texture2D" uid="uid://4n5xwb5ds2su" path="res://assets/characters/curated/mira/core_move_front.png" id="6_mira_stage"]
+
+[sub_resource type="Resource" id="Outcome_recruit_mira"]
+script = ExtResource("4_outcome")
+kind = 8
+subject_id = &"mira"
+
+[sub_resource type="Resource" id="Outcome_resolve_recruitment"]
+script = ExtResource("4_outcome")
+kind = 7
+subject_id = &"layer_1_mira_recruitment"
+
+[sub_resource type="Resource" id="Choice_continue_together"]
+script = ExtResource("3_choice")
+choice_id = &"mira_recruitment_continue_together"
+text = "Then keep up."
+responder_id = &"lysandra"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_recruit_mira"), SubResource("Outcome_resolve_recruitment")])
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mira_portrait"]
+atlas = ExtResource("6_mira_stage")
+region = Rect2(250, 0, 750, 1020)
+
+[sub_resource type="Resource" id="Node_first_line"]
+script = ExtResource("2_node")
+node_id = &"first_line"
+speaker_id = &"mira"
+speaker_name = "Mira"
+portrait = SubResource("AtlasTexture_mira_portrait")
+left_actor_sprite = ExtResource("5_lysandra_stage")
+right_actor_sprite = ExtResource("6_mira_stage")
+text = "You are either very brave or very lost. In this place, I suppose both count as qualifications."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_continue_together")])
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_1_mira_recruitment_aftermath"
+start_node_id = &"first_line"
+trigger_kind = &"encounter_aftermath"
+trigger_id = &"layer_1_corrupted_butler_opening"
+completion_kind = &"recruited"
+completion_id = &"mira"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_first_line")])

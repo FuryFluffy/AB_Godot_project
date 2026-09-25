@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://cxm7cemwjw8ea"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://b6vsc6yyc260a" path="res://assets/backgrounds/layer_1/sdxl_curated/21_Blood_Nun_Processing_Chapel.png" id="3_texture_0"]
+[ext_resource type="PackedScene" path="res://scenes/battle/battlefields/processing_chapel_battlefield.tscn" id="4_production_0"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"blood_nun_processing_chapel"
+display_name = "Blood Nun Processing Chapel"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"battle"
+display_name = "Blood Nun Processing Chapel — Battle"
+presentation_uses = 2
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"blood_nun_processing_chapel"
+display_name = "Blood Nun Processing Chapel"
+canonical_order = 8
+authoring_summary = "Layer 1 boss arena. Sorting, ritual, wax, ledgers, and classification imagery."
+strong_battle_candidate = true
+authoring_tags = Array[StringName]([&"boss", &"required_narrative"])
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = SubResource("EventRoomDefinition_1")
+production_battlefields = Array[PackedScene]([ExtResource("4_production_0")])

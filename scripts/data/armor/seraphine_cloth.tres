@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmorDefinition" format=3 uid="uid://deuwef0ycybdx"]
+
+[ext_resource type="Script" uid="uid://hcuscl12ao6" path="res://scripts/data/armor_definition.gd" id="1_6viet"]
+
+[resource]
+script = ExtResource("1_6viet")
+equipment_id = &"seraphine_cloth"
+display_name = "Seraphine's Vestments"
+player_refuge_available = true
+allowed_slots = Array[int]([2])
+condition_maximum = 2
+destructible = false
+metadata/_custom_type_script = "uid://hcuscl12ao6"

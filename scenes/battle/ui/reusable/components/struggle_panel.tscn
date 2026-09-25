@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://jndrjh0kdp6x"]
+
+[ext_resource type="Script" uid="uid://dgaotcfwqow50" path="res://scripts/battle/presentation/struggle_panel.gd" id="1"]
+[ext_resource type="StyleBox" uid="uid://b6m37hpkc3vee" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="2_frame"]
+
+[node name="StrugglePanel" type="Control" unique_id=67983851 node_paths=PackedStringArray("prompt_label", "track_option", "might_button", "agility_button", "endurance_button")]
+z_index = 60
+custom_minimum_size = Vector2(420, 278)
+layout_mode = 0
+offset_right = 420.0
+offset_bottom = 278.0
+mouse_filter = 2
+clip_contents = true
+script = ExtResource("1")
+prompt_label = NodePath("Frame/Margin/Content/PromptLabel")
+track_option = NodePath("Frame/Margin/Content/TrackOption")
+might_button = NodePath("Frame/Margin/Content/AttributeButtons/Might")
+agility_button = NodePath("Frame/Margin/Content/AttributeButtons/Agility")
+endurance_button = NodePath("Frame/Margin/Content/AttributeButtons/Endurance")
+
+[node name="Frame" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 0
+offset_right = 420.0
+offset_bottom = 278.0
+mouse_filter = 0
+theme_override_styles/panel = ExtResource("2_frame")
+
+[node name="Margin" type="MarginContainer" parent="Frame" unique_id=1521275375]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Content" type="VBoxContainer" parent="Frame/Margin" unique_id=1490571440]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Title" type="Label" parent="Frame/Margin/Content" unique_id=1420919534]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "STRUGGLE"
+
+[node name="PromptLabel" type="Label" parent="Frame/Margin/Content" unique_id=1065254569]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Choose an Attribute."
+autowrap_mode = 2
+
+[node name="TrackOption" type="OptionButton" parent="Frame/Margin/Content" unique_id=672179428]
+visible = false
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+tooltip_text = "Choose which Grapple track to resist."
+
+[node name="AttributeButtons" type="VBoxContainer" parent="Frame/Margin/Content" unique_id=312198288]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Might" type="Button" parent="Frame/Margin/Content/AttributeButtons" unique_id=1484117047]
+custom_minimum_size = Vector2(128, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = ExtResource("2_frame")
+text = "Might
+0d10 vs 0d10"
+
+[node name="Agility" type="Button" parent="Frame/Margin/Content/AttributeButtons" unique_id=1067519462]
+custom_minimum_size = Vector2(128, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = ExtResource("2_frame")
+text = "Agility
+0d10 vs 0d10"
+
+[node name="Endurance" type="Button" parent="Frame/Margin/Content/AttributeButtons" unique_id=1097444166]
+custom_minimum_size = Vector2(128, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = ExtResource("2_frame")
+text = "Endurance
+0d10 vs 0d10"

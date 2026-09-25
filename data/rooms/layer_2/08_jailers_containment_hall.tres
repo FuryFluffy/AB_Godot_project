@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://b4kvqi7mef771"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://4ja8xddusm6h" path="res://assets/backgrounds/layer_2/sdxl_curated/09_Jailers_Containment_Hall.png" id="3_texture_0"]
+[ext_resource type="Texture2D" uid="uid://d1qdpdw8cbiks" path="res://assets/backgrounds/layer_2/sdxl_curated/22_Jailers_Boss_Room.png" id="4_texture_1"]
+[ext_resource type="PackedScene" path="res://scenes/battle/battlefields/jailer_containment_landing_battlefield.tscn" id="5_production_0"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"jailers_containment_hall"
+display_name = "Jailer's Containment Hall"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"containment_hall"
+display_name = "Jailer's Containment Hall"
+texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_2"]
+script = ExtResource("2_visual")
+variant_id = &"boss_battle"
+display_name = "Jailer's Boss Room — Battle"
+presentation_uses = 2
+texture = ExtResource("4_texture_1")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"jailers_containment_hall"
+display_name = "Jailer's Containment Hall"
+layer_number = 2
+canonical_order = 8
+authoring_summary = "Layer 2 boss arena. Massive prison architecture and moving restraint mechanisms."
+strong_battle_candidate = true
+authoring_tags = Array[StringName]([&"boss", &"required_narrative"])
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1"), SubResource("Visual_2")])
+exploration_definition = SubResource("EventRoomDefinition_1")
+production_battlefields = Array[PackedScene]([ExtResource("5_production_0")])

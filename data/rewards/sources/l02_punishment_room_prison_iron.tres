@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomLootSourceDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="1_source"]
+[ext_resource type="Resource" path="res://data/rewards/pools/l02_prison_iron_material_pool.tres" id="2_pool"]
+
+[resource]
+script = ExtResource("1_source")
+source_id = &"l02_punishment_room_prison_iron"
+source_channel = 4
+eligible_layers = Array[int]([2])
+once_only = true
+pool = ExtResource("2_pool")
+fixed_entry_id = &"prison_iron_material"
+minimum_draws = 1
+maximum_draws = 1

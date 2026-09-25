@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/ward_one_die.tres" id="3_effect"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"seraphine_ward_of_grace"
+display_name = "Ward of Grace"
+description = "Spend 2 MP to ward Seraphine or one ally in her BattleZone. Add +1d10 to the target's next Defense Check; recasting moves the ward."
+school = 5
+tier = 1
+tags = 1
+action_cost = 1
+mp_cost = 2
+targeting_mode = 1
+requires_same_zone = true
+is_magic = true
+can_target_self = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_effect")])

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://bjdh4t8bmp2ln"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://ci8mmas3cyv2q" path="res://assets/backgrounds/layer_1/sdxl_curated/08_Dishwashing_Hall.png" id="3_texture_0"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"dishwashing_hall"
+display_name = "Dishwashing Hall"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Dishwashing Hall"
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"dishwashing_hall"
+display_name = "Dishwashing Hall"
+canonical_order = 14
+authoring_summary = "Long basins, drying racks, warm water still running."
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = SubResource("EventRoomDefinition_1")

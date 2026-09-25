@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EventRoomCatalogDefinition" format=3 uid="uid://cet0es1phtuam"]
+
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="1_piqhc"]
+[ext_resource type="Resource" uid="uid://bhds0m41q7v01" path="res://data/exploration/rooms/layer1/wine_cellar_warm_bottles.tres" id="2_icm5j"]
+[ext_resource type="Script" uid="uid://baagepn5ikq7j" path="res://scripts/exploration/event_room_catalog_definition.gd" id="2_rmiw1"]
+[ext_resource type="Resource" uid="uid://d3njt2r2a0uig" path="res://data/exploration/rooms/layer1/butlers_office.tres" id="3_icm5j"]
+[ext_resource type="Resource" uid="uid://bdqot3e8lihi4" path="res://data/exploration/rooms/layer1/wax_prep_room.tres" id="4_ly4h1"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/dining_service_hall.tres" id="5_dining"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/bell_pull_gallery.tres" id="6_bell"]
+
+[resource]
+script = ExtResource("2_rmiw1")
+rooms = Array[ExtResource("1_piqhc")]([ExtResource("2_icm5j"), ExtResource("3_icm5j"), ExtResource("4_ly4h1"), ExtResource("5_dining"), ExtResource("6_bell")])

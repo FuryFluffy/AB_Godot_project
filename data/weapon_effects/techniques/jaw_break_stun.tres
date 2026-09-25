@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StatusOnUndefendedHitWeaponEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/effects/status_on_undefended_hit_weapon_effect.gd" id="1_effect"]
+[ext_resource type="Resource" path="res://data/statuses/stunned.tres" id="2_status"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"jaw_break_stun"
+display_name = "Jaw Break: Stun an undefended target"
+description = "Applies Stunned when the attack hits and the target used no Defense."
+status = ExtResource("2_status")

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c84714xii8egt"]
+
+[ext_resource type="Script" uid="uid://cb5rur3a5ksp7" path="res://scripts/exploration/items/world_item_pickup.gd" id="1_ryboa"]
+
+[node name="WorldItemPickup" type="Area2D" unique_id=124905408]
+script = ExtResource("1_ryboa")
+
+[node name="ItemSprite" type="Sprite2D" parent="." unique_id=1575884310]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=179092032]

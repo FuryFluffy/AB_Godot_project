@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RefugeRecipeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/refuge_recipe_definition.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+recipe_id = &"refuge_repair_cloth_armor"
+display_name = "Repair Cloth Armor"
+material_inputs = {"mat_l01_servant_cloth": 1}
+action = 0
+equipment_target = 2
+condition_restore_amount = 1

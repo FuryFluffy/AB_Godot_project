@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l02_guiltless_key.png" id="99_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l02_guiltless_key"
+display_name = "Guiltless Key"
+description = "Layer 2 exploration Key Item. It remains visible but cannot be activated during battle."
+icon = ExtResource("99_icon")
+content_category = 3
+rarity = 4
+canonical_workbook_item = true
+layer = 2
+item_type = 2
+key_persistence_scope = 0
+stack_limit = 1
+consumes_on_use = false
+combat_usable = false
+action_cost = 0

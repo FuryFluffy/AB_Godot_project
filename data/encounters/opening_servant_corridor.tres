@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EncounterTemplateDefinition" format=3 uid="uid://cktolfimhs5vy"]
+
+[ext_resource type="PackedScene" uid="uid://b642b2srd1e2u" path="res://scenes/battle/battlefields/opening_servant_corridor_battlefield.tscn" id="1_s6qk1"]
+[ext_resource type="Script" uid="uid://cx6v3bl2bsoxs" path="res://scripts/data/encounters/encounter_template_definition.gd" id="1_template"]
+[ext_resource type="Resource" uid="uid://ctw1y0m6nsheu" path="res://data/enemy_ai/ruined_chapel_group_rulebook.tres" id="3_rulebook"]
+
+[resource]
+script = ExtResource("1_template")
+template_id = &"opening_servant_corridor_opening"
+display_name = "Opening Servant Corridor"
+battlefield_scene = ExtResource("1_s6qk1")
+enemy_group_rulebook = ExtResource("3_rulebook")
+preview_enemy_ids = Array[StringName]([&"hollow_servant", &"corrupted_butler"])
+party_spawn_slot_ids = Array[StringName]([&"party_1", &"party_2", &"party_3"])
+enemy_spawn_slot_ids = Array[StringName]([&"enemy_1", &"enemy_2", &"enemy_3"])

@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://d0qex6jwefw88"]
+
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="1_4b54h"]
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_hwcml"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_bj0x8"]
+[ext_resource type="Resource" uid="uid://cgtcmj25twq04" path="res://scripts/data/equipment/loadouts/knife_footman_loadout.tres" id="2_tsdjh"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_tsdjh"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" uid="uid://b7b1rmkgcy547" path="res://data/enemy_ai/knife_footman_rulebook.tres" id="5_rulebook"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="8_6vkuj"]
+
+[sub_resource type="Resource" id="Resource_k108i"]
+script = ExtResource("1_hwcml")
+agility = 3
+intellect = 0
+personality = 0
+metadata/_custom_type_script = "uid://bkkj2s2lvlk3y"
+
+[sub_resource type="Resource" id="Resource_protection"]
+script = ExtResource("4_protection")
+protection_type = 1
+
+[sub_resource type="Resource" id="Resource_shield_protection"]
+script = ExtResource("4_protection")
+protection_type = 4
+
+[sub_resource type="Resource" id="Resource_h6jdc"]
+script = ExtResource("3_tsdjh")
+skill = 8
+level = 2
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[sub_resource type="Resource" id="Resource_pcf5p"]
+script = ExtResource("3_tsdjh")
+level = 2
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[sub_resource type="Resource" id="Resource_d41no"]
+script = ExtResource("3_tsdjh")
+skill = 2
+level = 1
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[resource]
+script = ExtResource("2_bj0x8")
+battler_id = &"knife_footman"
+display_name = "Knife Footman"
+faction = 1
+attributes = SubResource("Resource_k108i")
+max_hp = 4
+max_mp = 2
+starting_resolve = 0
+order_value = 3
+skills = Array[ExtResource("3_tsdjh")]([SubResource("Resource_h6jdc"), SubResource("Resource_pcf5p"), SubResource("Resource_d41no")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Resource_protection"), SubResource("Resource_shield_protection")])
+default_loadout = ExtResource("2_tsdjh")
+enemy_rulebook = ExtResource("5_rulebook")
+metadata/_custom_type_script = "uid://jm0qoyjtshqv"

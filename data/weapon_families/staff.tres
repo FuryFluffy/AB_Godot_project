@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponFamilyDefinition" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/weapon_family_definition.gd" id="1_family"]
+[ext_resource type="Resource" path="res://data/weapon_ranks/staff/rank_1.tres" id="2_rank_1"]
+[ext_resource type="Resource" path="res://data/weapon_ranks/staff/rank_2.tres" id="3_rank_2"]
+[ext_resource type="Resource" path="res://data/weapon_ranks/staff/rank_3.tres" id="4_rank_3"]
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="5_ability_script"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/jaw_break.tres" id="6_jaw_break"]
+
+[resource]
+script = ExtResource("1_family")
+family_id = &"staff"
+display_name = "Staff"
+description = "Damaging Staff hits remove currently available Actions. Refuge ranks increase Action loss and Attack dice."
+ranks = Array[WeaponRankDefinition]([ExtResource("2_rank_1"), ExtResource("3_rank_2"), ExtResource("4_rank_3")])
+compatible_techniques = Array[ExtResource("5_ability_script")]([ExtResource("6_jaw_break")])

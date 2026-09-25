@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="EnemyRulebookDefinition" format=3 uid="uid://dq434ana6nesc"]
+
+[ext_resource type="Script" uid="uid://uqw71glrm6lx" path="res://scripts/data/ai/enemy_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://jdqyagtsapyh" path="res://scripts/data/ai/enemy_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="Hold"]
+script = ExtResource("1_rule")
+rule_id = &"hold_active_grapple"
+display_name = "Maintain Perfect Service"
+condition = 3
+action = 4
+
+[sub_resource type="Resource" id="Progress"]
+script = ExtResource("1_rule")
+rule_id = &"progress_active_grapple"
+display_name = "Complete the Service"
+condition = 4
+action = 5
+
+[sub_resource type="Resource" id="Grapple"]
+script = ExtResource("1_rule")
+rule_id = &"courteous_embrace"
+display_name = "Courteous Embrace"
+condition = 5
+action = 3
+target_policy = 1
+
+[sub_resource type="Resource" id="Attack"]
+script = ExtResource("1_rule")
+rule_id = &"silver_tray"
+display_name = "Silver Tray"
+condition = 1
+action = 0
+target_policy = 1
+
+[sub_resource type="Resource" id="Move"]
+script = ExtResource("1_rule")
+rule_id = &"isolate_guest"
+display_name = "Approach the Weakest Guest"
+condition = 2
+action = 1
+target_policy = 1
+
+[sub_resource type="Resource" id="Wait"]
+script = ExtResource("1_rule")
+rule_id = &"wait"
+display_name = "Await Instructions"
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"corrupted_butler_rules"
+display_name = "Corrupted Butler — False Hospitality"
+rules = Array[ExtResource("1_rule")]([SubResource("Hold"), SubResource("Progress"), SubResource("Grapple"), SubResource("Attack"), SubResource("Move"), SubResource("Wait")])
+move_reaction_priority = 30
+move_reaction_policy = 1

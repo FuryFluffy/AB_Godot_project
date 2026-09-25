@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BloodRiposteAbilityEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/blood_riposte_ability_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"blood_riposte_once"
+maximum_triggers_per_round = 1
+requires_full_dodge = true
+requires_sword = true

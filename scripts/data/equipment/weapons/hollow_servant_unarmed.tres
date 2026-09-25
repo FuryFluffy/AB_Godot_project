@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" format=3 uid="uid://coao7po6v5wm2"]
+
+[ext_resource type="Script" uid="uid://t1h75lwqivdf" path="res://scripts/data/weapon_definition.gd" id="1_n5cbc"]
+
+[resource]
+script = ExtResource("1_n5cbc")
+equipment_id = &"hollow_servant_unarmed"
+display_name = "Clawed Hands"
+allowed_slots = Array[int]([0])
+condition_maximum = 5
+destructible = false
+skill = 10
+property = 6
+can_parry = false
+metadata/_custom_type_script = "uid://t1h75lwqivdf"

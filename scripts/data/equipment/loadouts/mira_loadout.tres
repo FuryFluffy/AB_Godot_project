@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EquipmentLoadout" format=3 uid="uid://chepuhxg7f2w2"]
+
+[ext_resource type="Resource" uid="uid://d554m4fqprto" path="res://scripts/data/equipment/weapons/mira_dagger.tres" id="1_jt5g7"]
+[ext_resource type="Script" uid="uid://cfwr5lyswtnub" path="res://scripts/data/equipment_loadout.gd" id="1_lkhlv"]
+
+[resource]
+script = ExtResource("1_lkhlv")
+main_hand = ExtResource("1_jt5g7")
+main_hand_family_rank = 1
+metadata/_custom_type_script = "uid://cfwr5lyswtnub"

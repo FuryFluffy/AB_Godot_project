@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArmorDefinition" format=3 uid="uid://cwo4r2ilr0vmj"]
+
+[ext_resource type="Script" uid="uid://hcuscl12ao6" path="res://scripts/data/armor_definition.gd" id="1_68akt"]
+
+[resource]
+script = ExtResource("1_68akt")
+equipment_id = &"mira_leather"
+display_name = "Mira's Leather"
+player_refuge_available = true
+allowed_slots = Array[int]([2])
+condition_maximum = 3
+destructible = false
+armor_type = 1
+metadata/_custom_type_script = "uid://hcuscl12ao6"

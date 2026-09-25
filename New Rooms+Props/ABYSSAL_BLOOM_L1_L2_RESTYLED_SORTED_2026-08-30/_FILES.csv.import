@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b7166c14ecqw2"
+
+[deps]
+
+files=["res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.category.translation", "res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.stable.translation", "res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.source.translation", "res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.archive.translation"]
+
+source_file="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.csv"
+dest_files=["res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.category.translation", "res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.stable.translation", "res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.source.translation", "res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/_FILES.archive.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

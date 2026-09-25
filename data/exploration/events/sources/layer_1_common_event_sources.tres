@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoomEventSourceDefinition" format=3 uid="uid://c4pf4cyib8c1m"]
+
+[ext_resource type="Resource" uid="uid://ogy71qiljtgx" path="res://data/exploration/events/pools/layer_1_common_event_pool.tres" id="1_i7gh3"]
+[ext_resource type="Script" uid="uid://d1ur56782s4b6" path="res://scripts/exploration/events/room_event_source_definition.gd" id="2_avuot"]
+
+[resource]
+script = ExtResource("2_avuot")
+source_id = &"layer_1_common_events"
+priority = 100
+pool = ExtResource("1_i7gh3")
+minimum_draws = 1
+activation_chance = 0.45
+metadata/_custom_type_script = "uid://d1ur56782s4b6"

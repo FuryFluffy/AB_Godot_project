@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoomLootProfileDefinition" format=3 uid="uid://dym72psdvae40"]
+
+[ext_resource type="Script" uid="uid://uge53xu8rs2a" path="res://scripts/exploration/items/room_loot_profile_definition.gd" id="1_kehv2"]
+[ext_resource type="Script" uid="uid://c2kxri7yvkbiy" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="2_b1opt"]
+[ext_resource type="Resource" uid="uid://cvpv1alh2we3w" path="res://data/exploration/loot_sources/butlers_office_specific_sources.tres" id="3_kehv2"]
+[ext_resource type="Resource" uid="uid://nolywbhdp6qg" path="res://data/exploration/loot_sources/layer_1_common_sources.tres" id="4_8xavk"]
+
+[resource]
+script = ExtResource("1_kehv2")
+profile_id = &"butlers_office_loot_profile"
+sources = Array[ExtResource("2_b1opt")]([ExtResource("3_kehv2"), ExtResource("4_8xavk")])
+metadata/_custom_type_script = "uid://uge53xu8rs2a"

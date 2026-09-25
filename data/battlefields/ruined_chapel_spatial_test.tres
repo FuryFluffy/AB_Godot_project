@@ -1,0 +1,175 @@
+[gd_resource type="Resource" script_class="BattlefieldDefinition" load_steps=25 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/battlefield/battlefield_definition.gd" id="1_field"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/battle_zone_definition.gd" id="2_zone"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/anchor_definition.gd" id="3_anchor"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/battler_placement_definition.gd" id="4_place"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/terrain_line_definition.gd" id="5_terrain"]
+
+[sub_resource type="Resource" id="ZoneRear"]
+script = ExtResource("2_zone")
+zone_id = &"rear_gallery"
+display_name = "Rear Gallery"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+map_center = Vector2(960, 118)
+
+[sub_resource type="Resource" id="ZoneLeft"]
+script = ExtResource("2_zone")
+zone_id = &"left_nave"
+display_name = "Left Nave"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+map_center = Vector2(360, 330)
+
+[sub_resource type="Resource" id="ZoneCentral"]
+script = ExtResource("2_zone")
+zone_id = &"central_nave"
+display_name = "Central Nave"
+connected_zone_ids = Array[StringName]([&"rear_gallery", &"left_nave", &"right_nave", &"broken_altar"])
+map_center = Vector2(960, 330)
+
+[sub_resource type="Resource" id="ZoneRight"]
+script = ExtResource("2_zone")
+zone_id = &"right_nave"
+display_name = "Right Nave"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+map_center = Vector2(1560, 330)
+
+[sub_resource type="Resource" id="ZoneAltar"]
+script = ExtResource("2_zone")
+zone_id = &"broken_altar"
+display_name = "Broken Altar"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+map_center = Vector2(960, 655)
+
+[sub_resource type="Resource" id="AnchorRear"]
+script = ExtResource("3_anchor")
+anchor_id = &"rear_gallery"
+display_name = "Gallery Rail"
+zone_id = &"rear_gallery"
+connected_anchor_ids = Array[StringName]([&"central_nave"])
+capacity = 2
+position_points = Array[Vector2]([Vector2(905, 190), Vector2(1015, 190)])
+
+[sub_resource type="Resource" id="AnchorLeft"]
+script = ExtResource("3_anchor")
+anchor_id = &"left_nave"
+display_name = "Left Pews"
+zone_id = &"left_nave"
+connected_anchor_ids = Array[StringName]([&"central_nave"])
+capacity = 4
+position_points = Array[Vector2]([Vector2(270, 400), Vector2(450, 400), Vector2(270, 485), Vector2(450, 485)])
+
+[sub_resource type="Resource" id="AnchorCentral"]
+script = ExtResource("3_anchor")
+anchor_id = &"central_nave"
+display_name = "Nave Crossing"
+zone_id = &"central_nave"
+connected_anchor_ids = Array[StringName]([&"rear_gallery", &"left_nave", &"right_nave", &"altar_left", &"altar_right"])
+capacity = 4
+position_points = Array[Vector2]([Vector2(870, 400), Vector2(1050, 400), Vector2(870, 485), Vector2(1050, 485)])
+
+[sub_resource type="Resource" id="AnchorRight"]
+script = ExtResource("3_anchor")
+anchor_id = &"right_nave"
+display_name = "Right Pews"
+zone_id = &"right_nave"
+connected_anchor_ids = Array[StringName]([&"central_nave"])
+capacity = 4
+position_points = Array[Vector2]([Vector2(1470, 400), Vector2(1650, 400), Vector2(1470, 485), Vector2(1650, 485)])
+
+[sub_resource type="Resource" id="AnchorAltarLeft"]
+script = ExtResource("3_anchor")
+anchor_id = &"altar_left"
+display_name = "Altar Left"
+zone_id = &"broken_altar"
+connected_anchor_ids = Array[StringName]([&"central_nave", &"altar_right"])
+capacity = 4
+position_points = Array[Vector2]([Vector2(700, 735), Vector2(860, 735), Vector2(700, 815), Vector2(860, 815)])
+
+[sub_resource type="Resource" id="AnchorAltarRight"]
+script = ExtResource("3_anchor")
+anchor_id = &"altar_right"
+display_name = "Altar Right"
+zone_id = &"broken_altar"
+connected_anchor_ids = Array[StringName]([&"central_nave", &"altar_left"])
+capacity = 2
+position_points = Array[Vector2]([Vector2(1060, 735), Vector2(1220, 735)])
+
+[sub_resource type="Resource" id="TerrainCover"]
+script = ExtResource("5_terrain")
+terrain_id = &"overturned_right_pews"
+display_name = "Overturned Pews (Cover)"
+start_point = Vector2(1260, 350)
+end_point = Vector2(1260, 535)
+provides_ranged_cover = true
+
+[sub_resource type="Resource" id="TerrainSightBlock"]
+script = ExtResource("5_terrain")
+terrain_id = &"collapsed_altar_screen"
+display_name = "Collapsed Screen (Blocks Sight)"
+start_point = Vector2(1050, 600)
+end_point = Vector2(1170, 600)
+blocks_line_of_sight = true
+
+[sub_resource type="Resource" id="PlaceLysandra"]
+script = ExtResource("4_place")
+battler_id = &"lysandra"
+anchor_id = &"altar_left"
+position_index = 0
+
+[sub_resource type="Resource" id="PlaceMira"]
+script = ExtResource("4_place")
+battler_id = &"mira"
+anchor_id = &"altar_left"
+position_index = 1
+
+[sub_resource type="Resource" id="PlaceSeraphine"]
+script = ExtResource("4_place")
+battler_id = &"seraphine"
+anchor_id = &"altar_right"
+position_index = 0
+
+[sub_resource type="Resource" id="PlaceHollow"]
+script = ExtResource("4_place")
+battler_id = &"hollow_servant"
+anchor_id = &"left_nave"
+position_index = 0
+
+[sub_resource type="Resource" id="PlaceKnife"]
+script = ExtResource("4_place")
+battler_id = &"knife_footman"
+anchor_id = &"central_nave"
+position_index = 0
+
+[sub_resource type="Resource" id="PlacePrayer"]
+script = ExtResource("4_place")
+battler_id = &"prayer_rag_novice"
+anchor_id = &"right_nave"
+position_index = 0
+
+[sub_resource type="Resource" id="PlaceButler"]
+script = ExtResource("4_place")
+battler_id = &"corrupted_butler"
+anchor_id = &"central_nave"
+position_index = 1
+
+[sub_resource type="Resource" id="PlaceAcolyte"]
+script = ExtResource("4_place")
+battler_id = &"red_wax_acolyte"
+anchor_id = &"rear_gallery"
+position_index = 0
+
+[sub_resource type="Resource" id="PlaceBloodNun"]
+script = ExtResource("4_place")
+battler_id = &"blood_nun"
+anchor_id = &"central_nave"
+position_index = 1
+
+[resource]
+script = ExtResource("1_field")
+battlefield_id = &"ruined_chapel_spatial_test"
+display_name = "Ruined Chapel Spatial Test"
+zones = Array[ExtResource("2_zone")]([SubResource("ZoneRear"), SubResource("ZoneLeft"), SubResource("ZoneCentral"), SubResource("ZoneRight"), SubResource("ZoneAltar")])
+anchors = Array[ExtResource("3_anchor")]([SubResource("AnchorRear"), SubResource("AnchorLeft"), SubResource("AnchorCentral"), SubResource("AnchorRight"), SubResource("AnchorAltarLeft"), SubResource("AnchorAltarRight")])
+initial_placements = Array[ExtResource("4_place")]([SubResource("PlaceLysandra"), SubResource("PlaceMira"), SubResource("PlaceSeraphine"), SubResource("PlaceHollow"), SubResource("PlaceKnife"), SubResource("PlacePrayer"), SubResource("PlaceButler"), SubResource("PlaceAcolyte"), SubResource("PlaceBloodNun")])
+terrain_lines = Array[ExtResource("5_terrain")]([SubResource("TerrainCover"), SubResource("TerrainSightBlock")])

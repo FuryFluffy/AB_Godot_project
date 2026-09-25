@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/interactions/room_encounter_hotspot.gd" id="1_hotspot"]
+
+[node name="RoomEncounterHotspot" type="Area2D"]
+script = ExtResource("1_hotspot")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

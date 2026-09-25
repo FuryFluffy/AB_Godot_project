@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoomEventProfileDefinition" format=3 uid="uid://ckik767lvi18e"]
+
+[ext_resource type="Script" uid="uid://bvuha02ulf1lt" path="res://scripts/exploration/events/room_event_profile_definition.gd" id="1_albtq"]
+[ext_resource type="Script" uid="uid://d1ur56782s4b6" path="res://scripts/exploration/events/room_event_source_definition.gd" id="2_40hvg"]
+[ext_resource type="Resource" uid="uid://c4pf4cyib8c1m" path="res://data/exploration/events/sources/layer_1_common_event_sources.tres" id="4_8gprs"]
+[ext_resource type="Resource" uid="uid://6ax0n3fvwn4k" path="res://data/exploration/events/sources/global_event_sources.tres" id="5_8jhgq"]
+
+[resource]
+script = ExtResource("1_albtq")
+profile_id = &"wine_cellar_event_profile"
+sources = Array[ExtResource("2_40hvg")]([ExtResource("4_8gprs"), ExtResource("5_8jhgq")])
+metadata/_custom_type_script = "uid://bvuha02ulf1lt"

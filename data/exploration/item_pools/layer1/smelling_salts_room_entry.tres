@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3 uid="uid://c7wa4i2itcugh"]
+
+[ext_resource type="Resource" uid="uid://dpbkmo2h1leci" path="res://data/items/layer_1/smelling_salts.tres" id="1_8xq2w"]
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="2_mpass"]
+[ext_resource type="Texture2D" uid="uid://cx32il0a64yxl" path="res://assets/exploration/layer1/butler_office/smelling_salts.png" id="3_hnry0"]
+
+[resource]
+script = ExtResource("2_mpass")
+entry_id = &"smelling_salts_spawn"
+item = ExtResource("1_8xq2w")
+world_texture = ExtResource("3_hnry0")
+required_anchor_tag = &"bottle"
+weight = 1
+quantity = 1
+metadata/_custom_type_script = "uid://dqg7udf6p2hld"

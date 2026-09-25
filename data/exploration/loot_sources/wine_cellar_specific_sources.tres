@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RoomLootSourceDefinition" format=3 uid="uid://cubsl3jwub055"]
+
+[ext_resource type="Script" uid="uid://c2kxri7yvkbiy" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="1_7n61a"]
+[ext_resource type="Resource" uid="uid://buj46ihphl1j7" path="res://data/exploration/item_pools/layer1/wine_cellar_item_pool.tres" id="1_ydbdr"]
+
+[resource]
+script = ExtResource("1_7n61a")
+source_id = &"wine_cellar_specific"
+source_channel = 2
+eligible_layers = Array[int]([1])
+once_only = true
+pool = ExtResource("1_ydbdr")
+fixed_entry_id = &"warm_wine_flask_spawn"
+minimum_draws = 1
+maximum_draws = 1
+activation_chance = 1.0
+allow_duplicate_entries = false
+metadata/_custom_type_script = "uid://c2kxri7yvkbiy"

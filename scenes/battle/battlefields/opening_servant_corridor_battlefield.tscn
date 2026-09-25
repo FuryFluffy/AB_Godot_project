@@ -1,0 +1,349 @@
+[gd_scene format=3 uid="uid://b642b2srd1e2u"]
+
+[ext_resource type="Script" uid="uid://n3evl0wtdhhi" path="res://scripts/data/battlefield/authored_battlefield.gd" id="1_field"]
+[ext_resource type="Texture2D" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_opening_servant_corridor.png" id="2_background"]
+[ext_resource type="Script" uid="uid://de1vxdqtubn2o" path="res://scripts/data/battlefield/authored_battle_zone.gd" id="3_zone"]
+[ext_resource type="Script" uid="uid://bom07utjav3yo" path="res://scripts/data/battlefield/authored_anchor.gd" id="4_anchor"]
+[ext_resource type="Script" uid="uid://ddfpco8a3cy15" path="res://scripts/data/battlefield/authored_position.gd" id="5_position"]
+[ext_resource type="Script" uid="uid://bb4j4ag3ivrtb" path="res://scripts/data/battlefield/authored_spawn_slot.gd" id="6_spawn"]
+
+[node name="OpeningServantCorridorAuthoring" type="Node2D"]
+script = ExtResource("1_field")
+battlefield_id = &"opening_servant_corridor"
+display_name = "Opening Servant Corridor"
+
+[node name="BackgroundLayer" type="Node2D" parent="."]
+z_index = -100
+
+[node name="BackgroundArt" type="Sprite2D" parent="BackgroundLayer"]
+position = Vector2(0, -8.57143)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("2_background")
+centered = false
+
+[node name="BattlefieldShade" type="Polygon2D" parent="BackgroundLayer"]
+z_index = 1
+color = Color(0.025, 0.02, 0.018, 0.08)
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+
+[node name="Zones" type="Node2D" parent="."]
+
+[node name="Threshold" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(245, 800, 1675, 800, 1880, 1050, 40, 1050)
+script = ExtResource("3_zone")
+zone_id = &"threshold"
+display_name = "Threshold"
+connected_zone_ids = Array[StringName]([&"lower_hall"])
+
+[node name="LowerHall" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(455, 660, 1465, 660, 1650, 785, 270, 785)
+script = ExtResource("3_zone")
+zone_id = &"lower_hall"
+display_name = "Lower Hall"
+connected_zone_ids = Array[StringName]([&"threshold", &"upper_hall"])
+
+[node name="UpperHall" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(650, 550, 1270, 550, 1440, 645, 480, 645)
+script = ExtResource("3_zone")
+zone_id = &"upper_hall"
+display_name = "Upper Hall"
+connected_zone_ids = Array[StringName]([&"lower_hall", &"far_door"])
+
+[node name="FarDoor" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(785, 445, 1135, 445, 1260, 535, 660, 535)
+script = ExtResource("3_zone")
+zone_id = &"far_door"
+display_name = "Far Door"
+connected_zone_ids = Array[StringName]([&"upper_hall"])
+
+[node name="Anchors" type="Node2D" parent="."]
+
+[node name="ThresholdLeft" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(260, 815, 915, 815, 930, 1030, 65, 1030)
+script = ExtResource("4_anchor")
+anchor_id = &"threshold_left"
+display_name = "Threshold Left"
+zone_id = &"threshold"
+connected_anchor_ids = Array[StringName]([&"threshold_right", &"lower_left"])
+visual_order = 30
+visual_depth_band = &"foreground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ThresholdLeft"]
+position = Vector2(430, 940)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/ThresholdLeft" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(660, 940)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7
+connected_positions = [NodePath("../../ThresholdRight/Position0")]
+
+[node name="Position2" type="Marker2D" parent="Anchors/ThresholdLeft" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(620, 830)
+script = ExtResource("5_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.6
+connected_positions = [NodePath("../../LowerLeft/Position0")]
+
+[node name="Position3" type="Marker2D" parent="Anchors/ThresholdLeft"]
+position = Vector2(850, 830)
+script = ExtResource("5_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="ThresholdRight" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(1005, 815, 1660, 815, 1855, 1030, 990, 1030)
+script = ExtResource("4_anchor")
+anchor_id = &"threshold_right"
+display_name = "Threshold Right"
+zone_id = &"threshold"
+connected_anchor_ids = Array[StringName]([&"threshold_left", &"lower_right"])
+visual_order = 30
+visual_depth_band = &"foreground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1070, 830)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position1" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1300, 830)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position2" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1260, 940)
+script = ExtResource("5_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position3" type="Marker2D" parent="Anchors/ThresholdRight" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(1490, 940)
+script = ExtResource("5_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.7
+connected_positions = [NodePath("../../LowerRight/Position1")]
+
+[node name="LowerLeft" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(470, 675, 930, 675, 940, 775, 300, 775)
+script = ExtResource("4_anchor")
+anchor_id = &"lower_left"
+display_name = "Lower Hall Left"
+zone_id = &"lower_hall"
+connected_anchor_ids = Array[StringName]([&"threshold_left", &"lower_right", &"centre_gate"])
+battler_scale = 0.82
+visual_order = 22
+visual_depth_band = &"midground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/LowerLeft"]
+position = Vector2(650, 750)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position1" type="Marker2D" parent="Anchors/LowerLeft" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(850, 750)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.1
+connected_positions = [NodePath("../../LowerRight/Position2")]
+
+[node name="Position2" type="Marker2D" parent="Anchors/LowerLeft" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(700, 695)
+script = ExtResource("5_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.0
+connected_positions = [NodePath("../../CentreGate/Position0")]
+
+[node name="Position3" type="Marker2D" parent="Anchors/LowerLeft"]
+position = Vector2(900, 695)
+script = ExtResource("5_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.0
+
+[node name="LowerRight" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(990, 675, 1450, 675, 1620, 775, 980, 775)
+script = ExtResource("4_anchor")
+anchor_id = &"lower_right"
+display_name = "Lower Hall Right"
+zone_id = &"lower_hall"
+connected_anchor_ids = Array[StringName]([&"threshold_right", &"lower_left", &"centre_gate"])
+battler_scale = 0.82
+visual_order = 22
+visual_depth_band = &"midground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/LowerRight"]
+position = Vector2(1020, 695)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 1.0
+
+[node name="Position1" type="Marker2D" parent="Anchors/LowerRight"]
+position = Vector2(1220, 695)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.0
+
+[node name="Position2" type="Marker2D" parent="Anchors/LowerRight"]
+position = Vector2(1070, 750)
+script = ExtResource("5_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position3" type="Marker2D" parent="Anchors/LowerRight" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(1270, 750)
+script = ExtResource("5_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.1
+connected_positions = [NodePath("../../CentreGate/Position1")]
+
+[node name="CentreGate" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(760, 565, 1160, 565, 1280, 635, 640, 635)
+script = ExtResource("4_anchor")
+anchor_id = &"centre_gate"
+display_name = "Centre Gate"
+zone_id = &"upper_hall"
+connected_anchor_ids = Array[StringName]([&"lower_left", &"lower_right", &"far_left", &"far_right"])
+capacity = 2
+battler_scale = 0.82
+visual_order = 15
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/CentreGate" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(885, 620)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 0.8
+connected_positions = [NodePath("../../FarLeft/Position1")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/CentreGate" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(1035, 620)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.8
+connected_positions = [NodePath("../../FarRight/Position0")]
+
+[node name="FarLeft" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(790, 460, 945, 460, 945, 525, 690, 525)
+script = ExtResource("4_anchor")
+anchor_id = &"far_left"
+display_name = "Far Door Left"
+zone_id = &"far_door"
+connected_anchor_ids = Array[StringName]([&"centre_gate", &"far_right"])
+capacity = 2
+battler_scale = 0.68
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/FarLeft" node_paths=PackedStringArray("connected_positions")]
+position = Vector2(770, 510)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 0.65
+connected_positions = [NodePath("../../FarRight/Position1")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/FarLeft"]
+position = Vector2(900, 510)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.65
+
+[node name="FarRight" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(975, 460, 1130, 460, 1230, 525, 975, 525)
+script = ExtResource("4_anchor")
+anchor_id = &"far_right"
+display_name = "Far Door Right"
+zone_id = &"far_door"
+connected_anchor_ids = Array[StringName]([&"centre_gate", &"far_left"])
+capacity = 2
+battler_scale = 0.68
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/FarRight"]
+position = Vector2(1020, 510)
+script = ExtResource("5_position")
+use_anchor_battler_scale = false
+battler_scale = 0.65
+
+[node name="Position1" type="Marker2D" parent="Anchors/FarRight"]
+position = Vector2(1150, 510)
+script = ExtResource("5_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.65
+
+[node name="SpawnSlots" type="Node2D" parent="."]
+
+[node name="Hero1" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(430, 940)
+script = ExtResource("6_spawn")
+slot_id = &"party_1"
+display_name = "Party Left"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"frontline"])
+
+[node name="Hero2" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(660, 940)
+script = ExtResource("6_spawn")
+slot_id = &"party_2"
+display_name = "Party Centre"
+faction = 0
+role_tags = Array[StringName]([&"party_entry"])
+
+[node name="Hero3" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(1260, 940)
+script = ExtResource("6_spawn")
+slot_id = &"party_3"
+display_name = "Party Right"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"support"])
+
+[node name="Enemy1" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(770, 510)
+script = ExtResource("6_spawn")
+slot_id = &"enemy_1"
+display_name = "Enemy Far Left"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry"])
+
+[node name="Enemy2" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(1020, 510)
+script = ExtResource("6_spawn")
+slot_id = &"enemy_2"
+display_name = "Enemy Far Right"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry"])
+
+[node name="Enemy3" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(1035, 620)
+script = ExtResource("6_spawn")
+slot_id = &"enemy_3"
+display_name = "Enemy Centre"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"frontline"])
+
+[node name="ForegroundProps" type="Node2D" parent="."]

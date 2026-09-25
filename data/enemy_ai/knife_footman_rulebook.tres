@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnemyRulebookDefinition" format=3 uid="uid://b7b1rmkgcy547"]
+
+[ext_resource type="Script" uid="uid://uqw71glrm6lx" path="res://scripts/data/ai/enemy_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://jdqyagtsapyh" path="res://scripts/data/ai/enemy_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="RuleAttack"]
+script = ExtResource("1_rule")
+rule_id = &"pressure_injured"
+display_name = "Pressure Injured Target"
+condition = 1
+action = 0
+target_policy = 2
+
+[sub_resource type="Resource" id="RuleMove"]
+script = ExtResource("1_rule")
+rule_id = &"pursue_injured"
+display_name = "Pursue Injured Target"
+condition = 2
+action = 1
+target_policy = 2
+
+[sub_resource type="Resource" id="RuleWait"]
+script = ExtResource("1_rule")
+rule_id = &"wait_if_blocked"
+display_name = "Wait If Blocked"
+target_policy = 2
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"knife_footman_rules"
+display_name = "Knife Footman — Wounded Prey"
+rules = Array[ExtResource("1_rule")]([SubResource("RuleAttack"), SubResource("RuleMove"), SubResource("RuleWait")])
+attack_reaction_policy = 1
+defense_preference = 2
+move_reaction_priority = 30

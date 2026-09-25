@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://bthk8mrjr0f6i"]
+
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_attributes"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="1_d3qpo"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_battler"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" path="res://scripts/data/equipment/loadouts/iron_masked_guard_loadout.tres" id="5_loadout"]
+[ext_resource type="Resource" uid="uid://cliyqncpsc50q" path="res://data/enemy_ai/iron_masked_guard_rulebook.tres" id="6_rules"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="8_srxgt"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("1_attributes")
+might = 4
+endurance = 5
+personality = 0
+
+[sub_resource type="Resource" id="Plate"]
+script = ExtResource("4_protection")
+protection_type = 3
+level = 4
+tier = 2
+
+[sub_resource type="Resource" id="Body"]
+script = ExtResource("3_skill")
+skill = 22
+level = 4
+tier = 2
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 2
+tier = 1
+
+[resource]
+script = ExtResource("2_battler")
+battler_id = &"iron_masked_guard"
+display_name = "Iron-Masked Guard"
+faction = 1
+attributes = SubResource("Attributes")
+max_hp = 10
+starting_resolve = 0
+order_value = 1
+skills = Array[ExtResource("3_skill")]([SubResource("Body"), SubResource("Awareness")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Plate")])
+default_loadout = ExtResource("5_loadout")
+enemy_rulebook = ExtResource("6_rules")

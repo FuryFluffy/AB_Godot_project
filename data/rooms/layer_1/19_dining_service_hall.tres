@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://bdwcolj5x2875"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://cpq537lsat27b" path="res://assets/backgrounds/layer_1/sdxl_curated/17_Dining_Service_Hall.png" id="3_texture_0"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/dining_service_hall.tres" id="4_exploration"]
+[ext_resource type="PackedScene" uid="uid://dqlcyeibnwuu3" path="res://scenes/battle/battlefields/dining_service_hall_battlefield.tscn" id="5_battlefield"]
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Dining Service Hall"
+presentation_uses = 3
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"dining_service_hall"
+display_name = "Dining Service Hall"
+canonical_order = 19
+authoring_summary = "Split foreground feeding two service lanes and a three-part rear dais."
+strong_battle_candidate = true
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = ExtResource("4_exploration")
+production_battlefields = Array[PackedScene]([ExtResource("5_battlefield")])

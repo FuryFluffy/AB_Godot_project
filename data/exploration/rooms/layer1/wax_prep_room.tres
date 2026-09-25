@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3 uid="uid://bdqot3e8lihi4"]
+
+[ext_resource type="Resource" uid="uid://2m8iydydq1tb" path="res://data/exploration/events/profiles/layer1/wax_prep_room_event_profile.tres" id="1_050e0"]
+[ext_resource type="PackedScene" uid="uid://cyi03o4xrqubk" path="res://scenes/exploration/rooms/layer1/wax_prep_room.tscn" id="2_b5hth"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="3_8joqo"]
+
+[resource]
+script = ExtResource("3_8joqo")
+room_id = &"wax_prep_room"
+display_name = "Wax Preparation Room"
+presentation_scene = ExtResource("2_b5hth")
+event_profile = ExtResource("1_050e0")
+metadata/_custom_type_script = "uid://bquxrwpntoig1"

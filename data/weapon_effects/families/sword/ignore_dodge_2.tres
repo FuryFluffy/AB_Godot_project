@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DefenseIgnoreWeaponEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/effects/defense_ignore_weapon_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"sword_ignore_dodge_2"
+display_name = "Ignore 2 Dodge successes"
+description = "The upgraded Sword family negates two successful Dodge results."
+defense = 0
+ignored_successes = 2

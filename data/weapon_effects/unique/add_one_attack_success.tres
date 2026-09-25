@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FlatAttackSuccessWeaponEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/effects/flat_attack_success_weapon_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"add_one_attack_success"
+display_name = "Add 1 Attack success"
+description = "Adds one success after the Attack roll is resolved."
+added_successes = 1

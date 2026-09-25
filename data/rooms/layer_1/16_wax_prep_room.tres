@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://cvvgoov6w6s8p"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://t7kspcdaaqtu" path="res://assets/backgrounds/layer_1/sdxl_curated/13_Wax_Preparation_Room.png" id="3_texture_0"]
+[ext_resource type="Resource" uid="uid://bdqot3e8lihi4" path="res://data/exploration/rooms/layer1/wax_prep_room.tres" id="4_exploration"]
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Wax Preparation Room"
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"wax_prep_room"
+display_name = "Wax Preparation Room"
+canonical_order = 16
+authoring_summary = "Red wax blocks, seals, candles, ritualized packaging."
+authoring_tags = Array[StringName]([&"event", &"loot_candidate"])
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = ExtResource("4_exploration")

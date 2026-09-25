@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomItemPoolDefinition" format=3 uid="uid://csyx4ryenuhc4"]
+
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_dnb2n"]
+[ext_resource type="Resource" uid="uid://flwi56kmiugn" path="res://data/exploration/item_pools/layer1/ledger_seal_room_entry.tres" id="2_dnb2n"]
+[ext_resource type="Script" uid="uid://bk7yob0d3610w" path="res://scripts/exploration/items/room_item_pool_definition.gd" id="3_v5k1w"]
+
+[resource]
+script = ExtResource("3_v5k1w")
+pool_id = &"butlers_office_item_pool"
+entries = Array[ExtResource("1_dnb2n")]([ExtResource("2_dnb2n")])
+metadata/_custom_type_script = "uid://bk7yob0d3610w"

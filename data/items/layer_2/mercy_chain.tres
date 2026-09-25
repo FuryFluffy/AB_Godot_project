@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://h33hlipguf8a"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://dkkgv0hv3du68" path="res://assets/items/by_stable_id/l02_mercy_chain.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_revive"]
+script = ExtResource("2_effect")
+kind = 6
+amount = 3
+
+[sub_resource type="Resource" id="Effect_corruption"]
+script = ExtResource("2_effect")
+kind = 4
+amount = 3
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l02_mercy_chain"
+display_name = "Mercy Chain"
+description = "Revive any defeated heroine at 3 HP; the revived heroine gains 3 Corruption."
+icon = ExtResource("99_icon")
+layer = 2
+content_category = 1
+rarity = 3
+canonical_workbook_item = true
+target_rule = 3
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_revive"), SubResource("Effect_corruption")])

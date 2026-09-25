@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://rbcxv2qpp3ua"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="3_5odnv"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Texture2D" uid="uid://dcqqwjai6qf6d" path="res://assets/backgrounds/layer_2/sdxl_curated/06_Farthest_Cell_Pre_Refuge.png" id="5_background"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="6_6k3pa"]
+[ext_resource type="Texture2D" uid="uid://bgoh5rb2em84w" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="6_lysandra"]
+[ext_resource type="Texture2D" uid="uid://ccbnd1r400hxw" path="res://assets/characters/curated/seraphine/core_idle_front.png" id="7_seraphine"]
+
+[sub_resource type="Resource" id="Node_fall"]
+script = ExtResource("2_node")
+node_id = &"fall"
+speaker_name = "The Castle"
+text = "The ascent ends without sky or stone. The Castle gathers the fallen and draws them down through passages they never walked."
+default_next_node_id = &"worst_cell"
+
+[sub_resource type="Resource" id="Node_worst_cell"]
+script = ExtResource("2_node")
+node_id = &"worst_cell"
+speaker_name = "The Farthest Cell"
+text = "They wake in the worst cell of the Dungeon. Warmth enters the stone. The door locks from the inside."
+default_next_node_id = &"castle_message"
+
+[sub_resource type="Resource" id="Node_castle_message"]
+script = ExtResource("2_node")
+node_id = &"castle_message"
+speaker_name = "The Castle"
+text = "Keep pushing through."
+default_next_node_id = &"wake"
+
+[sub_resource type="Resource" id="Node_wake"]
+script = ExtResource("2_node")
+node_id = &"wake"
+speaker_id = &"lysandra"
+speaker_name = "Lysandra"
+left_actor_sprite = ExtResource("6_lysandra")
+right_actor_sprite = ExtResource("7_seraphine")
+text = "We fell above the Dungeon. Whatever brought us here did not ask permission."
+default_next_node_id = &"alive"
+
+[sub_resource type="Resource" id="Node_alive"]
+script = ExtResource("2_node")
+node_id = &"alive"
+speaker_id = &"seraphine"
+speaker_name = "Seraphine"
+left_actor_sprite = ExtResource("6_lysandra")
+right_actor_sprite = ExtResource("7_seraphine")
+text = "And yet we are alive again. This is neither realm I was taught to expect."
+default_next_node_id = &"bloom"
+
+[sub_resource type="Resource" id="Outcome_refuge_established"]
+script = ExtResource("4_outcome")
+scope = &"save"
+subject_id = &"refuge_ever_established"
+
+[sub_resource type="Resource" id="Outcome_resolve_origin"]
+script = ExtResource("4_outcome")
+kind = 7
+subject_id = &"layer_2_refuge_origin"
+
+[sub_resource type="Resource" id="Choice_rise"]
+script = ExtResource("3_choice")
+choice_id = &"layer_2_refuge_rise_together"
+text = "Rise together."
+responder_id = &"lysandra"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_refuge_established"), SubResource("Outcome_resolve_origin")])
+
+[sub_resource type="Resource" id="Node_bloom"]
+script = ExtResource("2_node")
+node_id = &"bloom"
+speaker_name = "Bloom Refuge"
+left_actor_sprite = ExtResource("6_lysandra")
+right_actor_sprite = ExtResource("7_seraphine")
+text = "A violet crystal grows where the floor meets the wall. The cell has become a refuge, though nothing here promises that refuge means freedom."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_rise")])
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_2_refuge_origin_from_upper_route"
+start_node_id = &"fall"
+trigger_kind = &"refugeless_defeat"
+trigger_id = &"refugeless_ascent_non_jailer"
+completion_kind = &"flag"
+completion_id = &"refuge_ever_established"
+completion_scope = &"save"
+background_override = ExtResource("5_background")
+nodes = Array[ExtResource("2_node")]([SubResource("Node_fall"), SubResource("Node_worst_cell"), SubResource("Node_castle_message"), SubResource("Node_wake"), SubResource("Node_alive"), SubResource("Node_bloom")])

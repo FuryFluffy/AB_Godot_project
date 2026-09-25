@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomEventPoolEntryDefinition" format=3 uid="uid://2rsiusn7oxh0"]
+
+[ext_resource type="Resource" uid="uid://clhsekv7l5ah3" path="res://data/exploration/events/definitions/tarnished_service_bell.tres" id="1_l7xxk"]
+[ext_resource type="Script" uid="uid://cu4bn2v0bfqhf" path="res://scripts/exploration/events/room_event_pool_entry_definition.gd" id="2_yem4i"]
+[ext_resource type="Texture2D" path="res://assets/exploration/shared/props/tarnished_service_bell.png" id="3_n6242"]
+
+[resource]
+script = ExtResource("2_yem4i")
+entry_id = &"tarnished_service_bell_entry"
+room_event = ExtResource("1_l7xxk")
+world_texture = ExtResource("3_n6242")
+world_visual_scale = Vector2(0.07, 0.07)
+required_anchor_tag = &"compact_desk_event"
+metadata/_custom_type_script = "uid://cu4bn2v0bfqhf"

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bvw5dspdokkbd"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://cmubygy1638an" path="res://assets/items/by_stable_id/l02_filed_iron_shard.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_detach"]
+script = ExtResource("2_effect")
+kind = 15
+
+[sub_resource type="Resource" id="Effect_resolve"]
+script = ExtResource("2_effect")
+kind = 3
+recipient = 1
+amount = -1
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l02_filed_iron_shard"
+display_name = "Filed Iron Shard"
+description = "Make an Agility/Dagger Attack against an attached grappler. HP damage detaches it, but costs 1 Resolve."
+icon = ExtResource("99_icon")
+layer = 2
+content_category = 1
+rarity = 2
+canonical_workbook_item = true
+stack_limit = 2
+target_rule = 6
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_detach"), SubResource("Effect_resolve")])
+performs_attack = true
+attack_skill = 8
+attack_attribute = 1
+attack_range = 0

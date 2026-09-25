@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dpbkmo2h1leci"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://0isy347d1f8r" path="res://assets/items/by_stable_id/l01_smelling_salts.png" id="2_hfdat"]
+
+[sub_resource type="Resource" id="Effect_revive"]
+script = ExtResource("2_effect")
+kind = 6
+amount = 2
+
+[sub_resource type="Resource" id="Effect_stun"]
+script = ExtResource("2_effect")
+kind = 5
+status_kind = 3
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_smelling_salts"
+display_name = "Smelling Salts"
+description = "Revive an Adjacent defeated heroine at 2 HP, or remove Stunned."
+icon = ExtResource("2_hfdat")
+content_category = 1
+rarity = 3
+canonical_workbook_item = true
+stack_limit = 2
+target_rule = 1
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_revive"), SubResource("Effect_stun")])

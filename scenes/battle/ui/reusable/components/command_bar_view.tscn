@@ -1,0 +1,117 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/presentation/reusable/command_bar_view.gd" id="1"]
+[ext_resource type="StyleBox" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="2_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/attack.png" id="3_attack"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/move.png" id="4_move"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/ability.png" id="5_ability"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/end_phase.png" id="6_end"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/log.png" id="7_log"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/struggle.png" id="8_struggle"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/wait.png" id="9_wait"]
+[ext_resource type="Texture2D" path="res://assets/ui/command_bar/submit.png" id="10_submit"]
+
+[node name="CommandBar" type="PanelContainer"]
+custom_minimum_size = Vector2(88, 372)
+custom_maximum_size = Vector2(88, 372)
+theme_override_styles/panel = ExtResource("2_frame")
+script = ExtResource("1")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Attack" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("3_attack")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Begin or cancel Attack targeting."
+
+[node name="Move" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("4_move")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Begin or cancel a committed Move."
+
+[node name="Ability" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("5_ability")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Open the selected heroine's active abilities."
+
+[node name="Struggle" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("8_struggle")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Spend all remaining Actions on a Struggle."
+
+[node name="GrappleWait" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("9_wait")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "End this heroine's activation without resisting."
+
+[node name="Submit" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("10_submit")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Submit to the active Grapple."
+disabled = true
+
+[node name="EndPhase" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("6_end")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Begin the encounter or end the Hero Phase."
+
+[node name="Log" type="Button" parent="Margin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("2_frame")
+icon = ExtResource("7_log")
+expand_icon = true
+icon_max_width = 50
+tooltip_text = "Expand or collapse the combat log."

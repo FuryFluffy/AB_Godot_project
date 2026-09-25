@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/exploration/components/room_exit_hotspot.tscn" id="1_exit"]
+
+[node name="RegisteredRoomShell" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+scale = Vector2(1.4285715, 1.4285715)
+
+[node name="WorldItemLayer" type="Node2D" parent="."]
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Passage" type="Node2D" parent="Interactables"]
+
+[node name="RoomExitHotspot" parent="Interactables/Passage" instance=ExtResource("1_exit")]
+display_name = "Continue"
+hover_prompt = "Return to the map"
+
+[node name="CollisionPolygon2D" parent="Interactables/Passage/RoomExitHotspot" index="0"]
+polygon = PackedVector2Array(760, 185, 1160, 185, 1230, 610, 690, 610)
+
+[node name="WorldEventLayer" type="Node2D" parent="."]
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[editable path="Interactables/Passage/RoomExitHotspot"]

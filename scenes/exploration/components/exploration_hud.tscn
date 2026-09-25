@@ -1,0 +1,89 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/ui/exploration_hud.gd" id="1_hud"]
+[ext_resource type="StyleBox" uid="uid://b6m37hpkc3vee" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="2_frame"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/heroine_card_view.tscn" id="3_card"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/item_bar_view.tscn" id="4_items"]
+[ext_resource type="PackedScene" uid="uid://cu1twvpaxj551" path="res://scenes/battle/ui/reusable/components/exploration_command_bar.tscn" id="5_commands"]
+[ext_resource type="Texture2D" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="6_lysandra"]
+[ext_resource type="Texture2D" path="res://assets/characters/curated/mira/core_move_front.png" id="7_mira"]
+[ext_resource type="Texture2D" path="res://assets/characters/curated/seraphine/core_idle_front.png" id="8_seraphine"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/components/dialogue_panel.tscn" id="9_dialogue"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lysandra_portrait"]
+atlas = ExtResource("6_lysandra")
+region = Rect2(500, 50, 300, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mira_portrait"]
+atlas = ExtResource("7_mira")
+region = Rect2(470, 30, 300, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seraphine_portrait"]
+atlas = ExtResource("8_seraphine")
+region = Rect2(470, 20, 300, 400)
+
+[node name="ExplorationHUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="PartyStrip" type="PanelContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -388.0
+offset_right = 354.0
+offset_bottom = -24.0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("2_frame")
+
+[node name="Cards" type="VBoxContainer" parent="PartyStrip"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LysandraCard" parent="PartyStrip/Cards" instance=ExtResource("3_card")]
+layout_mode = 2
+battler_id = &"lysandra"
+
+[node name="Portrait" parent="PartyStrip/Cards/LysandraCard/MarginContainer/HBoxContainer/PortraitFrame" index="0"]
+texture = SubResource("AtlasTexture_lysandra_portrait")
+
+[node name="MiraCard" parent="PartyStrip/Cards" instance=ExtResource("3_card")]
+layout_mode = 2
+battler_id = &"mira"
+
+[node name="Portrait" parent="PartyStrip/Cards/MiraCard/MarginContainer/HBoxContainer/PortraitFrame" index="0"]
+texture = SubResource("AtlasTexture_mira_portrait")
+
+[node name="SeraphineCard" parent="PartyStrip/Cards" instance=ExtResource("3_card")]
+layout_mode = 2
+battler_id = &"seraphine"
+
+[node name="Portrait" parent="PartyStrip/Cards/SeraphineCard/MarginContainer/HBoxContainer/PortraitFrame" index="0"]
+texture = SubResource("AtlasTexture_seraphine_portrait")
+
+[node name="ItemBar" parent="." instance=ExtResource("4_items")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -278.0
+offset_right = -16.0
+offset_bottom = 106.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ExplorationCommandBar" parent="." instance=ExtResource("5_commands")]
+
+[node name="HoverLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+size_flags_vertical = 1
+
+[node name="DialoguePanel" parent="." instance=ExtResource("9_dialogue")]
+visible = false
+
+[editable path="PartyStrip/Cards/LysandraCard"]
+[editable path="PartyStrip/Cards/MiraCard"]
+[editable path="PartyStrip/Cards/SeraphineCard"]

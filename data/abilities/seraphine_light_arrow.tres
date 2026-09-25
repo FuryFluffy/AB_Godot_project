@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/attack_light_arrow.tres" id="3_effect"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"seraphine_light_arrow"
+display_name = "Light Arrow"
+description = "Spend 1 MP to make a Light/Personality Attack against one visible enemy within 1 BattleZone. Magic cannot be Parried."
+school = 5
+tier = 1
+tags = 1
+action_cost = 1
+mp_cost = 1
+skill = 16
+attribute = 4
+targeting_mode = 0
+maximum_zone_distance = 1
+is_magic = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_effect")])

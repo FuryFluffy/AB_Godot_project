@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://co42hsd5udx60"]
+
+[ext_resource type="Script" uid="uid://b1tl1rxuv8f8x" path="res://scripts/exploration/interactions/room_lock_hotspot.gd" id="1_yj6g3"]
+
+[node name="RoomLockHotspot" type="Area2D" unique_id=246651096]
+script = ExtResource("1_yj6g3")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=277226602]

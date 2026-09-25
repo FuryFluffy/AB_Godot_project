@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3 uid="uid://flwi56kmiugn"]
+
+[ext_resource type="Resource" uid="uid://bj2wfwrrdeif" path="res://data/items/layer_1/ledger_seal.tres" id="1_hy6qh"]
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="2_tbxfk"]
+[ext_resource type="Texture2D" uid="uid://bmbjgckb4761d" path="res://assets/exploration/layer1/butler_office/ledger_seal.png" id="3_tbxfk"]
+
+[resource]
+script = ExtResource("2_tbxfk")
+entry_id = &"ledger_seal_spawn"
+item = ExtResource("1_hy6qh")
+world_texture = ExtResource("3_tbxfk")
+required_anchor_tag = &"flat_item"
+weight = 1
+quantity = 1
+metadata/_custom_type_script = "uid://dqg7udf6p2hld"

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ceb25rfal6785"]
+
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="1_3f1q4"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/shared_rusty_key.png" id="2_k84wr"]
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="2_rscso"]
+
+[resource]
+script = ExtResource("2_rscso")
+item_id = &"shared_rusty_key"
+display_name = "Rusty Key"
+description = "A brittle iron key, deeply eaten by rust."
+icon = ExtResource("2_k84wr")
+content_category = 3
+rarity = 4
+canonical_workbook_item = true
+item_type = 2
+key_persistence_scope = 0
+stack_limit = 9
+consumes_on_use = false
+combat_usable = false
+action_cost = 0
+metadata/_custom_type_script = "uid://bote6v51qdu3s"

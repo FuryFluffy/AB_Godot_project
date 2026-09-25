@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://cxqh4kk4j8rk3"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://baasfv7n8o5vq" path="res://assets/backgrounds/layer_1/sdxl_curated/05_Lower_Kitchen.png" id="3_texture_0"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+[ext_resource type="PackedScene" path="res://scenes/battle/battlefields/lower_kitchen_battlefield.tscn" id="5_battlefield"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"lower_kitchen"
+display_name = "Lower Kitchen"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Lower Kitchen"
+presentation_uses = 3
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"lower_kitchen"
+display_name = "Lower Kitchen"
+layer_number = 1
+canonical_order = 9
+authoring_summary = "Maintained hearths, prepared workstations, no cooks."
+strong_battle_candidate = true
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = SubResource("EventRoomDefinition_1")
+production_battlefields = Array[PackedScene]([ExtResource("5_battlefield")])

@@ -1,0 +1,98 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://b0cr52xr5a2qk"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="5_10ogf"]
+[ext_resource type="Script" uid="uid://xrisyebbpq6k" path="res://scripts/data/dialogue/dialogue_condition_definition.gd" id="5_condition"]
+[ext_resource type="Script" uid="uid://bsv46mai0ojkr" path="res://scripts/data/dialogue/dialogue_condition_group.gd" id="6_group"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="7_transition"]
+
+[sub_resource type="Resource" id="Outcome_grant_cuff"]
+script = ExtResource("4_outcome")
+kind = 15
+subject_id = &"l01_torn_cuff"
+
+[sub_resource type="Resource" id="Outcome_cuff_claimed"]
+script = ExtResource("4_outcome")
+scope = &"persistent"
+subject_id = &"torn_cuff_claimed"
+
+[sub_resource type="Resource" id="Choice_take"]
+script = ExtResource("3_choice")
+choice_id = &"take_torn_cuff"
+text = "Take the torn cuff. Leave the coat."
+next_node_id = &"taken"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_grant_cuff"), SubResource("Outcome_cuff_claimed")])
+
+[sub_resource type="Resource" id="Choice_leave"]
+script = ExtResource("3_choice")
+choice_id = &"leave_torn_cuff"
+text = "Leave the coat untouched."
+next_node_id = &"left"
+
+[sub_resource type="Resource" id="Node_prompt"]
+script = ExtResource("2_node")
+node_id = &"prompt"
+speaker_name = "Service Door"
+text = "A complete duelist's coat hangs beside the service door. It belongs to the room now. One torn cuff rests loose beneath it."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_take"), SubResource("Choice_leave")])
+mandatory = false
+
+[sub_resource type="Resource" id="Condition_ledger"]
+script = ExtResource("5_condition")
+kind = 7
+subject_id = &"servant_ledger_read"
+scope = &"persistent"
+
+[sub_resource type="Resource" id="Group_ledger"]
+script = ExtResource("6_group")
+conditions = Array[ExtResource("5_condition")]([SubResource("Condition_ledger")])
+
+[sub_resource type="Resource" id="Transition_ledger"]
+script = ExtResource("7_transition")
+transition_id = &"coat_after_ledger"
+conditions = SubResource("Group_ledger")
+next_node_id = &"ledger_callback"
+
+[sub_resource type="Resource" id="Transition_plain"]
+script = ExtResource("7_transition")
+transition_id = &"coat_without_ledger"
+next_node_id = &"plain_callback"
+
+[sub_resource type="Resource" id="Node_taken"]
+script = ExtResource("2_node")
+node_id = &"taken"
+speaker_name = "Lysandra"
+text = "The coat stays. The cuff may still tell us who wore it."
+automatic_transitions = Array[ExtResource("7_transition")]([SubResource("Transition_ledger"), SubResource("Transition_plain")])
+
+[sub_resource type="Resource" id="Node_ledger"]
+script = ExtResource("2_node")
+node_id = &"ledger_callback"
+speaker_name = "Lysandra"
+text = "Vowbroken. The ledger used that word as a classification, not an accusation."
+
+[sub_resource type="Resource" id="Node_plain"]
+script = ExtResource("2_node")
+node_id = &"plain_callback"
+speaker_name = "Lysandra"
+text = "Vowbroken. A title, a sentence, or both."
+
+[sub_resource type="Resource" id="Node_left"]
+script = ExtResource("2_node")
+node_id = &"left"
+speaker_name = "Lysandra"
+text = "Scenery can wait."
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_1_coat_torn_cuff"
+start_node_id = &"prompt"
+trigger_kind = &"event_room_entry"
+trigger_id = &"coat_beside_service_door"
+completion_kind = &"flag"
+completion_id = &"torn_cuff_claimed"
+completion_scope = &"persistent"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_prompt"), SubResource("Node_taken"), SubResource("Node_ledger"), SubResource("Node_plain"), SubResource("Node_left")])

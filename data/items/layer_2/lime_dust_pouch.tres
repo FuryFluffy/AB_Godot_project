@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Resource" path="res://data/statuses/slow.tres" id="2_slow"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l02_lime_dust_pouch.png" id="99_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l02_lime_dust_pouch"
+display_name = "Lime-Dust Pouch"
+description = "Make a ranged Knowledge/Intellect Attack within one BattleZone; HP damage applies Slow."
+icon = ExtResource("99_icon")
+content_category = 1
+rarity = 2
+canonical_workbook_item = true
+layer = 2
+stack_limit = 3
+action_cost = 1
+target_rule = 5
+maximum_zone_distance = 1
+requires_line_of_sight = true
+performs_attack = true
+attack_skill = 3
+attack_attribute = 3
+attack_dice_modifier = 1
+attack_range = 2
+on_damage_status = ExtResource("2_slow")

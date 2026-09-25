@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StatusDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/status_definition.gd" id="1_status"]
+
+[resource]
+script = ExtResource("1_status")
+status_id = &"slow"
+display_name = "Slow"
+kind = 2
+duration_ticks = 3
+maximum_action_penalty = 1
+immediate_action_loss = 1

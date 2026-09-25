@@ -1,0 +1,399 @@
+[gd_scene format=3 uid="uid://dqlcyeibnwuu3"]
+
+[ext_resource type="Script" uid="uid://n3evl0wtdhhi" path="res://scripts/data/battlefield/authored_battlefield.gd" id="1_field"]
+[ext_resource type="Script" uid="uid://de1vxdqtubn2o" path="res://scripts/data/battlefield/authored_battle_zone.gd" id="2_zone"]
+[ext_resource type="Script" uid="uid://bom07utjav3yo" path="res://scripts/data/battlefield/authored_anchor.gd" id="3_anchor"]
+[ext_resource type="Script" uid="uid://ddfpco8a3cy15" path="res://scripts/data/battlefield/authored_position.gd" id="4_position"]
+[ext_resource type="Script" uid="uid://bb4j4ag3ivrtb" path="res://scripts/data/battlefield/authored_spawn_slot.gd" id="5_spawn"]
+[ext_resource type="Texture2D" uid="uid://c3up1sm8w4jqm" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_dining_service_hall.png" id="6_background"]
+
+[node name="DiningServiceHallBattlefield" type="Node2D" unique_id=1885047199]
+script = ExtResource("1_field")
+battlefield_id = &"dining_service_hall"
+display_name = "Dining Service Hall"
+show_battler_previews = true
+preview_battler_id = "mira"
+
+[node name="BackgroundLayer" type="Node2D" parent="." unique_id=152982232]
+z_index = -100
+
+[node name="BackgroundArt" type="Sprite2D" parent="BackgroundLayer" unique_id=1287647855]
+position = Vector2(0, -8.571411)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("6_background")
+centered = false
+
+[node name="BattlefieldShade" type="Polygon2D" parent="BackgroundLayer" unique_id=563711162]
+z_index = 1
+color = Color(0.025, 0.02, 0.018, 0.08)
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+
+[node name="Zones" type="Node2D" parent="." unique_id=400206156]
+
+[node name="ForegroundService" type="Polygon2D" parent="Zones" unique_id=482269335]
+z_index = -60
+position = Vector2(-11, -43)
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(503, 773, 1582, 757, 1909, 1060, 124, 1057)
+script = ExtResource("2_zone")
+zone_id = &"foreground_service"
+display_name = "Foreground Service Floor"
+connected_zone_ids = Array[StringName]([&"west_service_lane", &"east_service_lane"])
+
+[node name="WestServiceLane" type="Polygon2D" parent="Zones" unique_id=2036589333]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(612, 567, 1054, 574, 1052, 719, 501, 722, 503, 616, 379, 588)
+script = ExtResource("2_zone")
+zone_id = &"west_service_lane"
+display_name = "West Service Lane"
+connected_zone_ids = Array[StringName]([&"foreground_service", &"east_service_lane", &"rear_service_left", &"rear_service_center"])
+
+[node name="EastServiceLane" type="Polygon2D" parent="Zones" unique_id=55613407]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(1062, 575, 1676, 542, 1576, 586, 1560, 711, 1062, 716)
+script = ExtResource("2_zone")
+zone_id = &"east_service_lane"
+display_name = "East Service Lane"
+connected_zone_ids = Array[StringName]([&"foreground_service", &"west_service_lane", &"rear_service_center", &"rear_service_right"])
+
+[node name="RearServiceLeft" type="Polygon2D" parent="Zones" unique_id=690333801]
+z_index = -60
+position = Vector2(70, 42)
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(697, 454, 839, 451, 758, 523, 470, 520)
+script = ExtResource("2_zone")
+zone_id = &"rear_service_left"
+display_name = "Rear Serving Dais Left"
+connected_zone_ids = Array[StringName]([&"west_service_lane", &"rear_service_center"])
+
+[node name="RearServiceCenter" type="Polygon2D" parent="Zones" unique_id=1535618286]
+z_index = -60
+position = Vector2(369, 42)
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(548, 451, 796, 454, 838, 516, 481, 519)
+script = ExtResource("2_zone")
+zone_id = &"rear_service_center"
+display_name = "Rear Serving Dais Center"
+connected_zone_ids = Array[StringName]([&"west_service_lane", &"east_service_lane", &"rear_service_left", &"rear_service_right"])
+
+[node name="RearServiceRight" type="Polygon2D" parent="Zones" unique_id=1235529452]
+z_index = -60
+position = Vector2(777, 33)
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(407, 464, 582, 463, 682, 514, 441, 523)
+script = ExtResource("2_zone")
+zone_id = &"rear_service_right"
+display_name = "Rear Serving Dais Right"
+connected_zone_ids = Array[StringName]([&"east_service_lane", &"rear_service_center"])
+
+[node name="Anchors" type="Node2D" parent="." unique_id=439401170]
+
+[node name="EntryFloorLeft" type="Polygon2D" parent="Anchors" unique_id=1716336186]
+z_index = -40
+position = Vector2(974, 855)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(-459, -104, 74, -98, 89, 140, -771, 132)
+script = ExtResource("3_anchor")
+anchor_id = &"entry_floor_left"
+display_name = "Entry Floor Left"
+zone_id = &"foreground_service"
+connected_anchor_ids = Array[StringName]([&"entry_floor_right", &"west_lane"])
+capacity = 2
+battler_scale = 1.5
+visual_order = 30
+visual_depth_band = &"foreground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/EntryFloorLeft" unique_id=774789427 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(-224, -36)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.6
+connected_positions = [NodePath("../../WestLane/Position2"), NodePath("../../WestLane/Position3"), NodePath("../../EntryFloorRight/Position0")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/EntryFloorLeft" unique_id=720320365]
+z_index = 2
+position = Vector2(-506, 69)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7000000000000002
+
+[node name="EntryFloorRight" type="Polygon2D" parent="Anchors" unique_id=2082994977]
+z_index = -40
+position = Vector2(1858, 844)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(-779, -79, -239, -73, -31, 150, -766, 148)
+script = ExtResource("3_anchor")
+anchor_id = &"entry_floor_right"
+display_name = "Entry Floor Right"
+zone_id = &"foreground_service"
+connected_anchor_ids = Array[StringName]([&"entry_floor_left", &"east_lane"])
+capacity = 2
+battler_scale = 1.5
+visual_order = 30
+visual_depth_band = &"foreground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/EntryFloorRight" unique_id=1706424194 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(-640, -19)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.6
+connected_positions = [NodePath("../../EastLane/Position2"), NodePath("../../EastLane/Position3")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/EntryFloorRight" unique_id=463171191]
+z_index = 2
+position = Vector2(-371, 55)
+script = ExtResource("4_position")
+position_index = 1
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 1.7000000000000002
+
+[node name="WestLane" type="Polygon2D" parent="Anchors" unique_id=725064154]
+z_index = -40
+position = Vector2(700, 620)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(-265, -32, -121.51196, -33.646576, 345, -39, 340, 89, -175, 93, -175, 0)
+script = ExtResource("3_anchor")
+anchor_id = &"west_lane"
+display_name = "West Lane"
+zone_id = &"west_service_lane"
+connected_anchor_ids = Array[StringName]([&"entry_floor_left", &"east_lane", &"rear_west", &"rear_center"])
+battler_scale = 0.82
+visual_order = 20
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/WestLane" unique_id=533463560 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(-99, -4)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+connected_positions = [NodePath("../../RearWest/Position1")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/WestLane" unique_id=1936532093 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(180, -4)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+connected_positions = [NodePath("../../RearCenter/Position0")]
+
+[node name="Position2" type="Marker2D" parent="Anchors/WestLane" unique_id=1334311138]
+z_index = 2
+position = Vector2(10, 56)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position3" type="Marker2D" parent="Anchors/WestLane" unique_id=434503176]
+z_index = 2
+position = Vector2(253, 67)
+script = ExtResource("4_position")
+position_index = 3
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="EastLane" type="Polygon2D" parent="Anchors" unique_id=1308498312]
+z_index = -40
+position = Vector2(1220, 620)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(-140, -27, 410, -66, 335, -34, 327, 81, -140, 89)
+script = ExtResource("3_anchor")
+anchor_id = &"east_lane"
+display_name = "East Lane"
+zone_id = &"east_service_lane"
+connected_anchor_ids = Array[StringName]([&"entry_floor_right", &"west_lane", &"rear_center", &"rear_east"])
+battler_scale = 0.82
+visual_order = 20
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/EastLane" unique_id=40357891 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(60, -11)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+connected_positions = [NodePath("../../RearCenter/Position1")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/EastLane" unique_id=343148760 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(289, -32)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+connected_positions = [NodePath("../../RearEast/Position1")]
+
+[node name="Position2" type="Marker2D" parent="Anchors/EastLane" unique_id=1911302261 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(-36, 61)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.1
+connected_positions = [NodePath("../../WestLane/Position3")]
+
+[node name="Position3" type="Marker2D" parent="Anchors/EastLane" unique_id=1378989504]
+z_index = 2
+position = Vector2(205, 44)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="RearWest" type="Polygon2D" parent="Anchors" unique_id=1630097505]
+z_index = -40
+position = Vector2(760, 450)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(4, 51, 136, 48, 70, 103, -197, 108)
+script = ExtResource("3_anchor")
+anchor_id = &"rear_west"
+display_name = "Rear West Service"
+zone_id = &"rear_service_left"
+connected_anchor_ids = Array[StringName]([&"west_lane", &"rear_center"])
+capacity = 2
+battler_scale = 0.68
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RearWest" unique_id=248545083 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(65, 68)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 0.6
+connected_positions = [NodePath("../../RearCenter/Position0")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/RearWest" unique_id=1052749120]
+z_index = 2
+position = Vector2(-52, 90)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.7
+
+[node name="RearEast" type="Polygon2D" parent="Anchors" unique_id=2025250550]
+z_index = -40
+position = Vector2(1218, 469)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(-15, 33, 140, 33, 212, 74, 9, 79)
+script = ExtResource("3_anchor")
+anchor_id = &"rear_east"
+display_name = "Rear East Service"
+zone_id = &"rear_service_right"
+connected_anchor_ids = Array[StringName]([&"east_lane", &"rear_center"])
+capacity = 2
+battler_scale = 0.68
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RearEast" unique_id=1844439313]
+z_index = 2
+position = Vector2(34, 49)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 0.6
+
+[node name="Position1" type="Marker2D" parent="Anchors/RearEast" unique_id=30491348]
+z_index = 2
+position = Vector2(141, 61)
+script = ExtResource("4_position")
+position_index = 1
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 0.7
+
+[node name="RearCenter" type="Polygon2D" parent="Anchors" unique_id=61263841]
+z_index = -40
+position = Vector2(1035, 504)
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(-115, -5, 57.347412, -4.2965393, 130, -4, 158, 50, -170, 52)
+script = ExtResource("3_anchor")
+anchor_id = &"rear_center"
+display_name = "Rear Dais"
+zone_id = &"rear_service_center"
+connected_anchor_ids = Array[StringName]([&"west_lane", &"east_lane", &"rear_west", &"rear_east"])
+capacity = 2
+battler_scale = 0.68
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RearCenter" unique_id=964648645]
+z_index = 2
+position = Vector2(-67, 32)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 0.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/RearCenter" unique_id=2048009402 node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(60, 23)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.6
+connected_positions = [NodePath("../../RearEast/Position0")]
+
+[node name="SpawnSlots" type="Node2D" parent="." unique_id=973720853]
+
+[node name="Party1" type="Marker2D" parent="SpawnSlots" unique_id=1079271751]
+z_index = -20
+position = Vector2(468, 924)
+script = ExtResource("5_spawn")
+slot_id = &"party_1"
+display_name = "Party West"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"frontline"])
+
+[node name="Party2" type="Marker2D" parent="SpawnSlots" unique_id=1446904030]
+z_index = -20
+position = Vector2(750, 819)
+script = ExtResource("5_spawn")
+slot_id = &"party_2"
+display_name = "Party Centre"
+faction = 0
+role_tags = Array[StringName]([&"party_entry"])
+
+[node name="Party3" type="Marker2D" parent="SpawnSlots" unique_id=2025277752]
+z_index = -20
+position = Vector2(1218, 825)
+script = ExtResource("5_spawn")
+slot_id = &"party_3"
+display_name = "Party East"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"support"])
+
+[node name="Enemy1" type="Marker2D" parent="SpawnSlots" unique_id=2044239911]
+z_index = -20
+position = Vector2(967, 533)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_1"
+display_name = "Enemy West"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"frontline"])
+
+[node name="Enemy2" type="Marker2D" parent="SpawnSlots" unique_id=1383641778]
+z_index = -20
+position = Vector2(1095, 525)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_2"
+display_name = "Enemy East"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"flank"])
+
+[node name="Enemy3" type="Marker2D" parent="SpawnSlots" unique_id=843285188]
+z_index = -20
+position = Vector2(1281, 608)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_3"
+display_name = "Enemy 3"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"flank"])
+
+[node name="ForegroundProps" type="Node2D" parent="." unique_id=223365631]

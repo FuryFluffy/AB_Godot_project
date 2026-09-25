@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EquipmentLoadout" format=3 uid="uid://byi3ogy7r3jdd"]
+
+[ext_resource type="Script" uid="uid://cfwr5lyswtnub" path="res://scripts/data/equipment_loadout.gd" id="1_iv2qm"]
+[ext_resource type="Resource" uid="uid://bprphgrhsqg30" path="res://scripts/data/armor/hollow_wrappings.tres" id="1_jmhg7"]
+[ext_resource type="Resource" uid="uid://coao7po6v5wm2" path="res://scripts/data/equipment/weapons/hollow_servant_unarmed.tres" id="1_kwgku"]
+
+[resource]
+script = ExtResource("1_iv2qm")
+main_hand = ExtResource("1_kwgku")
+armor = ExtResource("1_jmhg7")
+metadata/_custom_type_script = "uid://cfwr5lyswtnub"

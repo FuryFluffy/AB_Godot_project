@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyGroupRulebookDefinition" format=3 uid="uid://ctw1y0m6nsheu"]
+
+[ext_resource type="Script" uid="uid://d3mcydlbfrjhi" path="res://scripts/data/ai/enemy_group_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://bfvtuivllxka0" path="res://scripts/data/ai/enemy_group_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="RuleSupportFirst"]
+script = ExtResource("1_rule")
+rule_id = &"support_first"
+display_name = "Prayer-Rag Opens"
+required_alive_battler_ids = Array[StringName]([&"prayer_rag_novice"])
+activation_order = Array[StringName]([&"prayer_rag_novice", &"knife_footman", &"hollow_servant"])
+
+[sub_resource type="Resource" id="RuleFrontlineFirst"]
+script = ExtResource("1_rule")
+rule_id = &"frontline_first"
+display_name = "Frontline Without Support"
+activation_order = Array[StringName]([&"knife_footman", &"hollow_servant", &"prayer_rag_novice"])
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"ruined_chapel_enemy_group"
+display_name = "Ruined Chapel Test Group"
+rules = Array[ExtResource("1_rule")]([SubResource("RuleSupportFirst"), SubResource("RuleFrontlineFirst")])

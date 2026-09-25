@@ -1,0 +1,73 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://beut1oytsnbs8"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Script" uid="uid://xrisyebbpq6k" path="res://scripts/data/dialogue/dialogue_condition_definition.gd" id="5_condition"]
+[ext_resource type="Script" uid="uid://bsv46mai0ojkr" path="res://scripts/data/dialogue/dialogue_condition_group.gd" id="6_group"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="7_k12fb"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="7_transition"]
+[ext_resource type="Texture2D" uid="uid://bgoh5rb2em84w" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="8_lysandra_stage"]
+[ext_resource type="Texture2D" uid="uid://ccbnd1r400hxw" path="res://assets/characters/curated/seraphine/core_idle_front.png" id="9_seraphine_stage"]
+
+[sub_resource type="Resource" id="Condition_mira_recruited"]
+script = ExtResource("5_condition")
+kind = 3
+subject_id = &"mira"
+
+[sub_resource type="Resource" id="Group_mira_recruited"]
+script = ExtResource("6_group")
+conditions = Array[ExtResource("5_condition")]([SubResource("Condition_mira_recruited")])
+
+[sub_resource type="Resource" id="Transition_canonical_party"]
+script = ExtResource("7_transition")
+transition_id = &"seraphine_arrival_with_mira"
+conditions = SubResource("Group_mira_recruited")
+next_node_id = &"first_line"
+
+[sub_resource type="Resource" id="Transition_fallback"]
+script = ExtResource("7_transition")
+transition_id = &"seraphine_arrival_fallback"
+next_node_id = &"first_line"
+
+[sub_resource type="Resource" id="Outcome_false_prayer_witnessed"]
+script = ExtResource("4_outcome")
+subject_id = &"layer_1_seraphine_false_prayer_witnessed"
+
+[sub_resource type="Resource" id="Node_arrival_router"]
+script = ExtResource("2_node")
+node_id = &"arrival_router"
+text = "The warded prayer answers in the wrong cadence."
+entry_outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_false_prayer_witnessed")])
+automatic_transitions = Array[ExtResource("7_transition")]([SubResource("Transition_canonical_party"), SubResource("Transition_fallback")])
+
+[sub_resource type="Resource" id="Choice_stand_with_seraphine"]
+script = ExtResource("3_choice")
+choice_id = &"seraphine_recruitment_stand_beneath_ward"
+text = "Stand with Seraphine."
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seraphine_portrait"]
+atlas = ExtResource("9_seraphine_stage")
+region = Rect2(250, 0, 750, 1020)
+
+[sub_resource type="Resource" id="Node_first_line"]
+script = ExtResource("2_node")
+node_id = &"first_line"
+speaker_id = &"seraphine"
+speaker_name = "Seraphine"
+portrait = SubResource("AtlasTexture_seraphine_portrait")
+left_actor_sprite = ExtResource("8_lysandra_stage")
+right_actor_sprite = ExtResource("9_seraphine_stage")
+text = "This place remembers prayer, but not mercy."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_stand_with_seraphine")])
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_1_seraphine_recruitment_prelude"
+start_node_id = &"arrival_router"
+trigger_kind = &"encounter_prelude"
+trigger_id = &"layer_1_seraphine_ruined_chapel"
+completion_kind = &"flag"
+completion_id = &"layer_1_seraphine_false_prayer_witnessed"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_arrival_router"), SubResource("Node_first_line")])

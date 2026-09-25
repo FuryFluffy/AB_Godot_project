@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/presentation/battle_marker.gd" id="1_marker"]
+
+[node name="BattleMarker" type="Marker2D" node_paths=PackedStringArray("select_button")]
+script = ExtResource("1_marker")
+select_button = NodePath("SelectButton")
+
+[node name="SelectButton" type="Button" parent="."]
+custom_minimum_size = Vector2(180, 62)
+offset_left = -90.0
+offset_top = -31.0
+offset_right = 90.0
+offset_bottom = 31.0
+flat = true

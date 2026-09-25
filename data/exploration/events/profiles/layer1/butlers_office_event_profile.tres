@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RoomEventProfileDefinition" format=3 uid="uid://nceu7isk3ehd"]
+
+[ext_resource type="Script" uid="uid://bvuha02ulf1lt" path="res://scripts/exploration/events/room_event_profile_definition.gd" id="1_jdfcd"]
+[ext_resource type="Script" uid="uid://d1ur56782s4b6" path="res://scripts/exploration/events/room_event_source_definition.gd" id="2_hcl65"]
+[ext_resource type="Resource" uid="uid://onrwhxwxd1oy" path="res://data/exploration/events/sources/butlers_office_event_sources.tres" id="3_1o4s2"]
+[ext_resource type="Resource" uid="uid://c4pf4cyib8c1m" path="res://data/exploration/events/sources/layer_1_common_event_sources.tres" id="4_o5aiw"]
+[ext_resource type="Resource" uid="uid://6ax0n3fvwn4k" path="res://data/exploration/events/sources/global_event_sources.tres" id="5_xclxx"]
+
+[resource]
+script = ExtResource("1_jdfcd")
+profile_id = &"butlers_office_event_profile"
+sources = Array[ExtResource("2_hcl65")]([ExtResource("3_1o4s2"), ExtResource("4_o5aiw"), ExtResource("5_xclxx")])
+metadata/_custom_type_script = "uid://bvuha02ulf1lt"

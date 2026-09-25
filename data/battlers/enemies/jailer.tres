@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://bupw5j4ic2oqu"]
+
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="1_5obwf"]
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_attributes"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_battler"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" path="res://scripts/data/equipment/loadouts/jailer_loadout.tres" id="5_loadout"]
+[ext_resource type="Resource" uid="uid://d3honnbo84j7e" path="res://data/enemy_ai/jailer_rulebook.tres" id="6_rules"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="8_uwv3x"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("1_attributes")
+might = 6
+endurance = 7
+intellect = 2
+personality = 4
+
+[sub_resource type="Resource" id="Plate"]
+script = ExtResource("4_protection")
+protection_type = 3
+level = 7
+tier = 3
+
+[sub_resource type="Resource" id="Body"]
+script = ExtResource("3_skill")
+skill = 22
+level = 5
+tier = 3
+
+[sub_resource type="Resource" id="Athletics"]
+script = ExtResource("3_skill")
+level = 5
+tier = 3
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 5
+tier = 3
+
+[resource]
+script = ExtResource("2_battler")
+battler_id = &"jailer"
+display_name = "The Jailer"
+faction = 1
+category = 3
+attributes = SubResource("Attributes")
+max_hp = 48
+base_actions = 2
+starting_resolve = 0
+order_value = 7
+skills = Array[ExtResource("3_skill")]([SubResource("Body"), SubResource("Athletics"), SubResource("Awareness")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Plate")])
+default_loadout = ExtResource("5_loadout")
+enemy_rulebook = ExtResource("6_rules")

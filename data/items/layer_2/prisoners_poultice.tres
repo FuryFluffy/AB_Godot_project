@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dvfwsaft8vsx5"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://b3pat6uvgjyjj" path="res://assets/items/by_stable_id/l02_prisoners_poultice.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_heal"]
+script = ExtResource("2_effect")
+amount = 3
+
+[sub_resource type="Resource" id="Effect_bleed"]
+script = ExtResource("2_effect")
+kind = 5
+
+[sub_resource type="Resource" id="Effect_poison"]
+script = ExtResource("2_effect")
+kind = 5
+status_kind = 1
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l02_prisoners_poultice"
+display_name = "Prisoner's Poultice"
+description = "Restore 3 HP and remove Bleed and Poison from the user or an Adjacent heroine."
+icon = ExtResource("99_icon")
+layer = 2
+content_category = 1
+rarity = 1
+canonical_workbook_item = true
+stack_limit = 3
+target_rule = 1
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_heal"), SubResource("Effect_bleed"), SubResource("Effect_poison")])

@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_bell_pull_gallery.png" id="1_background"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/components/room_exit_hotspot.tscn" id="2_exit"]
+
+[node name="BellPullGallery" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("1_background")
+
+[node name="WorldItemLayer" type="Node2D" parent="."]
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="GalleryExit" type="Node2D" parent="Interactables"]
+
+[node name="RoomExitHotspot" parent="Interactables/GalleryExit" instance=ExtResource("2_exit")]
+display_name = "End of the Gallery"
+hover_prompt = "Continue to the Layer 1 map"
+
+[node name="CollisionPolygon2D" parent="Interactables/GalleryExit/RoomExitHotspot" index="0"]
+polygon = PackedVector2Array(850, 220, 1070, 220, 1130, 560, 790, 560)
+
+[node name="WorldEventLayer" type="Node2D" parent="."]
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[editable path="Interactables/GalleryExit/RoomExitHotspot"]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3 uid="uid://0sknbc2kji3k"]
+
+[ext_resource type="Resource" uid="uid://bl0rnfpeh6not" path="res://data/items/layer_1/servants_tonic.tres" id="1_66auu"]
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="2_7o5bh"]
+[ext_resource type="Texture2D" uid="uid://dr8lunro6eorl" path="res://assets/exploration/layer1/butler_office/servant_tonic.png" id="3_7o5bh"]
+
+[resource]
+script = ExtResource("2_7o5bh")
+entry_id = &"servant_tonic_spawn"
+item = ExtResource("1_66auu")
+world_texture = ExtResource("3_7o5bh")
+required_anchor_tag = &"bottle"
+weight = 1
+quantity = 1
+metadata/_custom_type_script = "uid://dqg7udf6p2hld"

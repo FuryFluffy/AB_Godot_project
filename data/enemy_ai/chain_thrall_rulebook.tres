@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="EnemyRulebookDefinition" format=3 uid="uid://d4geynq0u2n8c"]
+
+[ext_resource type="Script" uid="uid://uqw71glrm6lx" path="res://scripts/data/ai/enemy_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://jdqyagtsapyh" path="res://scripts/data/ai/enemy_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="Hold"]
+script = ExtResource("1_rule")
+rule_id = &"chain_hold"
+display_name = "Keep the Chain Tight"
+condition = 3
+action = 4
+
+[sub_resource type="Resource" id="Progress"]
+script = ExtResource("1_rule")
+rule_id = &"chain_progress"
+display_name = "Draw the Captive In"
+condition = 4
+action = 5
+
+[sub_resource type="Resource" id="Grapple"]
+script = ExtResource("1_rule")
+rule_id = &"chain_restraint"
+display_name = "Catch Nearest Heroine"
+condition = 5
+action = 3
+
+[sub_resource type="Resource" id="Attack"]
+script = ExtResource("1_rule")
+rule_id = &"chain_strike"
+display_name = "Strike Nearest Heroine"
+condition = 1
+action = 0
+
+[sub_resource type="Resource" id="Move"]
+script = ExtResource("1_rule")
+rule_id = &"drag_chain_forward"
+display_name = "Close Restraint Distance"
+condition = 2
+action = 1
+
+[sub_resource type="Resource" id="Wait"]
+script = ExtResource("1_rule")
+rule_id = &"keep_chain_ready"
+display_name = "Keep the Chain Ready"
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"chain_thrall_rules"
+display_name = "Chain Thrall — Restraint First"
+rules = Array[ExtResource("1_rule")]([SubResource("Hold"), SubResource("Progress"), SubResource("Grapple"), SubResource("Attack"), SubResource("Move"), SubResource("Wait")])
+defense_preference = 1
+move_reaction_priority = 35
+move_reaction_policy = 1

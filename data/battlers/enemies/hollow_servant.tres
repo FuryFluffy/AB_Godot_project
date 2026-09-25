@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://w5pqojarjf6l"]
+
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="1_p8rtr"]
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_rkise"]
+[ext_resource type="Resource" uid="uid://byi3ogy7r3jdd" path="res://scripts/data/equipment/loadouts/hollow_servant_loadout.tres" id="2_khf7k"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_nxet1"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_3yuye"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" uid="uid://bg1j2cvdy15bh" path="res://data/enemy_ai/hollow_servant_rulebook.tres" id="5_rulebook"]
+[ext_resource type="Resource" uid="uid://bc6x2s25nmo51" path="res://data/grapples/standard_hollow_servant_grapple.tres" id="6_grapple"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="9_kmym1"]
+
+[sub_resource type="Resource" id="Resource_k108i"]
+script = ExtResource("1_rkise")
+might = 2
+agility = 0
+endurance = 2
+intellect = 0
+personality = 0
+metadata/_custom_type_script = "uid://bkkj2s2lvlk3y"
+
+[sub_resource type="Resource" id="Resource_protection"]
+script = ExtResource("4_protection")
+
+[sub_resource type="Resource" id="Resource_h6jdc"]
+script = ExtResource("3_3yuye")
+skill = 10
+level = 2
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[sub_resource type="Resource" id="Resource_pcf5p"]
+script = ExtResource("3_3yuye")
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[resource]
+script = ExtResource("2_nxet1")
+battler_id = &"hollow_servant"
+display_name = "Hollow Servant"
+faction = 1
+attributes = SubResource("Resource_k108i")
+max_hp = 6
+max_mp = 3
+starting_resolve = 0
+order_value = 1
+skills = Array[ExtResource("3_3yuye")]([SubResource("Resource_h6jdc"), SubResource("Resource_pcf5p")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Resource_protection")])
+default_loadout = ExtResource("2_khf7k")
+enemy_rulebook = ExtResource("5_rulebook")
+grapple_template = ExtResource("6_grapple")
+metadata/_custom_type_script = "uid://jm0qoyjtshqv"

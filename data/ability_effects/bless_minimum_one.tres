@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BlessAbilityEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/bless_ability_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"bless_minimum_one"
+minimum_damage = 1
+

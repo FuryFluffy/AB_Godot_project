@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://dlvvn6dutbymv"]
+
+[ext_resource type="Script" uid="uid://d0q4iavqybai8" path="res://scripts/battle/presentation/reusable/reusable_combat_hud.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/heroine_card_view.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/item_bar_view.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/command_bar_view.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/combat_log_drawer.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/reaction_exchange.tscn" id="6"]
+[ext_resource type="Texture2D" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/characters/curated/mira/core_move_front.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/characters/curated/seraphine/core_idle_front.png" id="9"]
+[ext_resource type="StyleBox" uid="uid://b6m37hpkc3vee" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="10_frame"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/ability_panel.tscn" id="11_ability"]
+[ext_resource type="PackedScene" uid="uid://jndrjh0kdp6x" path="res://scenes/battle/ui/reusable/components/struggle_panel.tscn" id="12_struggle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lysandra_portrait"]
+atlas = ExtResource("7")
+region = Rect2(500, 50, 300, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mira_portrait"]
+atlas = ExtResource("8")
+region = Rect2(470, 30, 300, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seraphine_portrait"]
+atlas = ExtResource("9")
+region = Rect2(470, 20, 300, 400)
+
+[sub_resource type="Animation" id="Animation_log_reset"]
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CombatLogDrawer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1920, 841)]
+}
+
+[sub_resource type="Animation" id="Animation_log_open"]
+resource_name = "log_open"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CombatLogDrawer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1920, 841), Vector2(1492, 841)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_log"]
+_data = {
+&"RESET": SubResource("Animation_log_reset"),
+&"log_open": SubResource("Animation_log_open")
+}
+
+[node name="ReusableCombatHUD" type="CanvasLayer" unique_id=1776418249]
+layer = 30
+script = ExtResource("1")
+
+[node name="Root" type="Control" parent="." unique_id=1127704762]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBar" type="PanelContainer" parent="Root" unique_id=128080285]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("10_frame")
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/TopBar" unique_id=1647832111]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/TopBar/MarginContainer" unique_id=2111449582]
+layout_mode = 2
+
+[node name="LayerLabel" type="Label" parent="Root/TopBar/MarginContainer/HBoxContainer" unique_id=1326136818]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("10_frame")
+text = "%Layer%"
+
+[node name="RoomLabel" type="Label" parent="Root/TopBar/MarginContainer/HBoxContainer" unique_id=721895164]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("10_frame")
+text = "%Room%"
+
+[node name="ObjectiveLabel" type="Label" parent="Root/TopBar/MarginContainer/HBoxContainer" unique_id=2009511324]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("10_frame")
+text = "%Objective%"
+
+[node name="PartyStrip" type="PanelContainer" parent="Root" unique_id=26294896]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1902.0
+offset_top = -388.0
+offset_right = -1566.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("10_frame")
+
+[node name="Cards" type="VBoxContainer" parent="Root/PartyStrip" unique_id=1169436519]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LysandraCard" parent="Root/PartyStrip/Cards" unique_id=1392854746 instance=ExtResource("2")]
+unique_name_in_owner = true
+layout_mode = 2
+battler_id = &"lysandra"
+
+[node name="Portrait" parent="Root/PartyStrip/Cards/LysandraCard/MarginContainer/HBoxContainer/PortraitFrame" index="0"]
+texture = SubResource("AtlasTexture_lysandra_portrait")
+
+[node name="MiraCard" parent="Root/PartyStrip/Cards" unique_id=418546906 instance=ExtResource("2")]
+unique_name_in_owner = true
+layout_mode = 2
+battler_id = &"mira"
+
+[node name="Portrait" parent="Root/PartyStrip/Cards/MiraCard/MarginContainer/HBoxContainer/PortraitFrame" index="0"]
+texture = SubResource("AtlasTexture_mira_portrait")
+
+[node name="SeraphineCard" parent="Root/PartyStrip/Cards" unique_id=1626541137 instance=ExtResource("2")]
+unique_name_in_owner = true
+layout_mode = 2
+battler_id = &"seraphine"
+
+[node name="Portrait" parent="Root/PartyStrip/Cards/SeraphineCard/MarginContainer/HBoxContainer/PortraitFrame" index="0"]
+texture = SubResource("AtlasTexture_seraphine_portrait")
+
+[node name="ItemBar" parent="Root" unique_id=607733848 instance=ExtResource("3")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -278.0
+offset_right = -16.0
+offset_bottom = 106.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="CommandBar" parent="Root" unique_id=1433290276 instance=ExtResource("4")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -388.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="CombatLogDrawer" parent="Root" unique_id=453484719 instance=ExtResource("5")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1920.0
+offset_top = 841.0
+offset_right = 2240.0
+offset_bottom = 1061.0
+
+[node name="LogAnimation" type="AnimationPlayer" parent="Root" unique_id=1474657391]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_log")
+
+[node name="ReactionExchange" parent="Root" unique_id=729673887 instance=ExtResource("6")]
+unique_name_in_owner = true
+anchors_preset = 0
+
+[node name="AbilityPanel" parent="Root" unique_id=618502600 instance=ExtResource("11_ability")]
+unique_name_in_owner = true
+
+[node name="StrugglePanel" parent="Root" unique_id=279395240 instance=ExtResource("12_struggle")]
+unique_name_in_owner = true
+anchors_preset = 0
+
+[editable path="Root/PartyStrip/Cards/LysandraCard"]
+[editable path="Root/PartyStrip/Cards/MiraCard"]
+[editable path="Root/PartyStrip/Cards/SeraphineCard"]

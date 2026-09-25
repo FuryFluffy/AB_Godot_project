@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://tgv2ng8gvk6n"]
+
+[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_1/sdxl_curated/09_Butlers_Office.png" id="1_wbh5w"]
+[ext_resource type="PackedScene" uid="uid://bpdam0qddyyfi" path="res://scenes/exploration/components/room_item_spawn_anchor.tscn" id="2_kl0bd"]
+[ext_resource type="PackedScene" uid="uid://evepjmugphk8" path="res://scenes/exploration/components/room_event_spawn_anchor.tscn" id="3_kl0bd"]
+[ext_resource type="Resource" uid="uid://2rsiusn7oxh0" path="res://data/exploration/events/entries/tarnished_service_bell_entry.tres" id="4_a2ys0"]
+[ext_resource type="PackedScene" uid="uid://c7y2njb0y2cxm" path="res://scenes/exploration/components/world_lore_pickup.tscn" id="4_lso8m"]
+[ext_resource type="Texture2D" path="res://assets/exploration/shared/props/butlers_records.png" id="5_1huek"]
+[ext_resource type="PackedScene" uid="uid://4p65hguom5uc" path="res://scenes/exploration/components/room_exit_hotspot.tscn" id="5_5kmdt"]
+[ext_resource type="Resource" uid="uid://mdfgug25bsx1" path="res://data/exploration/events/entries/red_wax_vial_entry.tres" id="5_uqbl3"]
+[ext_resource type="Resource" uid="uid://gwwqp2yxwris" path="res://data/exploration/events/entries/bone_dice_cup_entry.tres" id="6_5kmdt"]
+
+[node name="ButtlersOffice" type="Node2D" unique_id=1144591511]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1221448960]
+position = Vector2(960, 540)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("1_wbh5w")
+
+[node name="WorldItemLayer" type="Node2D" parent="." unique_id=1925852711]
+
+[node name="ItemSpawnAnchors" type="Node2D" parent="." unique_id=1314392877]
+
+[node name="CentreTableBottle" parent="ItemSpawnAnchors" unique_id=371311837 instance=ExtResource("2_kl0bd")]
+position = Vector2(419, 695)
+anchor_id = &"centre_table_bottle"
+anchor_tags = Array[StringName]([&"bottle", &"flat_item"])
+item_visual_scale = Vector2(0.16, 0.16)
+pickup_size = Vector2(70, 150)
+item_z_index = 3
+
+[node name="LeftShelfBottle" parent="ItemSpawnAnchors" unique_id=1819573302 instance=ExtResource("2_kl0bd")]
+position = Vector2(306, 429)
+anchor_id = &"left_shelf_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.09, 0.09)
+item_visual_rotation_degrees = -2.0
+pickup_size = Vector2(45, 90)
+item_z_index = 2
+
+[node name="RearCabinetBottle" parent="ItemSpawnAnchors" unique_id=1061361938 instance=ExtResource("2_kl0bd")]
+position = Vector2(1595, 493)
+anchor_id = &"rear_cabinet_bottle"
+anchor_tags = Array[StringName]([&"bottle", &"flat_item"])
+item_visual_scale = Vector2(0.075, 0.075)
+item_visual_rotation_degrees = 2.0
+pickup_size = Vector2(40, 80)
+
+[node name="ForegroundTableBottle" parent="ItemSpawnAnchors" unique_id=380870341 instance=ExtResource("2_kl0bd")]
+position = Vector2(1255, 964)
+anchor_id = &"foreground_table_bottle"
+anchor_tags = Array[StringName]([&"bottle", &"flat_item"])
+item_visual_scale = Vector2(0.13, 0.13)
+item_visual_rotation_degrees = -4.0
+pickup_size = Vector2(60, 125)
+item_z_index = 3
+
+[node name="RustyKeyTable" parent="ItemSpawnAnchors" unique_id=1262550057 instance=ExtResource("2_kl0bd")]
+position = Vector2(666, 660)
+anchor_id = &"rusty_key_table"
+anchor_tags = Array[StringName]([&"key", &"key_accessible"])
+item_visual_scale = Vector2(0.1, 0.1)
+pickup_size = Vector2(90, 70)
+item_z_index = 3
+
+[node name="EventSpawnAnchors" type="Node2D" parent="." unique_id=938195211]
+
+[node name="BellEventAnchor" parent="EventSpawnAnchors" unique_id=1119960024 instance=ExtResource("3_kl0bd")]
+position = Vector2(998, 634)
+anchor_id = &"office_bell_event"
+anchor_tags = Array[StringName]([&"compact_desk_event", &"small_tabletop_event"])
+interaction_size = Vector2(80, 80)
+preview_entry = ExtResource("4_a2ys0")
+
+[node name="Common" parent="EventSpawnAnchors" unique_id=2038851608 instance=ExtResource("3_kl0bd")]
+position = Vector2(1534, 511)
+anchor_id = &"office_common_event"
+event_visual_scale = Vector2(0.04, 0.04)
+interaction_size = Vector2(80, 80)
+preview_entry = ExtResource("5_uqbl3")
+
+[node name="Global" parent="EventSpawnAnchors" unique_id=620198198 instance=ExtResource("3_kl0bd")]
+position = Vector2(758, 464)
+anchor_id = &"office_global_event"
+event_visual_scale = Vector2(0.06, 0.06)
+interaction_size = Vector2(70, 70)
+preview_entry = ExtResource("6_5kmdt")
+
+[node name="Interactables" type="Node2D" parent="." unique_id=428862644]
+
+[node name="ExitDoor" type="Node2D" parent="Interactables" unique_id=1930841606]
+
+[node name="RoomExitHotspot" parent="Interactables/ExitDoor" unique_id=116027957 instance=ExtResource("5_5kmdt")]
+
+[node name="CollisionPolygon2D" parent="Interactables/ExitDoor/RoomExitHotspot" index="0" unique_id=1989793451]
+position = Vector2(-226, 7)
+polygon = PackedVector2Array(1607, 613, 1619, 220, 1477, 218, 1481, 551, 1369, 562)
+
+[node name="ButlerRecords" parent="Interactables" unique_id=378419780 instance=ExtResource("4_lso8m")]
+z_index = 10
+position = Vector2(560, 660)
+lore_entry_id = &"butler_records"
+world_texture = ExtResource("5_1huek")
+visual_scale = Vector2(0.24, 0.24)
+pickup_size = Vector2(220, 120)
+pickup_z_index = 10
+
+[node name="WorldEventLayer" type="Node2D" parent="." unique_id=476103928]
+
+[node name="Foreground" type="Node2D" parent="." unique_id=276757200]
+
+[node name="DebugPanel" type="Node2D" parent="." unique_id=349133109]
+
+[editable path="Interactables/ExitDoor/RoomExitHotspot"]

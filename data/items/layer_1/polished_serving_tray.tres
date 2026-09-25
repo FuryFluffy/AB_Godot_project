@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://7r04qs20uyor"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://bblisvgfyibb5" path="res://assets/items/by_stable_id/l01_polished_serving_tray.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_guard"]
+script = ExtResource("2_effect")
+kind = 10
+amount = 2
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_polished_serving_tray"
+display_name = "Polished Serving Tray"
+description = "Gain 2 temporary Item Guard. Guard absorbs HP damage before HP."
+icon = ExtResource("99_icon")
+content_category = 1
+rarity = 2
+canonical_workbook_item = true
+stack_limit = 2
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_guard")])

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/group_heal_two_cost_two.tres" id="3_effect"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"blood_nun_communion"
+display_name = "Communion"
+description = "Sacrifice 2 HP to restore 2 HP to each surviving allied Blessed unit in the Blood Nun's zone."
+school = 7
+tags = 1
+action_cost = 2
+mp_cost = 3
+targeting_mode = 2
+is_magic = true
+can_target_self = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_effect")])

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/attack_jaw_break.tres" id="3_attack"]
+[ext_resource type="Resource" path="res://data/weapon_effects/techniques/flat_damage_1.tres" id="4_damage"]
+[ext_resource type="Resource" path="res://data/weapon_effects/techniques/jaw_break_stun.tres" id="5_stun"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"jaw_break"
+display_name = "Jaw Break"
+description = "Spend 1 Action and 2 MP for a Staff Attack with +1 flat damage. A hit Stuns a target that used no Defense."
+tier = 1
+tags = 4
+requires_progression_unlock = true
+required_weapon_family_id = &"staff"
+minimum_weapon_family_rank = 1
+uses_equipped_weapon_attack_profile = true
+additional_weapon_effects = Array[WeaponEffectDefinition]([ExtResource("4_damage"), ExtResource("5_stun")])
+action_cost = 1
+mp_cost = 2
+skill = 7
+attribute = 0
+dice_modifier = 0
+targeting_mode = 0
+maximum_zone_distance = 1
+is_magic = false
+can_be_parried = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_attack")])

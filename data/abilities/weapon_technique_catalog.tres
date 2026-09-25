@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityCatalogDefinition" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/abilities/ability_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="2_ability_script"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/forced_blade.tres" id="3_sword"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/knife_dance.tres" id="4_dagger"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/jaw_break.tres" id="5_staff"]
+
+[resource]
+script = ExtResource("1_catalog")
+catalog_id = &"initial_weapon_techniques"
+display_name = "Initial Refuge Weapon Techniques"
+description = "The first MP-powered Sword, Dagger, and Staff weapon arts taught through persistent heroine progression."
+abilities = Array[ExtResource("2_ability_script")]([ExtResource("3_sword"), ExtResource("4_dagger"), ExtResource("5_staff")])

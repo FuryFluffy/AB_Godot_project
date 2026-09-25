@@ -1,0 +1,199 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/presentation/reusable/heroine_card_view.gd" id="1"]
+[ext_resource type="StyleBox" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="2_frame"]
+
+[sub_resource type="StyleBoxFlat" id="hp_background"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.57254905, 0.45490196, 0.2627451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="hp_fill"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="mp_background"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.57254905, 0.45490196, 0.2627451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="mp_fill"]
+bg_color = Color(0, 0.4117647, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="resolve_background"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.57254905, 0.45490196, 0.2627451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="resolve_fill"]
+bg_color = Color(0.73564655, 0.6611453, 0.13795185, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="corruption_background"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.57254905, 0.45490196, 0.2627451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="corruption_fill"]
+bg_color = Color(0.48235294, 0.4509804, 0.8862745, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="HeroineCardView" type="PanelContainer"]
+custom_minimum_size = Vector2(320, 112)
+custom_maximum_size = Vector2(320, 112)
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = ExtResource("2_frame")
+script = ExtResource("1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="PortraitFrame" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(72, 96)
+custom_maximum_size = Vector2(72, 96)
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_frame")
+
+[node name="Portrait" type="TextureRect" parent="MarginContainer/HBoxContainer/PortraitFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="StatBlock" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/StatBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "%NAME%"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/StatBlock"]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 0
+
+[node name="HPLabel" type="Label" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "HP"
+
+[node name="HPBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("hp_background")
+theme_override_styles/fill = SubResource("hp_fill")
+show_percentage = false
+
+[node name="MPLabel" type="Label" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "MP"
+
+[node name="MPBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("mp_background")
+theme_override_styles/fill = SubResource("mp_fill")
+show_percentage = false
+
+[node name="ResLabel" type="Label" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Res"
+
+[node name="ResolveBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 7)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("resolve_background")
+theme_override_styles/fill = SubResource("resolve_fill")
+show_percentage = false
+
+[node name="CorLabel" type="Label" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Cor"
+
+[node name="CorruptionBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/StatBlock/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 7)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("corruption_background")
+theme_override_styles/fill = SubResource("corruption_fill")
+show_percentage = false
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/HBoxContainer/StatBlock"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="ActLabel" type="Label" parent="MarginContainer/HBoxContainer/StatBlock/Actions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Actions"
+
+[node name="ActionPips" type="HBoxContainer" parent="MarginContainer/HBoxContainer/StatBlock/Actions"]
+unique_name_in_owner = true
+layout_mode = 2

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RoomItemPoolDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_entry"]
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_pool_definition.gd" id="2_pool"]
+[ext_resource type="Resource" path="res://data/exploration/item_pools/layer1/rusty_key_room_entry.tres" id="3_entry"]
+
+[resource]
+script = ExtResource("2_pool")
+pool_id = &"layer1_rusty_key_reward_pool"
+entries = Array[ExtResource("1_entry")]([ExtResource("3_entry")])

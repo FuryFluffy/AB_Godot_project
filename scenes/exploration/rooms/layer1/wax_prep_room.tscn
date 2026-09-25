@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cyi03o4xrqubk"]
+
+[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_1/sdxl_curated/13_Wax_Preparation_Room.png" id="1_6sgge"]
+[ext_resource type="PackedScene" uid="uid://bpdam0qddyyfi" path="res://scenes/exploration/components/room_item_spawn_anchor.tscn" id="2_xubsx"]
+[ext_resource type="PackedScene" uid="uid://evepjmugphk8" path="res://scenes/exploration/components/room_event_spawn_anchor.tscn" id="3_f81no"]
+[ext_resource type="Resource" uid="uid://mdfgug25bsx1" path="res://data/exploration/events/entries/red_wax_vial_entry.tres" id="4_xubsx"]
+[ext_resource type="PackedScene" uid="uid://4p65hguom5uc" path="res://scenes/exploration/components/room_exit_hotspot.tscn" id="5_xby4g"]
+[ext_resource type="Resource" uid="uid://gwwqp2yxwris" path="res://data/exploration/events/entries/bone_dice_cup_entry.tres" id="5_y2yum"]
+
+[node name="WaxPrepRoom" type="Node2D" unique_id=1144591511]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1221448960]
+position = Vector2(960, 540)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("1_6sgge")
+
+[node name="WorldItemLayer" type="Node2D" parent="." unique_id=1925852711]
+
+[node name="ItemSpawnAnchors" type="Node2D" parent="." unique_id=1314392877]
+
+[node name="ForegroundTableBottle" parent="ItemSpawnAnchors" unique_id=371311837 instance=ExtResource("2_xubsx")]
+position = Vector2(521, 782)
+anchor_id = &"foreground_table_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.16, 0.16)
+pickup_size = Vector2(70, 150)
+item_z_index = 3
+
+[node name="LeftShelfBottle" parent="ItemSpawnAnchors" unique_id=1819573302 instance=ExtResource("2_xubsx")]
+position = Vector2(351, 535)
+anchor_id = &"left_shelf_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.09, 0.09)
+item_visual_rotation_degrees = -2.0
+pickup_size = Vector2(45, 90)
+item_z_index = 2
+
+[node name="RearCabinetBottle" parent="ItemSpawnAnchors" unique_id=1061361938 instance=ExtResource("2_xubsx")]
+position = Vector2(1296, 505)
+anchor_id = &"rear_cabinet_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.075, 0.075)
+item_visual_rotation_degrees = 2.0
+pickup_size = Vector2(40, 80)
+
+[node name="BarrelCrateBottle" parent="ItemSpawnAnchors" unique_id=380870341 instance=ExtResource("2_xubsx")]
+position = Vector2(1564, 948)
+anchor_id = &"barrel_crate_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.13, 0.13)
+item_visual_rotation_degrees = -4.0
+pickup_size = Vector2(60, 125)
+item_z_index = 3
+
+[node name="EventSpawnAnchors" type="Node2D" parent="." unique_id=1587555369]
+
+[node name="Common" parent="EventSpawnAnchors" unique_id=1119960024 instance=ExtResource("3_f81no")]
+position = Vector2(351, 731)
+anchor_id = &"wax_prep_common_event"
+event_visual_scale = Vector2(0.1, 0.1)
+interaction_size = Vector2(100, 100)
+preview_entry = ExtResource("4_xubsx")
+
+[node name="Global" parent="EventSpawnAnchors" unique_id=2044286962 instance=ExtResource("3_f81no")]
+position = Vector2(728, 394)
+anchor_id = &"wax_prep_global_event"
+event_visual_scale = Vector2(0.07, 0.07)
+interaction_size = Vector2(80, 80)
+preview_entry = ExtResource("5_y2yum")
+
+[node name="Interactables" type="Node2D" parent="." unique_id=428862644]
+
+[node name="ExitDoor" type="Node2D" parent="Interactables" unique_id=1930841606]
+
+[node name="RoomExitHotspot" parent="Interactables/ExitDoor" unique_id=116027957 instance=ExtResource("5_xby4g")]
+
+[node name="CollisionPolygon2D" parent="Interactables/ExitDoor/RoomExitHotspot" index="0" unique_id=1989793451]
+polygon = PackedVector2Array(1467, 174, 1682, 168, 1671, 723, 1617, 742, 1464, 714)
+
+[node name="Foreground" type="Node2D" parent="." unique_id=276757200]
+
+[node name="DebugPanel" type="Node2D" parent="." unique_id=349133109]
+
+[node name="WorldEventLayer" type="Node2D" parent="." unique_id=1205394358]
+
+[editable path="Interactables/ExitDoor/RoomExitHotspot"]

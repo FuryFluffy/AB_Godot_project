@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="RewardSourceCatalogDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/reward_source_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="2_source"]
+[ext_resource type="Resource" path="res://data/rewards/sources/demo_map_item_cache.tres" id="3_cache"]
+[ext_resource type="Resource" path="res://data/rewards/sources/l02_kept_watch_chain_oil.tres" id="4_chain"]
+[ext_resource type="Resource" path="res://data/rewards/sources/layer1_rusty_key.tres" id="5_rusty"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_specific_sources.tres" id="6_wine"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/butlers_office_specific_sources.tres" id="7_butler"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/layer_1_common_sources.tres" id="8_common"]
+[ext_resource type="Resource" path="res://data/rewards/sources/m8_compat_bandage_cache.tres" id="9_m8_bandage"]
+[ext_resource type="Resource" path="res://data/rewards/sources/l01_wax_prep_red_wax_material.tres" id="10_red_wax_material"]
+[ext_resource type="Resource" path="res://data/rewards/sources/l01_linen_sorting_servant_cloth.tres" id="11_servant_cloth_material"]
+[ext_resource type="Resource" path="res://data/rewards/sources/l02_polished_gallery_chain_links.tres" id="12_chain_links_material"]
+[ext_resource type="Resource" path="res://data/rewards/sources/l02_punishment_room_prison_iron.tres" id="13_prison_iron_material"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_1.tres" id="14_wine_optional_1"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_2.tres" id="15_wine_optional_2"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_3.tres" id="16_wine_optional_3"]
+
+[resource]
+script = ExtResource("1_catalog")
+sources = Array[ExtResource("2_source")]([ExtResource("3_cache"), ExtResource("4_chain"), ExtResource("5_rusty"), ExtResource("6_wine"), ExtResource("7_butler"), ExtResource("8_common"), ExtResource("9_m8_bandage"), ExtResource("10_red_wax_material"), ExtResource("11_servant_cloth_material"), ExtResource("12_chain_links_material"), ExtResource("13_prison_iron_material"), ExtResource("14_wine_optional_1"), ExtResource("15_wine_optional_2"), ExtResource("16_wine_optional_3")])

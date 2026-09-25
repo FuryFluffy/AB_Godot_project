@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyGroupRulebookDefinition" format=3 uid="uid://cgvf781jq6vdv"]
+
+[ext_resource type="Script" uid="uid://d3mcydlbfrjhi" path="res://scripts/data/ai/enemy_group_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://bfvtuivllxka0" path="res://scripts/data/ai/enemy_group_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="GuardFirst"]
+script = ExtResource("1_rule")
+rule_id = &"guard_opens_lane"
+display_name = "Guard Seals the Passage"
+required_alive_battler_ids = Array[StringName]([&"iron_masked_guard", &"chain_thrall"])
+activation_order = Array[StringName]([&"iron_masked_guard", &"chain_thrall"])
+
+[sub_resource type="Resource" id="Remaining"]
+script = ExtResource("1_rule")
+rule_id = &"remaining_watch"
+display_name = "Remaining Watch Acts"
+activation_order = Array[StringName]([&"chain_thrall", &"iron_masked_guard"])
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"layer2_kept_watch_group"
+display_name = "Farthest Cell Passage — Kept Watch"
+rules = Array[ExtResource("1_rule")]([SubResource("GuardFirst"), SubResource("Remaining")])

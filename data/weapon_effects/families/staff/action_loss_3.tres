@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActionLossOnDamageWeaponEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/effects/action_loss_on_damage_weapon_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"staff_action_loss_3"
+display_name = "Remove 3 Actions after HP damage"
+description = "A damaging mastered Staff hit removes up to three currently available Actions."
+action_loss = 3
+minimum_hp_damage = 1

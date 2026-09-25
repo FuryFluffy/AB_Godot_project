@@ -1,0 +1,1299 @@
+[gd_resource type="Resource" script_class="BattlerVisualProfileCatalog" format=3 uid="uid://ftuj3vr17nyj"]
+
+[ext_resource type="Script" uid="uid://cl3gpbyilp5jl" path="res://scripts/data/presentation/battler_visual_profile_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://dgha487cm1doy" path="res://scripts/data/presentation/battler_visual_profile.gd" id="2_profile"]
+[ext_resource type="Script" uid="uid://cpkb6lkah1pr5" path="res://scripts/data/presentation/battler_visual_state_definition.gd" id="3_state"]
+[ext_resource type="Script" uid="uid://dod0focdmswor" path="res://scripts/data/presentation/battler_visual_fallback_definition.gd" id="4_fallback"]
+[ext_resource type="Texture2D" uid="uid://cw6i00e8rakxe" path="res://assets/characters/curated/lysandra/core_attack_front.png" id="5_lysandra_attack_front"]
+[ext_resource type="Texture2D" uid="uid://c3t6nn6o6pgdl" path="res://assets/characters/curated/lysandra/core_attack_back.png" id="6_lysandra_attack_back"]
+[ext_resource type="Texture2D" uid="uid://cg4esai8e4jnq" path="res://assets/characters/curated/lysandra/core_defeated_front.png" id="7_lysandra_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://cuavitu6uxdsv" path="res://assets/characters/curated/lysandra/core_defeated_back.png" id="8_lysandra_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://dni35qhg45664" path="res://assets/characters/curated/lysandra/core_hurt_front.png" id="9_lysandra_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://d4hxclv6qfu0f" path="res://assets/characters/curated/lysandra/core_hurt_back.png" id="10_lysandra_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://bqusjtss8h00a" path="res://assets/characters/curated/lysandra/core_move_front.png" id="11_lysandra_move_front"]
+[ext_resource type="Texture2D" uid="uid://gmxh5xy88f55" path="res://assets/characters/curated/lysandra/core_move_back.png" id="12_lysandra_move_back"]
+[ext_resource type="Texture2D" uid="uid://c0n2kyt2vx8gj" path="res://assets/characters/curated/lysandra/reaction_defend_front.png" id="13_lysandra_defend_front"]
+[ext_resource type="Texture2D" uid="uid://crh0da22h7a7i" path="res://assets/characters/curated/lysandra/reaction_defend_back.png" id="14_lysandra_defend_back"]
+[ext_resource type="Texture2D" uid="uid://bgoh5rb2em84w" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="15_lysandra_idle_front"]
+[ext_resource type="Texture2D" uid="uid://cqd0kr51h2vi1" path="res://assets/characters/curated/lysandra/core_idle_back.png" id="16_lysandra_idle_back"]
+[ext_resource type="Texture2D" uid="uid://b8ycpvk014o00" path="res://assets/characters/curated/mira/core_attack_front.png" id="17_mira_attack_front"]
+[ext_resource type="Texture2D" uid="uid://c253okfin6s6m" path="res://assets/characters/curated/mira/core_attack_back.png" id="18_mira_attack_back"]
+[ext_resource type="Texture2D" uid="uid://ci57mrbrhd1y3" path="res://assets/characters/curated/mira/core_defeated_front.png" id="19_mira_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://dunt4r1sr86w4" path="res://assets/characters/curated/mira/core_defeated_back.png" id="20_mira_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://cpnf1pf8ofk1b" path="res://assets/characters/curated/mira/core_hurt_front.png" id="21_mira_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://7j3rgu0j6l0x" path="res://assets/characters/curated/mira/core_hurt_back.png" id="22_mira_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://4n5xwb5ds2su" path="res://assets/characters/curated/mira/core_move_front.png" id="23_mira_move_front"]
+[ext_resource type="Texture2D" uid="uid://b80d1ceuh4o18" path="res://assets/characters/curated/mira/core_move_back.png" id="24_mira_move_back"]
+[ext_resource type="Texture2D" uid="uid://ku75m1nsxjwa" path="res://assets/characters/curated/mira/reaction_defend_front.png" id="25_mira_defend_front"]
+[ext_resource type="Texture2D" uid="uid://bxa0wme483sr5" path="res://assets/characters/curated/mira/reaction_defend_back.png" id="26_mira_defend_back"]
+[ext_resource type="Texture2D" uid="uid://bqesunknxvk0n" path="res://assets/characters/curated/seraphine/core_attack_front.png" id="27_seraphine_attack_front"]
+[ext_resource type="Texture2D" uid="uid://cv48kkt7jnn6e" path="res://assets/characters/curated/seraphine/core_attack_back.png" id="28_seraphine_attack_back"]
+[ext_resource type="Texture2D" uid="uid://b2p42g4hux1iq" path="res://assets/characters/curated/seraphine/core_defeated_front.png" id="29_seraphine_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://dnp0703c58svp" path="res://assets/characters/curated/seraphine/core_defeated_back.png" id="30_seraphine_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://ifjla30n455l" path="res://assets/characters/curated/seraphine/core_hurt_front.png" id="31_seraphine_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://bqpndglu68lhb" path="res://assets/characters/curated/seraphine/core_hurt_back.png" id="32_seraphine_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://u7hl15bxmb4r" path="res://assets/characters/curated/seraphine/core_move_front.png" id="33_seraphine_move_front"]
+[ext_resource type="Texture2D" uid="uid://biqxhfkhub4en" path="res://assets/characters/curated/seraphine/core_move_back.png" id="34_seraphine_move_back"]
+[ext_resource type="Texture2D" uid="uid://bli2ja72guywm" path="res://assets/characters/curated/seraphine/reaction_defend_front.png" id="35_seraphine_defend_front"]
+[ext_resource type="Texture2D" uid="uid://l71kvshwobn3" path="res://assets/characters/curated/seraphine/reaction_defend_back.png" id="36_seraphine_defend_back"]
+[ext_resource type="Texture2D" uid="uid://ccbnd1r400hxw" path="res://assets/characters/curated/seraphine/core_idle_front.png" id="37_seraphine_idle_front"]
+[ext_resource type="Texture2D" uid="uid://ptn6fx0k3jc0" path="res://assets/characters/curated/seraphine/core_idle_back.png" id="38_seraphine_idle_back"]
+[ext_resource type="Texture2D" uid="uid://3sx51vnfvfj" path="res://assets/characters/curated/seraphine/weapon_staff_cast_front.png" id="39_seraphine_cast_front"]
+[ext_resource type="Texture2D" uid="uid://p8qm783mi4xt" path="res://assets/characters/curated/seraphine/weapon_staff_cast_back.png" id="40_seraphine_cast_back"]
+[ext_resource type="Texture2D" uid="uid://ctj3oc7mq5t86" path="res://assets/characters/curated/hollow_servant/core_attack_front.png" id="41_hollow_servant_attack_front"]
+[ext_resource type="Texture2D" uid="uid://bq57lfg3qaw44" path="res://assets/characters/curated/hollow_servant/core_attack_back.png" id="42_hollow_servant_attack_back"]
+[ext_resource type="Texture2D" uid="uid://bok3yh384jfy5" path="res://assets/characters/curated/hollow_servant/core_defeated_front.png" id="43_hollow_servant_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://deamxfigtes07" path="res://assets/characters/curated/hollow_servant/core_defeated_back.png" id="44_hollow_servant_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://bisi4lehd5yg" path="res://assets/characters/curated/hollow_servant/core_hurt_front.png" id="45_hollow_servant_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://22uuvynak2mg" path="res://assets/characters/curated/hollow_servant/core_hurt_back.png" id="46_hollow_servant_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://ciuersbprey0o" path="res://assets/characters/curated/hollow_servant/core_move_front.png" id="47_hollow_servant_move_front"]
+[ext_resource type="Texture2D" uid="uid://c5cwo3i0f7f7g" path="res://assets/characters/curated/hollow_servant/core_move_back.png" id="48_hollow_servant_move_back"]
+[ext_resource type="Texture2D" uid="uid://1pdc8tbvyscf" path="res://assets/characters/curated/hollow_servant/reaction_defend_front.png" id="49_hollow_servant_defend_front"]
+[ext_resource type="Texture2D" uid="uid://c1ix40oa5uvgk" path="res://assets/characters/curated/hollow_servant/reaction_defend_back.png" id="50_hollow_servant_defend_back"]
+[ext_resource type="Texture2D" uid="uid://d1eed5t4mk6me" path="res://assets/characters/curated/hollow_servant/core_idle_front.png" id="51_hollow_servant_idle_front"]
+[ext_resource type="Texture2D" uid="uid://bptw5qhrxia6r" path="res://assets/characters/curated/hollow_servant/core_idle_back.png" id="52_hollow_servant_idle_back"]
+[ext_resource type="Texture2D" uid="uid://coao8ijgiao57" path="res://assets/characters/curated/knife_footman/core_attack_front.png" id="53_knife_footman_attack_front"]
+[ext_resource type="Texture2D" uid="uid://rnk6ffn1ckk6" path="res://assets/characters/curated/knife_footman/core_attack_back.png" id="54_knife_footman_attack_back"]
+[ext_resource type="Texture2D" uid="uid://dkkk22283gnrv" path="res://assets/characters/curated/knife_footman/core_defeated_front.png" id="55_knife_footman_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://cf7kidoae2m1m" path="res://assets/characters/curated/knife_footman/core_defeated_back.png" id="56_knife_footman_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://bfa2kmim3rj7a" path="res://assets/characters/curated/knife_footman/core_hurt_front.png" id="57_knife_footman_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://b488ps3ktrydg" path="res://assets/characters/curated/knife_footman/core_hurt_back.png" id="58_knife_footman_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://m47oetfm3641" path="res://assets/characters/curated/knife_footman/core_move_front.png" id="59_knife_footman_move_front"]
+[ext_resource type="Texture2D" uid="uid://ccqvmfu0u1ni8" path="res://assets/characters/curated/knife_footman/core_move_back.png" id="60_knife_footman_move_back"]
+[ext_resource type="Texture2D" uid="uid://bexhgcg856cke" path="res://assets/characters/curated/knife_footman/reaction_defend_front.png" id="61_knife_footman_defend_front"]
+[ext_resource type="Texture2D" uid="uid://bdr86l6qv33rs" path="res://assets/characters/curated/knife_footman/reaction_defend_back.png" id="62_knife_footman_defend_back"]
+[ext_resource type="Texture2D" uid="uid://tqg7ojsctu3w" path="res://assets/characters/curated/knife_footman/core_idle_front.png" id="63_knife_footman_idle_front"]
+[ext_resource type="Texture2D" uid="uid://4k0bpvf5rdqb" path="res://assets/characters/curated/knife_footman/core_idle_back.png" id="64_knife_footman_idle_back"]
+[ext_resource type="Texture2D" uid="uid://iew7clrja1cn" path="res://assets/characters/curated/prayer_rag_novice/core_attack_front.png" id="65_prayer_rag_novice_attack_front"]
+[ext_resource type="Texture2D" uid="uid://dufvoglclmn0h" path="res://assets/characters/curated/prayer_rag_novice/core_attack_back.png" id="66_prayer_rag_novice_attack_back"]
+[ext_resource type="Texture2D" uid="uid://osryuhge1yhv" path="res://assets/characters/curated/prayer_rag_novice/core_defeated_front.png" id="67_prayer_rag_novice_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://dhanq621t7i8v" path="res://assets/characters/curated/prayer_rag_novice/core_defeated_back.png" id="68_prayer_rag_novice_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://4424ht4dftjw" path="res://assets/characters/curated/prayer_rag_novice/core_hurt_front.png" id="69_prayer_rag_novice_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://d2ultas2kdhjr" path="res://assets/characters/curated/prayer_rag_novice/core_hurt_back.png" id="70_prayer_rag_novice_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://dmyho7smnd8gg" path="res://assets/characters/curated/prayer_rag_novice/core_move_front.png" id="71_prayer_rag_novice_move_front"]
+[ext_resource type="Texture2D" uid="uid://bx4a0r4c18d8e" path="res://assets/characters/curated/prayer_rag_novice/core_move_back.png" id="72_prayer_rag_novice_move_back"]
+[ext_resource type="Texture2D" uid="uid://bd0vx1ihvjejy" path="res://assets/characters/curated/prayer_rag_novice/reaction_defend_front.png" id="73_prayer_rag_novice_defend_front"]
+[ext_resource type="Texture2D" uid="uid://b38jomuh1rnnk" path="res://assets/characters/curated/prayer_rag_novice/reaction_defend_back.png" id="74_prayer_rag_novice_defend_back"]
+[ext_resource type="Texture2D" uid="uid://cvgicojwvnkno" path="res://assets/characters/curated/prayer_rag_novice/core_idle_front.png" id="75_prayer_rag_novice_idle_front"]
+[ext_resource type="Texture2D" uid="uid://b3k7xn3vwxsjy" path="res://assets/characters/curated/prayer_rag_novice/core_idle_back.png" id="76_prayer_rag_novice_idle_back"]
+[ext_resource type="Texture2D" uid="uid://tar1vomeqch3" path="res://assets/characters/curated/prayer_rag_novice/weapon_staff_cast_front.png" id="77_prayer_rag_novice_cast_front"]
+[ext_resource type="Texture2D" uid="uid://o73gjw2epd1s" path="res://assets/characters/curated/prayer_rag_novice/weapon_staff_cast_back.png" id="78_prayer_rag_novice_cast_back"]
+[ext_resource type="Texture2D" uid="uid://sx4mks71iy4m" path="res://assets/characters/curated/corrupted_butler/core_attack_front.png" id="79_corrupted_butler_attack_front"]
+[ext_resource type="Texture2D" uid="uid://cof0hv1668t5i" path="res://assets/characters/curated/corrupted_butler/core_attack_back.png" id="80_corrupted_butler_attack_back"]
+[ext_resource type="Texture2D" uid="uid://b6e1ljalppp7w" path="res://assets/characters/curated/corrupted_butler/core_defeated_front.png" id="81_corrupted_butler_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://cn8ujah3rsgid" path="res://assets/characters/curated/corrupted_butler/core_defeated_back.png" id="82_corrupted_butler_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://tg8tp0uaf6hv" path="res://assets/characters/curated/corrupted_butler/core_hurt_front.png" id="83_corrupted_butler_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://i0hxf8pu6ar2" path="res://assets/characters/curated/corrupted_butler/core_hurt_back.png" id="84_corrupted_butler_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://cpo1rhpqeugj8" path="res://assets/characters/curated/corrupted_butler/core_move_front.png" id="85_corrupted_butler_move_front"]
+[ext_resource type="Texture2D" uid="uid://dmylobtw3tfhd" path="res://assets/characters/curated/corrupted_butler/core_move_back.png" id="86_corrupted_butler_move_back"]
+[ext_resource type="Texture2D" uid="uid://bf1o08ryx00m6" path="res://assets/characters/curated/corrupted_butler/reaction_defend_front.png" id="87_corrupted_butler_defend_front"]
+[ext_resource type="Texture2D" uid="uid://cu7b26c3iduec" path="res://assets/characters/curated/corrupted_butler/reaction_defend_back.png" id="88_corrupted_butler_defend_back"]
+[ext_resource type="Texture2D" uid="uid://bvps5ls7ts0yn" path="res://assets/characters/curated/corrupted_butler/core_idle_front.png" id="89_corrupted_butler_idle_front"]
+[ext_resource type="Texture2D" uid="uid://k5cqf5y8w0fo" path="res://assets/characters/curated/corrupted_butler/core_idle_back.png" id="90_corrupted_butler_idle_back"]
+[ext_resource type="Texture2D" uid="uid://chd5lrncx0bci" path="res://assets/characters/curated/red_wax_acolyte/core_attack_front.png" id="91_red_wax_acolyte_attack_front"]
+[ext_resource type="Texture2D" uid="uid://c0vj5fflf5d23" path="res://assets/characters/curated/red_wax_acolyte/core_attack_back.png" id="92_red_wax_acolyte_attack_back"]
+[ext_resource type="Texture2D" uid="uid://capoujlkw6emu" path="res://assets/characters/curated/red_wax_acolyte/core_defeated_front.png" id="93_red_wax_acolyte_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://bydci7lwqqhaa" path="res://assets/characters/curated/red_wax_acolyte/core_defeated_back.png" id="94_red_wax_acolyte_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://cvhqqanpejals" path="res://assets/characters/curated/red_wax_acolyte/core_hurt_front.png" id="95_red_wax_acolyte_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://cg03e6hvbb24x" path="res://assets/characters/curated/red_wax_acolyte/core_hurt_back.png" id="96_red_wax_acolyte_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://bindp8jso8rco" path="res://assets/characters/curated/red_wax_acolyte/core_move_front.png" id="97_red_wax_acolyte_move_front"]
+[ext_resource type="Texture2D" uid="uid://bf7agm0j3syrp" path="res://assets/characters/curated/red_wax_acolyte/core_move_back.png" id="98_red_wax_acolyte_move_back"]
+[ext_resource type="Texture2D" uid="uid://bkrxj4i4jdnc6" path="res://assets/characters/curated/red_wax_acolyte/reaction_defend_front.png" id="99_red_wax_acolyte_defend_front"]
+[ext_resource type="Texture2D" uid="uid://tp5yrvejw1o5" path="res://assets/characters/curated/red_wax_acolyte/reaction_defend_back.png" id="100_red_wax_acolyte_defend_back"]
+[ext_resource type="Texture2D" uid="uid://14itqig5wvly" path="res://assets/characters/curated/red_wax_acolyte/core_idle_front.png" id="101_red_wax_acolyte_idle_front"]
+[ext_resource type="Texture2D" uid="uid://dtekg0qcxbw8" path="res://assets/characters/curated/red_wax_acolyte/core_idle_back.png" id="102_red_wax_acolyte_idle_back"]
+[ext_resource type="Texture2D" uid="uid://cnrgoj58iql0c" path="res://assets/characters/curated/red_wax_acolyte/weapon_staff_cast_front.png" id="103_red_wax_acolyte_cast_front"]
+[ext_resource type="Texture2D" uid="uid://o3yirqwb2cop" path="res://assets/characters/curated/red_wax_acolyte/weapon_staff_cast_back.png" id="104_red_wax_acolyte_cast_back"]
+[ext_resource type="Texture2D" uid="uid://g2kx7nu61r7y" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_attack_front__s01_00001_.png" id="105_blood_nun_attack_front"]
+[ext_resource type="Texture2D" uid="uid://b1jivbs7mqff2" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_attack_back__s01_00001_.png" id="106_blood_nun_attack_back"]
+[ext_resource type="Texture2D" uid="uid://bcw8yhp3y6jbv" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_defeated_front__s01_00004_.png" id="107_blood_nun_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://cqhoas6b12mkd" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_defeated_back__s01_00004_.png" id="108_blood_nun_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://3ga0j6fr710l" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_hurt_front__s01_00004_.png" id="109_blood_nun_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://vbuvhhf3hvsl" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_hurt_back__s01_00004_.png" id="110_blood_nun_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://ra2ocm5t66h7" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_move_front__s01_00001_.png" id="111_blood_nun_move_front"]
+[ext_resource type="Texture2D" uid="uid://gic4gxiwsded" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_move_back__s01_00002_.png" id="112_blood_nun_move_back"]
+[ext_resource type="Texture2D" uid="uid://b4cg0q2gp0tch" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__reaction_defend_front__s01_00002_.png" id="113_blood_nun_defend_front"]
+[ext_resource type="Texture2D" uid="uid://c0h5bfbt2qhv7" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__reaction_defend_back__s01_00002_.png" id="114_blood_nun_defend_back"]
+[ext_resource type="Texture2D" uid="uid://dv24jx2ilun14" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_idle_front__s01_00001_.png" id="115_blood_nun_idle_front"]
+[ext_resource type="Texture2D" uid="uid://15nio7lun57w" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__core_idle_back__s01_00003_.png" id="116_blood_nun_idle_back"]
+[ext_resource type="Texture2D" uid="uid://b1xvdbiihvu55" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__weapon_staff_cast_front__s01_00003_.png" id="117_blood_nun_cast_front"]
+[ext_resource type="Texture2D" uid="uid://bd7tquespe3mh" path="res://assets/characters/curated/blood_nun/text__ABBloodNun__weapon_staff_cast_back__s01_00003_.png" id="118_blood_nun_cast_back"]
+[ext_resource type="Texture2D" uid="uid://civphmrkr5y4a" path="res://assets/characters/curated/chain_thrall/core_attack_front.png" id="119_chain_thrall_attack_front"]
+[ext_resource type="Texture2D" uid="uid://c3e47frc7i6jj" path="res://assets/characters/curated/chain_thrall/core_attack_back.png" id="120_chain_thrall_attack_back"]
+[ext_resource type="Texture2D" uid="uid://qiqq7n85dhre" path="res://assets/characters/curated/chain_thrall/core_defeated_front.png" id="121_chain_thrall_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://bak4886hgt76d" path="res://assets/characters/curated/chain_thrall/core_defeated_back.png" id="122_chain_thrall_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://daim6uw7k4uwv" path="res://assets/characters/curated/chain_thrall/core_hurt_front.png" id="123_chain_thrall_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://bqcy5atx0vogt" path="res://assets/characters/curated/chain_thrall/core_hurt_back.png" id="124_chain_thrall_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://bq2yd251b13mt" path="res://assets/characters/curated/chain_thrall/core_move_front.png" id="125_chain_thrall_move_front"]
+[ext_resource type="Texture2D" uid="uid://ckhav4ckgv1s" path="res://assets/characters/curated/chain_thrall/core_move_back.png" id="126_chain_thrall_move_back"]
+[ext_resource type="Texture2D" uid="uid://cticyyamqf37f" path="res://assets/characters/curated/chain_thrall/reaction_defend_front.png" id="127_chain_thrall_defend_front"]
+[ext_resource type="Texture2D" uid="uid://tcnirvs82vdl" path="res://assets/characters/curated/chain_thrall/reaction_defend_back.png" id="128_chain_thrall_defend_back"]
+[ext_resource type="Texture2D" uid="uid://b3rny3u36n8c5" path="res://assets/characters/curated/chain_thrall/core_idle_front.png" id="129_chain_thrall_idle_front"]
+[ext_resource type="Texture2D" uid="uid://cm4gmmv4xd6vl" path="res://assets/characters/curated/chain_thrall/core_idle_back.png" id="130_chain_thrall_idle_back"]
+[ext_resource type="Texture2D" uid="uid://dr8je602pkvsf" path="res://assets/characters/curated/iron_masked_guard/core_attack_front.png" id="131_iron_masked_guard_attack_front"]
+[ext_resource type="Texture2D" uid="uid://dm7pdbygeikol" path="res://assets/characters/curated/iron_masked_guard/core_attack_back.png" id="132_iron_masked_guard_attack_back"]
+[ext_resource type="Texture2D" uid="uid://bhgox1aevs7d7" path="res://assets/characters/curated/iron_masked_guard/core_defeated_front.png" id="133_iron_masked_guard_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://x0yln40joks8" path="res://assets/characters/curated/iron_masked_guard/core_defeated_back.png" id="134_iron_masked_guard_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://dtdy2no5udj84" path="res://assets/characters/curated/iron_masked_guard/core_hurt_front.png" id="135_iron_masked_guard_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://byth285uq884r" path="res://assets/characters/curated/iron_masked_guard/core_hurt_back.png" id="136_iron_masked_guard_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://ifms8gsagwbd" path="res://assets/characters/curated/iron_masked_guard/core_move_front.png" id="137_iron_masked_guard_move_front"]
+[ext_resource type="Texture2D" uid="uid://i0o2jgrqrswd" path="res://assets/characters/curated/iron_masked_guard/core_move_back.png" id="138_iron_masked_guard_move_back"]
+[ext_resource type="Texture2D" uid="uid://dopfxpmcrjr7h" path="res://assets/characters/curated/iron_masked_guard/reaction_defend_front.png" id="139_iron_masked_guard_defend_front"]
+[ext_resource type="Texture2D" uid="uid://ogovpnq32kls" path="res://assets/characters/curated/iron_masked_guard/reaction_defend_back.png" id="140_iron_masked_guard_defend_back"]
+[ext_resource type="Texture2D" uid="uid://bwkko7ddmmikv" path="res://assets/characters/curated/iron_masked_guard/core_idle_front.png" id="141_iron_masked_guard_idle_front"]
+[ext_resource type="Texture2D" uid="uid://cs2adejsbt7fq" path="res://assets/characters/curated/iron_masked_guard/core_idle_back.png" id="142_iron_masked_guard_idle_back"]
+[ext_resource type="Texture2D" uid="uid://dqmdo4o8fp8xi" path="res://assets/characters/curated/cell_slime/core_attack_front.png" id="143_cell_slime_attack_front"]
+[ext_resource type="Texture2D" uid="uid://bf7a1k78c2gty" path="res://assets/characters/curated/cell_slime/core_attack_back.png" id="144_cell_slime_attack_back"]
+[ext_resource type="Texture2D" uid="uid://c051eabwtved4" path="res://assets/characters/curated/cell_slime/core_defeated_front.png" id="145_cell_slime_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://c6pburb0cm5xm" path="res://assets/characters/curated/cell_slime/core_defeated_back.png" id="146_cell_slime_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://c8h5203ilh1xw" path="res://assets/characters/curated/cell_slime/core_hurt_front.png" id="147_cell_slime_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://b5xp5bs2wxtug" path="res://assets/characters/curated/cell_slime/core_hurt_back.png" id="148_cell_slime_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://da0c40urb8nug" path="res://assets/characters/curated/cell_slime/core_move_front.png" id="149_cell_slime_move_front"]
+[ext_resource type="Texture2D" uid="uid://c7cbgf71u2kao" path="res://assets/characters/curated/cell_slime/core_move_back.png" id="150_cell_slime_move_back"]
+[ext_resource type="Texture2D" uid="uid://ungyf7on1qe1" path="res://assets/characters/curated/cell_slime/reaction_defend_front.png" id="151_cell_slime_defend_front"]
+[ext_resource type="Texture2D" uid="uid://cwnqaqihnfbi8" path="res://assets/characters/curated/cell_slime/reaction_defend_back.png" id="152_cell_slime_defend_back"]
+[ext_resource type="Texture2D" uid="uid://bw5quhmgfb77c" path="res://assets/characters/curated/cell_slime/core_idle_front.png" id="153_cell_slime_idle_front"]
+[ext_resource type="Texture2D" uid="uid://c5hko8wm2pu52" path="res://assets/characters/curated/cell_slime/core_idle_back.png" id="154_cell_slime_idle_back"]
+[ext_resource type="Texture2D" uid="uid://cyxtnqvuene0c" path="res://assets/characters/curated/jailer/core_attack_front.png" id="155_jailer_attack_front"]
+[ext_resource type="Texture2D" uid="uid://cagtngq4t80fm" path="res://assets/characters/curated/jailer/core_attack_back.png" id="156_jailer_attack_back"]
+[ext_resource type="Texture2D" uid="uid://bwshgjhd6k6vm" path="res://assets/characters/curated/jailer/core_defeated_front.png" id="157_jailer_defeated_front"]
+[ext_resource type="Texture2D" uid="uid://bn1g5pqpo2j35" path="res://assets/characters/curated/jailer/core_defeated_back.png" id="158_jailer_defeated_back"]
+[ext_resource type="Texture2D" uid="uid://bybbjrk7mvywy" path="res://assets/characters/curated/jailer/core_hurt_front.png" id="159_jailer_hurt_front"]
+[ext_resource type="Texture2D" uid="uid://dhvipnrpulsn6" path="res://assets/characters/curated/jailer/core_hurt_back.png" id="160_jailer_hurt_back"]
+[ext_resource type="Texture2D" uid="uid://716aetwbd1lf" path="res://assets/characters/curated/jailer/core_move_front.png" id="161_jailer_move_front"]
+[ext_resource type="Texture2D" uid="uid://bol10436d36p7" path="res://assets/characters/curated/jailer/core_move_back.png" id="162_jailer_move_back"]
+[ext_resource type="Texture2D" uid="uid://dykru2h6bf4st" path="res://assets/characters/curated/jailer/reaction_defend_front.png" id="163_jailer_defend_front"]
+[ext_resource type="Texture2D" uid="uid://4shm14o5fryu" path="res://assets/characters/curated/jailer/reaction_defend_back.png" id="164_jailer_defend_back"]
+[ext_resource type="Texture2D" uid="uid://22tqmvycrjkl" path="res://assets/characters/curated/jailer/core_idle_front.png" id="165_jailer_idle_front"]
+[ext_resource type="Texture2D" uid="uid://cuyps2d0q4djr" path="res://assets/characters/curated/jailer/core_idle_back.png" id="166_jailer_idle_back"]
+
+[sub_resource type="Resource" id="FallbackLysandraBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackLysandraCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateLysandraAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("5_lysandra_attack_front")
+
+[sub_resource type="Resource" id="StateLysandraAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("6_lysandra_attack_back")
+
+[sub_resource type="Resource" id="StateLysandraDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("7_lysandra_defeated_front")
+
+[sub_resource type="Resource" id="StateLysandraDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("8_lysandra_defeated_back")
+
+[sub_resource type="Resource" id="StateLysandraHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("9_lysandra_hurt_front")
+
+[sub_resource type="Resource" id="StateLysandraHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("10_lysandra_hurt_back")
+
+[sub_resource type="Resource" id="StateLysandraMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("11_lysandra_move_front")
+
+[sub_resource type="Resource" id="StateLysandraMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("12_lysandra_move_back")
+
+[sub_resource type="Resource" id="StateLysandraDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("13_lysandra_defend_front")
+
+[sub_resource type="Resource" id="StateLysandraDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("14_lysandra_defend_back")
+
+[sub_resource type="Resource" id="StateLysandraIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("15_lysandra_idle_front")
+
+[sub_resource type="Resource" id="StateLysandraIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("16_lysandra_idle_back")
+
+[sub_resource type="Resource" id="ProfileLysandra"]
+script = ExtResource("2_profile")
+profile_id = &"lysandra_visual"
+battler_id = &"lysandra"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateLysandraAttackFront"), SubResource("StateLysandraAttackBack"), SubResource("StateLysandraDefeatedFront"), SubResource("StateLysandraDefeatedBack"), SubResource("StateLysandraHurtFront"), SubResource("StateLysandraHurtBack"), SubResource("StateLysandraMoveFront"), SubResource("StateLysandraMoveBack"), SubResource("StateLysandraDefendFront"), SubResource("StateLysandraDefendBack"), SubResource("StateLysandraIdleFront"), SubResource("StateLysandraIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackLysandraBlockDefend"), SubResource("FallbackLysandraCastAttack")])
+baseline_scale = Vector2(0.215, 0.215)
+diagnostic_message = "Lysandra uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackMiraBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackMiraCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="FallbackMiraIdleMove"]
+script = ExtResource("4_fallback")
+from_key = &"idle"
+to_key = &"move"
+
+[sub_resource type="Resource" id="StateMiraAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("17_mira_attack_front")
+
+[sub_resource type="Resource" id="StateMiraAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("18_mira_attack_back")
+
+[sub_resource type="Resource" id="StateMiraDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("19_mira_defeated_front")
+
+[sub_resource type="Resource" id="StateMiraDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("20_mira_defeated_back")
+
+[sub_resource type="Resource" id="StateMiraHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("21_mira_hurt_front")
+
+[sub_resource type="Resource" id="StateMiraHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("22_mira_hurt_back")
+
+[sub_resource type="Resource" id="StateMiraMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("23_mira_move_front")
+
+[sub_resource type="Resource" id="StateMiraMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("24_mira_move_back")
+
+[sub_resource type="Resource" id="StateMiraDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("25_mira_defend_front")
+
+[sub_resource type="Resource" id="StateMiraDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("26_mira_defend_back")
+
+[sub_resource type="Resource" id="ProfileMira"]
+script = ExtResource("2_profile")
+profile_id = &"mira_visual"
+battler_id = &"mira"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateMiraAttackFront"), SubResource("StateMiraAttackBack"), SubResource("StateMiraDefeatedFront"), SubResource("StateMiraDefeatedBack"), SubResource("StateMiraHurtFront"), SubResource("StateMiraHurtBack"), SubResource("StateMiraMoveFront"), SubResource("StateMiraMoveBack"), SubResource("StateMiraDefendFront"), SubResource("StateMiraDefendBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackMiraBlockDefend"), SubResource("FallbackMiraCastAttack"), SubResource("FallbackMiraIdleMove")])
+baseline_scale = Vector2(0.215, 0.215)
+diagnostic_message = "Mira Voss uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackSeraphineBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="StateSeraphineAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("27_seraphine_attack_front")
+
+[sub_resource type="Resource" id="StateSeraphineAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("28_seraphine_attack_back")
+
+[sub_resource type="Resource" id="StateSeraphineDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("29_seraphine_defeated_front")
+
+[sub_resource type="Resource" id="StateSeraphineDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("30_seraphine_defeated_back")
+
+[sub_resource type="Resource" id="StateSeraphineHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("31_seraphine_hurt_front")
+
+[sub_resource type="Resource" id="StateSeraphineHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("32_seraphine_hurt_back")
+
+[sub_resource type="Resource" id="StateSeraphineMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("33_seraphine_move_front")
+
+[sub_resource type="Resource" id="StateSeraphineMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("34_seraphine_move_back")
+
+[sub_resource type="Resource" id="StateSeraphineDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("35_seraphine_defend_front")
+
+[sub_resource type="Resource" id="StateSeraphineDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("36_seraphine_defend_back")
+
+[sub_resource type="Resource" id="StateSeraphineIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("37_seraphine_idle_front")
+
+[sub_resource type="Resource" id="StateSeraphineIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("38_seraphine_idle_back")
+
+[sub_resource type="Resource" id="StateSeraphineCastFront"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+texture = ExtResource("39_seraphine_cast_front")
+
+[sub_resource type="Resource" id="StateSeraphineCastBack"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+orientation_key = &"back"
+texture = ExtResource("40_seraphine_cast_back")
+
+[sub_resource type="Resource" id="ProfileSeraphine"]
+script = ExtResource("2_profile")
+profile_id = &"seraphine_visual"
+battler_id = &"seraphine"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateSeraphineAttackFront"), SubResource("StateSeraphineAttackBack"), SubResource("StateSeraphineDefeatedFront"), SubResource("StateSeraphineDefeatedBack"), SubResource("StateSeraphineHurtFront"), SubResource("StateSeraphineHurtBack"), SubResource("StateSeraphineMoveFront"), SubResource("StateSeraphineMoveBack"), SubResource("StateSeraphineDefendFront"), SubResource("StateSeraphineDefendBack"), SubResource("StateSeraphineIdleFront"), SubResource("StateSeraphineIdleBack"), SubResource("StateSeraphineCastFront"), SubResource("StateSeraphineCastBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackSeraphineBlockDefend")])
+baseline_scale = Vector2(0.215, 0.215)
+diagnostic_message = "Seraphine uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackHollowServantBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackHollowServantCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateHollowServantAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("41_hollow_servant_attack_front")
+
+[sub_resource type="Resource" id="StateHollowServantAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("42_hollow_servant_attack_back")
+
+[sub_resource type="Resource" id="StateHollowServantDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("43_hollow_servant_defeated_front")
+
+[sub_resource type="Resource" id="StateHollowServantDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("44_hollow_servant_defeated_back")
+
+[sub_resource type="Resource" id="StateHollowServantHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("45_hollow_servant_hurt_front")
+
+[sub_resource type="Resource" id="StateHollowServantHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("46_hollow_servant_hurt_back")
+
+[sub_resource type="Resource" id="StateHollowServantMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("47_hollow_servant_move_front")
+
+[sub_resource type="Resource" id="StateHollowServantMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("48_hollow_servant_move_back")
+
+[sub_resource type="Resource" id="StateHollowServantDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("49_hollow_servant_defend_front")
+
+[sub_resource type="Resource" id="StateHollowServantDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("50_hollow_servant_defend_back")
+
+[sub_resource type="Resource" id="StateHollowServantIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("51_hollow_servant_idle_front")
+
+[sub_resource type="Resource" id="StateHollowServantIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("52_hollow_servant_idle_back")
+
+[sub_resource type="Resource" id="ProfileHollowServant"]
+script = ExtResource("2_profile")
+profile_id = &"hollow_servant_visual"
+battler_id = &"hollow_servant"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateHollowServantAttackFront"), SubResource("StateHollowServantAttackBack"), SubResource("StateHollowServantDefeatedFront"), SubResource("StateHollowServantDefeatedBack"), SubResource("StateHollowServantHurtFront"), SubResource("StateHollowServantHurtBack"), SubResource("StateHollowServantMoveFront"), SubResource("StateHollowServantMoveBack"), SubResource("StateHollowServantDefendFront"), SubResource("StateHollowServantDefendBack"), SubResource("StateHollowServantIdleFront"), SubResource("StateHollowServantIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackHollowServantBlockDefend"), SubResource("FallbackHollowServantCastAttack")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Hollow Servant uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackKnifeFootmanBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackKnifeFootmanCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateKnifeFootmanAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("53_knife_footman_attack_front")
+
+[sub_resource type="Resource" id="StateKnifeFootmanAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("54_knife_footman_attack_back")
+
+[sub_resource type="Resource" id="StateKnifeFootmanDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("55_knife_footman_defeated_front")
+
+[sub_resource type="Resource" id="StateKnifeFootmanDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("56_knife_footman_defeated_back")
+
+[sub_resource type="Resource" id="StateKnifeFootmanHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("57_knife_footman_hurt_front")
+
+[sub_resource type="Resource" id="StateKnifeFootmanHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("58_knife_footman_hurt_back")
+
+[sub_resource type="Resource" id="StateKnifeFootmanMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("59_knife_footman_move_front")
+
+[sub_resource type="Resource" id="StateKnifeFootmanMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("60_knife_footman_move_back")
+
+[sub_resource type="Resource" id="StateKnifeFootmanDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("61_knife_footman_defend_front")
+
+[sub_resource type="Resource" id="StateKnifeFootmanDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("62_knife_footman_defend_back")
+
+[sub_resource type="Resource" id="StateKnifeFootmanIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("63_knife_footman_idle_front")
+
+[sub_resource type="Resource" id="StateKnifeFootmanIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("64_knife_footman_idle_back")
+
+[sub_resource type="Resource" id="ProfileKnifeFootman"]
+script = ExtResource("2_profile")
+profile_id = &"knife_footman_visual"
+battler_id = &"knife_footman"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateKnifeFootmanAttackFront"), SubResource("StateKnifeFootmanAttackBack"), SubResource("StateKnifeFootmanDefeatedFront"), SubResource("StateKnifeFootmanDefeatedBack"), SubResource("StateKnifeFootmanHurtFront"), SubResource("StateKnifeFootmanHurtBack"), SubResource("StateKnifeFootmanMoveFront"), SubResource("StateKnifeFootmanMoveBack"), SubResource("StateKnifeFootmanDefendFront"), SubResource("StateKnifeFootmanDefendBack"), SubResource("StateKnifeFootmanIdleFront"), SubResource("StateKnifeFootmanIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackKnifeFootmanBlockDefend"), SubResource("FallbackKnifeFootmanCastAttack")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Knife Footman uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackPrayerRagNoviceBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("65_prayer_rag_novice_attack_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("66_prayer_rag_novice_attack_back")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("67_prayer_rag_novice_defeated_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("68_prayer_rag_novice_defeated_back")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("69_prayer_rag_novice_hurt_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("70_prayer_rag_novice_hurt_back")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("71_prayer_rag_novice_move_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("72_prayer_rag_novice_move_back")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("73_prayer_rag_novice_defend_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("74_prayer_rag_novice_defend_back")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("75_prayer_rag_novice_idle_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("76_prayer_rag_novice_idle_back")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceCastFront"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+texture = ExtResource("77_prayer_rag_novice_cast_front")
+
+[sub_resource type="Resource" id="StatePrayerRagNoviceCastBack"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+orientation_key = &"back"
+texture = ExtResource("78_prayer_rag_novice_cast_back")
+
+[sub_resource type="Resource" id="ProfilePrayerRagNovice"]
+script = ExtResource("2_profile")
+profile_id = &"prayer_rag_novice_visual"
+battler_id = &"prayer_rag_novice"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StatePrayerRagNoviceAttackFront"), SubResource("StatePrayerRagNoviceAttackBack"), SubResource("StatePrayerRagNoviceDefeatedFront"), SubResource("StatePrayerRagNoviceDefeatedBack"), SubResource("StatePrayerRagNoviceHurtFront"), SubResource("StatePrayerRagNoviceHurtBack"), SubResource("StatePrayerRagNoviceMoveFront"), SubResource("StatePrayerRagNoviceMoveBack"), SubResource("StatePrayerRagNoviceDefendFront"), SubResource("StatePrayerRagNoviceDefendBack"), SubResource("StatePrayerRagNoviceIdleFront"), SubResource("StatePrayerRagNoviceIdleBack"), SubResource("StatePrayerRagNoviceCastFront"), SubResource("StatePrayerRagNoviceCastBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackPrayerRagNoviceBlockDefend")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Prayer-Rag Novice uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackCorruptedButlerBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackCorruptedButlerCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateCorruptedButlerAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("79_corrupted_butler_attack_front")
+
+[sub_resource type="Resource" id="StateCorruptedButlerAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("80_corrupted_butler_attack_back")
+
+[sub_resource type="Resource" id="StateCorruptedButlerDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("81_corrupted_butler_defeated_front")
+
+[sub_resource type="Resource" id="StateCorruptedButlerDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("82_corrupted_butler_defeated_back")
+
+[sub_resource type="Resource" id="StateCorruptedButlerHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("83_corrupted_butler_hurt_front")
+
+[sub_resource type="Resource" id="StateCorruptedButlerHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("84_corrupted_butler_hurt_back")
+
+[sub_resource type="Resource" id="StateCorruptedButlerMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("85_corrupted_butler_move_front")
+
+[sub_resource type="Resource" id="StateCorruptedButlerMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("86_corrupted_butler_move_back")
+
+[sub_resource type="Resource" id="StateCorruptedButlerDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("87_corrupted_butler_defend_front")
+
+[sub_resource type="Resource" id="StateCorruptedButlerDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("88_corrupted_butler_defend_back")
+
+[sub_resource type="Resource" id="StateCorruptedButlerIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("89_corrupted_butler_idle_front")
+
+[sub_resource type="Resource" id="StateCorruptedButlerIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("90_corrupted_butler_idle_back")
+
+[sub_resource type="Resource" id="ProfileCorruptedButler"]
+script = ExtResource("2_profile")
+profile_id = &"corrupted_butler_visual"
+battler_id = &"corrupted_butler"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateCorruptedButlerAttackFront"), SubResource("StateCorruptedButlerAttackBack"), SubResource("StateCorruptedButlerDefeatedFront"), SubResource("StateCorruptedButlerDefeatedBack"), SubResource("StateCorruptedButlerHurtFront"), SubResource("StateCorruptedButlerHurtBack"), SubResource("StateCorruptedButlerMoveFront"), SubResource("StateCorruptedButlerMoveBack"), SubResource("StateCorruptedButlerDefendFront"), SubResource("StateCorruptedButlerDefendBack"), SubResource("StateCorruptedButlerIdleFront"), SubResource("StateCorruptedButlerIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackCorruptedButlerBlockDefend"), SubResource("FallbackCorruptedButlerCastAttack")])
+baseline_scale = Vector2(0.16, 0.16)
+diagnostic_message = "Corrupted Butler uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackRedWaxAcolyteBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("91_red_wax_acolyte_attack_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("92_red_wax_acolyte_attack_back")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("93_red_wax_acolyte_defeated_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("94_red_wax_acolyte_defeated_back")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("95_red_wax_acolyte_hurt_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("96_red_wax_acolyte_hurt_back")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("97_red_wax_acolyte_move_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("98_red_wax_acolyte_move_back")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("99_red_wax_acolyte_defend_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("100_red_wax_acolyte_defend_back")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("101_red_wax_acolyte_idle_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("102_red_wax_acolyte_idle_back")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteCastFront"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+texture = ExtResource("103_red_wax_acolyte_cast_front")
+
+[sub_resource type="Resource" id="StateRedWaxAcolyteCastBack"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+orientation_key = &"back"
+texture = ExtResource("104_red_wax_acolyte_cast_back")
+
+[sub_resource type="Resource" id="ProfileRedWaxAcolyte"]
+script = ExtResource("2_profile")
+profile_id = &"red_wax_acolyte_visual"
+battler_id = &"red_wax_acolyte"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateRedWaxAcolyteAttackFront"), SubResource("StateRedWaxAcolyteAttackBack"), SubResource("StateRedWaxAcolyteDefeatedFront"), SubResource("StateRedWaxAcolyteDefeatedBack"), SubResource("StateRedWaxAcolyteHurtFront"), SubResource("StateRedWaxAcolyteHurtBack"), SubResource("StateRedWaxAcolyteMoveFront"), SubResource("StateRedWaxAcolyteMoveBack"), SubResource("StateRedWaxAcolyteDefendFront"), SubResource("StateRedWaxAcolyteDefendBack"), SubResource("StateRedWaxAcolyteIdleFront"), SubResource("StateRedWaxAcolyteIdleBack"), SubResource("StateRedWaxAcolyteCastFront"), SubResource("StateRedWaxAcolyteCastBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackRedWaxAcolyteBlockDefend")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Red-Wax Acolyte uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackBloodNunBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="StateBloodNunAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("105_blood_nun_attack_front")
+
+[sub_resource type="Resource" id="StateBloodNunAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("106_blood_nun_attack_back")
+
+[sub_resource type="Resource" id="StateBloodNunDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("107_blood_nun_defeated_front")
+
+[sub_resource type="Resource" id="StateBloodNunDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("108_blood_nun_defeated_back")
+
+[sub_resource type="Resource" id="StateBloodNunHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("109_blood_nun_hurt_front")
+
+[sub_resource type="Resource" id="StateBloodNunHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("110_blood_nun_hurt_back")
+
+[sub_resource type="Resource" id="StateBloodNunMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("111_blood_nun_move_front")
+
+[sub_resource type="Resource" id="StateBloodNunMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("112_blood_nun_move_back")
+
+[sub_resource type="Resource" id="StateBloodNunDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("113_blood_nun_defend_front")
+
+[sub_resource type="Resource" id="StateBloodNunDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("114_blood_nun_defend_back")
+
+[sub_resource type="Resource" id="StateBloodNunIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("115_blood_nun_idle_front")
+
+[sub_resource type="Resource" id="StateBloodNunIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("116_blood_nun_idle_back")
+
+[sub_resource type="Resource" id="StateBloodNunCastFront"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+texture = ExtResource("117_blood_nun_cast_front")
+
+[sub_resource type="Resource" id="StateBloodNunCastBack"]
+script = ExtResource("3_state")
+pose_key = &"cast"
+orientation_key = &"back"
+texture = ExtResource("118_blood_nun_cast_back")
+
+[sub_resource type="Resource" id="ProfileBloodNun"]
+script = ExtResource("2_profile")
+profile_id = &"blood_nun_visual"
+battler_id = &"blood_nun"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateBloodNunAttackFront"), SubResource("StateBloodNunAttackBack"), SubResource("StateBloodNunDefeatedFront"), SubResource("StateBloodNunDefeatedBack"), SubResource("StateBloodNunHurtFront"), SubResource("StateBloodNunHurtBack"), SubResource("StateBloodNunMoveFront"), SubResource("StateBloodNunMoveBack"), SubResource("StateBloodNunDefendFront"), SubResource("StateBloodNunDefendBack"), SubResource("StateBloodNunIdleFront"), SubResource("StateBloodNunIdleBack"), SubResource("StateBloodNunCastFront"), SubResource("StateBloodNunCastBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackBloodNunBlockDefend")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Blood Nun uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackChainThrallBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackChainThrallCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateChainThrallAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("119_chain_thrall_attack_front")
+
+[sub_resource type="Resource" id="StateChainThrallAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("120_chain_thrall_attack_back")
+
+[sub_resource type="Resource" id="StateChainThrallDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("121_chain_thrall_defeated_front")
+
+[sub_resource type="Resource" id="StateChainThrallDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("122_chain_thrall_defeated_back")
+
+[sub_resource type="Resource" id="StateChainThrallHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("123_chain_thrall_hurt_front")
+
+[sub_resource type="Resource" id="StateChainThrallHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("124_chain_thrall_hurt_back")
+
+[sub_resource type="Resource" id="StateChainThrallMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("125_chain_thrall_move_front")
+
+[sub_resource type="Resource" id="StateChainThrallMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("126_chain_thrall_move_back")
+
+[sub_resource type="Resource" id="StateChainThrallDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("127_chain_thrall_defend_front")
+
+[sub_resource type="Resource" id="StateChainThrallDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("128_chain_thrall_defend_back")
+
+[sub_resource type="Resource" id="StateChainThrallIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("129_chain_thrall_idle_front")
+
+[sub_resource type="Resource" id="StateChainThrallIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("130_chain_thrall_idle_back")
+
+[sub_resource type="Resource" id="ProfileChainThrall"]
+script = ExtResource("2_profile")
+profile_id = &"chain_thrall_visual"
+battler_id = &"chain_thrall"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateChainThrallAttackFront"), SubResource("StateChainThrallAttackBack"), SubResource("StateChainThrallDefeatedFront"), SubResource("StateChainThrallDefeatedBack"), SubResource("StateChainThrallHurtFront"), SubResource("StateChainThrallHurtBack"), SubResource("StateChainThrallMoveFront"), SubResource("StateChainThrallMoveBack"), SubResource("StateChainThrallDefendFront"), SubResource("StateChainThrallDefendBack"), SubResource("StateChainThrallIdleFront"), SubResource("StateChainThrallIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackChainThrallBlockDefend"), SubResource("FallbackChainThrallCastAttack")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Chain Thrall uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackIronMaskedGuardBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackIronMaskedGuardCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateIronMaskedGuardAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("131_iron_masked_guard_attack_front")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("132_iron_masked_guard_attack_back")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("133_iron_masked_guard_defeated_front")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("134_iron_masked_guard_defeated_back")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("135_iron_masked_guard_hurt_front")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("136_iron_masked_guard_hurt_back")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("137_iron_masked_guard_move_front")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("138_iron_masked_guard_move_back")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("139_iron_masked_guard_defend_front")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("140_iron_masked_guard_defend_back")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("141_iron_masked_guard_idle_front")
+
+[sub_resource type="Resource" id="StateIronMaskedGuardIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("142_iron_masked_guard_idle_back")
+
+[sub_resource type="Resource" id="ProfileIronMaskedGuard"]
+script = ExtResource("2_profile")
+profile_id = &"iron_masked_guard_visual"
+battler_id = &"iron_masked_guard"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateIronMaskedGuardAttackFront"), SubResource("StateIronMaskedGuardAttackBack"), SubResource("StateIronMaskedGuardDefeatedFront"), SubResource("StateIronMaskedGuardDefeatedBack"), SubResource("StateIronMaskedGuardHurtFront"), SubResource("StateIronMaskedGuardHurtBack"), SubResource("StateIronMaskedGuardMoveFront"), SubResource("StateIronMaskedGuardMoveBack"), SubResource("StateIronMaskedGuardDefendFront"), SubResource("StateIronMaskedGuardDefendBack"), SubResource("StateIronMaskedGuardIdleFront"), SubResource("StateIronMaskedGuardIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackIronMaskedGuardBlockDefend"), SubResource("FallbackIronMaskedGuardCastAttack")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Iron-Masked Guard uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackCellSlimeBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackCellSlimeCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateCellSlimeAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("143_cell_slime_attack_front")
+
+[sub_resource type="Resource" id="StateCellSlimeAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("144_cell_slime_attack_back")
+
+[sub_resource type="Resource" id="StateCellSlimeDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("145_cell_slime_defeated_front")
+
+[sub_resource type="Resource" id="StateCellSlimeDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("146_cell_slime_defeated_back")
+
+[sub_resource type="Resource" id="StateCellSlimeHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("147_cell_slime_hurt_front")
+
+[sub_resource type="Resource" id="StateCellSlimeHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("148_cell_slime_hurt_back")
+
+[sub_resource type="Resource" id="StateCellSlimeMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("149_cell_slime_move_front")
+
+[sub_resource type="Resource" id="StateCellSlimeMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("150_cell_slime_move_back")
+
+[sub_resource type="Resource" id="StateCellSlimeDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("151_cell_slime_defend_front")
+
+[sub_resource type="Resource" id="StateCellSlimeDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("152_cell_slime_defend_back")
+
+[sub_resource type="Resource" id="StateCellSlimeIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("153_cell_slime_idle_front")
+
+[sub_resource type="Resource" id="StateCellSlimeIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("154_cell_slime_idle_back")
+
+[sub_resource type="Resource" id="ProfileCellSlime"]
+script = ExtResource("2_profile")
+profile_id = &"cell_slime_visual"
+battler_id = &"cell_slime"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateCellSlimeAttackFront"), SubResource("StateCellSlimeAttackBack"), SubResource("StateCellSlimeDefeatedFront"), SubResource("StateCellSlimeDefeatedBack"), SubResource("StateCellSlimeHurtFront"), SubResource("StateCellSlimeHurtBack"), SubResource("StateCellSlimeMoveFront"), SubResource("StateCellSlimeMoveBack"), SubResource("StateCellSlimeDefendFront"), SubResource("StateCellSlimeDefendBack"), SubResource("StateCellSlimeIdleFront"), SubResource("StateCellSlimeIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackCellSlimeBlockDefend"), SubResource("FallbackCellSlimeCastAttack")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Cell Slime uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[sub_resource type="Resource" id="FallbackJailerBlockDefend"]
+script = ExtResource("4_fallback")
+from_key = &"block"
+to_key = &"defend"
+
+[sub_resource type="Resource" id="FallbackJailerCastAttack"]
+script = ExtResource("4_fallback")
+from_key = &"cast"
+to_key = &"attack"
+
+[sub_resource type="Resource" id="StateJailerAttackFront"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+texture = ExtResource("155_jailer_attack_front")
+
+[sub_resource type="Resource" id="StateJailerAttackBack"]
+script = ExtResource("3_state")
+pose_key = &"attack"
+orientation_key = &"back"
+texture = ExtResource("156_jailer_attack_back")
+
+[sub_resource type="Resource" id="StateJailerDefeatedFront"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+texture = ExtResource("157_jailer_defeated_front")
+
+[sub_resource type="Resource" id="StateJailerDefeatedBack"]
+script = ExtResource("3_state")
+pose_key = &"defeated"
+orientation_key = &"back"
+texture = ExtResource("158_jailer_defeated_back")
+
+[sub_resource type="Resource" id="StateJailerHurtFront"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+texture = ExtResource("159_jailer_hurt_front")
+
+[sub_resource type="Resource" id="StateJailerHurtBack"]
+script = ExtResource("3_state")
+pose_key = &"hurt"
+orientation_key = &"back"
+texture = ExtResource("160_jailer_hurt_back")
+
+[sub_resource type="Resource" id="StateJailerMoveFront"]
+script = ExtResource("3_state")
+pose_key = &"move"
+texture = ExtResource("161_jailer_move_front")
+
+[sub_resource type="Resource" id="StateJailerMoveBack"]
+script = ExtResource("3_state")
+pose_key = &"move"
+orientation_key = &"back"
+texture = ExtResource("162_jailer_move_back")
+
+[sub_resource type="Resource" id="StateJailerDefendFront"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+texture = ExtResource("163_jailer_defend_front")
+
+[sub_resource type="Resource" id="StateJailerDefendBack"]
+script = ExtResource("3_state")
+pose_key = &"defend"
+orientation_key = &"back"
+texture = ExtResource("164_jailer_defend_back")
+
+[sub_resource type="Resource" id="StateJailerIdleFront"]
+script = ExtResource("3_state")
+texture = ExtResource("165_jailer_idle_front")
+
+[sub_resource type="Resource" id="StateJailerIdleBack"]
+script = ExtResource("3_state")
+orientation_key = &"back"
+texture = ExtResource("166_jailer_idle_back")
+
+[sub_resource type="Resource" id="ProfileJailer"]
+script = ExtResource("2_profile")
+profile_id = &"jailer_visual"
+battler_id = &"jailer"
+supported_pose_keys = Array[StringName]([&"idle", &"move", &"attack", &"cast", &"defend", &"block", &"hurt", &"defeated"])
+supported_orientation_keys = Array[StringName]([&"front", &"back"])
+states = Array[ExtResource("3_state")]([SubResource("StateJailerAttackFront"), SubResource("StateJailerAttackBack"), SubResource("StateJailerDefeatedFront"), SubResource("StateJailerDefeatedBack"), SubResource("StateJailerHurtFront"), SubResource("StateJailerHurtBack"), SubResource("StateJailerMoveFront"), SubResource("StateJailerMoveBack"), SubResource("StateJailerDefendFront"), SubResource("StateJailerDefendBack"), SubResource("StateJailerIdleFront"), SubResource("StateJailerIdleBack")])
+pose_fallbacks = Array[ExtResource("4_fallback")]([SubResource("FallbackJailerBlockDefend"), SubResource("FallbackJailerCastAttack")])
+baseline_scale = Vector2(0.2, 0.2)
+diagnostic_message = "Jailer uses its curated transparent static-PNG pose set; the Milestone 14 renderer consumes this profile."
+
+[resource]
+script = ExtResource("1_catalog")
+profiles = Array[ExtResource("2_profile")]([SubResource("ProfileLysandra"), SubResource("ProfileMira"), SubResource("ProfileSeraphine"), SubResource("ProfileHollowServant"), SubResource("ProfileKnifeFootman"), SubResource("ProfilePrayerRagNovice"), SubResource("ProfileCorruptedButler"), SubResource("ProfileRedWaxAcolyte"), SubResource("ProfileBloodNun"), SubResource("ProfileChainThrall"), SubResource("ProfileIronMaskedGuard"), SubResource("ProfileCellSlime"), SubResource("ProfileJailer")])
+required_battler_ids = Array[StringName]([&"lysandra", &"mira", &"seraphine", &"hollow_servant", &"knife_footman", &"prayer_rag_novice", &"corrupted_butler", &"red_wax_acolyte", &"blood_nun", &"chain_thrall", &"iron_masked_guard", &"cell_slime", &"chain_warden", &"jailer"])
+allowed_marker_only_battler_ids = Array[StringName]([&"chain_warden"])

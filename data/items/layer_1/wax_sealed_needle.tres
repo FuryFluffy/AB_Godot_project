@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cdepeyw4nch25"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://iiwnis14o4jp" path="res://assets/items/by_stable_id/l01_wax_sealed_needle.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_heal"]
+script = ExtResource("2_effect")
+amount = 1
+
+[sub_resource type="Resource" id="Effect_bleed"]
+script = ExtResource("2_effect")
+kind = 5
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_wax_sealed_needle"
+display_name = "Wax-Sealed Needle"
+description = "Remove Bleed and restore 1 HP to the user or an Adjacent heroine."
+icon = ExtResource("99_icon")
+content_category = 1
+rarity = 2
+canonical_workbook_item = true
+stack_limit = 3
+target_rule = 1
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_heal"), SubResource("Effect_bleed")])

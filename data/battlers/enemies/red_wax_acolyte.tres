@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://bks5g6oot46tb"]
+
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_attributes"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_battler"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" path="res://scripts/data/equipment/loadouts/red_wax_acolyte_loadout.tres" id="5_loadout"]
+[ext_resource type="Resource" uid="uid://cohkg4jn64m2w" path="res://data/enemy_ai/red_wax_acolyte_rulebook.tres" id="6_rules"]
+[ext_resource type="Resource" uid="uid://dic7j1qq5sm8s" path="res://data/grapples/red_wax_elite_grapple.tres" id="7_grapple"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="8_specialty"]
+[ext_resource type="Resource" path="res://data/abilities/red_wax_crimson_blessing.tres" id="9_bless"]
+[ext_resource type="Resource" path="res://data/abilities/red_wax_ember_ward.tres" id="10_ward"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="11_ability_script"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("1_attributes")
+endurance = 3
+intellect = 2
+personality = 4
+
+[sub_resource type="Resource" id="Cloth"]
+script = ExtResource("4_protection")
+level = 1
+tier = 1
+
+[sub_resource type="Resource" id="Light"]
+script = ExtResource("3_skill")
+skill = 16
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Body"]
+script = ExtResource("3_skill")
+skill = 22
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Staff"]
+script = ExtResource("3_skill")
+skill = 7
+level = 1
+tier = 1
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Meditation"]
+script = ExtResource("8_specialty")
+specialty = 4
+tier = 1
+
+[resource]
+script = ExtResource("2_battler")
+battler_id = &"red_wax_acolyte"
+display_name = "Red-Wax Acolyte"
+faction = 1
+category = 2
+attributes = SubResource("Attributes")
+max_hp = 9
+max_mp = 9
+starting_resolve = 0
+order_value = 3
+skills = Array[ExtResource("3_skill")]([SubResource("Light"), SubResource("Body"), SubResource("Staff"), SubResource("Awareness")])
+specialties = Array[ExtResource("8_specialty")]([SubResource("Meditation")])
+abilities = Array[ExtResource("11_ability_script")]([ExtResource("9_bless"), ExtResource("10_ward")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Cloth")])
+default_loadout = ExtResource("5_loadout")
+enemy_rulebook = ExtResource("6_rules")
+grapple_template = ExtResource("7_grapple")

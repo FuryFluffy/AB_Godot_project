@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://c32vs7rdgy6ri"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Intake Corridor"
+presentation_uses = 3
+art_pending = true
+art_note = "The visual specification expects 10_Intake_Corridor.png, but that asset is absent from the tested project and supplied Library files."
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"intake_corridor"
+display_name = "Intake Corridor"
+layer_number = 2
+canonical_order = 9
+authoring_summary = "Prisoner arrival route, benches, inspection points."
+strong_battle_candidate = true
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])

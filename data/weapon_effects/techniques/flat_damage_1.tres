@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FlatDamageWeaponEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/effects/flat_damage_weapon_effect.gd" id="1_effect"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"weapon_art_flat_damage_1"
+display_name = "Weapon Art: +1 flat damage"
+description = "Adds one damage after defense when at least one Attack success remains."
+added_damage = 1

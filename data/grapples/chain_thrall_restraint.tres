@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="GrappleTemplateDefinition" format=3 uid="uid://drgnkjgvstpyt"]
+
+[ext_resource type="Script" uid="uid://ioho2xwus6yi" path="res://scripts/data/grapple/grapple_template_definition.gd" id="1_template"]
+[ext_resource type="Script" uid="uid://ci6353gn53ilg" path="res://scripts/data/grapple/grapple_stage_definition.gd" id="2_stage"]
+
+[sub_resource type="Resource" id="Stage1"]
+script = ExtResource("2_stage")
+display_name = "Chain Caught"
+corruption_change = 1
+resolve_change = -1
+maximum_holds = 1
+
+[sub_resource type="Resource" id="Stage2"]
+script = ExtResource("2_stage")
+stage_number = 2
+display_name = "Dragged Close"
+corruption_change = 2
+resolve_change = -2
+maximum_holds = 1
+
+[sub_resource type="Resource" id="Stage3"]
+script = ExtResource("2_stage")
+stage_number = 3
+display_name = "Locked in Restraint"
+corruption_change = 5
+resolve_change = -5
+is_climax = true
+
+[resource]
+script = ExtResource("1_template")
+template_id = &"chain_thrall_restraint"
+display_name = "Chain Thrall Restraint"
+combined_visual_prefix = "CT"
+stages = Array[ExtResource("2_stage")]([SubResource("Stage1"), SubResource("Stage2"), SubResource("Stage3")])
+grapple_cooldown_activations = 1

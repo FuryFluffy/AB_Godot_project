@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EncounterTemplateDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounters/encounter_template_definition.gd" id="1_template"]
+[ext_resource type="PackedScene" path="res://scenes/battle/battlefields/layer2_chain_maintenance_battlefield.tscn" id="2_field"]
+[ext_resource type="Resource" path="res://data/enemy_ai/layer2_kept_watch_group_rulebook.tres" id="3_rulebook"]
+
+[resource]
+script = ExtResource("1_template")
+template_id = &"layer_2_chain_maintenance_regular"
+display_name = "Farthest Cell Passage — Kept Watch"
+battlefield_scene = ExtResource("2_field")
+enemy_group_rulebook = ExtResource("3_rulebook")
+preview_enemy_ids = Array[StringName]([&"iron_masked_guard", &"chain_thrall"])
+party_spawn_slot_ids = Array[StringName]([&"party_1", &"party_2", &"party_3"])
+enemy_spawn_slot_ids = Array[StringName]([&"enemy_1", &"enemy_2"])

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoomEventProfileDefinition" format=3 uid="uid://2m8iydydq1tb"]
+
+[ext_resource type="Script" uid="uid://bvuha02ulf1lt" path="res://scripts/exploration/events/room_event_profile_definition.gd" id="1_8q2wg"]
+[ext_resource type="Script" uid="uid://d1ur56782s4b6" path="res://scripts/exploration/events/room_event_source_definition.gd" id="2_vhq37"]
+[ext_resource type="Resource" uid="uid://c4pf4cyib8c1m" path="res://data/exploration/events/sources/layer_1_common_event_sources.tres" id="3_k31nq"]
+[ext_resource type="Resource" uid="uid://6ax0n3fvwn4k" path="res://data/exploration/events/sources/global_event_sources.tres" id="4_xthro"]
+
+[resource]
+script = ExtResource("1_8q2wg")
+profile_id = &"wax_prep_room_event_profile"
+sources = Array[ExtResource("2_vhq37")]([ExtResource("3_k31nq"), ExtResource("4_xthro")])
+metadata/_custom_type_script = "uid://bvuha02ulf1lt"

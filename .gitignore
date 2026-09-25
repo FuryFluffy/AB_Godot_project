@@ -1,0 +1,30 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Generated local tooling and isolated private-review publishing workspace.
+/tools/__pycache__/
+/.review-publish/
+
+# Local secrets, if introduced. Keep ordinary export settings and examples.
+/.env
+/.env.local
+/.env.*.local
+/export_credentials.cfg
+
+# Source delivery archives; extracted runtime art remains tracked.
+# Exact paths only: do not ignore future archives or art-source formats blindly.
+/assets/backgrounds.tar.gz
+/assets/characters/ABBloodNun_CURATED_v1.zip
+/assets/characters/ABCellSlime_CURATED.zip
+/assets/characters/ABChainThrall_CURATED.zip
+/assets/characters/ABCorruptedButler_CURATED.zip
+/assets/characters/ABHollowServant_CURATED.zip
+/assets/characters/ABIronMaskedGuard_CURATED.zip
+/assets/characters/ABJailer_CURATED.zip
+/assets/characters/ABKnifeFootman_CURATED.zip
+/assets/characters/ABLysandra_CURATED.zip
+/assets/characters/ABMiraVoss_CURATED.zip
+/assets/characters/ABPrayerRagNovice_CURATED.zip
+/assets/characters/ABRedWaxAcolyte_v2_CURATED.zip
+/assets/characters/ABSeraphine_CURATED.zip

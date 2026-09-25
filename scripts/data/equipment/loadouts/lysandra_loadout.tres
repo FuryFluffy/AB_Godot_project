@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EquipmentLoadout" format=3 uid="uid://bjxs335jodqok"]
+
+[ext_resource type="Resource" uid="uid://72fniehb5cwf" path="res://scripts/data/equipment/weapons/lysandra_sword.tres" id="1_5q22n"]
+[ext_resource type="Resource" uid="uid://ygtcoolvy2j3" path="res://scripts/data/armor/lysandra_chain.tres" id="1_liis0"]
+[ext_resource type="Script" uid="uid://cfwr5lyswtnub" path="res://scripts/data/equipment_loadout.gd" id="1_xu7xk"]
+
+[resource]
+script = ExtResource("1_xu7xk")
+main_hand = ExtResource("1_5q22n")
+main_hand_family_rank = 1
+armor = ExtResource("1_liis0")
+metadata/_custom_type_script = "uid://cfwr5lyswtnub"

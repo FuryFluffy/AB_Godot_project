@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3 uid="uid://ddo5j7mf4eq2b"]
+
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_4b35d"]
+[ext_resource type="Resource" uid="uid://ceb25rfal6785" path="res://data/items/keys/rusty_key.tres" id="1_70q7c"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/shared_rusty_key.png" id="3_nbrd0"]
+
+[resource]
+script = ExtResource("1_4b35d")
+entry_id = &"rusty_key_spawn"
+item = ExtResource("1_70q7c")
+world_texture = ExtResource("3_nbrd0")
+required_anchor_tag = &"key"
+weight = 1
+quantity = 1
+guaranteed_once = true
+metadata/_custom_type_script = "uid://dqg7udf6p2hld"

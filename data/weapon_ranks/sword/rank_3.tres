@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponRankDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapons/weapon_rank_definition.gd" id="1_rank"]
+[ext_resource type="Resource" path="res://data/weapon_effects/families/sword/ignore_dodge_3.tres" id="2_effect"]
+
+[resource]
+script = ExtResource("1_rank")
+rank = 3
+display_name = "Rank III"
+description = "Ignore 3 Dodge successes and gain +2d10 on Attack rolls."
+attack_dice_bonus = 2
+effects = Array[WeaponEffectDefinition]([ExtResource("2_effect")])

@@ -1,0 +1,29 @@
+Abyssal Bloom — Sorted Restyled L1/L2 Assets
+Date: 2026-08-30
+
+ROOMS
+- Layer 1: 12
+- Layer 2: 8
+- Total: 20
+
+CORE SHARED PROPS
+- Layer 1: 13
+- Layer 2: 12
+- Total: 25
+
+EXPERIMENTAL FOREGROUND
+- Layer 1: 2
+- Layer 2: 1
+- Total present: 3
+
+CLEANUP
+- The earlier alpha-broken l01_prop_pew_long_00001 output was excluded.
+- The later l01_prop_pew_long_00002 output was retained and renamed to l01_prop_pew_long.png.
+- ComfyUI prefixes and numeric suffixes were removed from all retained files.
+
+MISSING FROM EXPECTED EXPERIMENTAL SET
+- l02_fg_chain_shackles
+
+ALPHA QC
+- All retained prop outputs have meaningful transparent canvas area.
+- Alpha warnings: 0

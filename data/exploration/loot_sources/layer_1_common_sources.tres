@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RoomLootSourceDefinition" format=3 uid="uid://nolywbhdp6qg"]
+
+[ext_resource type="Resource" uid="uid://ckmg7q23nefp8" path="res://data/exploration/item_pools/layer1/layer_1_common_item_pool.tres" id="1_ptnld"]
+[ext_resource type="Script" uid="uid://c2kxri7yvkbiy" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="2_babvf"]
+
+[resource]
+script = ExtResource("2_babvf")
+source_id = &"layer_1_common"
+source_channel = 2
+eligible_layers = Array[int]([1])
+once_only = true
+priority = 100
+pool = ExtResource("1_ptnld")
+minimum_draws = 1
+maximum_draws = 1
+activation_chance = 0.65
+allow_duplicate_entries = false
+metadata/_custom_type_script = "uid://c2kxri7yvkbiy"

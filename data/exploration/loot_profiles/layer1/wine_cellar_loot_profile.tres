@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomLootProfileDefinition" format=3 uid="uid://deslewogka2wl"]
+
+[ext_resource type="Script" uid="uid://uge53xu8rs2a" path="res://scripts/exploration/items/room_loot_profile_definition.gd" id="1_1dlo2"]
+[ext_resource type="Script" uid="uid://c2kxri7yvkbiy" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="2_bbowm"]
+[ext_resource type="Resource" uid="uid://cubsl3jwub055" path="res://data/exploration/loot_sources/wine_cellar_specific_sources.tres" id="3_ccxq8"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_1.tres" id="4_optional_1"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_2.tres" id="5_optional_2"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_3.tres" id="6_optional_3"]
+
+[resource]
+script = ExtResource("1_1dlo2")
+profile_id = &"wine_cellar_loot_profile"
+sources = Array[ExtResource("2_bbowm")]([ExtResource("3_ccxq8"), ExtResource("4_optional_1"), ExtResource("5_optional_2"), ExtResource("6_optional_3")])
+metadata/_custom_type_script = "uid://uge53xu8rs2a"

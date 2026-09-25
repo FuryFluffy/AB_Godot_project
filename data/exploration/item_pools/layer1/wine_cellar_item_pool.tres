@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomItemPoolDefinition" format=3 uid="uid://buj46ihphl1j7"]
+
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_5t8h7"]
+[ext_resource type="Resource" uid="uid://b6jhfxqps7rr0" path="res://data/exploration/item_pools/layer1/warm_wine_flask_room_entry.tres" id="2_ir3ar"]
+[ext_resource type="Script" uid="uid://bk7yob0d3610w" path="res://scripts/exploration/items/room_item_pool_definition.gd" id="3_b21wn"]
+
+[resource]
+script = ExtResource("3_b21wn")
+pool_id = &"wine_cellar_item_pool"
+entries = Array[ExtResource("1_5t8h7")]([ExtResource("2_ir3ar")])
+metadata/_custom_type_script = "uid://bk7yob0d3610w"

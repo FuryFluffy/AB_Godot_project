@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ccpukg040dced"]
+
+[ext_resource type="Script" uid="uid://uvraxyxkc4bu" path="res://scripts/exploration/event_room_screen.gd" id="1_2dm4p"]
+[ext_resource type="PackedScene" uid="uid://c84714xii8egt" path="res://scenes/exploration/components/world_item_pickup.tscn" id="2_4vot4"]
+[ext_resource type="PackedScene" uid="uid://dl4rck6tyv2s7" path="res://scenes/exploration/components/world_room_event.tscn" id="3_02ppu"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/components/exploration_hud.tscn" id="4_hud"]
+[ext_resource type="Resource" path="res://data/dialogue/dialogue_foundation_test.tres" id="5_dialogue_test"]
+
+[node name="EventRoomScreen" type="Node2D" unique_id=1538068036]
+script = ExtResource("1_2dm4p")
+world_item_scene = ExtResource("2_4vot4")
+world_event_scene = ExtResource("3_02ppu")
+developer_test_dialogue = ExtResource("5_dialogue_test")
+
+[node name="RoomHost" type="Node2D" parent="." unique_id=1335736827]
+
+[node name="ExplorationHUD" parent="." instance=ExtResource("4_hud")]

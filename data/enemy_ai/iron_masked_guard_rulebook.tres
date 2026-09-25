@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnemyRulebookDefinition" format=3 uid="uid://cliyqncpsc50q"]
+
+[ext_resource type="Script" uid="uid://uqw71glrm6lx" path="res://scripts/data/ai/enemy_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://jdqyagtsapyh" path="res://scripts/data/ai/enemy_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="Attack"]
+script = ExtResource("1_rule")
+rule_id = &"hold_the_line"
+display_name = "Strike the Nearest Intruder"
+condition = 1
+action = 0
+
+[sub_resource type="Resource" id="Move"]
+script = ExtResource("1_rule")
+rule_id = &"seal_the_passage"
+display_name = "Seal the Passage"
+condition = 2
+action = 1
+
+[sub_resource type="Resource" id="Wait"]
+script = ExtResource("1_rule")
+rule_id = &"stand_watch"
+display_name = "Stand Watch"
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"iron_masked_guard_rules"
+display_name = "Iron-Masked Guard — Maintained Frontline"
+rules = Array[ExtResource("1_rule")]([SubResource("Attack"), SubResource("Move"), SubResource("Wait")])
+attack_reaction_policy = 1
+defense_preference = 1
+break_policy = 1
+move_reaction_priority = 60

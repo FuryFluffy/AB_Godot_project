@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bj2wfwrrdeif"]
+
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="1_754y0"]
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_ledger_seal.png" id="2_8art3"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_ledger_seal"
+display_name = "Ledger Seal"
+description = "Layer 1 exploration Key Item. It remains visible but cannot be activated during battle."
+icon = ExtResource("2_8art3")
+content_category = 3
+rarity = 4
+canonical_workbook_item = true
+item_type = 2
+key_persistence_scope = 0
+consumes_on_use = false
+combat_usable = false
+action_cost = 0

@@ -1,0 +1,282 @@
+[gd_scene format=3 uid="uid://buu8i7g1r223m"]
+
+[ext_resource type="Script" uid="uid://coewsry3lkln" path="res://scripts/map/main_controller.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://c8f0s5drnadwa" path="res://scripts/map/layer_map_view.gd" id="2_map_view"]
+[ext_resource type="PackedScene" uid="uid://ccpukg040dced" path="res://scenes/exploration/event_room_screen.tscn" id="3_6q06x"]
+[ext_resource type="PackedScene" uid="uid://tf0h1nmxx8ub" path="res://scenes/battle/combat_encounter.tscn" id="3_combat"]
+[ext_resource type="Resource" uid="uid://cet0es1phtuam" path="res://data/exploration/rooms/event_room_catalog.tres" id="4_ow5a4"]
+[ext_resource type="Resource" uid="uid://brwc8d1a4icq7" path="res://data/items/layer_1_2_item_catalog.tres" id="5_ow5a4"]
+[ext_resource type="Resource" path="res://data/battlers/battler_catalog.tres" id="6_hujxm"]
+[ext_resource type="Resource" uid="uid://m1ssq53qn7ge" path="res://data/lore/lore_catalog.tres" id="7_yyfjg"]
+[ext_resource type="Resource" path="res://data/dialogue/production_dialogue_catalog.tres" id="8_dialogue_catalog"]
+[ext_resource type="PackedScene" path="res://scenes/refuge/bloom_refuge_screen.tscn" id="14_refuge_screen"]
+[ext_resource type="Resource" path="res://data/presentation/combat_stage_catalog.tres" id="15_stage_catalog"]
+
+[node name="Main" type="Node" unique_id=1474929252]
+
+[node name="Controller" type="Node" parent="." unique_id=102243169 node_paths=PackedStringArray("map_screen", "map_view", "seed_edit", "progress_label", "layer_title_label", "node_title_label", "node_detail_label", "travel_button", "resolve_node_button", "new_run_button", "return_to_refuge_button", "combat_host", "event_room_host", "refuge_host", "return_overlay", "return_summary_label", "return_to_map_button", "boot_fallback", "boot_status_label")]
+script = ExtResource("1_main")
+combat_scene = ExtResource("3_combat")
+event_room_scene = ExtResource("3_6q06x")
+refuge_scene = ExtResource("14_refuge_screen")
+event_room_catalog = ExtResource("4_ow5a4")
+map_screen = NodePath("../UILayer/MapScreen")
+map_view = NodePath("../UILayer/MapScreen/Margin/VBox/MapPanel/MapView")
+seed_edit = NodePath("../UILayer/MapScreen/Margin/VBox/Header/SeedEdit")
+progress_label = NodePath("../UILayer/MapScreen/Margin/VBox/Header/Progress")
+layer_title_label = NodePath("../UILayer/MapScreen/Margin/VBox/Header/Title")
+node_title_label = NodePath("../UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Title")
+node_detail_label = NodePath("../UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Description")
+travel_button = NodePath("../UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Actions/Travel")
+resolve_node_button = NodePath("../UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Actions/Resolve")
+new_run_button = NodePath("../UILayer/MapScreen/Margin/VBox/Header/NewRun")
+return_to_refuge_button = NodePath("../UILayer/MapScreen/Margin/VBox/Header/ReturnToRefuge")
+combat_host = NodePath("../CombatHost")
+event_room_host = NodePath("../EventRoomHost")
+refuge_host = NodePath("../RefugeHost")
+return_overlay = NodePath("../UILayer/ReturnOverlay")
+return_summary_label = NodePath("../UILayer/ReturnOverlay/Center/Panel/Margin/VBox/Summary")
+return_to_map_button = NodePath("../UILayer/ReturnOverlay/Center/Panel/Margin/VBox/Return")
+boot_fallback = NodePath("../UILayer/BootFallback")
+boot_status_label = NodePath("../UILayer/BootFallback/Center/Panel/Margin/VBox/Status")
+item_catalog = ExtResource("5_ow5a4")
+battler_catalog = ExtResource("6_hujxm")
+lore_catalog = ExtResource("7_yyfjg")
+dialogue_catalog = ExtResource("8_dialogue_catalog")
+combat_stage_catalog = ExtResource("15_stage_catalog")
+
+[node name="CombatHost" type="Node" parent="." unique_id=1213361414]
+
+[node name="EventRoomHost" type="Node" parent="." unique_id=422239217]
+
+[node name="RefugeHost" type="Node" parent="."]
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=178294939]
+layer = 50
+
+[node name="MapScreen" type="ColorRect" parent="UILayer" unique_id=1408047389]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.075, 0.068, 0.064, 1)
+
+[node name="Margin" type="MarginContainer" parent="UILayer/MapScreen" unique_id=898742667]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 24.0
+offset_right = -28.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UILayer/MapScreen/Margin" unique_id=1694517395]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="UILayer/MapScreen/Margin/VBox" unique_id=513312620]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UILayer/MapScreen/Margin/VBox/Header" unique_id=927855095]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Layer 1 — Lower Castle Route"
+
+[node name="Spacer" type="Control" parent="UILayer/MapScreen/Margin/VBox/Header" unique_id=541328982]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Progress" type="Label" parent="UILayer/MapScreen/Margin/VBox/Header" unique_id=375893265]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Seed"
+
+[node name="SeedLabel" type="Label" parent="UILayer/MapScreen/Margin/VBox/Header" unique_id=952638079]
+layout_mode = 2
+text = "Run Seed"
+
+[node name="SeedEdit" type="LineEdit" parent="UILayer/MapScreen/Margin/VBox/Header" unique_id=711043524]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "27072026"
+placeholder_text = "Seed"
+
+[node name="NewRun" type="Button" parent="UILayer/MapScreen/Margin/VBox/Header" unique_id=1552312734]
+custom_minimum_size = Vector2(150, 44)
+layout_mode = 2
+text = "Generate New Run"
+
+[node name="ReturnToRefuge" type="Button" parent="UILayer/MapScreen/Margin/VBox/Header"]
+visible = false
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+text = "Return to Refuge"
+
+[node name="MapPanel" type="PanelContainer" parent="UILayer/MapScreen/Margin/VBox" unique_id=1384632816]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MapView" type="Control" parent="UILayer/MapScreen/Margin/VBox/MapPanel" unique_id=761327425]
+custom_minimum_size = Vector2(1200, 650)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("2_map_view")
+
+[node name="DetailsPanel" type="PanelContainer" parent="UILayer/MapScreen/Margin/VBox" unique_id=1161979756]
+custom_minimum_size = Vector2(0, 182)
+layout_mode = 2
+
+[node name="Details" type="VBoxContainer" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel" unique_id=1075023538]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Title" type="Label" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details" unique_id=877718362]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Select a node"
+
+[node name="Description" type="Label" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details" unique_id=807448287]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.78, 0.76, 0.72, 1)
+theme_override_font_sizes/font_size = 17
+text = "Only connected nodes can be entered."
+autowrap_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details" unique_id=1449436289]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Travel" type="Button" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Actions" unique_id=664542266]
+custom_minimum_size = Vector2(320, 46)
+layout_mode = 2
+disabled = true
+text = "Select a new connection or reachable cleared node"
+
+[node name="Resolve" type="Button" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Actions" unique_id=313467373]
+visible = false
+custom_minimum_size = Vector2(260, 46)
+layout_mode = 2
+text = "Resolve Temporary Node"
+
+[node name="Legend" type="Label" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Actions" unique_id=962815574]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Full graph visible • Unknown locked types • Connected exploration • Route-wide free backtracking • First-clear rewards"
+horizontal_alignment = 2
+
+[node name="ReturnOverlay" type="Control" parent="UILayer" unique_id=1688976327]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Shade" type="ColorRect" parent="UILayer/ReturnOverlay" unique_id=2076600940]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.66)
+
+[node name="Center" type="CenterContainer" parent="UILayer/ReturnOverlay" unique_id=372919190]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="UILayer/ReturnOverlay/Center" unique_id=1234864938]
+custom_minimum_size = Vector2(600, 240)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="UILayer/ReturnOverlay/Center/Panel" unique_id=468110852]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="UILayer/ReturnOverlay/Center/Panel/Margin" unique_id=1080212979]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="UILayer/ReturnOverlay/Center/Panel/Margin/VBox" unique_id=503786177]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Encounter Complete"
+horizontal_alignment = 1
+
+[node name="Summary" type="Label" parent="UILayer/ReturnOverlay/Center/Panel/Margin/VBox" unique_id=1798030374]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Outcome"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Return" type="Button" parent="UILayer/ReturnOverlay/Center/Panel/Margin/VBox" unique_id=698899734]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+text = "Return to Layer 1 Map"
+
+[node name="BootFallback" type="Control" parent="UILayer" unique_id=331259965]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="UILayer/BootFallback" unique_id=1880377458]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="UILayer/BootFallback/Center" unique_id=1991784180]
+custom_minimum_size = Vector2(720, 180)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="UILayer/BootFallback/Center/Panel" unique_id=1167626042]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="UILayer/BootFallback/Center/Panel/Margin" unique_id=776722542]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UILayer/BootFallback/Center/Panel/Margin/VBox" unique_id=740405759]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Layer 1 Node Map"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="UILayer/BootFallback/Center/Panel/Margin/VBox" unique_id=1270055661]
+custom_minimum_size = Vector2(640, 52)
+layout_mode = 2
+text = "Initializing the seeded route..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EquipmentLoadout" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/equipment_loadout.gd" id="1_loadout"]
+[ext_resource type="Resource" path="res://scripts/data/equipment/weapons/blood_nun_lash.tres" id="2_weapon"]
+[ext_resource type="Resource" path="res://scripts/data/armor/blood_nun_chain.tres" id="3_armor"]
+
+[resource]
+script = ExtResource("1_loadout")
+main_hand = ExtResource("2_weapon")
+armor = ExtResource("3_armor")

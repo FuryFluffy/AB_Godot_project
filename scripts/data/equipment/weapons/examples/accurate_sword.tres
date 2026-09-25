@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Resource" path="res://data/weapon_families/sword.tres" id="2_family"]
+[ext_resource type="Resource" path="res://data/weapon_effects/unique/add_one_attack_success.tres" id="3_success"]
+
+[resource]
+script = ExtResource("1_weapon")
+equipment_id = &"accurate_sword"
+display_name = "Accurate Sword"
+allowed_slots = Array[int]([0])
+condition_maximum = 5
+destructible = false
+family = ExtResource("2_family")
+default_family_rank = 1
+unique_effects = Array[WeaponEffectDefinition]([ExtResource("3_success")])
+skill = 5
+attribute = 0
+attack_range = 0
+can_parry = true

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StatusDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/status_definition.gd" id="1_status"]
+
+[resource]
+script = ExtResource("1_status")
+status_id = &"stunned"
+display_name = "Stunned"
+kind = 3
+duration_ticks = 1
+prevents_actions = true
+stops_committed_movement = true
+

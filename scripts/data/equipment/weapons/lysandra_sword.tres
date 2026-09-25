@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=3 format=3 uid="uid://72fniehb5cwf"]
+
+[ext_resource type="Script" uid="uid://t1h75lwqivdf" path="res://scripts/data/weapon_definition.gd" id="1_ajycy"]
+[ext_resource type="Resource" path="res://data/weapon_families/sword.tres" id="2_family"]
+
+[resource]
+script = ExtResource("1_ajycy")
+equipment_id = &"lysandra_sword"
+display_name = "Lysandra's Sword"
+player_refuge_available = true
+allowed_slots = Array[int]([0])
+condition_maximum = 5
+destructible = false
+family = ExtResource("2_family")
+default_family_rank = 1
+metadata/_custom_type_script = "uid://t1h75lwqivdf"

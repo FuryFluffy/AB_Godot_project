@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_definition.gd" id="1_weapon"]
+
+[resource]
+script = ExtResource("1_weapon")
+equipment_id = &"iron_guard_gaoler_pole"
+display_name = "Iron Gaoler Pole"
+allowed_slots = Array[int]([0])
+condition_maximum = 10
+destructible = true
+rarity = 3
+salvage_material_id = &"mat_l02_prison_iron"
+skill = 22
+attribute = 0
+dice_modifier = 1
+attack_range = 1
+maximum_zone_distance = 1
+can_parry = true
+is_two_handed = true

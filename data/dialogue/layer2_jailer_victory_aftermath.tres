@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://5wco38k7b7cb"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="2_uqu1o"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_fqemc"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="3_outcome"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="5_mv88r"]
+
+[sub_resource type="Resource" id="Node_opening"]
+script = ExtResource("2_node")
+node_id = &"opening"
+speaker_id = &"jailer"
+speaker_name = "The Jailer"
+text = "Door opening... No. Open means gone. Gone means hurt."
+default_next_node_id = &"dungeon_exit"
+
+[sub_resource type="Resource" id="Outcome_resolve_aftermath"]
+script = ExtResource("3_outcome")
+kind = 7
+subject_id = &"layer_2_jailer_victory_aftermath"
+
+[sub_resource type="Resource" id="Node_dungeon_exit"]
+script = ExtResource("2_node")
+node_id = &"dungeon_exit"
+speaker_name = "Containment Landing"
+text = "The Jailer falls at Layer 2's exit. The Dungeon continues inward, toward the Farthest Cell."
+entry_outcomes = Array[ExtResource("3_outcome")]([SubResource("Outcome_resolve_aftermath")])
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_2_jailer_victory_aftermath"
+start_node_id = &"opening"
+trigger_kind = &"encounter_victory"
+trigger_id = &"layer_2_jailer_first_containment"
+completion_kind = &"resolved_interaction"
+completion_id = &"layer_2_jailer_victory_aftermath"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_opening"), SubResource("Node_dungeon_exit")])

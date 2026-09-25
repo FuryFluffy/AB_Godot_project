@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArmorDefinition" format=3 uid="uid://ygtcoolvy2j3"]
+
+[ext_resource type="Script" uid="uid://hcuscl12ao6" path="res://scripts/data/armor_definition.gd" id="1_s7vj6"]
+
+[resource]
+script = ExtResource("1_s7vj6")
+equipment_id = &"lysandra_chain"
+display_name = "Lysandra's Chain"
+player_refuge_available = true
+allowed_slots = Array[int]([2])
+condition_maximum = 4
+destructible = false
+armor_type = 2
+metadata/_custom_type_script = "uid://hcuscl12ao6"

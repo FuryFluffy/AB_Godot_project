@@ -1,0 +1,293 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_battlefield.gd" id="1_field"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_battle_zone.gd" id="2_zone"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_anchor.gd" id="3_anchor"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_position.gd" id="4_position"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_spawn_slot.gd" id="5_spawn"]
+[ext_resource type="Texture2D" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_blood_nun_processing_chapel.png" id="6_background"]
+
+[node name="ProcessingChapelBattlefield" type="Node2D"]
+script = ExtResource("1_field")
+battlefield_id = &"blood_nun_processing_chapel"
+display_name = "Blood Nun Processing Chapel"
+
+[node name="BackgroundLayer" type="Node2D" parent="."]
+z_index = -100
+
+[node name="BackgroundArt" type="Sprite2D" parent="BackgroundLayer"]
+position = Vector2(0, -8.57143)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("6_background")
+centered = false
+
+[node name="BattlefieldShade" type="Polygon2D" parent="BackgroundLayer"]
+z_index = 1
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+color = Color(0.025, 0.02, 0.018, 0.08)
+
+[node name="Zones" type="Node2D" parent="."]
+
+[node name="Threshold" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(180, 830, 1740, 830, 1920, 1080, 0, 1080)
+script = ExtResource("2_zone")
+zone_id = &"threshold"
+display_name = "Chapel Threshold"
+connected_zone_ids = Array[StringName]([&"processing_floor"])
+authoring_color = Color(0.25, 0.72, 1, 0.22)
+
+[node name="ProcessingFloor" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(460, 680, 1460, 680, 1640, 815, 280, 815)
+script = ExtResource("2_zone")
+zone_id = &"processing_floor"
+display_name = "Processing Floor"
+connected_zone_ids = Array[StringName]([&"threshold", &"ritual_dais"])
+authoring_color = Color(0.95, 0.64, 0.22, 0.22)
+
+[node name="RitualDais" type="Polygon2D" parent="Zones"]
+polygon = PackedVector2Array(700, 580, 1220, 580, 1280, 665, 640, 665)
+script = ExtResource("2_zone")
+zone_id = &"ritual_dais"
+display_name = "Ritual Dais"
+connected_zone_ids = Array[StringName]([&"processing_floor"])
+authoring_color = Color(0.78, 0.24, 0.55, 0.22)
+
+[node name="Anchors" type="Node2D" parent="."]
+
+[node name="ThresholdLeft" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(180, 845, 920, 845, 920, 1050, 130, 1050)
+script = ExtResource("3_anchor")
+anchor_id = &"threshold_left"
+display_name = "Threshold Left"
+zone_id = &"threshold"
+connected_anchor_ids = Array[StringName]([&"threshold_right", &"floor_left"])
+battler_scale = 1.5
+visual_order = 30
+visual_depth_band = &"foreground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ThresholdLeft"]
+position = Vector2(400, 960)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/ThresholdLeft"]
+position = Vector2(700, 960)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position2" type="Marker2D" parent="Anchors/ThresholdLeft"]
+position = Vector2(400, 875)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position3" type="Marker2D" parent="Anchors/ThresholdLeft"]
+position = Vector2(700, 875)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="ThresholdRight" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(1000, 845, 1740, 845, 1790, 1050, 1000, 1050)
+script = ExtResource("3_anchor")
+anchor_id = &"threshold_right"
+display_name = "Threshold Right"
+zone_id = &"threshold"
+connected_anchor_ids = Array[StringName]([&"threshold_left", &"floor_right"])
+battler_scale = 1.5
+visual_order = 30
+visual_depth_band = &"foreground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1220, 960)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1500, 960)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position2" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1220, 875)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position3" type="Marker2D" parent="Anchors/ThresholdRight"]
+position = Vector2(1500, 875)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="FloorLeft" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(480, 695, 920, 695, 920, 805, 340, 805)
+script = ExtResource("3_anchor")
+anchor_id = &"floor_left"
+display_name = "Processing Floor Left"
+zone_id = &"processing_floor"
+connected_anchor_ids = Array[StringName]([&"threshold_left", &"floor_right", &"dais"])
+battler_scale = 1.0
+visual_order = 20
+visual_depth_band = &"midground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/FloorLeft"]
+position = Vector2(520, 785)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position1" type="Marker2D" parent="Anchors/FloorLeft"]
+position = Vector2(780, 785)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position2" type="Marker2D" parent="Anchors/FloorLeft"]
+position = Vector2(520, 720)
+script = ExtResource("4_position")
+position_index = 2
+
+[node name="Position3" type="Marker2D" parent="Anchors/FloorLeft"]
+position = Vector2(780, 720)
+script = ExtResource("4_position")
+position_index = 3
+
+[node name="FloorRight" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(1000, 695, 1440, 695, 1580, 805, 1000, 805)
+script = ExtResource("3_anchor")
+anchor_id = &"floor_right"
+display_name = "Processing Floor Right"
+zone_id = &"processing_floor"
+connected_anchor_ids = Array[StringName]([&"threshold_right", &"floor_left", &"dais"])
+battler_scale = 1.0
+visual_order = 20
+visual_depth_band = &"midground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/FloorRight"]
+position = Vector2(1140, 785)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position1" type="Marker2D" parent="Anchors/FloorRight"]
+position = Vector2(1400, 785)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position2" type="Marker2D" parent="Anchors/FloorRight"]
+position = Vector2(1140, 720)
+script = ExtResource("4_position")
+position_index = 2
+
+[node name="Position3" type="Marker2D" parent="Anchors/FloorRight"]
+position = Vector2(1400, 720)
+script = ExtResource("4_position")
+position_index = 3
+
+[node name="Dais" type="Polygon2D" parent="Anchors"]
+polygon = PackedVector2Array(720, 595, 1200, 595, 1250, 655, 670, 655)
+script = ExtResource("3_anchor")
+anchor_id = &"dais"
+display_name = "Ritual Dais"
+zone_id = &"ritual_dais"
+connected_anchor_ids = Array[StringName]([&"floor_left", &"floor_right"])
+battler_scale = 0.72
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/Dais"]
+position = Vector2(820, 645)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 0.8
+
+[node name="Position1" type="Marker2D" parent="Anchors/Dais"]
+position = Vector2(1100, 645)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.8
+
+[node name="Position2" type="Marker2D" parent="Anchors/Dais"]
+position = Vector2(820, 610)
+script = ExtResource("4_position")
+position_index = 2
+
+[node name="Position3" type="Marker2D" parent="Anchors/Dais"]
+position = Vector2(1100, 610)
+script = ExtResource("4_position")
+position_index = 3
+
+[node name="SpawnSlots" type="Node2D" parent="."]
+
+[node name="Party1" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(400, 960)
+script = ExtResource("5_spawn")
+slot_id = &"party_1"
+display_name = "Party Threshold Left"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"frontline"])
+
+[node name="Party2" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(700, 960)
+script = ExtResource("5_spawn")
+slot_id = &"party_2"
+display_name = "Party Threshold Centre"
+faction = 0
+role_tags = Array[StringName]([&"party_entry"])
+
+[node name="Party3" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(1220, 960)
+script = ExtResource("5_spawn")
+slot_id = &"party_3"
+display_name = "Party Threshold Right"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"support"])
+
+[node name="Enemy1" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(820, 645)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_1"
+display_name = "Dais Principal"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"boss"])
+
+[node name="Enemy2" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(1100, 645)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_2"
+display_name = "Dais Support"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"support"])
+
+[node name="Enemy3" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(520, 785)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_3"
+display_name = "Processing Floor Left"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"frontline"])
+
+[node name="Enemy4" type="Marker2D" parent="SpawnSlots"]
+position = Vector2(1140, 785)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_4"
+display_name = "Processing Floor Right"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"frontline"])
+
+[node name="ForegroundProps" type="Node2D" parent="."]

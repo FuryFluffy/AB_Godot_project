@@ -1,0 +1,470 @@
+[gd_scene format=3 uid="uid://d17udiacsmkut"]
+
+[ext_resource type="Script" uid="uid://n3evl0wtdhhi" path="res://scripts/data/battlefield/authored_battlefield.gd" id="1_field"]
+[ext_resource type="Script" uid="uid://de1vxdqtubn2o" path="res://scripts/data/battlefield/authored_battle_zone.gd" id="2_zone"]
+[ext_resource type="Script" uid="uid://bom07utjav3yo" path="res://scripts/data/battlefield/authored_anchor.gd" id="3_anchor"]
+[ext_resource type="Script" uid="uid://ddfpco8a3cy15" path="res://scripts/data/battlefield/authored_position.gd" id="4_position"]
+[ext_resource type="Script" uid="uid://bb4j4ag3ivrtb" path="res://scripts/data/battlefield/authored_spawn_slot.gd" id="5_spawn"]
+[ext_resource type="Texture2D" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_ruined_chapel.png" id="6_background"]
+
+[node name="RuinedChapelBattlefield" type="Node2D" unique_id=275786906]
+script = ExtResource("1_field")
+battlefield_id = &"ruined_chapel"
+display_name = "Ruined Chapel"
+
+[node name="BackgroundLayer" type="Node2D" parent="." unique_id=344583733]
+z_index = -100
+
+[node name="BackgroundArt" type="Sprite2D" parent="BackgroundLayer" unique_id=1706674338]
+position = Vector2(0, -8.57143)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("6_background")
+centered = false
+
+[node name="BattlefieldShade" type="Polygon2D" parent="BackgroundLayer" unique_id=831633829]
+z_index = 1
+color = Color(0.025, 0.02, 0.018, 0.08)
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+
+[node name="Zones" type="Node2D" parent="." unique_id=409785935]
+
+[node name="RearGallery" type="Polygon2D" parent="Zones" unique_id=1212331281]
+z_index = -60
+color = Color(0.3, 0.62, 1, 0.24)
+polygon = PackedVector2Array(740, 455, 1180, 455, 1230, 530, 700, 530)
+script = ExtResource("2_zone")
+zone_id = &"rear_gallery"
+display_name = "Rear Gallery"
+connected_zone_ids = Array[StringName]([&"gallery_approach"])
+authoring_color = Color(0.3, 0.62, 1, 0.24)
+
+[node name="GalleryApproach" type="Polygon2D" parent="Zones" unique_id=817968889]
+z_index = -60
+color = Color(0.31354195, 0.7071502, 0.44601202, 0.23921569)
+polygon = PackedVector2Array(670, 545, 1250, 545, 1280, 625, 640, 625)
+script = ExtResource("2_zone")
+zone_id = &"gallery_approach"
+display_name = "Gallery Approach"
+connected_zone_ids = Array[StringName]([&"central_nave", &"rear_gallery"])
+authoring_color = Color(0.31354195, 0.7071502, 0.44601202, 0.23921569)
+
+[node name="LeftNave" type="Polygon2D" parent="Zones" unique_id=2107764333]
+z_index = -60
+color = Color(0.2, 0.84, 0.66, 0.22)
+polygon = PackedVector2Array(280, 640, 750, 640, 750, 790, 300, 790)
+script = ExtResource("2_zone")
+zone_id = &"left_nave"
+display_name = "Left Nave"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+authoring_color = Color(0.2, 0.84, 0.66, 0.22)
+
+[node name="CentralNave" type="Polygon2D" parent="Zones" unique_id=1503610]
+z_index = -60
+color = Color(0.94, 0.72, 0.22, 0.22)
+polygon = PackedVector2Array(790, 640, 1130, 640, 1130, 790, 790, 790)
+script = ExtResource("2_zone")
+zone_id = &"central_nave"
+display_name = "Central Nave"
+connected_zone_ids = Array[StringName]([&"left_nave", &"right_nave", &"foreground_nave", &"gallery_approach"])
+authoring_color = Color(0.94, 0.72, 0.22, 0.22)
+
+[node name="RightNave" type="Polygon2D" parent="Zones" unique_id=1419178403]
+z_index = -60
+color = Color(0.92, 0.36, 0.28, 0.22)
+polygon = PackedVector2Array(1170, 640, 1640, 640, 1620, 790, 1170, 790)
+script = ExtResource("2_zone")
+zone_id = &"right_nave"
+display_name = "Right Nave"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+authoring_color = Color(0.92, 0.36, 0.28, 0.22)
+
+[node name="ForegroundNave" type="Polygon2D" parent="Zones" unique_id=254280417]
+z_index = -60
+color = Color(0.72, 0.34, 0.92, 0.22)
+polygon = PackedVector2Array(180, 805, 1740, 805, 1920, 1080, 0, 1080)
+script = ExtResource("2_zone")
+zone_id = &"foreground_nave"
+display_name = "Foreground Nave"
+connected_zone_ids = Array[StringName]([&"central_nave"])
+authoring_color = Color(0.72, 0.34, 0.92, 0.22)
+
+[node name="Anchors" type="Node2D" parent="." unique_id=214413912]
+
+[node name="RearGallery" type="Polygon2D" parent="Anchors" unique_id=1350658783]
+z_index = -40
+polygon = PackedVector2Array(740, 465, 1180, 465, 1230, 520, 700, 520)
+script = ExtResource("3_anchor")
+anchor_id = &"rear_gallery"
+display_name = "Gallery Rail"
+zone_id = &"rear_gallery"
+connected_anchor_ids = Array[StringName]([&"gallery_approach"])
+capacity = 2
+battler_scale = 0.65
+visual_order = 10
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RearGallery" unique_id=1916339305]
+z_index = 2
+position = Vector2(850, 505)
+script = ExtResource("4_position")
+
+[node name="Position1" type="Marker2D" parent="Anchors/RearGallery" unique_id=1288456596]
+z_index = 2
+position = Vector2(1060, 505)
+script = ExtResource("4_position")
+position_index = 1
+
+[node name="GalleryApproach" type="Polygon2D" parent="Anchors" unique_id=1394127785]
+z_index = -40
+polygon = PackedVector2Array(670, 555, 1250, 555, 1280, 615, 640, 615)
+script = ExtResource("3_anchor")
+anchor_id = &"gallery_approach"
+display_name = "Gallery Approach"
+zone_id = &"gallery_approach"
+connected_anchor_ids = Array[StringName]([&"central_nave", &"rear_gallery"])
+capacity = 2
+battler_scale = 0.8
+visual_order = 15
+visual_depth_band = &"background"
+
+[node name="Position0" type="Marker2D" parent="Anchors/GalleryApproach" unique_id=1710594990]
+z_index = 2
+position = Vector2(850, 600)
+script = ExtResource("4_position")
+
+[node name="Position1" type="Marker2D" parent="Anchors/GalleryApproach" unique_id=374076966]
+z_index = 2
+position = Vector2(1070, 600)
+script = ExtResource("4_position")
+position_index = 1
+
+[node name="LeftNave" type="Polygon2D" parent="Anchors" unique_id=336823090]
+z_index = -40
+polygon = PackedVector2Array(300, 650, 735, 650, 735, 780, 300, 780)
+script = ExtResource("3_anchor")
+anchor_id = &"left_nave"
+display_name = "Left Pews"
+zone_id = &"left_nave"
+connected_anchor_ids = Array[StringName]([&"central_nave"])
+battler_scale = 1.0
+visual_order = 20
+visual_depth_band = &"midground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/LeftNave" unique_id=1529973305]
+z_index = 2
+position = Vector2(400, 755)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position1" type="Marker2D" parent="Anchors/LeftNave" unique_id=73583861]
+z_index = 2
+position = Vector2(620, 755)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position2" type="Marker2D" parent="Anchors/LeftNave" unique_id=215152782]
+z_index = 2
+position = Vector2(400, 680)
+script = ExtResource("4_position")
+position_index = 2
+
+[node name="Position3" type="Marker2D" parent="Anchors/LeftNave" unique_id=1618379879]
+z_index = 2
+position = Vector2(620, 680)
+script = ExtResource("4_position")
+position_index = 3
+
+[node name="CentralNave" type="Polygon2D" parent="Anchors" unique_id=1504005855]
+z_index = -40
+polygon = PackedVector2Array(805, 650, 1115, 650, 1115, 780, 805, 780)
+script = ExtResource("3_anchor")
+anchor_id = &"central_nave"
+display_name = "Nave Crossing"
+zone_id = &"central_nave"
+connected_anchor_ids = Array[StringName]([&"left_nave", &"right_nave", &"foreground_center", &"gallery_approach"])
+battler_scale = 1.0
+visual_order = 20
+visual_depth_band = &"midground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/CentralNave" unique_id=1445715049]
+z_index = 2
+position = Vector2(870, 755)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position1" type="Marker2D" parent="Anchors/CentralNave" unique_id=955899553]
+z_index = 2
+position = Vector2(1050, 755)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position2" type="Marker2D" parent="Anchors/CentralNave" unique_id=88827202]
+z_index = 2
+position = Vector2(870, 680)
+script = ExtResource("4_position")
+position_index = 2
+
+[node name="Position3" type="Marker2D" parent="Anchors/CentralNave" unique_id=1615098477]
+z_index = 2
+position = Vector2(1050, 680)
+script = ExtResource("4_position")
+position_index = 3
+
+[node name="RightNave" type="Polygon2D" parent="Anchors" unique_id=1644283738]
+z_index = -40
+polygon = PackedVector2Array(1185, 650, 1620, 650, 1600, 780, 1185, 780)
+script = ExtResource("3_anchor")
+anchor_id = &"right_nave"
+display_name = "Right Pews"
+zone_id = &"right_nave"
+connected_anchor_ids = Array[StringName]([&"central_nave"])
+battler_scale = 1.0
+visual_order = 20
+visual_depth_band = &"midground"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RightNave" unique_id=1069266489]
+z_index = 2
+position = Vector2(1300, 755)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position1" type="Marker2D" parent="Anchors/RightNave" unique_id=792451171]
+z_index = 2
+position = Vector2(1510, 755)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.1
+
+[node name="Position2" type="Marker2D" parent="Anchors/RightNave" unique_id=761137163]
+z_index = 2
+position = Vector2(1300, 680)
+script = ExtResource("4_position")
+position_index = 2
+
+[node name="Position3" type="Marker2D" parent="Anchors/RightNave" unique_id=869310472]
+z_index = 2
+position = Vector2(1510, 680)
+script = ExtResource("4_position")
+position_index = 3
+
+[node name="ForegroundCenter" type="Polygon2D" parent="Anchors" unique_id=209000683]
+z_index = -40
+polygon = PackedVector2Array(740, 820, 1130, 820, 1130, 1050, 740, 1050)
+script = ExtResource("3_anchor")
+anchor_id = &"foreground_center"
+display_name = "Foreground Center"
+zone_id = &"foreground_nave"
+connected_anchor_ids = Array[StringName]([&"central_nave", &"foreground_left", &"foreground_right"])
+visual_order = 30
+visual_depth_band = &"foreground"
+battler_scale = 1.5
+
+[node name="Position0" type="Marker2D" parent="Anchors/ForegroundCenter" unique_id=1502973425]
+z_index = 2
+position = Vector2(850, 950)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/ForegroundCenter" unique_id=1671677923]
+z_index = 2
+position = Vector2(1020, 950)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position2" type="Marker2D" parent="Anchors/ForegroundCenter" unique_id=39833635]
+z_index = 2
+position = Vector2(850, 850)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position3" type="Marker2D" parent="Anchors/ForegroundCenter" unique_id=1413170924]
+z_index = 2
+position = Vector2(1020, 850)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="ForegroundLeft" type="Polygon2D" parent="Anchors" unique_id=1140382324]
+z_index = -40
+polygon = PackedVector2Array(200, 820, 700, 820, 700, 1050, 150, 1050)
+script = ExtResource("3_anchor")
+anchor_id = &"foreground_left"
+display_name = "Foreground Left"
+zone_id = &"foreground_nave"
+connected_anchor_ids = Array[StringName]([&"foreground_center"])
+visual_order = 30
+visual_depth_band = &"foreground"
+battler_scale = 1.5
+
+[node name="Position0" type="Marker2D" parent="Anchors/ForegroundLeft" unique_id=256199335]
+z_index = 2
+position = Vector2(380, 950)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/ForegroundLeft" unique_id=1271274441]
+z_index = 2
+position = Vector2(570, 950)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position2" type="Marker2D" parent="Anchors/ForegroundLeft" unique_id=791130521]
+z_index = 2
+position = Vector2(380, 850)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position3" type="Marker2D" parent="Anchors/ForegroundLeft" unique_id=1704091213]
+z_index = 2
+position = Vector2(570, 850)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="ForegroundRight" type="Polygon2D" parent="Anchors" unique_id=1115598241]
+z_index = -40
+polygon = PackedVector2Array(1170, 820, 1710, 820, 1770, 1050, 1170, 1050)
+script = ExtResource("3_anchor")
+anchor_id = &"foreground_right"
+display_name = "Foreground Right"
+zone_id = &"foreground_nave"
+connected_anchor_ids = Array[StringName]([&"foreground_center"])
+visual_order = 30
+visual_depth_band = &"foreground"
+battler_scale = 1.5
+
+[node name="Position0" type="Marker2D" parent="Anchors/ForegroundRight" unique_id=1289072305]
+z_index = 2
+position = Vector2(1300, 950)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position1" type="Marker2D" parent="Anchors/ForegroundRight" unique_id=2134417394]
+z_index = 2
+position = Vector2(1500, 950)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.7
+
+[node name="Position2" type="Marker2D" parent="Anchors/ForegroundRight" unique_id=919476455]
+z_index = 2
+position = Vector2(1300, 850)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="Position3" type="Marker2D" parent="Anchors/ForegroundRight" unique_id=479200477]
+z_index = 2
+position = Vector2(1500, 850)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.6
+
+[node name="SpawnSlots" type="Node2D" parent="." unique_id=1880881574]
+
+[node name="Party1" type="Marker2D" parent="SpawnSlots" unique_id=431789923]
+z_index = -20
+position = Vector2(570, 850)
+script = ExtResource("5_spawn")
+slot_id = &"party_1"
+display_name = "Party Left"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"frontline"])
+
+[node name="Party2" type="Marker2D" parent="SpawnSlots" unique_id=1614637971]
+z_index = -20
+position = Vector2(850, 850)
+script = ExtResource("5_spawn")
+slot_id = &"party_2"
+display_name = "Party Centre"
+faction = 0
+role_tags = Array[StringName]([&"party_entry"])
+
+[node name="Party3" type="Marker2D" parent="SpawnSlots" unique_id=1130091865]
+z_index = -20
+position = Vector2(1300, 950)
+script = ExtResource("5_spawn")
+slot_id = &"party_3"
+display_name = "Party Right"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"support"])
+
+[node name="Enemy1" type="Marker2D" parent="SpawnSlots" unique_id=1446370380]
+z_index = -20
+position = Vector2(1050, 755)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_1"
+display_name = "Enemy Centre"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"frontline"])
+
+[node name="Enemy2" type="Marker2D" parent="SpawnSlots" unique_id=522341814]
+z_index = -20
+position = Vector2(400, 755)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_2"
+display_name = "Enemy Left"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"flank"])
+
+[node name="Enemy3" type="Marker2D" parent="SpawnSlots" unique_id=1516023262]
+z_index = -20
+position = Vector2(1300, 755)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_3"
+display_name = "Enemy Right"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"support"])
+
+[node name="Enemy4" type="Marker2D" parent="SpawnSlots" unique_id=445502701]
+z_index = -20
+position = Vector2(850, 505)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_4"
+display_name = "Enemy Rear"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"rear"])
+
+[node name="Enemy5" type="Marker2D" parent="SpawnSlots" unique_id=2034359347]
+z_index = -20
+position = Vector2(870, 680)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_5"
+display_name = "Enemy Centre Reserve"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry"])
+
+[node name="Enemy6" type="Marker2D" parent="SpawnSlots" unique_id=1647290060]
+z_index = -20
+position = Vector2(620, 680)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_6"
+display_name = "Enemy Left Reserve"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry"])
+
+[node name="ForegroundProps" type="Node2D" parent="." unique_id=1348975636]

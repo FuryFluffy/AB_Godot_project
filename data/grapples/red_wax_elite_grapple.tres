@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="GrappleTemplateDefinition" format=3 uid="uid://dic7j1qq5sm8s"]
+
+[ext_resource type="Script" uid="uid://ioho2xwus6yi" path="res://scripts/data/grapple/grapple_template_definition.gd" id="1_template"]
+[ext_resource type="Script" uid="uid://ci6353gn53ilg" path="res://scripts/data/grapple/grapple_stage_definition.gd" id="2_stage"]
+
+[sub_resource type="Resource" id="Stage1"]
+script = ExtResource("2_stage")
+display_name = "Marked"
+corruption_change = 1
+resolve_change = -1
+maximum_holds = 1
+
+[sub_resource type="Resource" id="Stage2"]
+script = ExtResource("2_stage")
+stage_number = 2
+display_name = "Wax-Bound"
+corruption_change = 2
+resolve_change = -2
+maximum_holds = 1
+
+[sub_resource type="Resource" id="Stage3"]
+script = ExtResource("2_stage")
+stage_number = 3
+display_name = "Consecrated"
+corruption_change = 3
+resolve_change = -3
+maximum_holds = 1
+
+[sub_resource type="Resource" id="Stage4"]
+script = ExtResource("2_stage")
+stage_number = 4
+display_name = "Rite Complete"
+corruption_change = 6
+resolve_change = -6
+is_climax = true
+
+[resource]
+script = ExtResource("1_template")
+template_id = &"red_wax_elite_grapple"
+display_name = "Red-Wax Rite"
+combined_visual_prefix = "RW"
+stages = Array[ExtResource("2_stage")]([SubResource("Stage1"), SubResource("Stage2"), SubResource("Stage3"), SubResource("Stage4")])
+grapple_cooldown_activations = 1

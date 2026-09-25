@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomEventSourceDefinition" format=3 uid="uid://onrwhxwxd1oy"]
+
+[ext_resource type="Resource" uid="uid://ccpxdm680avyu" path="res://data/exploration/events/pools/butlers_office_event_pool.tres" id="1_5ygmk"]
+[ext_resource type="Script" uid="uid://d1ur56782s4b6" path="res://scripts/exploration/events/room_event_source_definition.gd" id="1_h4rdg"]
+
+[resource]
+script = ExtResource("1_h4rdg")
+source_id = &"butlers_office_events"
+pool = ExtResource("1_5ygmk")
+minimum_draws = 1
+metadata/_custom_type_script = "uid://d1ur56782s4b6"

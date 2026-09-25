@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/apply_regeneration.tres" id="3_effect"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"regeneration"
+display_name = "Regeneration"
+description = "Spend 3 MP to restore 1 HP at the target's side-phase start for 3 ticks. Regeneration ends if the target reaches 0 HP."
+school = 7
+tier = 2
+tags = 1
+action_cost = 1
+mp_cost = 3
+targeting_mode = 1
+maximum_zone_distance = 0
+requires_same_zone = true
+is_magic = true
+can_target_self = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_effect")])
+

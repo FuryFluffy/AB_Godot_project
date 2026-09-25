@@ -1,0 +1,113 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://uwuj7vexubqe"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="2_1oilt"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://bsv46mai0ojkr" path="res://scripts/data/dialogue/dialogue_condition_group.gd" id="4_group"]
+[ext_resource type="Script" uid="uid://xrisyebbpq6k" path="res://scripts/data/dialogue/dialogue_condition_definition.gd" id="5_condition"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="6_item"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="7_outcome"]
+[ext_resource type="Texture2D" uid="uid://brfwm2blmq7mv" path="res://assets/characters/heroines/lysandra_temp.png" id="8_lysandra_stage"]
+[ext_resource type="Texture2D" uid="uid://cprnckenfjr0y" path="res://assets/characters/heroines/portraits_lysandra_temp.png" id="9_lysandra_portrait"]
+
+[sub_resource type="Resource" id="Outcome_calm_choice"]
+script = ExtResource("7_outcome")
+kind = 1
+subject_id = &"dialogue_test_calm"
+
+[sub_resource type="Resource" id="Choice_calm"]
+script = ExtResource("3_choice")
+choice_id = &"dialogue_test_calm"
+text = "Examine the sealed cup carefully."
+responder_id = &"lysandra"
+next_node_id = &"item_gate"
+outcomes = Array[ExtResource("7_outcome")]([SubResource("Outcome_calm_choice")])
+
+[sub_resource type="Resource" id="Condition_mira_party"]
+script = ExtResource("5_condition")
+kind = 1
+subject_id = &"mira"
+
+[sub_resource type="Resource" id="Group_mira_party"]
+script = ExtResource("4_group")
+conditions = Array[ExtResource("5_condition")]([SubResource("Condition_mira_party")])
+
+[sub_resource type="Resource" id="Outcome_mira_choice"]
+script = ExtResource("7_outcome")
+kind = 1
+subject_id = &"dialogue_test_mira"
+
+[sub_resource type="Resource" id="Choice_mira"]
+script = ExtResource("3_choice")
+choice_id = &"dialogue_test_mira"
+text = "You know traps. What do you see?"
+responder_id = &"lysandra"
+conditions = SubResource("Group_mira_party")
+failed_condition_presentation = 1
+unavailable_reason = "Mira must be in the current party."
+next_node_id = &"item_gate"
+outcomes = Array[ExtResource("7_outcome")]([SubResource("Outcome_mira_choice")])
+
+[sub_resource type="Resource" id="Node_start"]
+script = ExtResource("2_node")
+node_id = &"start"
+speaker_id = &"narrator"
+speaker_name = "The Castle"
+left_actor_sprite = ExtResource("8_lysandra_stage")
+text = "A shallow silver cup waits beneath a skin of red wax."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_calm"), SubResource("Choice_mira")])
+
+[sub_resource type="Resource" id="Outcome_consume_wine"]
+script = ExtResource("7_outcome")
+kind = 3
+subject_id = &"l01_warm_wine_flask"
+
+[sub_resource type="Resource" id="Outcome_set_wine_flag"]
+script = ExtResource("7_outcome")
+subject_id = &"dialogue_test_wine_offered"
+
+[sub_resource type="Resource" id="Item_warm_wine"]
+script = ExtResource("6_item")
+item_id = &"l01_warm_wine_flask"
+next_node_id = &"rejoin"
+outcomes = Array[ExtResource("7_outcome")]([SubResource("Outcome_consume_wine"), SubResource("Outcome_set_wine_flag")])
+
+[sub_resource type="Resource" id="Node_item_gate"]
+script = ExtResource("2_node")
+node_id = &"item_gate"
+speaker_id = &"narrator"
+speaker_name = "The Castle"
+left_actor_sprite = ExtResource("8_lysandra_stage")
+text = "The wax softens only when offered something already warmed."
+item_policy = 3
+item_options = Array[ExtResource("6_item")]([SubResource("Item_warm_wine")])
+
+[sub_resource type="Resource" id="Node_rejoin"]
+script = ExtResource("2_node")
+node_id = &"rejoin"
+speaker_id = &"narrator"
+speaker_name = "The Castle"
+left_actor_sprite = ExtResource("8_lysandra_stage")
+text = "Both approaches lead here. The cup accepts the wine and releases its seal."
+default_next_node_id = &"end"
+
+[sub_resource type="Resource" id="Node_end"]
+script = ExtResource("2_node")
+node_id = &"end"
+speaker_id = &"lysandra"
+speaker_name = "Lysandra"
+portrait = ExtResource("9_lysandra_portrait")
+left_actor_sprite = ExtResource("8_lysandra_stage")
+text = "Then the Castle can keep its cup."
+mandatory = false
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"dialogue_foundation_test"
+start_node_id = &"start"
+trigger_kind = &"development"
+trigger_id = &"event_room_screen_developer_test"
+completion_kind = &"development"
+completion_id = &"dialogue_foundation_test_completed"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_start"), SubResource("Node_item_gate"), SubResource("Node_rejoin"), SubResource("Node_end")])

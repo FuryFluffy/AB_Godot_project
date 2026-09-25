@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnemyRulebookDefinition" format=3 uid="uid://c6pelmo2g5lrq"]
+
+[ext_resource type="Script" uid="uid://uqw71glrm6lx" path="res://scripts/data/ai/enemy_rule_definition.gd" id="1_rule"]
+[ext_resource type="Script" uid="uid://jdqyagtsapyh" path="res://scripts/data/ai/enemy_rulebook_definition.gd" id="2_book"]
+
+[sub_resource type="Resource" id="RuleAttack"]
+script = ExtResource("1_rule")
+rule_id = &"cast_at_weakest"
+display_name = "Cast At Weakest"
+condition = 1
+action = 0
+target_policy = 2
+
+[sub_resource type="Resource" id="RuleMove"]
+script = ExtResource("1_rule")
+rule_id = &"seek_clear_cast"
+display_name = "Seek A Clear Cast"
+condition = 2
+action = 1
+target_policy = 2
+
+[sub_resource type="Resource" id="RuleWait"]
+script = ExtResource("1_rule")
+rule_id = &"wait_if_blocked"
+display_name = "Wait If Blocked"
+target_policy = 2
+
+[resource]
+script = ExtResource("2_book")
+rulebook_id = &"prayer_rag_novice_rules"
+display_name = "Prayer-Rag Novice — Distant Pressure"
+rules = Array[ExtResource("1_rule")]([SubResource("RuleAttack"), SubResource("RuleMove"), SubResource("RuleWait")])
+react_to_enemy_moves = false

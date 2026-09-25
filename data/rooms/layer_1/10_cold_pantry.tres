@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://dq6npjoraa1es"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://ds1ekda0sr80o" path="res://assets/backgrounds/layer_1/sdxl_curated/06_Cold_Pantry.png" id="3_texture_0"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"cold_pantry"
+display_name = "Cold Pantry"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Cold Pantry"
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"cold_pantry"
+display_name = "Cold Pantry"
+canonical_order = 10
+authoring_summary = "Shelves, hooks, preserved food, strange freshness."
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = SubResource("EventRoomDefinition_1")

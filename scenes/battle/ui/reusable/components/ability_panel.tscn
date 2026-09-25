@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/presentation/ability_panel.gd" id="1"]
+[ext_resource type="StyleBox" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="2_frame"]
+
+[node name="AbilityPanel" type="PanelContainer" node_paths=PackedStringArray("title_label", "ability_list", "empty_label", "cancel_button")]
+z_index = 60
+custom_minimum_size = Vector2(360, 260)
+layout_mode = 0
+offset_right = 360.0
+offset_bottom = 260.0
+mouse_filter = 0
+theme_override_styles/panel = ExtResource("2_frame")
+script = ExtResource("1")
+title_label = NodePath("Margin/Content/Header/TitleLabel")
+ability_list = NodePath("Margin/Content/AbilityScroll/AbilityList")
+empty_label = NodePath("Margin/Content/AbilityScroll/AbilityList/EmptyLabel")
+cancel_button = NodePath("Margin/Content/Header/BackButton")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="Content" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Margin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "ABILITIES"
+
+[node name="BackButton" type="Button" parent="Margin/Content/Header"]
+custom_minimum_size = Vector2(52, 34)
+layout_mode = 2
+tooltip_text = "Close Abilities."
+text = "BACK"
+
+[node name="AbilityScroll" type="ScrollContainer" parent="Margin/Content"]
+custom_minimum_size = Vector2(0, 192)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="AbilityList" type="VBoxContainer" parent="Margin/Content/AbilityScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="EmptyLabel" type="Label" parent="Margin/Content/AbilityScroll/AbilityList"]
+custom_minimum_size = Vector2(320, 54)
+layout_mode = 2
+text = "No active abilities are available."
+autowrap_mode = 2

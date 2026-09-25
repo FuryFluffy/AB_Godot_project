@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ApplyStatusAbilityEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/apply_status_ability_effect.gd" id="1_effect"]
+[ext_resource type="Resource" path="res://data/statuses/regeneration.tres" id="2_regeneration"]
+
+[resource]
+script = ExtResource("1_effect")
+effect_id = &"apply_regeneration"
+status = ExtResource("2_regeneration")
+status_is_magical = true
+status_is_dispellable = true
+requires_opposed_check = false

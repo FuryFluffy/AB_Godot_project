@@ -1,0 +1,127 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/dialogue/dialogue_panel.gd" id="1_panel"]
+[ext_resource type="StyleBox" uid="uid://b6m37hpkc3vee" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="2_frame"]
+
+[node name="DialoguePanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 100
+script = ExtResource("1_panel")
+
+[node name="LeftActor" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 390.0
+offset_top = -900.0
+offset_right = 865.0
+offset_bottom = -240.0
+grow_vertical = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RightActor" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -865.0
+offset_top = -900.0
+offset_right = -390.0
+offset_bottom = -240.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 382.0
+offset_top = -244.0
+offset_right = -112.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("2_frame")
+
+[node name="Margin" type="MarginContainer" parent="Frame"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Main" type="HBoxContainer" parent="Frame/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Portrait" type="TextureRect" parent="Frame/Margin/Main"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(132, 180)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Content" type="VBoxContainer" parent="Frame/Margin/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="Speaker" type="Label" parent="Frame/Margin/Main/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.75, 0.46, 1)
+theme_override_font_sizes/font_size = 20
+text = "Speaker"
+
+[node name="DialogueText" type="RichTextLabel" parent="Frame/Margin/Main/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_vertical = 3
+scroll_active = false
+autowrap_mode = 2
+text = "Dialogue text"
+
+[node name="ChoiceScroll" type="ScrollContainer" parent="Frame/Margin/Main/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ChoiceList" type="VBoxContainer" parent="Frame/Margin/Main/Content/ChoiceScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="ItemPrompt" type="Label" parent="Frame/Margin/Main/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.75, 0.46, 1)
+autowrap_mode = 2
+
+[node name="Continue" type="Button" parent="Frame/Margin/Main/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 34)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Continue"

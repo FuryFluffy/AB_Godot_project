@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_definition.gd" id="1_weapon"]
+
+[resource]
+script = ExtResource("1_weapon")
+equipment_id = &"chain_thrall_chain"
+display_name = "Dragging Restraint Chain"
+allowed_slots = Array[int]([0])
+condition_maximum = 8
+destructible = true
+rarity = 2
+salvage_material_id = &"mat_l02_chain_links"
+skill = 24
+attribute = 0
+attack_range = 1
+maximum_zone_distance = 1
+can_parry = false
+is_two_handed = true

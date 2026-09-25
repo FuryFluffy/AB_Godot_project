@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://tf0h1nmxx8ub"]
+
+[ext_resource type="Script" uid="uid://62yia3iupq5o" path="res://scripts/battle/encounter_coordinator.gd" id="1_coordinator"]
+[ext_resource type="Script" uid="uid://dicymtc22pfha" path="res://scripts/battle/presentation/battlefield_overlay.gd" id="2_overlay"]
+[ext_resource type="Script" uid="uid://b2hylwb2r842w" path="res://scripts/battle/presentation/battlefield_interaction_overlay.gd" id="3_input"]
+[ext_resource type="Resource" uid="uid://cktolfimhs5vy" path="res://data/encounters/opening_servant_corridor.tres" id="3_isndn"]
+[ext_resource type="Resource" path="res://data/items/layer_1_2_item_catalog.tres" id="4_items"]
+[ext_resource type="PackedScene" path="res://scenes/battle/runtime/combat_engine.tscn" id="5_engine"]
+[ext_resource type="PackedScene" path="res://scenes/battle/runtime/combat_presenter.tscn" id="6_presenter"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/combat_hud.tscn" id="7_hud"]
+[ext_resource type="Resource" path="res://data/battlers/battler_catalog.tres" id="8_battlers"]
+[ext_resource type="Script" uid="uid://b4v0flbxn12q1" path="res://scripts/battle/presentation/battle_marker_factory.gd" id="10_factory"]
+[ext_resource type="PackedScene" path="res://scenes/battle/presentation/battle_marker.tscn" id="11_marker"]
+[ext_resource type="Resource" uid="uid://b4scg85j1etkm" path="res://data/presentation/battler_view_catalog.tres" id="12_views"]
+[ext_resource type="Resource" path="res://data/presentation/battler_visual_profile_catalog.tres" id="13_visual_profiles"]
+[ext_resource type="Resource" path="res://data/presentation/combat_stage_catalog.tres" id="14_stage_catalog"]
+[ext_resource type="Script" path="res://scripts/battle/presentation/combat_stage_presenter.gd" id="15_stage_presenter"]
+
+[node name="CombatEncounter" type="Node" unique_id=703476071 node_paths=PackedStringArray("battlefield_host", "marker_host", "marker_factory", "combat_stage_presenter", "battlefield_input_overlay", "battlefield_overlay", "combat_engine", "combat_presenter", "reusable_hud")]
+script = ExtResource("1_coordinator")
+battler_catalog = ExtResource("8_battlers")
+default_encounter_template = ExtResource("3_isndn")
+battlefield_host = NodePath("Battlefield/BattlefieldHost")
+marker_host = NodePath("Battlefield/MarkerHost")
+marker_factory = NodePath("BattleMarkerFactory")
+combat_stage_catalog = ExtResource("14_stage_catalog")
+combat_stage_presenter = NodePath("CombatStagePresenter")
+battlefield_input_overlay = NodePath("Battlefield/BattlefieldInputOverlay")
+item_catalog = ExtResource("4_items")
+base_seed = 1
+battlefield_overlay = NodePath("Battlefield/BattlefieldOverlay")
+combat_engine = NodePath("CombatEngine")
+combat_presenter = NodePath("CombatPresenter")
+reusable_hud = NodePath("ReusableCombatHUD")
+
+[node name="CombatEngine" parent="." unique_id=1532002182 instance=ExtResource("5_engine")]
+
+[node name="CombatPresenter" parent="." unique_id=890153809 instance=ExtResource("6_presenter")]
+
+[node name="ReusableCombatHUD" parent="." unique_id=1618724564 instance=ExtResource("7_hud")]
+
+[node name="BattleMarkerFactory" type="Node" parent="." unique_id=1531752890]
+script = ExtResource("10_factory")
+marker_scene = ExtResource("11_marker")
+view_catalog = ExtResource("12_views")
+visual_profile_catalog = ExtResource("13_visual_profiles")
+
+[node name="CombatStagePresenter" type="Node" parent="."]
+script = ExtResource("15_stage_presenter")
+
+[node name="Battlefield" type="Node2D" parent="." unique_id=1530812062]
+
+[node name="BattlefieldHost" type="Node" parent="Battlefield" unique_id=273389755]
+
+[node name="BattlefieldOverlay" type="Node2D" parent="Battlefield" unique_id=15376634]
+z_index = -1
+script = ExtResource("2_overlay")
+
+[node name="BattlefieldInputOverlay" type="Node2D" parent="Battlefield" unique_id=1718404971]
+z_index = 100
+script = ExtResource("3_input")
+
+[node name="MarkerHost" type="Node2D" parent="Battlefield" unique_id=1097411772]

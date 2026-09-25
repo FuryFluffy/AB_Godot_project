@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://cpc5mrw0s5omt"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://dcqqwjai6qf6d" path="res://assets/backgrounds/layer_2/sdxl_curated/06_Farthest_Cell_Pre_Refuge.png" id="3_texture_0"]
+[ext_resource type="Texture2D" uid="uid://cwiumx7av27p8" path="res://assets/backgrounds/layer_2/sdxl_curated/07_Bloom_Refuge_Transformed.png" id="4_texture_1"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"farthest_cell"
+display_name = "Farthest Cell / Future Bloom Refuge"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"pre_refuge"
+display_name = "Farthest Cell — Pre-Refuge"
+texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_2"]
+script = ExtResource("2_visual")
+variant_id = &"refuge_transformed"
+display_name = "Bloom Refuge — Transformed"
+presentation_uses = 4
+texture = ExtResource("4_texture_1")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"farthest_cell"
+display_name = "Farthest Cell / Future Bloom Refuge"
+layer_number = 2
+canonical_order = 6
+authoring_summary = "Worst cell in the Castle. Later becomes the Bloom Refuge."
+authoring_tags = Array[StringName]([&"refuge_origin", &"required_narrative"])
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1"), SubResource("Visual_2")])
+exploration_definition = SubResource("EventRoomDefinition_1")

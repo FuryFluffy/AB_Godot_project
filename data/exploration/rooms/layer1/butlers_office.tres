@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3 uid="uid://d3njt2r2a0uig"]
+
+[ext_resource type="PackedScene" uid="uid://tgv2ng8gvk6n" path="res://scenes/exploration/rooms/layer1/butlers_office.tscn" id="1_m67uy"]
+[ext_resource type="Resource" uid="uid://nceu7isk3ehd" path="res://data/exploration/events/profiles/layer1/butlers_office_event_profile.tres" id="1_sh760"]
+[ext_resource type="Resource" uid="uid://dym72psdvae40" path="res://data/exploration/loot_profiles/layer1/butlers_office_loot_profile.tres" id="1_xh1gv"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="1_ynjwc"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_butlers_office_observation.tres" id="2_dialogue"]
+
+[resource]
+script = ExtResource("1_ynjwc")
+room_id = &"butlers_office"
+display_name = "Butler's Office"
+presentation_scene = ExtResource("1_m67uy")
+loot_profile = ExtResource("1_xh1gv")
+event_profile = ExtResource("1_sh760")
+entry_dialogue = ExtResource("2_dialogue")
+metadata/_custom_type_script = "uid://bquxrwpntoig1"

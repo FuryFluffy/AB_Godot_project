@@ -1,0 +1,113 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://bqg3m5ngqagg8"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Script" uid="uid://xrisyebbpq6k" path="res://scripts/data/dialogue/dialogue_condition_definition.gd" id="5_condition"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="5_s5e8b"]
+[ext_resource type="Script" uid="uid://bsv46mai0ojkr" path="res://scripts/data/dialogue/dialogue_condition_group.gd" id="6_group"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="7_transition"]
+
+[sub_resource type="Resource" id="Outcome_ledger_read"]
+script = ExtResource("4_outcome")
+scope = &"persistent"
+subject_id = &"servant_ledger_read"
+
+[sub_resource type="Resource" id="Choice_read"]
+script = ExtResource("3_choice")
+choice_id = &"servant_ledger_read_choice"
+text = "Read the ledger."
+next_node_id = &"ledger_finding"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_ledger_read")])
+
+[sub_resource type="Resource" id="Choice_leave"]
+script = ExtResource("3_choice")
+choice_id = &"servant_ledger_leave_choice"
+text = "Leave it closed."
+next_node_id = &"ledger_left"
+
+[sub_resource type="Resource" id="Node_prompt"]
+script = ExtResource("2_node")
+node_id = &"prompt"
+speaker_name = "Servant Ledger"
+text = "A ledger lies beneath a film of dust. The newest ink is still wet."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_read"), SubResource("Choice_leave")])
+mandatory = false
+
+[sub_resource type="Resource" id="Condition_seraphine"]
+script = ExtResource("5_condition")
+kind = 1
+subject_id = &"seraphine"
+
+[sub_resource type="Resource" id="Group_seraphine"]
+script = ExtResource("6_group")
+conditions = Array[ExtResource("5_condition")]([SubResource("Condition_seraphine")])
+
+[sub_resource type="Resource" id="Transition_seraphine"]
+script = ExtResource("7_transition")
+transition_id = &"ledger_seraphine_present"
+conditions = SubResource("Group_seraphine")
+next_node_id = &"seraphine_callback"
+
+[sub_resource type="Resource" id="Condition_mira"]
+script = ExtResource("5_condition")
+kind = 1
+subject_id = &"mira"
+
+[sub_resource type="Resource" id="Group_mira"]
+script = ExtResource("6_group")
+conditions = Array[ExtResource("5_condition")]([SubResource("Condition_mira")])
+
+[sub_resource type="Resource" id="Transition_mira"]
+script = ExtResource("7_transition")
+transition_id = &"ledger_mira_present"
+conditions = SubResource("Group_mira")
+next_node_id = &"mira_callback"
+
+[sub_resource type="Resource" id="Transition_lysandra"]
+script = ExtResource("7_transition")
+transition_id = &"ledger_lysandra_alone"
+next_node_id = &"lysandra_callback"
+
+[sub_resource type="Resource" id="Node_finding"]
+script = ExtResource("2_node")
+node_id = &"ledger_finding"
+speaker_name = "Lysandra"
+text = "Names, duties, punishments. Nearly every man's name has been crossed out. Not dismissed—removed from the accounting."
+automatic_transitions = Array[ExtResource("7_transition")]([SubResource("Transition_seraphine"), SubResource("Transition_mira"), SubResource("Transition_lysandra")])
+
+[sub_resource type="Resource" id="Node_seraphine"]
+script = ExtResource("2_node")
+node_id = &"seraphine_callback"
+speaker_name = "Seraphine"
+text = "This is not a memorial. Someone made absence into doctrine."
+
+[sub_resource type="Resource" id="Node_mira"]
+script = ExtResource("2_node")
+node_id = &"mira_callback"
+speaker_name = "Mira"
+text = "Then we remember the missing. That should annoy whoever kept the book."
+
+[sub_resource type="Resource" id="Node_lysandra"]
+script = ExtResource("2_node")
+node_id = &"lysandra_callback"
+speaker_name = "Lysandra"
+text = "A pattern is still evidence, even when the reason is hiding."
+
+[sub_resource type="Resource" id="Node_left"]
+script = ExtResource("2_node")
+node_id = &"ledger_left"
+speaker_name = "Lysandra"
+text = "Later, if later becomes useful."
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_1_servant_ledger_observation"
+start_node_id = &"prompt"
+trigger_kind = &"event_room_entry"
+trigger_id = &"servant_ledger_alcove"
+completion_kind = &"flag"
+completion_id = &"servant_ledger_read"
+completion_scope = &"persistent"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_prompt"), SubResource("Node_finding"), SubResource("Node_seraphine"), SubResource("Node_mira"), SubResource("Node_lysandra"), SubResource("Node_left")])

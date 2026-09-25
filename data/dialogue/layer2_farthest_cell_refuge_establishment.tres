@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://d1o8snmhmoow1"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="3_j03a7"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Texture2D" uid="uid://dcqqwjai6qf6d" path="res://assets/backgrounds/layer_2/sdxl_curated/06_Farthest_Cell_Pre_Refuge.png" id="5_background"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="6_qjfx4"]
+
+[sub_resource type="Resource" id="Node_warmth"]
+script = ExtResource("2_node")
+node_id = &"warmth"
+speaker_name = "The Farthest Cell"
+text = "Warmth enters the stone. The door locks from the inside."
+default_next_node_id = &"message"
+
+[sub_resource type="Resource" id="Node_message"]
+script = ExtResource("2_node")
+node_id = &"message"
+speaker_name = "The Castle"
+text = "Keep pushing through."
+default_next_node_id = &"bloom"
+
+[sub_resource type="Resource" id="Outcome_refuge_established"]
+script = ExtResource("4_outcome")
+scope = &"save"
+subject_id = &"refuge_ever_established"
+
+[sub_resource type="Resource" id="Outcome_resolve_arrival"]
+script = ExtResource("4_outcome")
+kind = 7
+subject_id = &"layer_2_farthest_cell_refuge_establishment"
+
+[sub_resource type="Resource" id="Choice_enter_refuge"]
+script = ExtResource("3_choice")
+choice_id = &"layer_2_farthest_cell_enter_refuge"
+text = "Enter the Refuge."
+responder_id = &"lysandra"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_refuge_established"), SubResource("Outcome_resolve_arrival")])
+
+[sub_resource type="Resource" id="Node_bloom"]
+script = ExtResource("2_node")
+node_id = &"bloom"
+speaker_name = "Bloom Refuge"
+text = "A violet crystal grows where the floor meets the wall. The worst cell in the Castle has become a refuge."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_enter_refuge")])
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_2_farthest_cell_refuge_establishment"
+start_node_id = &"warmth"
+trigger_kind = &"map_arrival"
+trigger_id = &"l2_refuge_farthest_cell"
+completion_kind = &"flag"
+completion_id = &"refuge_ever_established"
+completion_scope = &"save"
+background_override = ExtResource("5_background")
+nodes = Array[ExtResource("2_node")]([SubResource("Node_warmth"), SubResource("Node_message"), SubResource("Node_bloom")])

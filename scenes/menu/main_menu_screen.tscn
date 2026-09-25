@@ -1,0 +1,403 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/menu/main_menu_screen.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_1/sdxl_curated/01_Opening_Servant_Corridor.png" id="2_background"]
+[ext_resource type="StyleBox" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="3_frame"]
+
+[node name="MainMenuScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+mouse_filter = 2
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015, 0.012, 0.018, 0.74)
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = 58.0
+offset_right = -72.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="NavigationPanel" type="PanelContainer" parent="Margin/Layout"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_frame")
+
+[node name="Padding" type="MarginContainer" parent="Margin/Layout/NavigationPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 28
+
+[node name="Content" type="VBoxContainer" parent="Margin/Layout/NavigationPanel/Padding"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.88, 0.77, 1)
+theme_override_font_sizes/font_size = 48
+text = "ABYSSAL BLOOM"
+autowrap_mode = 2
+
+[node name="Subtitle" type="Label" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.73, 0.65, 0.61, 1)
+theme_override_font_sizes/font_size = 19
+text = "The Castle still keeps its appointments."
+autowrap_mode = 2
+
+[node name="Rule" type="HSeparator" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="Continue" type="Button" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "CONTINUE"
+
+[node name="NewCampaign" type="Button" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "NEW CAMPAIGN"
+
+[node name="LoadCampaign" type="Button" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "LOAD CAMPAIGN"
+
+[node name="Settings" type="Button" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SETTINGS"
+
+[node name="Quit" type="Button" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "QUIT"
+
+[node name="FlexibleSpace" type="Control" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Version" type="Label" parent="Margin/Layout/NavigationPanel/Padding/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.54, 0.52, 1)
+text = "Godot 4.7 • Production save-slot milestone"
+
+[node name="ContentPanel" type="PanelContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("3_frame")
+
+[node name="Padding" type="MarginContainer" parent="Margin/Layout/ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 34
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 34
+theme_override_constants/margin_bottom = 28
+
+[node name="Stack" type="Control" parent="Margin/Layout/ContentPanel/Padding"]
+layout_mode = 2
+
+[node name="HomePanel" type="VBoxContainer" parent="Margin/Layout/ContentPanel/Padding/Stack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="Header" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/HomePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "RETURN TO THE CASTLE"
+
+[node name="Body" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/HomePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.79, 0.75, 0.7, 1)
+theme_override_font_sizes/font_size = 20
+text = "Campaign saves are kept at validated Bloom Refuge boundaries. The previous safe version of each slot is retained as a recovery backup."
+autowrap_mode = 2
+
+[node name="ContinueSummary" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/HomePanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "No campaign save is available."
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="Boundary" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/HomePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.61, 0.48, 1)
+text = "Active-run resume is intentionally reserved for the next persistence pass."
+autowrap_mode = 2
+
+[node name="NewPanel" type="VBoxContainer" parent="Margin/Layout/ContentPanel/Padding/Stack"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="Header" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "NEW CAMPAIGN"
+
+[node name="Description" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Choose a campaign slot and seed. The slot becomes durable when the Bloom Refuge is first established; active-run resume follows in the next persistence pass. An occupied slot requires confirmation before its campaign and backup are removed."
+autowrap_mode = 2
+
+[node name="SlotLabel" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+layout_mode = 2
+text = "Campaign Slot"
+
+[node name="NewCampaignSlot" type="OptionButton" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="SeedLabel" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+layout_mode = 2
+text = "Campaign Seed"
+
+[node name="NewCampaignSeed" type="LineEdit" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+placeholder_text = "Positive whole number"
+
+[node name="SeedHelp" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.64, 0.61, 1)
+text = "The tutorial Layer 1 layout remains tied to this campaign seed until the Blood Nun is defeated."
+autowrap_mode = 2
+
+[node name="Space" type="Control" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StartNewCampaign" type="Button" parent="Margin/Layout/ContentPanel/Padding/Stack/NewPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "BEGIN NEW CAMPAIGN"
+
+[node name="LoadPanel" type="VBoxContainer" parent="Margin/Layout/ContentPanel/Padding/Stack"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Header" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/LoadPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "CAMPAIGN SLOTS"
+
+[node name="Description" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/LoadPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.72, 0.68, 1)
+text = "A damaged primary save may be loaded from its previous safe backup."
+
+[node name="LoadSlotList" type="VBoxContainer" parent="Margin/Layout/ContentPanel/Padding/Stack/LoadPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="SettingsPanel" type="VBoxContainer" parent="Margin/Layout/ContentPanel/Padding/Stack"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="Header" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/SettingsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "SETTINGS"
+
+[node name="VolumeLabel" type="Label" parent="Margin/Layout/ContentPanel/Padding/Stack/SettingsPanel"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterVolume" type="HSlider" parent="Margin/Layout/ContentPanel/Padding/Stack/SettingsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="Fullscreen" type="CheckBox" parent="Margin/Layout/ContentPanel/Padding/Stack/SettingsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="SettingsSpace" type="Control" parent="Margin/Layout/ContentPanel/Padding/Stack/SettingsPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ApplySettings" type="Button" parent="Margin/Layout/ContentPanel/Padding/Stack/SettingsPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+text = "APPLY SETTINGS"
+
+[node name="MenuStatus" type="Label" parent="Margin/Layout/ContentPanel/Padding"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -52.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+text = "Select an option."
+autowrap_mode = 2
+
+[node name="ConfirmationOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Shade" type="ColorRect" parent="ConfirmationOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78)
+
+[node name="Center" type="CenterContainer" parent="ConfirmationOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="ConfirmationOverlay/Center"]
+custom_minimum_size = Vector2(680, 320)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_frame")
+
+[node name="Margin" type="MarginContainer" parent="ConfirmationOverlay/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 28
+
+[node name="Content" type="VBoxContainer" parent="ConfirmationOverlay/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="ConfirmationTitle" type="Label" parent="ConfirmationOverlay/Center/Panel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Confirm"
+
+[node name="ConfirmationMessage" type="Label" parent="ConfirmationOverlay/Center/Panel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 19
+text = "This action cannot be undone."
+autowrap_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="ConfirmationOverlay/Center/Panel/Margin/Content"]
+layout_mode = 2
+alignment = 2
+theme_override_constants/separation = 14
+
+[node name="ConfirmationCancel" type="Button" parent="ConfirmationOverlay/Center/Panel/Margin/Content/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 52)
+layout_mode = 2
+text = "Cancel"
+
+[node name="ConfirmationAccept" type="Button" parent="ConfirmationOverlay/Center/Panel/Margin/Content/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+text = "Confirm"

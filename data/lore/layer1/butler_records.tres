@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LoreEntryDefinition" format=3 uid="uid://7oi7gkmu5a1k"]
+
+[ext_resource type="Script" uid="uid://b2yl7c8kvert4" path="res://scripts/data/lore/lore_entry_definition.gd" id="1_obnux"]
+
+[resource]
+script = ExtResource("1_obnux")
+lore_id = &"butler_records"
+title = "Butler's Records"
+discovery_text = "You collect the butler's records.
+Routine inventories, servant schedules, and a marked series of absences suggest the household was failing long before the halls fell silent."
+archive_text = "outine inventories and servant schedules from the Butler's Office. Several names are crossed out or marked absent in an increasingly irregular pattern."
+metadata/_custom_type_script = "uid://b2yl7c8kvert4"

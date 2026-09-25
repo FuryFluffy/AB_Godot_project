@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomEventPoolDefinition" format=3 uid="uid://ctrorouyftok7"]
+
+[ext_resource type="Script" uid="uid://cu4bn2v0bfqhf" path="res://scripts/exploration/events/room_event_pool_entry_definition.gd" id="1_xg7nf"]
+[ext_resource type="Resource" uid="uid://gwwqp2yxwris" path="res://data/exploration/events/entries/bone_dice_cup_entry.tres" id="2_xg7nf"]
+[ext_resource type="Script" uid="uid://brpp5sklk4eo3" path="res://scripts/exploration/events/room_event_pool_definition.gd" id="3_mfgby"]
+
+[resource]
+script = ExtResource("3_mfgby")
+pool_id = &"global_event_pool"
+entries = Array[ExtResource("1_xg7nf")]([ExtResource("2_xg7nf")])
+metadata/_custom_type_script = "uid://brpp5sklk4eo3"

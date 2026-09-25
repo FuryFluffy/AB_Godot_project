@@ -1,0 +1,167 @@
+[gd_resource type="Resource" script_class="CombatStageCatalog" format=3 uid="uid://c1xpnk0t2yubq"]
+
+[ext_resource type="Script" uid="uid://d0pvr5uc1s87r" path="res://scripts/data/presentation/combat_stage_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://kxkdccpv7ofl" path="res://scripts/data/presentation/combat_stage_definition.gd" id="2_stage"]
+[ext_resource type="Script" uid="uid://bjqw8msm7ry4j" path="res://scripts/data/presentation/combat_stage_prop_definition.gd" id="3_prop"]
+[ext_resource type="Script" uid="uid://bcgd18iwc6kvh" path="res://scripts/data/presentation/combat_stage_binding_definition.gd" id="4_binding"]
+[ext_resource type="Texture2D" uid="uid://16mk1aaw7l1x" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_opening_servant_corridor.png" id="5_opening_bg"]
+[ext_resource type="Texture2D" uid="uid://c7u7ewso6g2tk" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_ruined_chapel.png" id="6_chapel_bg"]
+[ext_resource type="Texture2D" uid="uid://dserwqlldlbdw" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_blood_nun_processing_chapel.png" id="7_blood_bg"]
+[ext_resource type="Texture2D" uid="uid://cw108yjr7du3d" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_2/l02_room_jailers_containment_hall.png" id="8_jailer_bg"]
+[ext_resource type="Texture2D" uid="uid://ddkw50lfltkt4" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Props/Core_Shared/Layer_1/l01_prop_pew_long.png" id="9_pew"]
+[ext_resource type="Texture2D" uid="uid://cm8wmjxdp1uj" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Props/Core_Shared/Layer_2/l02_prop_divider_iron_long.png" id="10_divider"]
+[ext_resource type="Texture2D" uid="uid://c3up1sm8w4jqm" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_dining_service_hall.png" id="11_dining_bg"]
+
+[sub_resource type="Resource" id="BindingOpening"]
+script = ExtResource("4_binding")
+binding_id = &"opening_servant_corridor_opening_binding"
+exploration_room_id = &"opening_servant_corridor"
+trigger_id = &"opening_route_battle"
+encounter_id = &"layer_1_lysandra_opening_hollow_servant"
+combat_stage_id = &"opening_servant_corridor_stage"
+battlefield_id = &"opening_servant_corridor"
+completion_state_id = &"opening_cleared"
+return_target = &"layer_1_map"
+
+[sub_resource type="Resource" id="BindingSelectedL1"]
+script = ExtResource("4_binding")
+binding_id = &"selected_layer_1_battle_binding"
+exploration_room_id = &"lower_kitchen"
+accepts_runtime_room_identity = true
+trigger_id = &"selected_room_route_battle"
+encounter_id = &"layer_1_corrupted_butler_opening"
+combat_stage_id = &"selected_layer_1_battle_stage"
+battlefield_id = &"lower_kitchen"
+completion_state_id = &"mira_recruitment_battle_resolved"
+return_target = &"mira_recruitment_aftermath"
+
+[sub_resource type="Resource" id="BindingChapel"]
+script = ExtResource("4_binding")
+binding_id = &"ruined_chapel_recruitment_binding"
+exploration_room_id = &"ruined_chapel"
+trigger_id = &"false_prayer_dialogue_result"
+encounter_id = &"layer_1_seraphine_ruined_chapel"
+combat_stage_id = &"ruined_chapel_stage"
+battlefield_id = &"ruined_chapel"
+trigger_type = &"dialogue_result"
+completion_state_id = &"seraphine_recruitment_battle_resolved"
+return_target = &"seraphine_recruitment_aftermath"
+
+[sub_resource type="Resource" id="BindingBloodNun"]
+script = ExtResource("4_binding")
+binding_id = &"blood_nun_processing_chapel_binding"
+exploration_room_id = &"blood_nun_processing_chapel"
+trigger_id = &"processing_chapel_route_battle"
+encounter_id = &"layer_1_blood_nun"
+combat_stage_id = &"blood_nun_processing_chapel_stage"
+battlefield_id = &"blood_nun_processing_chapel"
+completion_state_id = &"blood_nun_battle_resolved"
+return_target = &"blood_nun_aftermath"
+
+[sub_resource type="Resource" id="BindingJailer"]
+script = ExtResource("4_binding")
+binding_id = &"jailer_containment_landing_binding"
+exploration_room_id = &"jailers_containment_hall"
+trigger_id = &"dungeon_exit_route_battle"
+encounter_id = &"layer_2_jailer_first_containment"
+combat_stage_id = &"jailer_containment_landing_stage"
+battlefield_id = &"jailer_containment_landing"
+completion_state_id = &"jailer_battle_resolved"
+return_target = &"jailer_victory_or_refuge_aftermath"
+
+[sub_resource type="Resource" id="BindingChainMaintenance"]
+script = ExtResource("4_binding")
+binding_id = &"layer_2_chain_maintenance_binding"
+exploration_room_id = &"chain_maintenance_room"
+trigger_id = &"kept_watch_route_battle"
+encounter_id = &"layer_2_farthest_cell_kept_watch"
+combat_stage_id = &"layer_2_chain_maintenance_stage"
+battlefield_id = &"layer_2_chain_maintenance"
+completion_state_id = &"kept_watch_battle_resolved"
+return_target = &"layer_2_map"
+
+[sub_resource type="Resource" id="BindingDiningServiceHall"]
+script = ExtResource("4_binding")
+binding_id = &"dining_service_hall_battle_binding"
+exploration_room_id = &"dining_service_hall"
+trigger_id = &"dining_service_hall_battle_route"
+encounter_id = &"layer_1_dining_service_hall"
+combat_stage_id = &"dining_service_hall_stage"
+battlefield_id = &"dining_service_hall"
+trigger_type = &"interaction"
+completion_state_id = &"dining_service_hall_battle_resolved"
+return_target = &"layer_1_map"
+
+[sub_resource type="Resource" id="StageOpening"]
+script = ExtResource("2_stage")
+stage_id = &"opening_servant_corridor_stage"
+battlefield_id = &"opening_servant_corridor"
+display_name = "Opening Servant Corridor Combat Stage"
+background_texture = ExtResource("5_opening_bg")
+
+[sub_resource type="Resource" id="StageSelectedL1"]
+script = ExtResource("2_stage")
+stage_id = &"selected_layer_1_battle_stage"
+battlefield_id = &"lower_kitchen"
+display_name = "Lower Kitchen — Corrupted Butler Recruitment"
+preserve_authored_background = true
+
+[sub_resource type="Resource" id="PropChapelPew"]
+script = ExtResource("3_prop")
+prop_id = &"ruined_chapel_front_pew"
+front_mask_texture = ExtResource("9_pew")
+position = Vector2(625, 1010)
+scale = Vector2(0.62, 0.62)
+depth_band = &"foreground"
+floor_anchor = Vector2(0.5, 0.84)
+
+[sub_resource type="Resource" id="StageChapel"]
+script = ExtResource("2_stage")
+stage_id = &"ruined_chapel_stage"
+battlefield_id = &"ruined_chapel"
+display_name = "Ruined Chapel Combat Stage"
+background_texture = ExtResource("6_chapel_bg")
+props = Array[ExtResource("3_prop")]([SubResource("PropChapelPew")])
+
+[sub_resource type="Resource" id="StageBloodNun"]
+script = ExtResource("2_stage")
+stage_id = &"blood_nun_processing_chapel_stage"
+battlefield_id = &"blood_nun_processing_chapel"
+display_name = "Blood Nun Processing Chapel Combat Stage"
+background_texture = ExtResource("7_blood_bg")
+
+[sub_resource type="Resource" id="PropJailerDivider"]
+script = ExtResource("3_prop")
+prop_id = &"jailer_front_iron_divider"
+front_mask_texture = ExtResource("10_divider")
+position = Vector2(1435, 995)
+scale = Vector2(0.58, 0.58)
+depth_band = &"foreground"
+floor_anchor = Vector2(0.5, 0.72)
+
+[sub_resource type="Resource" id="StageJailer"]
+script = ExtResource("2_stage")
+stage_id = &"jailer_containment_landing_stage"
+battlefield_id = &"jailer_containment_landing"
+display_name = "Jailer Containment Landing Combat Stage"
+background_texture = ExtResource("8_jailer_bg")
+props = Array[ExtResource("3_prop")]([SubResource("PropJailerDivider")])
+
+[sub_resource type="Resource" id="StageChainMaintenance"]
+script = ExtResource("2_stage")
+stage_id = &"layer_2_chain_maintenance_stage"
+battlefield_id = &"layer_2_chain_maintenance"
+display_name = "Chain Maintenance Combat Stage — Existing Tactical Composition"
+preserve_authored_background = true
+
+[sub_resource type="Resource" id="StageDiningServiceHall"]
+script = ExtResource("2_stage")
+stage_id = &"dining_service_hall_stage"
+battlefield_id = &"dining_service_hall"
+display_name = "Dining Service Hall Combat Stage"
+background_texture = ExtResource("11_dining_bg")
+
+[resource]
+script = ExtResource("1_catalog")
+stages = Array[ExtResource("2_stage")]([SubResource("StageOpening"), SubResource("StageSelectedL1"), SubResource("StageChapel"), SubResource("StageBloodNun"), SubResource("StageJailer"), SubResource("StageChainMaintenance"), SubResource("StageDiningServiceHall")])
+bindings = Array[ExtResource("4_binding")]([SubResource("BindingOpening"), SubResource("BindingSelectedL1"), SubResource("BindingChapel"), SubResource("BindingBloodNun"), SubResource("BindingJailer"), SubResource("BindingChainMaintenance"), SubResource("BindingDiningServiceHall")])

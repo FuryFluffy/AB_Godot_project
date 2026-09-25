@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="RoomEventDefinition" format=3 uid="uid://4acupddyvcw"]
+
+[ext_resource type="Script" uid="uid://bf3poxw8ph4c1" path="res://scripts/exploration/events/room_event_outcome_definition.gd" id="1_2d54j"]
+[ext_resource type="Script" uid="uid://dsaaqnefrume7" path="res://scripts/exploration/events/room_event_effect_definition.gd" id="2_6skwh"]
+[ext_resource type="Script" uid="uid://b28sbvef64ml5" path="res://scripts/exploration/events/room_event_definition.gd" id="3_dshgv"]
+
+[sub_resource type="Resource" id="Resource_pk46g"]
+script = ExtResource("2_6skwh")
+amount = 3
+metadata/_custom_type_script = "uid://dsaaqnefrume7"
+
+[sub_resource type="Resource" id="Resource_uiwww"]
+script = ExtResource("1_2d54j")
+outcome_id = &"restorative_warmth"
+message = "The remaining wax melts into a brief, soothing warmth"
+effects = Array[ExtResource("2_6skwh")]([SubResource("Resource_pk46g")])
+metadata/_custom_type_script = "uid://bf3poxw8ph4c1"
+
+[sub_resource type="Resource" id="Resource_j4jlg"]
+script = ExtResource("2_6skwh")
+kind = 2
+amount = 10
+metadata/_custom_type_script = "uid://dsaaqnefrume7"
+
+[sub_resource type="Resource" id="Resource_mt2rw"]
+script = ExtResource("1_2d54j")
+outcome_id = &"corrupting_residue"
+message = "The wax crawls coldly across the skin"
+effects = Array[ExtResource("2_6skwh")]([SubResource("Resource_j4jlg")])
+metadata/_custom_type_script = "uid://bf3poxw8ph4c1"
+
+[sub_resource type="Resource" id="Resource_hebhg"]
+script = ExtResource("2_6skwh")
+kind = 2
+amount = 10
+metadata/_custom_type_script = "uid://dsaaqnefrume7"
+
+[sub_resource type="Resource" id="Resource_n3ly5"]
+script = ExtResource("2_6skwh")
+kind = 1
+amount = -10
+metadata/_custom_type_script = "uid://dsaaqnefrume7"
+
+[sub_resource type="Resource" id="Resource_w2bxn"]
+script = ExtResource("1_2d54j")
+outcome_id = &"devouring_residue"
+message = "The wax clings with a hunger that was not yet spent."
+effects = Array[ExtResource("2_6skwh")]([SubResource("Resource_hebhg"), SubResource("Resource_n3ly5")])
+metadata/_custom_type_script = "uid://bf3poxw8ph4c1"
+
+[resource]
+script = ExtResource("3_dshgv")
+event_id = &"red_wax_vial"
+display_name = "Red Wax Vial"
+target_rule = 1
+outcomes = Array[ExtResource("1_2d54j")]([SubResource("Resource_uiwww"), SubResource("Resource_mt2rw"), SubResource("Resource_w2bxn")])
+metadata/_custom_type_script = "uid://b28sbvef64ml5"

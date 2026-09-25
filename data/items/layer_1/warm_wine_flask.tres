@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dltj0e8r52ij7"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://c012ejpd1b7c1" path="res://assets/items/by_stable_id/l01_warm_wine_flask.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_heal"]
+script = ExtResource("2_effect")
+amount = 1
+
+[sub_resource type="Resource" id="Effect_resolve"]
+script = ExtResource("2_effect")
+kind = 3
+amount = 5
+
+[sub_resource type="Resource" id="Effect_corruption"]
+script = ExtResource("2_effect")
+kind = 4
+amount = 2
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_warm_wine_flask"
+display_name = "Warm Wine Flask"
+description = "Restore 1 HP and 5 Resolve, then gain 2 Corruption."
+icon = ExtResource("99_icon")
+content_category = 1
+rarity = 2
+canonical_workbook_item = true
+stack_limit = 3
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_heal"), SubResource("Effect_resolve"), SubResource("Effect_corruption")])

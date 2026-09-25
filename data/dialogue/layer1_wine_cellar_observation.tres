@@ -1,0 +1,89 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://c3j2jqb0v1xo8"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="2_r6jtk"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="5_3wglm"]
+
+[sub_resource type="Resource" id="Outcome_consume_offered_bottle"]
+script = ExtResource("4_outcome")
+kind = 14
+subject_id = &"l01_warm_wine_flask"
+
+[sub_resource type="Resource" id="Outcome_restore_party"]
+script = ExtResource("4_outcome")
+kind = 13
+subject_id = &"active_party"
+
+[sub_resource type="Resource" id="Outcome_resolve_plus_10"]
+script = ExtResource("4_outcome")
+kind = 12
+subject_id = &"active_party"
+key = &"resolve"
+integer_value = 10
+
+[sub_resource type="Resource" id="Outcome_corruption_plus_10"]
+script = ExtResource("4_outcome")
+kind = 12
+subject_id = &"active_party"
+key = &"corruption"
+integer_value = 10
+
+[sub_resource type="Resource" id="Outcome_hidden_feeding"]
+script = ExtResource("4_outcome")
+scope = &"save"
+subject_id = &"hidden_feeding_flag_minor"
+
+[sub_resource type="Resource" id="Outcome_offer_used_accept"]
+script = ExtResource("4_outcome")
+subject_id = &"wine_cellar_offer_used"
+
+[sub_resource type="Resource" id="Choice_accept"]
+script = ExtResource("3_choice")
+choice_id = &"wine_cellar_accept"
+text = "Accept the room's offered bottle."
+next_node_id = &"accepted"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_consume_offered_bottle"), SubResource("Outcome_restore_party"), SubResource("Outcome_resolve_plus_10"), SubResource("Outcome_corruption_plus_10"), SubResource("Outcome_hidden_feeding"), SubResource("Outcome_offer_used_accept")])
+
+[sub_resource type="Resource" id="Outcome_offer_used_refuse"]
+script = ExtResource("4_outcome")
+subject_id = &"wine_cellar_offer_used"
+
+[sub_resource type="Resource" id="Choice_refuse"]
+script = ExtResource("3_choice")
+choice_id = &"wine_cellar_refuse"
+text = "Refuse. Leave the bottle where it is."
+next_node_id = &"refused"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_offer_used_refuse")])
+
+[sub_resource type="Resource" id="Node_offer"]
+script = ExtResource("2_node")
+node_id = &"offer"
+speaker_name = "Wine Cellar"
+text = "The fire is warm. Three chairs wait beside three glasses, and one bottle has been uncorked as if the room expected you. Nothing moves except the wine's dark surface."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_accept"), SubResource("Choice_refuse")])
+mandatory = false
+
+[sub_resource type="Resource" id="Node_accepted"]
+script = ExtResource("2_node")
+node_id = &"accepted"
+speaker_name = "Wine Cellar"
+text = "Warmth spreads too quickly to be natural. Wounds close, breath steadies, and the castle learns how readily comfort can resemble hunger."
+
+[sub_resource type="Resource" id="Node_refused"]
+script = ExtResource("2_node")
+node_id = &"refused"
+speaker_name = "Lysandra"
+text = "We take what we choose. Not what the room pours for us."
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_1_wine_cellar_observation"
+start_node_id = &"offer"
+trigger_kind = &"event_room_entry"
+trigger_id = &"wine_cellar_warm_bottles"
+completion_kind = &"flag"
+completion_id = &"wine_cellar_offer_used"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_offer"), SubResource("Node_accepted"), SubResource("Node_refused")])

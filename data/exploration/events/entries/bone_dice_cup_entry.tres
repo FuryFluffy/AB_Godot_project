@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoomEventPoolEntryDefinition" format=3 uid="uid://gwwqp2yxwris"]
+
+[ext_resource type="Resource" uid="uid://e2ncbmpgeu8q" path="res://data/exploration/events/definitions/bone_dice_cup.tres" id="1_ckvmu"]
+[ext_resource type="Script" uid="uid://cu4bn2v0bfqhf" path="res://scripts/exploration/events/room_event_pool_entry_definition.gd" id="2_1wej5"]
+[ext_resource type="Texture2D" path="res://assets/exploration/shared/props/bone_dice_cup.png" id="3_1wej5"]
+
+[resource]
+script = ExtResource("2_1wej5")
+entry_id = &"bone_dice_cup_entry"
+room_event = ExtResource("1_ckvmu")
+world_texture = ExtResource("3_1wej5")
+metadata/_custom_type_script = "uid://cu4bn2v0bfqhf"

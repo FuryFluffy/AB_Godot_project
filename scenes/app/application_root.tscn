@@ -1,0 +1,101 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/app/application_root.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/main/main.tscn" id="2_gameplay"]
+[ext_resource type="PackedScene" path="res://scenes/menu/main_menu_screen.tscn" id="3_menu"]
+[ext_resource type="StyleBox" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="4_frame"]
+
+[node name="ApplicationRoot" type="Node" node_paths=PackedStringArray("session_host", "main_menu", "session_menu_layer", "session_menu_button", "return_confirmation", "return_confirm_button", "return_cancel_button")]
+script = ExtResource("1_script")
+gameplay_scene = ExtResource("2_gameplay")
+session_host = NodePath("GameplaySessionHost")
+main_menu = NodePath("MainMenuScreen")
+session_menu_layer = NodePath("SessionMenuLayer")
+session_menu_button = NodePath("SessionMenuLayer/SessionMenuButton")
+return_confirmation = NodePath("SessionMenuLayer/ReturnConfirmation")
+return_confirm_button = NodePath("SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content/Actions/Return")
+return_cancel_button = NodePath("SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content/Actions/Cancel")
+
+[node name="GameplaySessionHost" type="Node" parent="."]
+
+[node name="MainMenuScreen" parent="." instance=ExtResource("3_menu")]
+
+[node name="SessionMenuLayer" type="CanvasLayer" parent="."]
+layer = 120
+
+[node name="SessionMenuButton" type="Button" parent="SessionMenuLayer"]
+offset_left = 1732.0
+offset_top = 18.0
+offset_right = 1900.0
+offset_bottom = 66.0
+text = "MAIN MENU"
+
+[node name="ReturnConfirmation" type="Control" parent="SessionMenuLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Shade" type="ColorRect" parent="SessionMenuLayer/ReturnConfirmation"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.76)
+
+[node name="Center" type="CenterContainer" parent="SessionMenuLayer/ReturnConfirmation"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="SessionMenuLayer/ReturnConfirmation/Center"]
+custom_minimum_size = Vector2(720, 330)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_frame")
+
+[node name="Margin" type="MarginContainer" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 28
+
+[node name="Content" type="VBoxContainer" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Title" type="Label" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "RETURN TO MAIN MENU?"
+
+[node name="Message" type="Label" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 19
+text = "Campaign slots currently save at validated Bloom Refuge boundaries. Any progress after the last safe save will be lost."
+autowrap_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content"]
+layout_mode = 2
+alignment = 2
+theme_override_constants/separation = 14
+
+[node name="Cancel" type="Button" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content/Actions"]
+custom_minimum_size = Vector2(180, 52)
+layout_mode = 2
+text = "Cancel"
+
+[node name="Return" type="Button" parent="SessionMenuLayer/ReturnConfirmation/Center/Panel/Margin/Content/Actions"]
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+text = "Return to Menu"

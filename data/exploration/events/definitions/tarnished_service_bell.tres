@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="RoomEventDefinition" format=3 uid="uid://clhsekv7l5ah3"]
+
+[ext_resource type="Script" uid="uid://bf3poxw8ph4c1" path="res://scripts/exploration/events/room_event_outcome_definition.gd" id="1_qq6ml"]
+[ext_resource type="Script" uid="uid://b28sbvef64ml5" path="res://scripts/exploration/events/room_event_definition.gd" id="2_1nnhc"]
+[ext_resource type="Script" uid="uid://dsaaqnefrume7" path="res://scripts/exploration/events/room_event_effect_definition.gd" id="2_uiwww"]
+
+[sub_resource type="Resource" id="Resource_uiwww"]
+script = ExtResource("1_qq6ml")
+outcome_id = &"distant_answer"
+message = "The bell answers with a distant chime from somewhere inside the walls."
+metadata/_custom_type_script = "uid://bf3poxw8ph4c1"
+
+[resource]
+script = ExtResource("2_1nnhc")
+event_id = &"tarnished_service_bell"
+display_name = "Tarnished Service Bell"
+remove_on_resolve = false
+outcomes = Array[ExtResource("1_qq6ml")]([SubResource("Resource_uiwww")])
+metadata/_custom_type_script = "uid://b28sbvef64ml5"

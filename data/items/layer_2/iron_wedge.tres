@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://834kw7fsjiku"]
+
+[ext_resource type="Script" uid="uid://bote6v51qdu3s" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://co12a5ftgg74n" path="res://scripts/data/items/item_effect_definition.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://csyyckb1k3tfj" path="res://assets/items/by_stable_id/l02_iron_wedge.png" id="99_icon"]
+
+[sub_resource type="Resource" id="Effect_armor"]
+script = ExtResource("2_effect")
+kind = 12
+amount = 2
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l02_iron_wedge"
+display_name = "Iron Wedge"
+description = "Damage an Adjacent enemy's armor condition by 2. This is a direct equipment effect, not an Attack."
+icon = ExtResource("99_icon")
+layer = 2
+content_category = 1
+rarity = 2
+canonical_workbook_item = true
+stack_limit = 2
+target_rule = 4
+effects = Array[ExtResource("2_effect")]([SubResource("Effect_armor")])

@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://brradygp1iib5"]
+
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_attributes"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_battler"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" path="res://scripts/data/equipment/loadouts/blood_nun_loadout.tres" id="5_loadout"]
+[ext_resource type="Resource" uid="uid://t3wvbefnso3y" path="res://data/enemy_ai/blood_nun_rulebook.tres" id="6_rules"]
+[ext_resource type="Resource" uid="uid://g7q5uwmknk6a" path="res://data/grapples/blood_nun_boss_grapple.tres" id="7_grapple"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="8_ability_script"]
+[ext_resource type="Resource" path="res://data/abilities/blood_nun_communion.tres" id="9_communion"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="10_k71nq"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("1_attributes")
+might = 3
+agility = 2
+endurance = 4
+intellect = 3
+personality = 5
+
+[sub_resource type="Resource" id="Chain"]
+script = ExtResource("4_protection")
+protection_type = 2
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Lash"]
+script = ExtResource("3_skill")
+skill = 24
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Light"]
+script = ExtResource("3_skill")
+skill = 16
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Body"]
+script = ExtResource("3_skill")
+skill = 22
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Athletics"]
+script = ExtResource("3_skill")
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 3
+tier = 1
+
+[resource]
+script = ExtResource("2_battler")
+battler_id = &"blood_nun"
+display_name = "Blood Nun"
+faction = 1
+category = 3
+attributes = SubResource("Attributes")
+max_hp = 18
+max_mp = 12
+base_actions = 4
+starting_resolve = 0
+order_value = 3
+skills = Array[ExtResource("3_skill")]([SubResource("Lash"), SubResource("Light"), SubResource("Body"), SubResource("Athletics"), SubResource("Awareness")])
+abilities = Array[ExtResource("8_ability_script")]([ExtResource("9_communion")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Chain")])
+default_loadout = ExtResource("5_loadout")
+enemy_rulebook = ExtResource("6_rules")
+grapple_template = ExtResource("7_grapple")

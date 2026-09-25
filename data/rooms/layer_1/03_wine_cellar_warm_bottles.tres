@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://dyxokgcxk1vjd"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://ca4bjciok0x3m" path="res://assets/backgrounds/layer_1/sdxl_curated/04_Wine_Cellar_of_Warm_Bottles.png" id="3_texture_0"]
+[ext_resource type="Resource" uid="uid://bhds0m41q7v01" path="res://data/exploration/rooms/layer1/wine_cellar_warm_bottles.tres" id="4_exploration"]
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Wine Cellar of Warm Bottles"
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"wine_cellar_warm_bottles"
+display_name = "Wine Cellar of Warm Bottles"
+canonical_order = 3
+authoring_summary = "Barrels, racks, tasting table. False comfort and hidden feeding event."
+authoring_tags = Array[StringName]([&"event", &"loot_candidate"])
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = ExtResource("4_exploration")

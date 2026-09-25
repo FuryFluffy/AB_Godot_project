@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_torn_cuff.png" id="99_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_torn_cuff"
+display_name = "Torn Cuff"
+description = "Layer 1 story Key Item tied to the Vowbroken Duelist clue."
+icon = ExtResource("99_icon")
+content_category = 5
+rarity = 4
+canonical_workbook_item = true
+layer = 1
+item_type = 2
+stack_limit = 1
+consumes_on_use = false
+combat_usable = false
+action_cost = 0

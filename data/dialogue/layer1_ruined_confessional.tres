@@ -1,0 +1,136 @@
+[gd_resource type="Resource" script_class="DialogueDefinition" format=3 uid="uid://driegxgou5hj5"]
+
+[ext_resource type="Script" uid="uid://cybq0i4o3rtqp" path="res://scripts/data/dialogue/dialogue_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dt5s76iehjwb1" path="res://scripts/data/dialogue/dialogue_node_definition.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://bonhhpc7ts3c0" path="res://scripts/data/dialogue/dialogue_choice_definition.gd" id="3_choice"]
+[ext_resource type="Script" uid="uid://dc31tn5aqd5jl" path="res://scripts/data/dialogue/dialogue_outcome_definition.gd" id="4_outcome"]
+[ext_resource type="Script" uid="uid://xrisyebbpq6k" path="res://scripts/data/dialogue/dialogue_condition_definition.gd" id="5_condition"]
+[ext_resource type="Script" uid="uid://bsv46mai0ojkr" path="res://scripts/data/dialogue/dialogue_condition_group.gd" id="6_group"]
+[ext_resource type="Script" uid="uid://by1deyw0gerap" path="res://scripts/data/dialogue/dialogue_item_option_definition.gd" id="7_cv61l"]
+[ext_resource type="Script" uid="uid://cupew1reqyia0" path="res://scripts/data/dialogue/dialogue_automatic_transition_definition.gd" id="7_transition"]
+
+[sub_resource type="Resource" id="Condition_seraphine"]
+script = ExtResource("5_condition")
+kind = 1
+subject_id = &"seraphine"
+
+[sub_resource type="Resource" id="Group_seraphine"]
+script = ExtResource("6_group")
+conditions = Array[ExtResource("5_condition")]([SubResource("Condition_seraphine")])
+
+[sub_resource type="Resource" id="Transition_holy_present"]
+script = ExtResource("7_transition")
+transition_id = &"confessional_holy_character_present"
+conditions = SubResource("Group_seraphine")
+next_node_id = &"seraphine_prompt"
+
+[sub_resource type="Resource" id="Transition_dormant"]
+script = ExtResource("7_transition")
+transition_id = &"confessional_no_holy_character"
+next_node_id = &"dormant"
+
+[sub_resource type="Resource" id="Node_entry"]
+script = ExtResource("2_node")
+node_id = &"entry"
+speaker_name = "Ruined Confessional"
+text = "The screen is split, but the listening side remains intact. Something behind it waits for a voice trained to address the sacred."
+automatic_transitions = Array[ExtResource("7_transition")]([SubResource("Transition_holy_present"), SubResource("Transition_dormant")])
+
+[sub_resource type="Resource" id="Node_dormant"]
+script = ExtResource("2_node")
+node_id = &"dormant"
+speaker_name = "Ruined Confessional"
+text = "The wood gives no answer. Whatever inhabits the rite does not recognize anyone present."
+mandatory = false
+
+[sub_resource type="Resource" id="Outcome_confess_resolve"]
+script = ExtResource("4_outcome")
+kind = 12
+subject_id = &"active_party"
+key = &"resolve"
+integer_value = 10
+
+[sub_resource type="Resource" id="Outcome_confess_corruption"]
+script = ExtResource("4_outcome")
+kind = 12
+subject_id = &"active_party"
+key = &"corruption"
+integer_value = 10
+
+[sub_resource type="Resource" id="Outcome_used_confess"]
+script = ExtResource("4_outcome")
+subject_id = &"ruined_confessional_used"
+
+[sub_resource type="Resource" id="Outcome_knowledge_confess"]
+script = ExtResource("4_outcome")
+scope = &"persistent"
+subject_id = &"ruined_confessional_completed"
+
+[sub_resource type="Resource" id="Choice_confess"]
+script = ExtResource("3_choice")
+choice_id = &"ruined_confessional_confess_fully"
+text = "Confess fully."
+responder_id = &"seraphine"
+next_node_id = &"confessed"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_confess_resolve"), SubResource("Outcome_confess_corruption"), SubResource("Outcome_used_confess"), SubResource("Outcome_knowledge_confess")])
+
+[sub_resource type="Resource" id="Outcome_refuse_resolve"]
+script = ExtResource("4_outcome")
+kind = 12
+subject_id = &"active_party"
+key = &"resolve"
+integer_value = 15
+
+[sub_resource type="Resource" id="Outcome_refuse_corruption"]
+script = ExtResource("4_outcome")
+kind = 12
+subject_id = &"active_party"
+key = &"corruption"
+integer_value = -5
+
+[sub_resource type="Resource" id="Outcome_used_refuse"]
+script = ExtResource("4_outcome")
+subject_id = &"ruined_confessional_used"
+
+[sub_resource type="Resource" id="Outcome_knowledge_refuse"]
+script = ExtResource("4_outcome")
+scope = &"persistent"
+subject_id = &"ruined_confessional_completed"
+
+[sub_resource type="Resource" id="Choice_refuse"]
+script = ExtResource("3_choice")
+choice_id = &"ruined_confessional_refuse"
+text = "Refuse the demand."
+responder_id = &"seraphine"
+next_node_id = &"refused"
+outcomes = Array[ExtResource("4_outcome")]([SubResource("Outcome_refuse_resolve"), SubResource("Outcome_refuse_corruption"), SubResource("Outcome_used_refuse"), SubResource("Outcome_knowledge_refuse")])
+
+[sub_resource type="Resource" id="Node_prompt"]
+script = ExtResource("2_node")
+node_id = &"seraphine_prompt"
+speaker_name = "Seraphine"
+text = "It recognizes the shape of prayer. That does not mean it deserves the truth."
+choices = Array[ExtResource("3_choice")]([SubResource("Choice_confess"), SubResource("Choice_refuse")])
+mandatory = false
+
+[sub_resource type="Resource" id="Node_confessed"]
+script = ExtResource("2_node")
+node_id = &"confessed"
+speaker_name = "Seraphine"
+text = "I believed obedience could make cruelty holy. I knew better before I stopped obeying."
+
+[sub_resource type="Resource" id="Node_refused"]
+script = ExtResource("2_node")
+node_id = &"refused"
+speaker_name = "Seraphine"
+text = "Confession is not surrender. You may have neither from me."
+
+[resource]
+script = ExtResource("1_definition")
+dialogue_id = &"layer_1_ruined_confessional"
+start_node_id = &"entry"
+trigger_kind = &"event_room_entry"
+trigger_id = &"ruined_confessional"
+completion_kind = &"flag"
+completion_id = &"ruined_confessional_used"
+nodes = Array[ExtResource("2_node")]([SubResource("Node_entry"), SubResource("Node_dormant"), SubResource("Node_prompt"), SubResource("Node_confessed"), SubResource("Node_refused")])

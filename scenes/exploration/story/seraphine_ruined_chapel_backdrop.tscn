@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_1/sdxl_curated/20_Ruined_Chapel_Battle.png" id="1_background"]
+
+[node name="SeraphineRuinedChapelBackdrop" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(0, -8.571429)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("1_background")
+centered = false

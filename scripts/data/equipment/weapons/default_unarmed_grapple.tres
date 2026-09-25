@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_definition.gd" id="1_weapon"]
+
+[resource]
+script = ExtResource("1_weapon")
+equipment_id = &"default_unarmed_grapple"
+display_name = "Unarmed Grapple"
+allowed_slots = Array[int]([0])
+condition_maximum = 5
+destructible = false
+skill = 10
+attribute = 0
+attack_range = 0
+is_magic_attack = false
+can_parry = false

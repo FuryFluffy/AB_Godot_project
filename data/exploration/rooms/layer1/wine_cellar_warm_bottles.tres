@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3 uid="uid://bhds0m41q7v01"]
+
+[ext_resource type="Resource" uid="uid://deslewogka2wl" path="res://data/exploration/loot_profiles/layer1/wine_cellar_loot_profile.tres" id="1_e2pmp"]
+[ext_resource type="Resource" uid="uid://ckik767lvi18e" path="res://data/exploration/events/profiles/layer1/wine_cellar_event_profile.tres" id="1_ov8re"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="1_q1y35"]
+[ext_resource type="PackedScene" uid="uid://cvdofh6qlj2da" path="res://scenes/exploration/rooms/layer1/wine_cellar_warm_bottles.tscn" id="2_v707j"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_wine_cellar_observation.tres" id="3_dialogue"]
+
+[resource]
+script = ExtResource("1_q1y35")
+room_id = &"wine_cellar_warm_bottles"
+display_name = "Wine Cellar"
+presentation_scene = ExtResource("2_v707j")
+loot_profile = ExtResource("1_e2pmp")
+event_profile = ExtResource("1_ov8re")
+entry_dialogue = ExtResource("3_dialogue")

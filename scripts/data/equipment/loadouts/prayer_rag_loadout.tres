@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EquipmentLoadout" format=3 uid="uid://bfracqv825r8n"]
+
+[ext_resource type="Script" uid="uid://cfwr5lyswtnub" path="res://scripts/data/equipment_loadout.gd" id="1_1e3au"]
+[ext_resource type="Resource" uid="uid://hru2gbctov" path="res://scripts/data/armor/prayer_rag_cloth.tres" id="1_nak53"]
+[ext_resource type="Resource" uid="uid://wjcogtsh8in4" path="res://scripts/data/equipment/weapons/prayer_rag_staff.tres" id="1_ol12n"]
+
+[resource]
+script = ExtResource("1_1e3au")
+main_hand = ExtResource("1_ol12n")
+main_hand_family_rank = 1
+armor = ExtResource("1_nak53")
+metadata/_custom_type_script = "uid://cfwr5lyswtnub"

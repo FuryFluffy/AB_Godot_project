@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://cvdofh6qlj2da"]
+
+[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_1/sdxl_curated/04_Wine_Cellar_of_Warm_Bottles.png" id="1_uvgx8"]
+[ext_resource type="Texture2D" path="res://assets/exploration/shared/doors/gothic_door_closed.png" id="2_kwccl"]
+[ext_resource type="PackedScene" uid="uid://bpdam0qddyyfi" path="res://scenes/exploration/components/room_item_spawn_anchor.tscn" id="2_ykcdu"]
+[ext_resource type="PackedScene" uid="uid://evepjmugphk8" path="res://scenes/exploration/components/room_event_spawn_anchor.tscn" id="3_kslvf"]
+[ext_resource type="Texture2D" path="res://assets/exploration/shared/doors/gothic_door_open.png" id="3_ykcdu"]
+[ext_resource type="Resource" uid="uid://mdfgug25bsx1" path="res://data/exploration/events/entries/red_wax_vial_entry.tres" id="4_hvcmi"]
+[ext_resource type="PackedScene" uid="uid://4p65hguom5uc" path="res://scenes/exploration/components/room_exit_hotspot.tscn" id="4_uvgx8"]
+[ext_resource type="Resource" uid="uid://gwwqp2yxwris" path="res://data/exploration/events/entries/bone_dice_cup_entry.tres" id="5_mytap"]
+[ext_resource type="PackedScene" uid="uid://co42hsd5udx60" path="res://scenes/exploration/components/room_lock_hotspot.tscn" id="6_ykcdu"]
+
+[node name="WineCellarWarmBottles" type="Node2D" unique_id=1144591511]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1221448960]
+position = Vector2(960, 540)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("1_uvgx8")
+
+[node name="WorldItemLayer" type="Node2D" parent="." unique_id=1925852711]
+
+[node name="ItemSpawnAnchors" type="Node2D" parent="." unique_id=1314392877]
+
+[node name="ForegroundTableBottle" parent="ItemSpawnAnchors" unique_id=371311837 instance=ExtResource("2_ykcdu")]
+position = Vector2(505, 658)
+anchor_id = &"foreground_table_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.16, 0.16)
+pickup_size = Vector2(70, 150)
+item_z_index = 3
+
+[node name="LeftShelfBottle" parent="ItemSpawnAnchors" unique_id=1819573302 instance=ExtResource("2_ykcdu")]
+position = Vector2(287, 269)
+anchor_id = &"left_shelf_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.09, 0.09)
+item_visual_rotation_degrees = -2.0
+pickup_size = Vector2(45, 90)
+item_z_index = 2
+
+[node name="RearCabinetBottle" parent="ItemSpawnAnchors" unique_id=1061361938 instance=ExtResource("2_ykcdu")]
+position = Vector2(1072, 491)
+anchor_id = &"rear_cabinet_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.075, 0.075)
+item_visual_rotation_degrees = 2.0
+pickup_size = Vector2(40, 80)
+
+[node name="BarrelCrateBottle" parent="ItemSpawnAnchors" unique_id=380870341 instance=ExtResource("2_ykcdu")]
+position = Vector2(1486, 890)
+anchor_id = &"barrel_crate_bottle"
+anchor_tags = Array[StringName]([&"bottle"])
+item_visual_scale = Vector2(0.13, 0.13)
+item_visual_rotation_degrees = -4.0
+pickup_size = Vector2(60, 125)
+item_z_index = 3
+
+[node name="RustyKeyTable" parent="ItemSpawnAnchors" unique_id=1262550057 instance=ExtResource("2_ykcdu")]
+position = Vector2(738, 646)
+anchor_id = &"rusty_key_table"
+anchor_tags = Array[StringName]([&"key", &"key_accessible"])
+item_visual_scale = Vector2(0.1, 0.1)
+pickup_size = Vector2(90, 70)
+item_z_index = 3
+
+[node name="EventSpawnAnchors" type="Node2D" parent="." unique_id=1093391277]
+
+[node name="Common" parent="EventSpawnAnchors" unique_id=1119960024 instance=ExtResource("3_kslvf")]
+position = Vector2(827, 609)
+anchor_id = &"cellar_common_event"
+event_visual_scale = Vector2(0.07, 0.07)
+interaction_size = Vector2(80, 80)
+preview_entry = ExtResource("4_hvcmi")
+
+[node name="Global" parent="EventSpawnAnchors" unique_id=1316691954 instance=ExtResource("3_kslvf")]
+position = Vector2(376, 509)
+anchor_id = &"cellar_global_event"
+event_visual_scale = Vector2(0.07, 0.07)
+interaction_size = Vector2(80, 80)
+preview_entry = ExtResource("5_mytap")
+
+[node name="Interactables" type="Node2D" parent="." unique_id=428862644]
+
+[node name="ExitDoor" type="Node2D" parent="Interactables" unique_id=1930841606]
+
+[node name="ClosedDoor" type="Sprite2D" parent="Interactables/ExitDoor" unique_id=1965881774]
+position = Vector2(1524, 417)
+scale = Vector2(0.32, 0.24)
+texture = ExtResource("2_kwccl")
+
+[node name="OpenDoor" type="Sprite2D" parent="Interactables/ExitDoor" unique_id=914964635]
+visible = false
+position = Vector2(1524, 417.00003)
+scale = Vector2(0.32, 0.23999846)
+texture = ExtResource("3_ykcdu")
+
+[node name="RoomExitHotspot" parent="Interactables/ExitDoor" unique_id=116027957 instance=ExtResource("4_uvgx8")]
+hover_visual_path = NodePath("../OpenDoor")
+
+[node name="CollisionPolygon2D" parent="Interactables/ExitDoor/RoomExitHotspot" index="0" unique_id=1989793451]
+polygon = PackedVector2Array(1452, 567, 1453, 335, 1520, 268, 1594, 338, 1595, 569)
+
+[node name="RustyDoorLock" parent="Interactables/ExitDoor" unique_id=246651096 instance=ExtResource("6_ykcdu")]
+lock_id = &"wine_cellar_rear_door"
+closed_visual_path = NodePath("../ClosedDoor")
+open_visual_path = NodePath("../OpenDoor")
+exit_hotspot_path = NodePath("../RoomExitHotspot")
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Interactables/ExitDoor/RustyDoorLock" unique_id=584051448]
+polygon = PackedVector2Array(1452, 567, 1453, 335, 1520, 268, 1594, 338, 1595, 569)
+
+[node name="Foreground" type="Node2D" parent="." unique_id=276757200]
+
+[node name="DebugPanel" type="Node2D" parent="." unique_id=349133109]
+
+[node name="WorldEventLayer" type="Node2D" parent="." unique_id=1445466818]
+
+[editable path="Interactables/ExitDoor/RoomExitHotspot"]

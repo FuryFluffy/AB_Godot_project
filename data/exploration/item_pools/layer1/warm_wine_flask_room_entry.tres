@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3 uid="uid://b6jhfxqps7rr0"]
+
+[ext_resource type="Script" uid="uid://dqg7udf6p2hld" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_7mnxw"]
+[ext_resource type="Resource" uid="uid://dltj0e8r52ij7" path="res://data/items/layer_1/warm_wine_flask.tres" id="1_nlbr0"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_warm_wine_flask.png" id="3_5vj0s"]
+
+[resource]
+script = ExtResource("1_7mnxw")
+entry_id = &"warm_wine_flask_spawn"
+item = ExtResource("1_nlbr0")
+world_texture = ExtResource("3_5vj0s")
+required_anchor_tag = &"bottle"
+weight = 1
+quantity = 1
+metadata/_custom_type_script = "uid://dqg7udf6p2hld"

@@ -1,0 +1,1000 @@
+layer,ordinal,stable_id,name,target_class,family,rarity,status,existing_source,prompt
+1,1,l01_bandage_roll,Bandage Roll,Active,Heal,Common,EXISTING_ITEM_SPRITE,assets/items/layer_1/bandage_roll.png,
+1,2,l01_servants_tonic,Servant's Tonic,Active,MP Restore,Common,EXISTING_ITEM_SPRITE,assets/items/layer_1/servants_tonic.png,
+1,3,l01_repair_thread_wax,Repair Thread and Wax,Active,Repair,Common,EXISTING_ITEM_SPRITE,assets/items/layer_1/repair_thread_and_wax.png,
+1,4,l01_wax_sealed_needle,Wax-Sealed Needle,Active,Status Cleanse,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_1/wax_sealed_needle.png,
+1,5,l01_warm_wine_flask,Warm Wine Flask,Active,HP + Resolve,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_1/warm_wine_flask.png,
+1,6,l01_red_wax_ampoule,Red-Wax Ampoule,Active,Offensive Throwable,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_1/red_wax_ampoule.png,
+1,7,l01_kitchen_knife,Kitchen Knife,Active,Grapple Escape,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_1/kitchen_knife.png,
+1,8,l01_polished_serving_tray,Polished Serving Tray,Active,Defense Utility,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_1/polished_serving_tray.png,
+1,9,l01_smelling_salts,Smelling Salts,Active,Revival / Control,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_1/smelling_salts.png,
+1,10,l01_chapel_rosary,Chapel Rosary,Memento,Enemy-Specific Counter,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_1/chapel_rosary.png,
+1,11,l01_hollow_livery_pin,Hollow Livery Pin,Memento,Enemy-Specific Control,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_1/hollow_livery_pin.png,
+1,12,l01_courtesy_collar,Courtesy Collar,Memento,Grapple Prevention,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_1/courtesy_collar.png,
+1,13,l01_ledger_seal,Ledger Seal,Key,Progression / Bureaucracy,Unique,EXISTING_ITEM_SPRITE,assets/items/layer_1/ledger_seal.png,
+1,14,l01_torn_cuff,Torn Cuff,Story,Narrative Clue,Unique,EXISTING_ITEM_SPRITE,assets/items/layer_1/torn_cuff.png,
+1,15,shared_rusty_key,Rusty Key,Key,Generated Progression,Unique,EXISTING_ITEM_SPRITE,assets/items/keys/rusty_key.png,
+1,16,mat_l01_red_wax,Red Wax,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 1 item ""Red Wax"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Red Wax"". Visual identity context only: Material-pouch resource for Layer 1 crafting, maintenance, and later Refuge recipes.
+Layer material direction: lower-castle service decay: worn linen, blackened iron, dark wood, old brass, red sealing wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact wax sample with a few flakes, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+1,17,mat_l01_servant_cloth,Servant Cloth,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 1 item ""Servant Cloth"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Servant Cloth"". Visual identity context only: Material-pouch resource for cloth repair, wraps, disguise/utility recipes, and Refuge crafting.
+Layer material direction: lower-castle service decay: worn linen, blackened iron, dark wood, old brass, red sealing wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact folded cloth bundle tied once with coarse thread; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+1,18,know_l01_butlers_records,Butler's Records,Knowledge,Lore / Records,Unique,REUSE_EXISTING_PROP,assets/exploration/shared/props/butlers_records.png,
+1,19,know_l01_servant_ledger,Servant Ledger / Missing Men Entry,Knowledge,Lore / Mystery,Unique,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 1 item ""Servant Ledger / Missing Men Entry"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a physical document pickup representing ""Servant Ledger / Missing Men Entry"". Visual identity context only: Persistent knowledge entry seeding the Missing Men mystery.
+Layer material direction: lower-castle service decay: worn linen, blackened iron, dark wood, old brass, red sealing wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single worn ledger or loose ledger page, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+1,20,know_l01_wrong_prayer,Wrong Prayer / Chapel Entry,Knowledge,Lore / Faith,Unique,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 1 item ""Wrong Prayer / Chapel Entry"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a physical document pickup representing ""Wrong Prayer / Chapel Entry"". Visual identity context only: Persistent knowledge entry recording that the Castle remembers prayer but not mercy.
+Layer material direction: lower-castle service decay: worn linen, blackened iron, dark wood, old brass, red sealing wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single worn prayer page or narrow folded prayer slip, angled presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+2,1,l02_prisoners_poultice,Prisoner's Poultice,Active,Heal / Cleanse,Common,EXISTING_ITEM_SPRITE,assets/items/layer_2/prisoners_poultice.png,
+2,2,l02_rusted_nail_bundle,Rusted Nail Bundle,Active,Offensive Throwable,Common,EXISTING_ITEM_SPRITE,assets/items/layer_2/rusted_nail_bundle.png,
+2,3,l02_bitter_wakefulness_tonic,Bitter Wakefulness Tonic,Active,Control Recovery,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/bitter_wakefulness_tonic.png,
+2,4,l02_chain_oil,Chain Oil,Active,Grapple Relief,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/chain_oil.png,
+2,5,l02_lime_dust_pouch,Lime-Dust Pouch,Active,Status Throwable,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/lime_dust_pouch.png,
+2,6,l02_iron_wedge,Iron Wedge,Active,Armor Pressure,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/iron_wedge.png,
+2,7,l02_jailers_maintenance_kit,Jailer's Maintenance Kit,Active,Repair,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/jailers_maintenance_kit.png,
+2,8,l02_filed_iron_shard,Filed Iron Shard,Active,Grapple Attack,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/filed_iron_shard.png,
+2,9,l02_shackle_key,Shackle Key,Active,Grapple Escape,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_2/shackle_key.png,
+2,10,l02_mercy_chain,Mercy Chain,Active,Revival,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_2/mercy_chain.png,
+2,11,l02_jailers_tag,Jailer's Tag,Memento,Enemy-Specific Control,Uncommon,EXISTING_ITEM_SPRITE,assets/items/layer_2/jailers_tag.png,
+2,12,l02_quiet_shackle,Quiet Shackle,Memento,Grapple Support,Rare,EXISTING_ITEM_SPRITE,assets/items/layer_2/quiet_shackle.png,
+2,13,l02_guiltless_key,Guiltless Key,Key,Progression,Unique,EXISTING_ITEM_SPRITE,assets/items/layer_2/guiltless_key.png,
+2,14,l02_mother_figurine,Mother Figurine,Memento,Boss-Specific Control,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 2 item ""Mother Figurine"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Mother Figurine"". Visual identity context only: After the required Mother-related Knowledge has been gained, the Mother Figurine may be equipped as a Curio. At the start of each Jailer turn, there is a 50% chance to Stun the Jailer.
+Layer material direction: prison machinery: rusted iron, chain, lime dust, crude wood, institutional wear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single small figurine, upright three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+2,15,mat_l02_chain_links,Chain Links,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 2 item ""Chain Links"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Chain Links"". Visual identity context only: Material-pouch resource for restraint, mechanism, and repair crafting.
+Layer material direction: prison machinery: rusted iron, chain, lime dust, crude wood, institutional wear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small compact group of heavy chain links; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+2,16,mat_l02_prison_iron,Prison Iron,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 2 item ""Prison Iron"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Prison Iron"". Visual identity context only: Material-pouch resource for heavy repair and mechanism recipes.
+Layer material direction: prison machinery: rusted iron, chain, lime dust, crude wood, institutional wear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: one compact rough iron billet and a small broken piece; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,1,l03_field_dressing,Field Dressing,Active,Heal,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Field Dressing"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Field Dressing"". Visual identity context only: Restore 3 HP to one living heroine.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,2,l03_wayfarers_bitter,Wayfarer's Bitter,Active,MP / Resolve,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Wayfarer's Bitter"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Wayfarer's Bitter"". Visual identity context only: Restore 3 MP and 3 Resolve to one heroine.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,3,l03_trapwrights_chalk,Trapwright's Chalk,Active,Hazard / Hotspot Protection,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Trapwright's Chalk"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Trapwright's Chalk"". Visual identity context only: Apply a protective Chalk ward to the consuming heroine. The next environmental, trap, or hotspot effect that would apply to that heroine is ignored completely; the ward is then removed.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact chalk stick or tied chalk bundle, diagonal presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,4,l03_barricade_spike,Barricade Spike,Active,Defense Utility,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Barricade Spike"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Barricade Spike"". Visual identity context only: Choose one heroine. Until the start of her next turn, the first damage she would take is reduced by 1.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single heavy spike placed diagonally; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,5,l03_smoke_capsule,Smoke Capsule,Active,Enemy Accuracy Control,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Smoke Capsule"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Smoke Capsule"". Visual identity context only: For the rest of the current round, all enemy Attack rolls suffer -1d10.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact centered capsule presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,6,l03_anti_mimic_needle,Anti-Mimic Needle,Active,Mimic Counter,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Anti-Mimic Needle"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Anti-Mimic Needle"". Visual identity context only: At battle start, if a Mimic-type enemy is present, automatically apply Slow to one Mimic enemy for Round 1. The Needle is then destroyed.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive needle placed diagonally; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,7,l03_three_plan_rope,Three-Plan Rope,Active,Movement Utility,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Three-Plan Rope"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Three-Plan Rope"". Visual identity context only: During the user's activation, make one normal Move action for 0 Actions. The move follows all normal adjacency/position rules.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact coiled rope, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,8,l03_couriers_stimulant,Courier's Stimulant,Active,Action Economy,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Courier's Stimulant"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Courier's Stimulant"". Visual identity context only: Immediately restore 1 Action to one heroine, up to her normal Action maximum.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,9,l03_purist_mark,Purist Mark,Memento,Status Protection,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Purist Mark"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Purist Mark"". Visual identity context only: The first negative status that would be applied to the wearer in each battle is ignored.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single physical inscribed charm or brand-token, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,10,l03_wrong_map_fragment,Wrong Map Fragment,Active,Map Reveal,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Wrong Map Fragment"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Wrong Map Fragment"". Visual identity context only: Reveal 70% of the rooms on the heroine party's current Layer map.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,11,mat_l03_salvage_wire,Salvage Wire,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Salvage Wire"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Salvage Wire"". Visual identity context only: Material-pouch resource for repairs, traps, and utility crafting.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact coil of wire; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+3,12,mat_l03_trap_components,Trap Components,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 3 item ""Trap Components"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Trap Components"". Visual identity context only: Material-pouch resource for control, hazard, and throwable crafting.
+Layer material direction: ruined road and trapwright salvage: soot, battered leather, wire, chalk, weathered field gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small compact group of recognizable trap springs, wire, and trigger pieces; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,1,l04_clearwater_phial,Clearwater Phial,Active,MP Restore,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Clearwater Phial"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Clearwater Phial"". Visual identity context only: Restore 4 MP to one heroine.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter vial presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,2,l04_mnemonic_salts,Mnemonic Salts,Active,Resolve Restore,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Mnemonic Salts"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Mnemonic Salts"". Visual identity context only: Restore 6 Resolve to one heroine.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small stoppered jar or tied pouch, upright three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,3,l04_mirror_shard,Mirror Shard,Active,Damage Reflection,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Mirror Shard"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Mirror Shard"". Visual identity context only: As a reaction after an enemy Attack deals at least 1 damage to the holder, deal 1 unavoidable damage back to that attacker.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive shard, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,4,l04_witness_thread,Witness Thread,Active,Dice Support,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Witness Thread"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Witness Thread"". Visual identity context only: The next d10+ roll made by the consuming heroine before the end of her next turn gains +2d10.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact spool or neatly tied bundle, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,5,l04_anchor_nail,Anchor Nail,Active,Forced-Movement Protection,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Anchor Nail"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Anchor Nail"". Visual identity context only: Until the start of the consuming heroine's next turn, she cannot be forcibly moved, pulled, pushed, swapped, or repositioned by enemy or environmental effects.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single heavy nail placed diagonally; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,6,l04_correction_needle,Correction Needle,Active,Heal / Cleanse,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Correction Needle"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Correction Needle"". Visual identity context only: Restore 4 HP and remove one negative status from one living heroine.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive needle placed diagonally; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,7,l04_scar_glass,Scar Glass,Active,Damage Conversion,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Scar Glass"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Scar Glass"". Visual identity context only: As a reaction when the holder would take HP damage, convert up to 2 of that damage into an equal amount of Resolve loss instead.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single glass fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,8,l04_duplicate_token,Duplicate Token,Active,Effect Copy,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Duplicate Token"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Duplicate Token"". Visual identity context only: Repeat the full effect of the most recent Common Active consumable used by the party in the current room or battle, choosing a new valid target if needed.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single thick token or medallion, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,9,l04_borrowed_memory_charm,Borrowed Memory Charm,Memento,Skill Support,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Borrowed Memory Charm"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Borrowed Memory Charm"". Visual identity context only: When equipped, choose one Skill. The wearer gains +1d10 on all rolls that use that Skill while the Curio remains equipped.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single wearable charm, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,10,l04_uncorrected_token,Uncorrected Token,Memento,Corruption Resistance,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Uncorrected Token"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Uncorrected Token"". Visual identity context only: While equipped, reduce every incoming Corruption gain to the wearer by 1, to a minimum of 0.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single thick token or medallion, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,11,mat_l04_memory_glass,Memory Glass,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Memory Glass"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Memory Glass"". Visual identity context only: Material-pouch resource for memory, insight, lens, and protective crafting.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single glass fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+4,12,mat_l04_foundation_fragment,Foundation Fragment,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 4 item ""Foundation Fragment"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Foundation Fragment"". Visual identity context only: Material-pouch resource for heavy protective, anchoring, and architecture-linked crafting.
+Layer material direction: reconstructed memory architecture: pale stone, cracked mirror, needles, translucent memory glass.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,1,l05_bloom_stitched_wrap,Bloom-Stitched Wrap,Active,Repair,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Bloom-Stitched Wrap"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Bloom-Stitched Wrap"". Visual identity context only: Restore 1 condition step to one non-Broken weapon, armor, or shield.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact folded and rolled textile bundle; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,2,l05_easy_breathing_incense,Easy-Breathing Incense,Active,Control Recovery,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Easy-Breathing Incense"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Easy-Breathing Incense"". Visual identity context only: Remove Stunned or Slow from one heroine.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact tied bundle or small burner-free packet, diagonal presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,3,l05_bloom_nectar,Bloom Nectar,Active,Heal / Corruption,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Bloom Nectar"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Bloom Nectar"". Visual identity context only: Restore 5 HP to one living heroine.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,4,l05_dreamfruit_slice,Dreamfruit Slice,Active,HP / MP / Corruption,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Dreamfruit Slice"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Dreamfruit Slice"". Visual identity context only: Restore 3 HP and 3 MP to one living heroine.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,5,l05_comfort_petals,Comfort Petals,Active,Resolve / Corruption,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Comfort Petals"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Comfort Petals"". Visual identity context only: Restore 10 Resolve to one heroine.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: one distinctive petal with two or three smaller petals; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,6,l05_garden_tonic,Garden Tonic,Active,Status Cleanse / Corruption,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Garden Tonic"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Garden Tonic"". Visual identity context only: Remove all negative status effects currently affecting one living heroine.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,7,l05_softening_balm,Softening Balm,Active,Defense / Grapple Support,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Softening Balm"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Softening Balm"". Visual identity context only: For the next 3 rounds, the heroine gains +1d10 on Defense rolls and Struggle rolls.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small squat stoppered jar, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,8,l05_moonwater_flask,Moonwater Flask,Active,MP / Resolve / Corruption,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Moonwater Flask"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Moonwater Flask"". Visual identity context only: Restore 4 MP and 6 Resolve to one heroine.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,9,l05_gift_greenhouse_seed,Gift Greenhouse Seed,Active,Regeneration / Corruption,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Gift Greenhouse Seed"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Gift Greenhouse Seed"". Visual identity context only: All living heroines gain Regeneration: restore 1 HP at the start of each of their turns for 3 turns.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: one distinctive seed with two or three much smaller companion seeds; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,10,l05_noxias_gift_ribbon,Noxia's Gift Ribbon,Memento,Healing Amplification / Corruption,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Noxia's Gift Ribbon"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Noxia's Gift Ribbon"". Visual identity context only: While equipped, every HP-healing effect received by the wearer restores +1 additional HP.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: loosely folded ribbon with clear silhouette; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,11,l05_portal_petal,Portal Petal,Memento,Corruption Power,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Portal Petal"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Portal Petal"". Visual identity context only: While equipped and the wearer has 30 or more Corruption, add +1d10 to her Attack rolls.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: one distinctive petal with two or three smaller petals; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,12,mat_l05_bloom_fiber,Bloom Fiber,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Bloom Fiber"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Bloom Fiber"". Visual identity context only: Material-pouch resource for healing, cloth, comfort, and regeneration crafting.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact tied bundle of raw fiber; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+5,13,mat_l05_garden_resin,Garden Resin,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 5 item ""Garden Resin"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Garden Resin"". Visual identity context only: Material-pouch resource for potent restoratives, bindings, coatings, and Garden-derived crafting.
+Layer material direction: impossible bloom garden: medicinal petals, pale moonwater, living fiber, amber-green resin.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,1,l06_stage_restorative,Stage Restorative,Active,Heal,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Stage Restorative"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Stage Restorative"". Visual identity context only: Restore 4 HP to one living heroine.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,2,l06_actors_salts,Actor's Salts,Active,Control / Resolve Recovery,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Actor's Salts"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Actor's Salts"". Visual identity context only: Remove Stunned from one heroine and restore 4 Resolve.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small stoppered jar or tied pouch, upright three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,3,l06_false_blood_capsule,False Blood Capsule,Active,Targeting / Feint,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""False Blood Capsule"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""False Blood Capsule"". Visual identity context only: Until the start of the heroine's next turn, enemies cannot choose her as the target of single-target Attacks while at least one other living heroine is targetable.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact centered capsule presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,4,l06_curtain_cord,Curtain Cord,Active,Grapple / Movement,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Curtain Cord"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Curtain Cord"". Visual identity context only: Reduce one active Grapple track on the user by 1 Stage. If this removes the Grapple entirely, the heroine may immediately make one normal Move for 0 Actions.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact coiled cord, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,5,l06_directors_chalk,Director's Chalk,Active,Enemy Debuff,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Director's Chalk"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Director's Chalk"". Visual identity context only: Mark one enemy until the end of the next round. All Attack rolls against that enemy gain +1d10 while the mark lasts.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact chalk stick or tied chalk bundle, diagonal presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,6,l06_applause_token,Applause Token,Active,Resolve / Momentum,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Applause Token"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Applause Token"". Visual identity context only: After the heroine successfully deals damage to an enemy, she may consume this token immediately to restore 6 Resolve and gain +1d10 to her next d10+ roll before the end of her next turn.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single thick token or medallion, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,7,l06_blank_role_card,Blank Role Card,Active,Status Rejection,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Blank Role Card"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Blank Role Card"". Visual identity context only: When a negative status would be applied to the holder, consume the Blank Role Card to ignore that status completely.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single blank worn card, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,8,l06_cue_bell,Cue Bell,Active,Turn Control,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Cue Bell"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Cue Bell"". Visual identity context only: Apply Slow to all enemies for 1 round.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,9,l06_understudy_pin,Understudy Pin,Memento,Defeat Response,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Understudy Pin"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Understudy Pin"". Visual identity context only: The first time another heroine is defeated in each battle, the wearer immediately gains 1 Action and restores 5 Resolve.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single wearable pin, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,10,l06_half_mask,Half-Mask,Memento,Targeting Defense,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Half-Mask"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Half-Mask"". Visual identity context only: The first single-target enemy Attack directed at the wearer in each battle suffers -2d10.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single wearable half-mask facing three-quarter toward the viewer; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,11,mat_l06_velvet_thread,Velvet Thread,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Velvet Thread"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Velvet Thread"". Visual identity context only: Material-pouch resource for cloth, restorative, restraint, and Curio crafting.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact spool or neatly tied bundle, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+6,12,mat_l06_stage_brass,Stage Brass,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 6 item ""Stage Brass"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Stage Brass"". Visual identity context only: Material-pouch resource for mechanisms, bells, reinforcement, and theatrical utility crafting.
+Layer material direction: decayed theatre: worn velvet, tarnished stage brass, chalk, masks, bells, faded performance props.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,1,l07_rain_cistern_flask,Rain Cistern Flask,Active,HP / MP Recovery,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Rain Cistern Flask"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Rain Cistern Flask"". Visual identity context only: Restore 4 HP and 2 MP to one living heroine.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,2,l07_weatherproof_tonic,Weatherproof Tonic,Active,Status / Resolve Recovery,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Weatherproof Tonic"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Weatherproof Tonic"". Visual identity context only: Remove Slow from one heroine and restore 4 Resolve.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,3,l07_chalk_marker_bundle,Chalk Marker Bundle,Active,Map Reveal,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Chalk Marker Bundle"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Chalk Marker Bundle"". Visual identity context only: Reveal 3 currently unrevealed rooms on the current Layer map.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single physical inscribed charm or brand-token, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,4,l07_windcloth_wrap,Windcloth Wrap,Active,Defense / Movement Protection,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Windcloth Wrap"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Windcloth Wrap"". Visual identity context only: For 2 rounds, the heroine gains +1d10 on Defense rolls and cannot be affected by Slow or forced movement.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact folded and rolled textile bundle; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,5,l07_climbers_cord,Climber's Cord,Active,Movement Utility,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Climber's Cord"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Climber's Cord"". Visual identity context only: The heroine's next Move action taken before the end of her turn allows up to 4 movement steps instead of the normal 2.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact coiled cord, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,6,l07_signal_flare,Signal Flare,Active,Ranged Utility,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Signal Flare"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Signal Flare"". Visual identity context only: Roll 2d10 against one enemy; each 7+ success deals 1 damage. If at least 1 success is rolled, that enemy's next Attack roll suffers -2d10.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,7,l07_parachute_silk,Parachute Silk,Active,Forced-Movement Reaction,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Parachute Silk"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Parachute Silk"". Visual identity context only: When the holder would be forcibly moved, consume the Parachute Silk to cancel that forced movement completely.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,8,l07_lightning_bottle,Lightning Bottle,Active,Shock / Stun,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Lightning Bottle"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Lightning Bottle"". Visual identity context only: Roll 4d10 against one enemy; each 7+ success deals 1 damage. If 2 or more successes are rolled, also apply Stunned for 1 round.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,9,l07_fold_nail,Fold Nail,Active,Spatial Reposition,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Fold Nail"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Fold Nail"". Visual identity context only: Immediately reposition the heroine to any valid position within her current BattleZone, ignoring normal position adjacency.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single heavy nail placed diagonally; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,10,l07_star_compass,Star Compass,Memento,Ambush Protection,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Star Compass"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Star Compass"". Visual identity context only: While equipped, the party cannot be Ambushed. Battles that would use the Ambush deployment instead use the normal deployment rules.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single compact compass, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,11,l07_captains_marker,Captain's Marker,Memento,Defeat Prevention,Unique,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Captain's Marker"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Captain's Marker"". Visual identity context only: The first time the wearer would be reduced to 0 HP, leave her at 1 HP instead and destroy the Captain's Marker.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single physical inscribed charm or brand-token, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,12,mat_l07_skyglass,Skyglass,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Skyglass"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Skyglass"". Visual identity context only: Material-pouch resource for lenses, navigation, light, and precision utility crafting.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single glass fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+7,13,mat_l07_stormwire,Stormwire,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 7 item ""Stormwire"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Stormwire"". Visual identity context only: Material-pouch resource for shock, signal, mechanism, and advanced movement-tool crafting.
+Layer material direction: storm heights and folded roads: windcloth, rope, skyglass, stormwire, navigation and climbing gear.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact coil of wire; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,1,l08_white_poultice,White Poultice,Active,Heal / Cleanse,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""White Poultice"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""White Poultice"". Visual identity context only: Restore 4 HP to one living heroine and remove Bleed.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact tied cloth poultice bundle; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,2,l08_purifying_incense,Purifying Incense,Active,Resolve / Status Cleanse,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Purifying Incense"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Purifying Incense"". Visual identity context only: Restore 6 Resolve and remove one negative status from one heroine.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact tied bundle or small burner-free packet, diagonal presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,3,l08_fasting_tonic,Fasting Tonic,Active,MP / Action Economy,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Fasting Tonic"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Fasting Tonic"". Visual identity context only: Restore 5 MP and immediately restore 1 Action, up to the heroine's normal Action maximum.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,4,l08_vigil_draught,Vigil Draught,Active,Control Protection,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Vigil Draught"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Vigil Draught"". Visual identity context only: For 3 rounds, the heroine cannot gain Stunned or Slow.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: upright three-quarter bottle presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,5,l08_consecrated_thread,Consecrated Thread,Active,Repair,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Consecrated Thread"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Consecrated Thread"". Visual identity context only: Restore 2 condition steps to one non-Broken weapon, armor, or shield.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact spool or neatly tied bundle, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,6,l08_seal_wax,Seal Wax,Active,Corruption Protection,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Seal Wax"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Seal Wax"". Visual identity context only: For 3 rounds, reduce every incoming Corruption gain to the heroine by 2, to a minimum of 0.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact wax sample with a few flakes, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,7,l08_ablution_salts,Ablution Salts,Active,Corruption Cleanse,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Ablution Salts"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Ablution Salts"". Visual identity context only: Reduce one heroine's Corruption by 10, to a minimum of 0.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small stoppered jar or tied pouch, upright three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,8,l08_chosen_thorn,Chosen Thorn,Active,Corruption Cleanse,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Chosen Thorn"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Chosen Thorn"". Visual identity context only: Reduce one heroine's Corruption by 6, to a minimum of 0.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,9,l08_surrendered_keepsake,Surrendered Keepsake,Active,Sacrifice / Corruption Cleanse,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Surrendered Keepsake"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Surrendered Keepsake"". Visual identity context only: Choose and permanently destroy one other carried Active consumable. Then reduce the user's Corruption by 12, to a minimum of 0.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,10,l08_pilgrims_token,Pilgrim's Token,Memento,Low-Corruption Discipline,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Pilgrim's Token"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Pilgrim's Token"". Visual identity context only: While the wearer has 20 or less Corruption, she gains +1d10 on Defense and Struggle rolls.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single thick token or medallion, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,11,l08_seal_fragment,Seal Fragment,Memento,Damage Ward,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Seal Fragment"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Seal Fragment"". Visual identity context only: While equipped, reduce every instance of incoming HP damage to the wearer by 1, to a minimum of 0.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,12,mat_l08_sacred_fiber,Sacred Fiber,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Sacred Fiber"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Sacred Fiber"". Visual identity context only: Material-pouch resource for protective cloth, healing, discipline, and ward crafting.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact tied bundle of raw fiber; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+8,13,mat_l08_seal_dust,Seal Dust,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 8 item ""Seal Dust"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Seal Dust"". Visual identity context only: Material-pouch resource for wards, Corruption resistance, portal/seal tools, and advanced purification crafting.
+Layer material direction: austere white convent: bleached cloth, silver-gray metal, incense, sacred fiber, seal dust and wax.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,1,l09_prayer_fuse,Prayer Fuse,Active,MP / Corruption,Common,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Prayer Fuse"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Prayer Fuse"". Visual identity context only: Restore 5 MP to one heroine.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single worn prayer page or narrow folded prayer slip, angled presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,2,l09_bell_rope_knot,Bell-Rope Knot,Active,Grapple Prevention,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Bell-Rope Knot"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Bell-Rope Knot"". Visual identity context only: When an attached grappler would advance the holder's Grapple by 1 Stage, consume the Bell-Rope Knot to cancel that Stage advance.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact coiled rope, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,3,l09_conduit_tap,Conduit Tap,Active,Corruption Routing,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Conduit Tap"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Conduit Tap"". Visual identity context only: Move up to 5 Corruption from one heroine to another heroine. The party's total Corruption does not change.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,4,l09_resonance_capsule,Resonance Capsule,Active,Defense Disruption,Uncommon,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Resonance Capsule"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Resonance Capsule"". Visual identity context only: Until the end of the current round, all enemy Defense rolls suffer -1d10.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: compact centered capsule presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,5,l09_corruption_condenser,Corruption Condenser,Active,Corruption Storage,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Corruption Condenser"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Corruption Condenser"". Visual identity context only: If the user has at least 10 Corruption, remove exactly 10 Corruption and transform this item into a Filled Corruption Condenser. A Filled Condenser can later be used for 1 Action to roll 5d10 damage against one enemy, then it is destroyed.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,6,l09_battery_shard,Battery Shard,Active,Power / Corruption,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Battery Shard"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Battery Shard"". Visual identity context only: Roll 6d10 against one enemy; each 7+ success deals 1 damage.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive shard, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,7,l09_selection_coin,Selection Coin,Active,Chance / Action Economy,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Selection Coin"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Selection Coin"". Visual identity context only: Flip a fair coin when used. Heads: immediately gain 2 Actions, up to a maximum of 4 Actions this round. Tails: immediately lose 6 Resolve.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single coin, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,8,l09_realm_lens_fragment,Realm Lens Fragment,Memento,Realm Combat Insight,Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Realm Lens Fragment"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Realm Lens Fragment"". Visual identity context only: While equipped, the wearer gains +1d10 on Attack rolls against enemies tagged Blessed or Corrupted.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single distinctive fragment, angled three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,9,l09_marriage_ribbon,Marriage Ribbon,Memento,Resolve Preservation,Unique,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Marriage Ribbon"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Marriage Ribbon"". Visual identity context only: While equipped, reduce every incoming Resolve loss to the wearer by 1, to a minimum of 0.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: loosely folded ribbon with clear silhouette; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,10,mat_l09_conduit_crystal,Conduit Crystal,Material,Crafting Material,Common Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Conduit Crystal"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Conduit Crystal"". Visual identity context only: Material-pouch resource for energy, lens, Corruption-routing and high-tier utility crafting.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single crystal sample, upright angled presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+9,11,mat_l09_bell_metal,Bell Metal,Material,Crafting Material,Uncommon Material,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 9 item ""Bell Metal"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: a compact representative crafting sample of ""Bell Metal"". Visual identity context only: Material-pouch resource for resonance, defense-disruption, mechanisms and heavy late-game crafting.
+Layer material direction: bell-and-conduit realm: dark bell metal, crystal conduits, restrained crimson-violet stored energy.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: one compact ingot-like sample and a small broken piece; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+10,1,l10_root_salve,Root Salve,Active,Final Recovery,Authored Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 10 item ""Root Salve"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Root Salve"". Visual identity context only: Restore 6 HP to one living heroine and remove all negative status effects currently affecting her.
+Layer material direction: Castle heart and Refuge echoes: ancient roots, memory seeds, fold geometry, muted bloom crystal.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: small squat stoppered jar, three-quarter presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+10,2,l10_memory_seed,Memory Seed,Active,Resolve Recovery / Protection,Authored Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 10 item ""Memory Seed"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Memory Seed"". Visual identity context only: Restore 10 Resolve to one heroine. For the next 3 rounds, reduce every incoming Resolve loss to her by 2, to a minimum of 0.
+Layer material direction: Castle heart and Refuge echoes: ancient roots, memory seeds, fold geometry, muted bloom crystal.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: one distinctive seed with two or three much smaller companion seeds; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+10,3,l10_fold_anchor,Fold Anchor,Active,Spatial Reposition,Authored Rare,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 10 item ""Fold Anchor"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single usable object ""Fold Anchor"". Visual identity context only: Immediately reposition one heroine to any valid battlefield position, ignoring normal position adjacency and BattleZone boundaries.
+Layer material direction: Castle heart and Refuge echoes: ancient roots, memory seeds, fold geometry, muted bloom crystal.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single centered object in a clear three-quarter product presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."
+10,4,l10_refuge_echo_crystal,Refuge Echo Crystal,Memento,Party Sustain,Unique,GENERATE,,"Use case: stylized-concept
+Asset type: production-ready dark-fantasy roguelite item sprite source master
+Primary request: create the canonical Layer 10 item ""Refuge Echo Crystal"".
+Input images: Images 1–4 are the game's existing item-sprite references for rendering style, tactile material detail, restrained lighting, silhouette clarity, framing, and relative object scale. They are references only; do not copy their objects.
+Subject: the single wearable or keepsake object ""Refuge Echo Crystal"". Visual identity context only: While equipped, at the start of each round the living heroine with the lowest current Resolve restores 2 Resolve. If tied, the player chooses among the tied heroines.
+Layer material direction: Castle heart and Refuge echoes: ancient roots, memory seeds, fold geometry, muted bloom crystal.
+Style/medium: match the references' high-detail painted-realistic dark-fantasy item rendering; aged practical materials; crisp silhouette; readable at inventory-icon size.
+Composition/framing: single crystal sample, upright angled presentation; fully visible; centered on a square canvas; generous transparent padding; no cropping.
+Lighting/mood: restrained warm-neutral controlled light matching the references; use only a very subtle contained internal glow when the item name or material explicitly requires supernatural energy.
+Constraints: genuinely transparent background with preserved alpha; exactly one item or one compact item group; no environment, pedestal, inventory frame, border, hands, characters, text, letters, numbers, logo, watermark, floating particles, large aura, excessive glow, or cast shadow outside the object; suitable for later normalization to 512×512."

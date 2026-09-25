@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomItemPoolEntryDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="1_entry"]
+[ext_resource type="Resource" path="res://data/items/layer_1/bandage_roll.tres" id="2_item"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_bandage_roll.png" id="3_texture"]
+
+[resource]
+script = ExtResource("1_entry")
+entry_id = &"l01_bandage_cache"
+item = ExtResource("2_item")
+world_texture = ExtResource("3_texture")
+required_anchor_tag = &"small_item"
+weight = 1
+quantity = 1

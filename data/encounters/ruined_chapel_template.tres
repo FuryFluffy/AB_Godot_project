@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EncounterTemplateDefinition" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounters/encounter_template_definition.gd" id="1_template"]
+[ext_resource type="PackedScene" path="res://scenes/battle/battlefields/ruined_chapel_battlefield.tscn" id="2_field"]
+[ext_resource type="Resource" path="res://data/enemy_ai/ruined_chapel_group_rulebook.tres" id="3_rulebook"]
+
+[resource]
+script = ExtResource("1_template")
+template_id = &"ruined_chapel_regular"
+display_name = "Ruined Chapel Encounter"
+battlefield_scene = ExtResource("2_field")
+enemy_group_rulebook = ExtResource("3_rulebook")
+preview_enemy_ids = Array[StringName]([&"hollow_servant", &"knife_footman", &"prayer_rag_novice"])
+party_spawn_slot_ids = Array[StringName]([&"party_1", &"party_2", &"party_3"])
+enemy_spawn_slot_ids = Array[StringName]([&"enemy_1", &"enemy_2", &"enemy_3", &"enemy_4", &"enemy_5", &"enemy_6"])

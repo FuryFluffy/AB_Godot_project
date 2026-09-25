@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/refuge/ui/refuge_slot_grid.gd" id="1_script"]
+
+[node name="RefugeSlotGrid" type="GridContainer"]
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 3
+script = ExtResource("1_script")

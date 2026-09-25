@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RefugeRecipeCatalogDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/refuge_recipe_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/data/refuge_recipe_definition.gd" id="2_recipe"]
+[ext_resource type="Resource" path="res://data/refuge/recipes/repair_cloth_armor.tres" id="3_repair"]
+
+[resource]
+script = ExtResource("1_catalog")
+recipes = Array[ExtResource("2_recipe")]([ExtResource("3_repair")])

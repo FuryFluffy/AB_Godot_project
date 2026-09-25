@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://co76xbfp17ye6"]
+
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="1_4l6wt"]
+[ext_resource type="Resource" uid="uid://bfracqv825r8n" path="res://scripts/data/equipment/loadouts/prayer_rag_loadout.tres" id="2_aqj2f"]
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="2_trn4i"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_aqj2f"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Resource" uid="uid://c6pelmo2g5lrq" path="res://data/enemy_ai/prayer_rag_novice_rulebook.tres" id="5_rulebook"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="6_ability_script"]
+[ext_resource type="Resource" path="res://data/abilities/prayer_rag_dark_prayer.tres" id="7_dark_prayer"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="9_kiwjh"]
+
+[sub_resource type="Resource" id="Resource_k108i"]
+script = ExtResource("1_4l6wt")
+might = 0
+personality = 3
+metadata/_custom_type_script = "uid://bkkj2s2lvlk3y"
+
+[sub_resource type="Resource" id="Resource_protection"]
+script = ExtResource("4_protection")
+
+[sub_resource type="Resource" id="Resource_h6jdc"]
+script = ExtResource("3_aqj2f")
+skill = 17
+level = 2
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[sub_resource type="Resource" id="Resource_f684v"]
+script = ExtResource("3_aqj2f")
+skill = 18
+level = 1
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[sub_resource type="Resource" id="Resource_pcf5p"]
+script = ExtResource("3_aqj2f")
+skill = 7
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[sub_resource type="Resource" id="Resource_d41no"]
+script = ExtResource("3_aqj2f")
+skill = 3
+level = 1
+tier = 1
+metadata/_custom_type_script = "uid://c67qo6deobbgk"
+
+[resource]
+script = ExtResource("2_trn4i")
+battler_id = &"prayer_rag_novice"
+display_name = "Prayer-Rag Novice"
+faction = 1
+attributes = SubResource("Resource_k108i")
+max_hp = 3
+max_mp = 6
+starting_resolve = 0
+order_value = 2
+skills = Array[ExtResource("3_aqj2f")]([SubResource("Resource_h6jdc"), SubResource("Resource_f684v"), SubResource("Resource_pcf5p"), SubResource("Resource_d41no")])
+abilities = Array[ExtResource("6_ability_script")]([ExtResource("7_dark_prayer")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Resource_protection")])
+default_loadout = ExtResource("2_aqj2f")
+enemy_rulebook = ExtResource("5_rulebook")
+metadata/_custom_type_script = "uid://jm0qoyjtshqv"

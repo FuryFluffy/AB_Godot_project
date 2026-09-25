@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cu1twvpaxj551"]
+
+[ext_resource type="StyleBox" uid="uid://b6m37hpkc3vee" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="1_5gmg7"]
+[ext_resource type="Script" uid="uid://8lnk64wcrgln" path="res://scripts/exploration/ui/exploration_command_bar.gd" id="2_h1tss"]
+[ext_resource type="Texture2D" uid="uid://5rj5qsnfcewk" path="res://assets/ui/command_bar/log.png" id="3_4cfaw"]
+
+[node name="ExplorationCommandBar" type="PanelContainer" unique_id=1719385065]
+custom_minimum_size = Vector2(88, 372)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -388.0
+offset_right = -2.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("1_5gmg7")
+script = ExtResource("2_h1tss")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=100366720]
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Margin" unique_id=1881657959]
+layout_mode = 2
+
+[node name="Inventory" type="Button" parent="Margin/Buttons" unique_id=1993292004]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Open inventory"
+theme_override_styles/normal = ExtResource("1_5gmg7")
+text = "Inv"
+
+[node name="Party" type="Button" parent="Margin/Buttons" unique_id=1901785828]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Review and re-arrange party"
+theme_override_styles/normal = ExtResource("1_5gmg7")
+text = "Party"
+
+[node name="Back" type="Button" parent="Margin/Buttons" unique_id=266376654]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Return to node map"
+theme_override_styles/normal = ExtResource("1_5gmg7")
+text = "Back"
+
+[node name="Log" type="Button" parent="Margin/Buttons" unique_id=1937227181]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Open log"
+theme_override_styles/normal = ExtResource("1_5gmg7")
+icon = ExtResource("3_4cfaw")
+expand_icon = true

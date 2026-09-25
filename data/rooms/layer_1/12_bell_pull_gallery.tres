@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://bpmvba2ouu6f5"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://cgkifbhe16m44" path="res://assets/backgrounds/layer_1/sdxl_curated/11_Bell_Pull_Gallery.png" id="3_texture_0"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/bell_pull_gallery.tres" id="4_exploration"]
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"primary"
+display_name = "Bell-Pull Gallery"
+texture = ExtResource("3_texture_0")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"bell_pull_gallery"
+display_name = "Bell-Pull Gallery"
+canonical_order = 12
+authoring_summary = "Rows of servant bells, cords moving without visible hands."
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1")])
+exploration_definition = ExtResource("4_exploration")

@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="LayerRoomDefinition" format=3 uid="uid://ddyf30a048v7x"]
+
+[ext_resource type="Script" uid="uid://xteve4v0kw7s" path="res://scripts/data/rooms/layer_room_definition.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://duesyy2pqofdi" path="res://scripts/data/rooms/layer_room_visual_definition.gd" id="2_visual"]
+[ext_resource type="Texture2D" uid="uid://dooqnpui8mfub" path="res://assets/backgrounds/layer_1/sdxl_curated/19_Ruined_Chapel_Exploration.png" id="3_texture_0"]
+[ext_resource type="Texture2D" uid="uid://lu6461n34rru" path="res://assets/backgrounds/layer_1/sdxl_curated/20_Ruined_Chapel_Battle.png" id="4_texture_1"]
+[ext_resource type="PackedScene" uid="uid://d17udiacsmkut" path="res://scenes/battle/battlefields/ruined_chapel_battlefield.tscn" id="5_production_0"]
+[ext_resource type="Script" uid="uid://bquxrwpntoig1" path="res://scripts/exploration/event_room_definition.gd" id="event_definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/registered_room_shell.tscn" id="room_shell"]
+
+[sub_resource type="Resource" id="EventRoomDefinition_1"]
+script = ExtResource("event_definition")
+room_id = &"ruined_chapel"
+display_name = "Ruined Chapel"
+presentation_scene = ExtResource("room_shell")
+presentation_texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_1"]
+script = ExtResource("2_visual")
+variant_id = &"exploration"
+display_name = "Ruined Chapel — Exploration"
+texture = ExtResource("3_texture_0")
+
+[sub_resource type="Resource" id="Visual_2"]
+script = ExtResource("2_visual")
+variant_id = &"battle"
+display_name = "Ruined Chapel — Battle"
+presentation_uses = 2
+texture = ExtResource("4_texture_1")
+
+[resource]
+script = ExtResource("1_room")
+room_id = &"ruined_chapel"
+display_name = "Ruined Chapel"
+canonical_order = 7
+authoring_summary = "Seraphine recruitment location. Major battle-ready room."
+strong_battle_candidate = true
+authoring_tags = Array[StringName]([&"recruitment", &"required_narrative"])
+visual_variants = Array[ExtResource("2_visual")]([SubResource("Visual_1"), SubResource("Visual_2")])
+exploration_definition = SubResource("EventRoomDefinition_1")
+production_battlefields = Array[PackedScene]([ExtResource("5_production_0")])

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/items/item_definition.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_chapel_rosary.png" id="99_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"l01_chapel_rosary"
+display_name = "Chapel Rosary"
+description = "Passive Layer 1 keepsake. Its encounter-wide passive hook is reserved for the progression pass."
+icon = ExtResource("99_icon")
+content_category = 2
+rarity = 2
+canonical_workbook_item = true
+layer = 1
+item_type = 1
+stack_limit = 1
+consumes_on_use = false
+combat_usable = false
+action_cost = 0

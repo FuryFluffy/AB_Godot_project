@@ -1,0 +1,93 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://cap5whfe8633c"]
+
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="1_battler"]
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="2_attributes"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="4_protection"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="5_specialty"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="6_ability_script"]
+[ext_resource type="Resource" uid="uid://rnt0avdox7kn" path="res://scripts/data/equipment/loadouts/seraphine_loadout.tres" id="7_loadout"]
+[ext_resource type="Resource" path="res://data/abilities/seraphine_light_arrow.tres" id="8_light_arrow"]
+[ext_resource type="Resource" path="res://data/abilities/seraphine_bless.tres" id="9_bless"]
+[ext_resource type="Resource" path="res://data/abilities/seraphine_heal.tres" id="10_heal"]
+[ext_resource type="Resource" path="res://data/abilities/seraphine_cleanse.tres" id="11_cleanse"]
+[ext_resource type="Resource" path="res://data/abilities/seraphine_ward_of_grace.tres" id="12_ward"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/jaw_break.tres" id="13_jaw_break"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("2_attributes")
+agility = 2
+endurance = 4
+intellect = 3
+personality = 5
+
+[sub_resource type="Resource" id="Cloth"]
+script = ExtResource("4_protection")
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Light"]
+script = ExtResource("3_skill")
+skill = 16
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Body"]
+script = ExtResource("3_skill")
+skill = 22
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Staff"]
+script = ExtResource("3_skill")
+skill = 7
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Speech"]
+script = ExtResource("3_skill")
+skill = 4
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Spirit"]
+script = ExtResource("3_skill")
+skill = 23
+level = 1
+tier = 1
+
+[sub_resource type="Resource" id="Armorer"]
+script = ExtResource("5_specialty")
+tier = 1
+
+[sub_resource type="Resource" id="Meditation"]
+script = ExtResource("5_specialty")
+specialty = 4
+tier = 1
+
+[sub_resource type="Resource" id="Spellcaster"]
+script = ExtResource("5_specialty")
+specialty = 3
+tier = 1
+
+[resource]
+script = ExtResource("1_battler")
+battler_id = &"seraphine"
+display_name = "Seraphine"
+faction = 0
+category = 0
+attributes = SubResource("Attributes")
+max_hp = 5
+max_mp = 9
+skills = Array[ExtResource("3_skill")]([SubResource("Light"), SubResource("Body"), SubResource("Staff"), SubResource("Awareness"), SubResource("Speech"), SubResource("Spirit")])
+specialties = Array[ExtResource("5_specialty")]([SubResource("Armorer"), SubResource("Meditation"), SubResource("Spellcaster")])
+abilities = Array[ExtResource("6_ability_script")]([ExtResource("8_light_arrow"), ExtResource("9_bless"), ExtResource("10_heal"), ExtResource("11_cleanse"), ExtResource("12_ward")])
+unlockable_abilities = Array[ExtResource("6_ability_script")]([ExtResource("13_jaw_break")])
+protection_proficiencies = Array[ExtResource("4_protection")]([SubResource("Cloth")])
+default_loadout = ExtResource("7_loadout")

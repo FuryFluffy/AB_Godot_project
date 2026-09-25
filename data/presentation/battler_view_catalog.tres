@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="BattlerViewCatalogDefinition" format=3 uid="uid://b4scg85j1etkm"]
+
+[ext_resource type="Script" uid="uid://cx2gvqo4ltook" path="res://scripts/data/presentation/battler_view_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://2kuh4xg4ixxj" path="res://scripts/data/presentation/battler_view_definition.gd" id="2_view"]
+[ext_resource type="Texture2D" uid="uid://bgoh5rb2em84w" path="res://assets/characters/curated/lysandra/core_idle_front.png" id="3_lysandra"]
+[ext_resource type="Texture2D" uid="uid://4n5xwb5ds2su" path="res://assets/characters/curated/mira/core_move_front.png" id="4_mira"]
+[ext_resource type="Texture2D" uid="uid://ccbnd1r400hxw" path="res://assets/characters/curated/seraphine/core_idle_front.png" id="5_seraphine"]
+[ext_resource type="Texture2D" uid="uid://btl2q5ajtwgdy" path="res://assets/characters/enemies/corrupted_butler.png" id="6_butler"]
+
+[sub_resource type="Resource" id="ViewLysandra"]
+script = ExtResource("2_view")
+battler_id = &"lysandra"
+texture = ExtResource("3_lysandra")
+art_offset = Vector2(0, -196)
+art_scale = Vector2(0.215, 0.215)
+
+[sub_resource type="Resource" id="ViewMira"]
+script = ExtResource("2_view")
+battler_id = &"mira"
+texture = ExtResource("4_mira")
+art_offset = Vector2(0, -196)
+art_scale = Vector2(0.215, 0.215)
+
+[sub_resource type="Resource" id="ViewSeraphine"]
+script = ExtResource("2_view")
+battler_id = &"seraphine"
+texture = ExtResource("5_seraphine")
+art_offset = Vector2(0, -196)
+art_scale = Vector2(0.215, 0.215)
+
+[sub_resource type="Resource" id="ViewButler"]
+script = ExtResource("2_view")
+battler_id = &"corrupted_butler"
+texture = ExtResource("6_butler")
+art_offset = Vector2(-2, -136)
+art_scale = Vector2(0.2, 0.2)
+
+[resource]
+script = ExtResource("1_catalog")
+views = Array[ExtResource("2_view")]([SubResource("ViewLysandra"), SubResource("ViewMira"), SubResource("ViewSeraphine"), SubResource("ViewButler")])

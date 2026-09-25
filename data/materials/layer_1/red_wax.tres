@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MaterialDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/items/material_definition.gd" id="1_material"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/mat_l01_red_wax.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_material")
+item_id = &"mat_l01_red_wax"
+display_name = "Red Wax"
+description = "A banked Layer 1 material used by authored Refuge equipment operations."
+icon = ExtResource("2_icon")
+layer = 1
+content_category = 4
+rarity = 1
+canonical_workbook_item = true
+item_type = 1
+stack_limit = 99
+consumes_on_use = false
+combat_usable = false
+action_cost = 0
+material_tier = 0
+purpose_ids = Array[StringName]([&"equipment_salvage"])

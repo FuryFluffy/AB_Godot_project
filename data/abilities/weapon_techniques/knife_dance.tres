@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="1_ability"]
+[ext_resource type="Script" path="res://scripts/data/abilities/effects/ability_effect_definition.gd" id="2_effect_script"]
+[ext_resource type="Resource" path="res://data/ability_effects/attack_knife_dance.tres" id="3_attack"]
+[ext_resource type="Resource" path="res://data/weapon_effects/techniques/flat_damage_1.tres" id="4_damage"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"knife_dance"
+display_name = "Knife Dance"
+description = "Spend 1 Action and 2 MP to make separate Dagger Attacks against up to two different legal targets. Each hit adds 1 flat damage. If only one target is legal, attack it once."
+tier = 1
+tags = 4
+requires_progression_unlock = true
+required_weapon_family_id = &"dagger"
+minimum_weapon_family_rank = 1
+uses_equipped_weapon_attack_profile = true
+additional_weapon_effects = Array[WeaponEffectDefinition]([ExtResource("4_damage")])
+action_cost = 1
+mp_cost = 2
+skill = 8
+attribute = 1
+dice_modifier = 0
+targeting_mode = 0
+required_target_count = 2
+allows_fewer_targets_when_unavailable = true
+maximum_zone_distance = 0
+is_magic = false
+can_be_parried = true
+effects = Array[ExtResource("2_effect_script")]([ExtResource("3_attack")])

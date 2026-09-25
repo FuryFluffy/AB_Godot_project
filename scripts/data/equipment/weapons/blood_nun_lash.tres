@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Resource" path="res://data/weapon_effects/unique/bleed_on_damage.tres" id="2_bleed"]
+
+[resource]
+script = ExtResource("1_weapon")
+equipment_id = &"blood_nun_lash"
+display_name = "Flagellant's Lash"
+allowed_slots = Array[int]([0])
+condition_maximum = 12
+destructible = false
+unique_effects = Array[WeaponEffectDefinition]([ExtResource("2_bleed")])
+skill = 24
+attribute = 0
+attack_range = 1
+is_magic_attack = false
+maximum_zone_distance = 1
+can_parry = true

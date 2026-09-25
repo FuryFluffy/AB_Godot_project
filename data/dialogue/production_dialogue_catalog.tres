@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogueCatalogDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/dialogue/dialogue_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_mira_recruitment_aftermath.tres" id="2_mira"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_seraphine_recruitment_prelude.tres" id="3_seraphine_pre"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_seraphine_recruitment_aftermath.tres" id="4_seraphine_after"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_blood_nun_aftermath.tres" id="5_blood_nun"]
+[ext_resource type="Resource" path="res://data/dialogue/layer2_refuge_origin.tres" id="6_refuge_jailer"]
+[ext_resource type="Resource" path="res://data/dialogue/layer2_refuge_origin_from_upper_route.tres" id="7_refuge_upper"]
+[ext_resource type="Resource" path="res://data/dialogue/layer2_jailer_victory_aftermath.tres" id="8_jailer_victory"]
+[ext_resource type="Resource" path="res://data/dialogue/layer2_farthest_cell_refuge_establishment.tres" id="9_farthest"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_wine_cellar_observation.tres" id="10_wine"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_butlers_office_observation.tres" id="11_office"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_bell_pull_gallery_observation.tres" id="12_bell"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_servant_ledger_observation.tres" id="13_ledger"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_ruined_confessional.tres" id="14_confessional"]
+[ext_resource type="Resource" path="res://data/dialogue/layer1_coat_torn_cuff.tres" id="15_cuff"]
+
+[resource]
+script = ExtResource("1_catalog")
+dialogues = Array[ExtResource("2_mira")]([ExtResource("2_mira"), ExtResource("3_seraphine_pre"), ExtResource("4_seraphine_after"), ExtResource("5_blood_nun"), ExtResource("6_refuge_jailer"), ExtResource("7_refuge_upper"), ExtResource("8_jailer_victory"), ExtResource("9_farthest"), ExtResource("10_wine"), ExtResource("11_office"), ExtResource("12_bell"), ExtResource("13_ledger"), ExtResource("14_confessional"), ExtResource("15_cuff")])

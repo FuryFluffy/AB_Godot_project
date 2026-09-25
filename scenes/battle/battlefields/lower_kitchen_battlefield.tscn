@@ -1,0 +1,452 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_battlefield.gd" id="1_field"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_battle_zone.gd" id="2_zone"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_anchor.gd" id="3_anchor"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_position.gd" id="4_position"]
+[ext_resource type="Script" path="res://scripts/data/battlefield/authored_spawn_slot.gd" id="5_spawn"]
+[ext_resource type="Texture2D" path="res://New Rooms+Props/ABYSSAL_BLOOM_L1_L2_RESTYLED_SORTED_2026-08-30/Rooms/Layer_1/l01_room_lower_kitchen.png" id="6_background"]
+
+[node name="LowerKitchenBattlefield" type="Node2D"]
+script = ExtResource("1_field")
+battlefield_id = &"lower_kitchen"
+display_name = "Lower Kitchen"
+show_battler_previews = true
+preview_battler_id = "mira"
+
+[node name="BackgroundLayer" type="Node2D" parent="."]
+z_index = -100
+
+[node name="BackgroundArt" type="Sprite2D" parent="BackgroundLayer"]
+position = Vector2(0, -8.571411)
+scale = Vector2(1.4285715, 1.4285715)
+texture = ExtResource("6_background")
+centered = false
+
+[node name="BattlefieldShade" type="Polygon2D" parent="BackgroundLayer"]
+z_index = 1
+color = Color(0.025, 0.02, 0.018, 0.08)
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+
+[node name="Zones" type="Node2D" parent="."]
+
+[node name="ForegroundPreparation" type="Polygon2D" parent="Zones"]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(300, 795, 1620, 795, 1380, 1045, 340, 1045)
+script = ExtResource("2_zone")
+zone_id = &"foreground_preparation"
+display_name = "Foreground Preparation Floor"
+connected_zone_ids = Array[StringName]([&"central_left_kitchen", &"central_center_kitchen", &"central_right_kitchen"])
+
+[node name="CentralLeftKitchen" type="Polygon2D" parent="Zones"]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(250, 580, 805, 580, 805, 770, 280, 770)
+script = ExtResource("2_zone")
+zone_id = &"central_left_kitchen"
+display_name = "Left Kitchen Work Floor"
+connected_zone_ids = Array[StringName]([&"foreground_preparation", &"central_center_kitchen", &"rear_hearth_apron"])
+
+[node name="CentralCenterKitchen" type="Polygon2D" parent="Zones"]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(830, 560, 1115, 560, 1115, 770, 830, 770)
+script = ExtResource("2_zone")
+zone_id = &"central_center_kitchen"
+display_name = "Central Preparation Aisle"
+connected_zone_ids = Array[StringName]([&"foreground_preparation", &"central_left_kitchen", &"central_right_kitchen", &"rear_hearth_apron"])
+
+[node name="CentralRightKitchen" type="Polygon2D" parent="Zones"]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(1140, 580, 1650, 580, 1600, 770, 1140, 770)
+script = ExtResource("2_zone")
+zone_id = &"central_right_kitchen"
+display_name = "Right Kitchen Work Floor"
+connected_zone_ids = Array[StringName]([&"foreground_preparation", &"central_center_kitchen", &"service_door_passage"])
+
+[node name="RearHearthApron" type="Polygon2D" parent="Zones"]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(370, 450, 1430, 450, 1460, 560, 340, 560)
+script = ExtResource("2_zone")
+zone_id = &"rear_hearth_apron"
+display_name = "Rear Hearth Apron"
+connected_zone_ids = Array[StringName]([&"central_left_kitchen", &"central_center_kitchen", &"service_door_passage"])
+
+[node name="ServiceDoorPassage" type="Polygon2D" parent="Zones"]
+z_index = -60
+color = Color(0.22, 0.66, 0.96, 0.22)
+polygon = PackedVector2Array(1490, 455, 1690, 445, 1730, 565, 1470, 565)
+script = ExtResource("2_zone")
+zone_id = &"service_door_passage"
+display_name = "Service Door Passage"
+connected_zone_ids = Array[StringName]([&"central_right_kitchen", &"rear_hearth_apron"])
+
+[node name="Anchors" type="Node2D" parent="."]
+
+[node name="ForegroundLeft" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(320, 810, 900, 810, 890, 1030, 360, 1030)
+script = ExtResource("3_anchor")
+anchor_id = &"foreground_left"
+display_name = "Foreground Left"
+zone_id = &"foreground_preparation"
+connected_anchor_ids = Array[StringName]([&"foreground_right", &"central_left", &"central_center"])
+capacity = 2
+battler_scale = 1.5
+visual_order = 30
+visual_depth_band = &"foreground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ForegroundLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(520, 930)
+script = ExtResource("4_position")
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 1.65
+connected_positions = [NodePath("../../ForegroundRight/Position1")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/ForegroundLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(760, 850)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.45
+connected_positions = [NodePath("../../CentralLeft/Position1"), NodePath("../../CentralCenter/Position0")]
+
+[node name="ForegroundRight" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(980, 810, 1600, 810, 1370, 1030, 990, 1030)
+script = ExtResource("3_anchor")
+anchor_id = &"foreground_right"
+display_name = "Foreground Right"
+zone_id = &"foreground_preparation"
+connected_anchor_ids = Array[StringName]([&"foreground_left", &"central_center", &"central_right"])
+capacity = 2
+battler_scale = 1.5
+visual_order = 30
+visual_depth_band = &"foreground"
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ForegroundRight" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(1120, 850)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.45
+connected_positions = [NodePath("../../CentralCenter/Position0"), NodePath("../../CentralRight/Position1")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/ForegroundRight"]
+z_index = 2
+position = Vector2(1250, 950)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.65
+
+[node name="CentralLeft" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(270, 595, 790, 595, 790, 755, 290, 755)
+script = ExtResource("3_anchor")
+anchor_id = &"central_left"
+display_name = "Central Left Work Floor"
+zone_id = &"central_left_kitchen"
+connected_anchor_ids = Array[StringName]([&"foreground_left", &"central_center", &"rear_left"])
+battler_scale = 1.1
+visual_order = 22
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/CentralLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(430, 720)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 1.2
+connected_positions = [NodePath("../../CentralCenter/Position0")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/CentralLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(700, 650)
+script = ExtResource("4_position")
+position_index = 1
+connected_positions = []
+
+[node name="Position2" type="Marker2D" parent="Anchors/CentralLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(520, 610)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.0
+connected_positions = [NodePath("../../RearLeft/Position0")]
+
+[node name="Position3" type="Marker2D" parent="Anchors/CentralLeft"]
+z_index = 2
+position = Vector2(760, 735)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.18
+
+[node name="CentralCenter" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(845, 575, 1100, 575, 1100, 755, 845, 755)
+script = ExtResource("3_anchor")
+anchor_id = &"central_center"
+display_name = "Central Preparation Aisle"
+zone_id = &"central_center_kitchen"
+connected_anchor_ids = Array[StringName]([&"foreground_left", &"foreground_right", &"central_left", &"central_right", &"rear_center"])
+capacity = 2
+battler_scale = 1.1
+visual_order = 22
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/CentralCenter" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(900, 720)
+script = ExtResource("4_position")
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 1.18
+connected_positions = [NodePath("../../CentralRight/Position0")]
+
+[node name="Position1" type="Marker2D" parent="Anchors/CentralCenter" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(1030, 620)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.0
+connected_positions = [NodePath("../../RearCenter/Position0")]
+
+[node name="CentralRight" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(1155, 595, 1635, 595, 1590, 755, 1155, 755)
+script = ExtResource("3_anchor")
+anchor_id = &"central_right"
+display_name = "Central Right Work Floor"
+zone_id = &"central_right_kitchen"
+connected_anchor_ids = Array[StringName]([&"foreground_right", &"central_center", &"service_door"])
+battler_scale = 1.1
+visual_order = 22
+visual_orientation = &"back"
+
+[node name="Position0" type="Marker2D" parent="Anchors/CentralRight" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(1250, 640)
+script = ExtResource("4_position")
+connected_positions = []
+
+[node name="Position1" type="Marker2D" parent="Anchors/CentralRight"]
+z_index = 2
+position = Vector2(1480, 710)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 1.18
+
+[node name="Position2" type="Marker2D" parent="Anchors/CentralRight" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(1360, 610)
+script = ExtResource("4_position")
+position_index = 2
+use_anchor_battler_scale = false
+battler_scale = 1.0
+connected_positions = [NodePath("../../ServiceDoor/Position0")]
+
+[node name="Position3" type="Marker2D" parent="Anchors/CentralRight"]
+z_index = 2
+position = Vector2(1570, 650)
+script = ExtResource("4_position")
+position_index = 3
+use_anchor_battler_scale = false
+battler_scale = 1.08
+
+[node name="RearLeft" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(390, 465, 850, 465, 840, 550, 370, 550)
+script = ExtResource("3_anchor")
+anchor_id = &"rear_left"
+display_name = "Left Hearth Apron"
+zone_id = &"rear_hearth_apron"
+connected_anchor_ids = Array[StringName]([&"central_left", &"rear_center"])
+capacity = 2
+battler_scale = 0.8
+visual_order = 12
+visual_depth_band = &"background"
+visual_orientation = &"front"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RearLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(520, 535)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 0.9
+connected_positions = []
+
+[node name="Position1" type="Marker2D" parent="Anchors/RearLeft" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(720, 490)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.8
+connected_positions = [NodePath("../../RearCenter/Position0")]
+
+[node name="RearCenter" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(880, 465, 1405, 465, 1440, 550, 880, 550)
+script = ExtResource("3_anchor")
+anchor_id = &"rear_center"
+display_name = "Main Hearth Apron"
+zone_id = &"rear_hearth_apron"
+connected_anchor_ids = Array[StringName]([&"central_center", &"rear_left", &"service_door"])
+capacity = 2
+battler_scale = 0.8
+visual_order = 12
+visual_depth_band = &"background"
+visual_orientation = &"front"
+
+[node name="Position0" type="Marker2D" parent="Anchors/RearCenter"]
+z_index = 2
+position = Vector2(980, 535)
+script = ExtResource("4_position")
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 0.9
+
+[node name="Position1" type="Marker2D" parent="Anchors/RearCenter" node_paths=PackedStringArray("connected_positions")]
+z_index = 2
+position = Vector2(1230, 490)
+script = ExtResource("4_position")
+position_index = 1
+use_anchor_battler_scale = false
+battler_scale = 0.8
+connected_positions = [NodePath("../../ServiceDoor/Position1")]
+
+[node name="ServiceDoor" type="Polygon2D" parent="Anchors"]
+z_index = -40
+color = Color(0.28, 0.78, 0.76, 0.14)
+polygon = PackedVector2Array(1505, 470, 1680, 460, 1710, 550, 1490, 550)
+script = ExtResource("3_anchor")
+anchor_id = &"service_door"
+display_name = "Right Service Door"
+zone_id = &"service_door_passage"
+connected_anchor_ids = Array[StringName]([&"central_right", &"rear_center"])
+capacity = 2
+battler_scale = 0.7
+visual_order = 8
+visual_depth_band = &"background"
+visual_orientation = &"front"
+
+[node name="Position0" type="Marker2D" parent="Anchors/ServiceDoor"]
+z_index = 2
+position = Vector2(1550, 535)
+script = ExtResource("4_position")
+use_anchor_battler_scale = false
+battler_scale = 0.85
+
+[node name="Position1" type="Marker2D" parent="Anchors/ServiceDoor"]
+z_index = 2
+position = Vector2(1630, 485)
+script = ExtResource("4_position")
+position_index = 1
+show_battler_preview = true
+use_anchor_battler_scale = false
+battler_scale = 0.75
+
+[node name="SpawnSlots" type="Node2D" parent="."]
+
+[node name="Party1" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(520, 930)
+script = ExtResource("5_spawn")
+slot_id = &"party_1"
+display_name = "Party Foreground Left"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"frontline"])
+
+[node name="Party2" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(1120, 850)
+script = ExtResource("5_spawn")
+slot_id = &"party_2"
+display_name = "Party Foreground Centre"
+faction = 0
+role_tags = Array[StringName]([&"party_entry"])
+
+[node name="Party3" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(760, 850)
+script = ExtResource("5_spawn")
+slot_id = &"party_3"
+display_name = "Party Foreground Reserve"
+faction = 0
+role_tags = Array[StringName]([&"party_entry", &"support"])
+
+[node name="Enemy1" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(1550, 535)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_1"
+display_name = "Enemy Service Door"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"frontline"])
+
+[node name="Enemy2" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(520, 535)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_2"
+display_name = "Enemy Left Hearth"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"flank"])
+
+[node name="Enemy3" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(980, 535)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_3"
+display_name = "Enemy Main Hearth"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"flank"])
+
+[node name="Enemy4" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(1230, 490)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_4"
+display_name = "Enemy Rear Reserve"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry", &"support"])
+
+[node name="Enemy5" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(700, 650)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_5"
+display_name = "Enemy Central Left Reserve"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry"])
+
+[node name="Enemy6" type="Marker2D" parent="SpawnSlots"]
+z_index = -20
+position = Vector2(1250, 640)
+script = ExtResource("5_spawn")
+slot_id = &"enemy_6"
+display_name = "Enemy Central Right Reserve"
+faction = 1
+role_tags = Array[StringName]([&"enemy_entry"])
+
+[node name="ForegroundProps" type="Node2D" parent="."]

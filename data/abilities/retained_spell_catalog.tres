@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityCatalogDefinition" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/abilities/ability_catalog_definition.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/data/ability_definition.gd" id="2_ability_script"]
+[ext_resource type="Resource" path="res://data/abilities/retained_spells/dispel_magic.tres" id="3_dispel"]
+[ext_resource type="Resource" path="res://data/abilities/retained_spells/slow.tres" id="4_slow"]
+[ext_resource type="Resource" path="res://data/abilities/retained_spells/regeneration.tres" id="5_regeneration"]
+[ext_resource type="Resource" path="res://data/abilities/retained_spells/cure.tres" id="6_cure"]
+
+[resource]
+script = ExtResource("1_catalog")
+catalog_id = &"retained_rav_spells"
+display_name = "Retained RAV Spells"
+abilities = Array[ExtResource("2_ability_script")]([ExtResource("3_dispel"), ExtResource("4_slow"), ExtResource("5_regeneration"), ExtResource("6_cure")])

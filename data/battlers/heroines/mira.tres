@@ -1,0 +1,92 @@
+[gd_resource type="Resource" script_class="BattlerDefinition" format=3 uid="uid://bng4fuajfac5p"]
+
+[ext_resource type="Script" uid="uid://jm0qoyjtshqv" path="res://scripts/data/battler_definition.gd" id="1_battler"]
+[ext_resource type="Script" uid="uid://bkkj2s2lvlk3y" path="res://scripts/data/attribute_set.gd" id="2_attributes"]
+[ext_resource type="Script" uid="uid://c67qo6deobbgk" path="res://scripts/data/skill_entry.gd" id="3_skill"]
+[ext_resource type="Script" uid="uid://cmsio3xaih17a" path="res://scripts/data/specialty_entry.gd" id="4_specialty"]
+[ext_resource type="Script" uid="uid://dyq314plghc8w" path="res://scripts/data/ability_definition.gd" id="5_ability_script"]
+[ext_resource type="Resource" uid="uid://chepuhxg7f2w2" path="res://scripts/data/equipment/loadouts/mira_loadout.tres" id="6_loadout"]
+[ext_resource type="Resource" path="res://data/abilities/mira_find_the_catch.tres" id="7_find"]
+[ext_resource type="Script" uid="uid://bxont5ysia2am" path="res://scripts/data/protection_proficiency_entry.gd" id="7_gk48t"]
+[ext_resource type="Resource" path="res://data/abilities/mira_thrown_dart.tres" id="8_dart"]
+[ext_resource type="Resource" path="res://data/abilities/mira_blight_bomb.tres" id="9_bomb"]
+[ext_resource type="Resource" path="res://data/abilities/weapon_techniques/knife_dance.tres" id="10_knife_dance"]
+
+[sub_resource type="Resource" id="Attributes"]
+script = ExtResource("2_attributes")
+might = 2
+agility = 4
+endurance = 3
+intellect = 4
+personality = 2
+
+[sub_resource type="Resource" id="Dagger"]
+script = ExtResource("3_skill")
+skill = 8
+level = 4
+tier = 1
+
+[sub_resource type="Resource" id="Espionage"]
+script = ExtResource("3_skill")
+skill = 19
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Speech"]
+script = ExtResource("3_skill")
+skill = 4
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Awareness"]
+script = ExtResource("3_skill")
+skill = 2
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="AlchemySkill"]
+script = ExtResource("3_skill")
+skill = 20
+level = 3
+tier = 1
+
+[sub_resource type="Resource" id="Slings"]
+script = ExtResource("3_skill")
+skill = 21
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Athletics"]
+script = ExtResource("3_skill")
+level = 2
+tier = 1
+
+[sub_resource type="Resource" id="Armsmaster"]
+script = ExtResource("4_specialty")
+specialty = 1
+tier = 1
+
+[sub_resource type="Resource" id="AlchemySpecialty"]
+script = ExtResource("4_specialty")
+specialty = 5
+tier = 1
+
+[sub_resource type="Resource" id="Tinkering"]
+script = ExtResource("4_specialty")
+specialty = 6
+tier = 1
+
+[resource]
+script = ExtResource("1_battler")
+battler_id = &"mira"
+display_name = "Mira"
+faction = 0
+category = 0
+attributes = SubResource("Attributes")
+max_hp = 5
+max_mp = 7
+skills = Array[ExtResource("3_skill")]([SubResource("Dagger"), SubResource("Espionage"), SubResource("Speech"), SubResource("Awareness"), SubResource("AlchemySkill"), SubResource("Slings"), SubResource("Athletics")])
+specialties = Array[ExtResource("4_specialty")]([SubResource("Armsmaster"), SubResource("AlchemySpecialty"), SubResource("Tinkering")])
+abilities = Array[ExtResource("5_ability_script")]([ExtResource("7_find"), ExtResource("8_dart"), ExtResource("9_bomb")])
+unlockable_abilities = Array[ExtResource("5_ability_script")]([ExtResource("10_knife_dance")])
+default_loadout = ExtResource("6_loadout")
