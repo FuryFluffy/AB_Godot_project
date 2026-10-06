@@ -13,6 +13,7 @@ extends Resource
 @export var preserve_authored_background: bool = false
 @export var props: Array[CombatStagePropDefinition] = []
 @export var experimental_foreground_enabled: bool = false
+@export var presentation_profile: CombatPresentationProfile
 
 
 func get_prop(prop_id: StringName) -> CombatStagePropDefinition:
@@ -23,6 +24,10 @@ func get_prop(prop_id: StringName) -> CombatStagePropDefinition:
 
 
 func validate_definition() -> String:
+	if presentation_profile != null:
+		var presentation_error: String = presentation_profile.validate_definition()
+		if not presentation_error.is_empty():
+			return presentation_error
 	if stage_id == &"":
 		return "A combat stage has no stage_id."
 	if battlefield_id == &"":

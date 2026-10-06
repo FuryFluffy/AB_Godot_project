@@ -99,6 +99,8 @@ var resolving_dodge_step: bool = false
 var encounter_starting: bool = false
 var combat_progression_queued: bool = false
 var combat_progression_running: bool = false
+var presentation_director: CombatPresentationDirector
+var presented_action_result: WeakRef
 
 const GRAPPLE_CLUSTER_MARKER_SPACING: float = 170.0
 const GRAPPLE_CLUSTER_GRAPPLER_Y: float = -45.0
@@ -159,6 +161,7 @@ func _ready() -> void:
 	_bind_battler_markers()
 	_initialize_spatial_presentation()
 	_initialize_reusable_presentation()
+	_initialize_presentation_pilot()
 
 	_connect_aoe_controls()
 	_connect_move_controls()
@@ -616,6 +619,29 @@ func _get_battler_marker(
 	return null
 
 
+func _initialize_presentation_pilot() -> void:
+	if active_combat_stage == null or active_combat_stage.presentation_profile == null:
+		return
+	presentation_director = CombatPresentationDirector.new()
+	presentation_director.name = "CombatPresentationDirector"
+	get_node("Battlefield").add_child(presentation_director)
+	presentation_director.initialize(active_combat_stage.presentation_profile, battler_markers)
+
+
+func _presentation_is_busy() -> bool:
+	return presentation_director != null and presentation_director.busy
+
+
+func _prepare_result_presentation() -> void:
+	if presentation_director != null and battle_runtime.has_pending_reaction():
+		presentation_director.prepare_result(battle_runtime.pending_reaction_context.request)
+
+
+func _release_result_presentation() -> void:
+	if presentation_director != null:
+		presentation_director.release_result_pose()
+
+
 func _resolve_battler_visual_orientation(
 	battler_id: StringName,
 	fallback_orientation: StringName
@@ -693,6 +719,8 @@ func _apply_marker_anchor_presentation(
 ) -> void:
 	if marker == null or battlefield_definition == null:
 		return
+	if presentation_director != null and presentation_director.is_moving(marker):
+		return
 	var anchor := battlefield_definition.get_anchor(anchor_id)
 	if anchor == null:
 		return
@@ -733,7 +761,7 @@ func _apply_marker_anchor_presentation(
 		marker.battler_id,
 		StringName(marker.name),
 		marker.current_visual_event,
-		marker.battler_state != null and marker.battler_state.is_defeated,
+		marker.battler_state != null and marker.battler_state.is_defeated and not marker.defer_result_pose,
 		authored_placement,
 		orientation
 	)
@@ -964,6 +992,8 @@ func _connect_move_controls() -> void:
 func _on_battler_selected(
 	battler_id: StringName
 ) -> void:
+	if _presentation_is_busy():
+		return
 	var state: BattlerState = get_battler_state(
 		battler_id
 	)
@@ -2068,6 +2098,17 @@ func _animate_move_step(
 		target_point = anchor.get_position_point(
 			destination_position_index
 		)
+	if (
+		presentation_director != null
+		and presentation_director.profile.smooth_movement_enabled
+	):
+		marker.present_visual_event(&"move_started", marker.current_orientation, 0.0, false)
+		await presentation_director.animate_move(marker, target_point,
+			anchor.get_position_battler_scale(destination_position_index))
+		_apply_marker_anchor_presentation(marker, anchor_id)
+		_present_battler_visual_event(mover_id, &"idle", 0.0, false)
+		_refresh_battler_marker_orientations()
+		return
 
 	# One committed route step is presented as a static step pose at the old
 	# Position, a fade, an invisible authoritative snap, and a fade-in at the
@@ -2476,6 +2517,8 @@ func _present_reaction_panel(
 
 
 func _resolve_enemy_attack_reaction() -> void:
+	if _presentation_is_busy():
+		return
 	if not battle_runtime.has_pending_reaction():
 		return
 
@@ -2501,6 +2544,8 @@ func _resolve_enemy_attack_reaction() -> void:
 
 
 func _resolve_enemy_defense() -> void:
+	if _presentation_is_busy():
+		return
 	if not battle_runtime.has_pending_reaction():
 		return
 
@@ -2528,6 +2573,8 @@ func _resolve_enemy_defense() -> void:
 func _on_attack_reaction_chosen(
 	choice: AttackReactionChoice.Type
 ) -> void:
+	if _presentation_is_busy():
+		return
 	if not battle_runtime.has_pending_reaction():
 		push_error(
 			"No ReactionContext is pending."
@@ -2548,11 +2595,13 @@ func _on_attack_reaction_chosen(
 		_clear_pending_reaction()
 		return
 
+	_prepare_result_presentation()
 	var result: ActionResult = (
 		action_controller.resolve_attack_reaction(choice)
 	)
 
 	if not result.succeeded:
+		_release_result_presentation()
 		log_presenter.append(
 			"Reaction failed: %s"
 			% result.error_message
@@ -2564,6 +2613,7 @@ func _on_attack_reaction_chosen(
 		return
 
 	if choice == AttackReactionChoice.Type.DEFEND:
+		_release_result_presentation()
 		_present_reaction_panel(
 			battle_runtime.pending_reaction_context,
 			target
@@ -2571,6 +2621,7 @@ func _on_attack_reaction_chosen(
 		return
 
 	if result.requires_equipment_break_choice:
+		_release_result_presentation()
 		_present_pending_equipment_break(
 			target,
 			result
@@ -2653,6 +2704,8 @@ func _on_reusable_equipment_break_selected(
 func _on_defense_chosen(
 	choice: DefenseChoice.Type
 ) -> void:
+	if _presentation_is_busy():
+		return
 	if not battle_runtime.has_pending_reaction():
 		push_error(
 			"No ReactionContext is pending."
@@ -2679,6 +2732,7 @@ func _on_defense_chosen(
 			&"defend_started"
 		)
 
+	_prepare_result_presentation()
 	var result: ActionResult = (
 		action_controller.resolve_reaction(choice)
 	)
@@ -2703,6 +2757,7 @@ func _on_defense_chosen(
 		)
 
 	if not result.succeeded:
+		_release_result_presentation()
 		log_presenter.append(
 			"Reaction failed: %s"
 			% result.error_message
@@ -2715,6 +2770,7 @@ func _on_defense_chosen(
 		return
 
 	if result.requires_equipment_break_choice:
+		_release_result_presentation()
 		_present_pending_equipment_break(
 			target,
 			result
@@ -2731,6 +2787,8 @@ func _on_defense_chosen(
 func _on_equipment_break_choice(
 	choice: BreakChoice.Type
 ) -> void:
+	if _presentation_is_busy():
+		return
 	if (
 		not battle_runtime.has_pending_reaction()
 		or battle_runtime.pending_action_result == null
@@ -2755,6 +2813,7 @@ func _on_equipment_break_choice(
 		_clear_pending_reaction()
 		return
 
+	_prepare_result_presentation()
 	var result: ActionResult = (
 		action_controller.resolve_equipment_break_choice(
 			choice
@@ -2762,6 +2821,7 @@ func _on_equipment_break_choice(
 	)
 
 	if not result.succeeded:
+		_release_result_presentation()
 		log_presenter.append(
 			"Equipment allocation failed: %s"
 			% result.error_message
@@ -2769,6 +2829,7 @@ func _on_equipment_break_choice(
 		return
 
 	if result.requires_equipment_break_choice:
+		_release_result_presentation()
 		_present_pending_equipment_break(
 			target,
 			result
@@ -2796,6 +2857,19 @@ func _finish_completed_action(
 		and completed_context.request != null,
 		"A completed Action lost its ReactionContext."
 	)
+	# Rules and defense have already resolved. Hold only the presentation/
+	# continuation, and never derive a hit or damage from the visual effect.
+	if (
+		presentation_director != null
+		and presentation_director.supports_action(completed_context.request)
+		and (presented_action_result == null or presented_action_result.get_ref() != result)
+	):
+		presented_action_result = weakref(result)
+		combat_presenter.close_reaction_exchange()
+		_set_commands_locked(true)
+		await presentation_director.play_action(completed_context.request, result)
+		if not is_inside_tree():
+			return
 
 	if (
 		not resolving_dodge_step
@@ -4192,6 +4266,8 @@ func _log_grapple_action_result(
 
 
 func _on_phase_button_pressed() -> void:
+	if _presentation_is_busy():
+		return
 	if encounter_starting:
 		return
 	if not battle_runtime.can_change_phase():
@@ -4331,6 +4407,8 @@ func _queue_combat_progression() -> void:
 
 func _advance_combat_progression() -> void:
 	combat_progression_queued = false
+	if _presentation_is_busy():
+		return
 	if combat_progression_running:
 		return
 	if (
