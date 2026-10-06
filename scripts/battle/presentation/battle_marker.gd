@@ -45,6 +45,7 @@ var last_observed_grappled: bool = false
 var battlefield_depth_band: StringName = &"midground"
 var bounded_y_sort_within_band: bool = true
 var grapple_cluster_role: StringName = &""
+var defer_result_pose: bool = false
 
 
 func configure_view(
@@ -127,7 +128,7 @@ func present_visual_event(
 		battler_id,
 		BattlerVisualIntentResolver.pose_key_for_event(
 			event_key,
-			battler_state != null and battler_state.is_defeated
+			battler_state != null and battler_state.is_defeated and not defer_result_pose
 		),
 		orientation_key,
 		StringName(name)
@@ -417,9 +418,9 @@ func _refresh() -> void:
 		battler_state.is_grappled()
 		or battler_state.is_attached_grappler()
 	)
-	if battler_state.is_defeated and current_visual_event != &"defeated":
+	if not defer_result_pose and battler_state.is_defeated and current_visual_event != &"defeated":
 		present_visual_event(&"defeated", current_orientation)
-	elif hp_decreased:
+	elif not defer_result_pose and hp_decreased:
 		present_visual_event(&"damage_received", current_orientation)
 	elif grappled_now and (
 		not last_observed_grappled
@@ -486,7 +487,7 @@ func _refresh() -> void:
 	if character_art != null:
 		character_art.modulate = (
 			Color(0.42, 0.42, 0.46, 0.68)
-			if battler_state.is_defeated
+			if battler_state.is_defeated and not defer_result_pose
 			else Color.WHITE
 		)
 	_refresh_grapple_progress()
@@ -494,6 +495,8 @@ func _refresh() -> void:
 
 
 func _on_pose_reset_timeout() -> void:
+	if defer_result_pose:
+		return
 	if battler_state != null and battler_state.is_defeated:
 		return
 	var resting_event: StringName = get_resting_visual_event()
