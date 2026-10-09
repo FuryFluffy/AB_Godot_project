@@ -6,6 +6,8 @@ signal slot_requested(slot_index: int)
 
 
 var slot_buttons: Array[Button] = []
+var slot_availability: Array[bool] = []
+var commands_locked: bool = false
 
 
 func _ready() -> void:
@@ -17,6 +19,7 @@ func _ready() -> void:
 			slot_requested.emit.bind(slot_index)
 		)
 		slot_buttons.append(button)
+		slot_availability.append(false)
 
 
 func display_slot(
@@ -25,11 +28,17 @@ func display_slot(
 	enabled: bool,
 	tooltip: String,
 	selected: bool = false,
-	icon: Texture2D = null
+	icon: Texture2D = null,
+	quantity: int = 0
 ) -> void:
 	if slot_index < 0 or slot_index >= slot_buttons.size():
 		return
+	slot_availability[slot_index] = enabled
+	enabled = enabled and not commands_locked
 	var button: Button = slot_buttons[slot_index]
+	if button is CombatItemSlotView:
+		button.display_item(icon, quantity, enabled, selected, tooltip)
+		return
 	button.icon = icon
 	button.text = _compact_slot_label(label, icon != null)
 	button.disabled = not enabled
@@ -38,8 +47,9 @@ func display_slot(
 
 
 func set_locked(locked: bool) -> void:
-	for button: Button in slot_buttons:
-		button.disabled = locked
+	commands_locked = locked
+	for index: int in slot_buttons.size():
+		slot_buttons[index].disabled = locked or not slot_availability[index]
 
 
 func _compact_slot_label(label: String, has_icon: bool) -> String:

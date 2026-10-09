@@ -65,6 +65,7 @@ TESTS = (
     "tests/test_combat_stage_triggers.gd",
     "tests/test_milestone_15_pilot_a.gd",
     "tests/test_dining_presentation.gd",
+    "tests/test_dining_bottom_dock.gd",
 )
 
 

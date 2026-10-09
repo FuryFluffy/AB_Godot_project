@@ -140,7 +140,8 @@ func display_item_slot(
 	enabled: bool,
 	tooltip: String,
 	selected: bool = false,
-	icon: Texture2D = null
+	icon: Texture2D = null,
+	quantity: int = 0
 ) -> void:
 	item_bar.display_slot(
 		slot_index,
@@ -148,7 +149,8 @@ func display_item_slot(
 		enabled,
 		tooltip,
 		selected,
-		icon
+		icon,
+		quantity
 	)
 
 

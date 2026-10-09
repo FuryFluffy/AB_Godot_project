@@ -9,6 +9,7 @@ signal grapple_response_selected(dodge: bool)
 signal move_reaction_selected(react: bool)
 
 
+@export var reserved_bottom_height: float = 0.0
 @export var compact_frame_size: Vector2 = Vector2(430.0, 170.0)
 @export var reaction_offset: Vector2 = Vector2.ZERO
 @export_range(0.0, 64.0, 1.0) var sprite_gap: float = 12.0
@@ -324,7 +325,7 @@ func _position_frame() -> void:
 	wanted_position.y = clampf(
 		wanted_position.y,
 		68.0,
-		viewport_size.y - frame_size.y - 12.0
+		viewport_size.y - reserved_bottom_height - frame_size.y - 12.0
 	)
 	position = wanted_position
 

@@ -6,6 +6,8 @@ signal ability_chosen(ability_id: StringName)
 signal cancelled
 
 
+@export var reserved_bottom_height: float = 0.0
+@export var open_above_command: bool = false
 @export var title_label: Label
 @export var ability_list: VBoxContainer
 @export var empty_label: Label
@@ -14,6 +16,7 @@ signal cancelled
 var presented_abilities: Array[AbilityDefinition] = []
 var availability_by_id: Dictionary = {}
 var command_anchor: Control
+var open_generation: int = 0
 var open_tween: Tween
 
 
@@ -55,12 +58,27 @@ func present(
 	if empty_label.visible:
 		empty_label.text = "No active abilities are available."
 
+	open_generation += 1
+	if open_tween != null and open_tween.is_valid():
+		open_tween.kill()
+	scale = Vector2.ONE
+	modulate.a = 0.0
 	show()
+	_finish_open(open_generation)
+
+
+func _finish_open(generation: int) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not visible or generation != open_generation:
+		return
+	reset_size()
 	_position_next_to_command()
 	_play_roll_open()
 
 
 func close_panel() -> void:
+	open_generation += 1
 	if open_tween != null and open_tween.is_valid():
 		open_tween.kill()
 	hide()
@@ -123,6 +141,8 @@ func _position_next_to_command() -> void:
 		anchor_rect.position.x - panel_size.x - 10.0,
 		anchor_rect.get_center().y - panel_size.y * 0.5
 	)
+	if open_above_command:
+		wanted_position = Vector2(anchor_rect.end.x - panel_size.x, anchor_rect.position.y - panel_size.y - 12.0)
 	wanted_position.x = clampf(
 		wanted_position.x,
 		12.0,
@@ -131,7 +151,7 @@ func _position_next_to_command() -> void:
 	wanted_position.y = clampf(
 		wanted_position.y,
 		68.0,
-		viewport_size.y - panel_size.y - 12.0
+		viewport_size.y - reserved_bottom_height - panel_size.y - 12.0
 	)
 	position = wanted_position
 

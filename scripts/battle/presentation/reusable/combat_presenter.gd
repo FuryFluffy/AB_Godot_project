@@ -88,6 +88,7 @@ func set_commands_locked(locked: bool) -> void:
 	commands_locked = locked
 	if hud != null:
 		hud.set_commands_locked(locked)
+	_refresh_items()
 	_refresh_header_and_commands()
 
 
@@ -351,7 +352,8 @@ func _refresh_items() -> void:
 			not commands_locked and availability.is_empty(),
 			item.description if availability.is_empty() else availability,
 			engine.battle_runtime.pending_item_slot_index == slot_index,
-			item.icon
+			item.icon,
+			slot.quantity
 		)
 
 

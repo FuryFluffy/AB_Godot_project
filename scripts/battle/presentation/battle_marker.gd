@@ -315,7 +315,7 @@ func get_reaction_anchor_screen_position() -> Vector2:
 	if select_button == null:
 		return get_global_transform_with_canvas().origin
 	var rect: Rect2 = select_button.get_global_rect()
-	return Vector2(rect.get_center().x, rect.position.y - 8.0)
+	return get_canvas_transform() * Vector2(rect.get_center().x, rect.position.y - 8.0)
 
 
 func set_battlefield_presentation(

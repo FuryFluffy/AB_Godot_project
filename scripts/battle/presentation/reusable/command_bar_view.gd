@@ -12,6 +12,8 @@ signal grapple_wait_requested
 signal submit_requested
 
 
+@export var show_labels: bool = false
+
 @onready var attack_button: Button = %Attack
 @onready var move_button: Button = %Move
 @onready var ability_button: Button = %Ability
@@ -32,6 +34,9 @@ func _ready() -> void:
 	grapple_wait_button.pressed.connect(grapple_wait_requested.emit)
 	submit_button.pressed.connect(submit_requested.emit)
 	_clear_visible_button_text()
+	if show_labels:
+		for button: Button in [attack_button, move_button, ability_button, struggle_button, grapple_wait_button, submit_button, end_phase_button, log_button]:
+			button.text = {"GrappleWait": "Wait", "EndPhase": "End Phase", "Log": "Combat Log"}.get(String(button.name), String(button.name))
 	set_grapple_context(false, false, false)
 
 
@@ -92,7 +97,7 @@ func set_grapple_context(
 
 
 func set_phase_label(label: String) -> void:
-	end_phase_button.text = ""
+	end_phase_button.text = ("Begin" if label.to_upper().contains("BEGIN") else "End Phase") if show_labels else ""
 	end_phase_button.tooltip_text = (
 		"Begin the encounter."
 		if label.to_upper().contains("BEGIN")
@@ -105,26 +110,26 @@ func set_action_labels(
 	move_label: String,
 	ability_label: String
 ) -> void:
-	attack_button.text = ""
-	move_button.text = ""
-	ability_button.text = ""
+	attack_button.text = "Attack" if show_labels else ""
+	move_button.text = "Move" if show_labels else ""
+	ability_button.text = "Ability" if show_labels else ""
 	attack_button.tooltip_text = _state_tooltip("Attack", attack_label)
 	move_button.tooltip_text = _state_tooltip("Move", move_label)
 	ability_button.tooltip_text = _state_tooltip("Ability", ability_label)
 
 
 func set_attack_hint(hint: String) -> void:
-	attack_button.text = ""
+	attack_button.text = "Attack" if show_labels else ""
 	attack_button.tooltip_text = hint
 
 
 func set_move_hint(hint: String) -> void:
-	move_button.text = ""
+	move_button.text = "Move" if show_labels else ""
 	move_button.tooltip_text = hint
 
 
 func set_ability_hint(hint: String) -> void:
-	ability_button.text = ""
+	ability_button.text = "Ability" if show_labels else ""
 	ability_button.tooltip_text = hint
 
 

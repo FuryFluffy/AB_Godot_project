@@ -1,0 +1,160 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/presentation/reusable/compact_heroine_card_view.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="HP"]
+bg_color = Color(0.66, 0.07, 0.13, 1)
+
+[sub_resource type="StyleBoxFlat" id="MP"]
+bg_color = Color(0.12, 0.39, 0.64, 1)
+
+[sub_resource type="StyleBoxFlat" id="Resolve"]
+bg_color = Color(0.64, 0.51, 0.20, 1)
+
+[sub_resource type="StyleBoxFlat" id="Corruption"]
+bg_color = Color(0.45, 0.28, 0.52, 1)
+
+[sub_resource type="StyleBoxFlat" id="empty"]
+bg_color = Color(0.12, 0.13, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="card_frame"]
+bg_color = Color(0.025, 0.032, 0.047, 0.97)
+border_color = Color(0.43, 0.35, 0.20, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[node name="CompactHeroineCard" type="PanelContainer"]
+custom_minimum_size = Vector2(288, 104)
+script = ExtResource("1")
+theme_override_styles/panel = SubResource("card_frame")
+mouse_default_cursor_shape = 2
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Portrait" type="TextureRect" parent="Row"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(58, 88)
+expand_mode = 1
+stretch_mode = 6
+clip_contents = true
+
+[node name="Stats" type="VBoxContainer" parent="Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Heading" type="HBoxContainer" parent="Row/Stats"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Row/Stats/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Seraphine"
+text_overrun_behavior = 3
+
+[node name="ActionPips" type="HBoxContainer" parent="Row/Stats/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 3
+
+[node name="HP" type="HBoxContainer" parent="Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Caption" type="Label" parent="Row/Stats/HP"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "HP"
+
+[node name="HPBar" type="ProgressBar" parent="Row/Stats/HP"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48, 8)
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+theme_override_styles/background = SubResource("empty")
+theme_override_styles/fill = SubResource("HP")
+
+[node name="HPValue" type="Label" parent="Row/Stats/HP"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(46, 0)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
+text = "0/0"
+
+[node name="MP" type="HBoxContainer" parent="Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Caption" type="Label" parent="Row/Stats/MP"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "MP"
+
+[node name="MPBar" type="ProgressBar" parent="Row/Stats/MP"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48, 8)
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+theme_override_styles/background = SubResource("empty")
+theme_override_styles/fill = SubResource("MP")
+
+[node name="MPValue" type="Label" parent="Row/Stats/MP"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(46, 0)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
+text = "0/0"
+
+[node name="Meters" type="HBoxContainer" parent="Row/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ResolveValue" type="Label" parent="Row/Stats/Meters"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "R 100"
+
+[node name="ResolveBar" type="ProgressBar" parent="Row/Stats/Meters"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(16, 6)
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+theme_override_styles/background = SubResource("empty")
+theme_override_styles/fill = SubResource("Resolve")
+
+[node name="CorruptionValue" type="Label" parent="Row/Stats/Meters"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "C 0"
+
+[node name="CorruptionBar" type="ProgressBar" parent="Row/Stats/Meters"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(16, 6)
+size_flags_horizontal = 3
+size_flags_vertical = 4
+show_percentage = false
+theme_override_styles/background = SubResource("empty")
+theme_override_styles/fill = SubResource("Corruption")

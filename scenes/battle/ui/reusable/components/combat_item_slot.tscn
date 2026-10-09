@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/presentation/reusable/combat_item_slot_view.gd" id="1"]
+
+[node name="CombatItemSlot" type="Button"]
+custom_minimum_size = Vector2(88, 96)
+script = ExtResource("1")
+toggle_mode = true
+expand_icon = true
+icon_max_width = 50
+text = "—"
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -29.0
+offset_right = -5.0
+offset_bottom = -3.0
+mouse_filter = 2
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 21
+theme_override_colors/font_color = Color(1, 0.85, 0.42, 1)

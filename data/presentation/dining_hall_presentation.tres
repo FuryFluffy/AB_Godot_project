@@ -2,7 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/data/presentation/combat_presentation_profile.gd" id="1"]
 
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/combat_hud_bottom_dock.tscn" id="2_hud"]
+
 [resource]
 script = ExtResource("1")
+hud_scene = ExtResource("2_hud")
+reserved_bottom_height = 136.0
 camera_zoom = 1.12
 movement_seconds = 0.42

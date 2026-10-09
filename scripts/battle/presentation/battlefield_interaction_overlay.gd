@@ -272,9 +272,13 @@ func choose_dodge_step(
 func _input(event: InputEvent) -> void:
 	if selection_mode == SelectionMode.NONE:
 		return
+	# Board targets can sit behind faded battler hitboxes. Handle those before
+	# GUI dispatch, but leave the screen-space HUD and its drawers to the GUI.
+	if event is InputEventMouse and _pointer_is_over_hud():
+		return
 
 	if event is InputEventMouseMotion:
-		_update_hover(to_local((event as InputEventMouseMotion).position))
+		_update_hover(get_global_transform_with_canvas().affine_inverse() * (event as InputEventMouseMotion).position)
 		return
 
 	if (
@@ -302,8 +306,17 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func _pointer_is_over_hud() -> bool:
+	var hovered: Node = get_viewport().gui_get_hovered_control()
+	while hovered != null:
+		if hovered is ReusableCombatHUD:
+			return true
+		hovered = hovered.get_parent()
+	return false
+
+
 func handle_board_click(viewport_point: Vector2) -> bool:
-	var local_point := to_local(viewport_point)
+	var local_point := get_global_transform_with_canvas().affine_inverse() * viewport_point
 	match selection_mode:
 		SelectionMode.MOVE:
 			return _handle_move_click(local_point)

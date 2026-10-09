@@ -9,6 +9,8 @@ signal confirmed(
 signal cancelled
 
 
+@export var reserved_bottom_height: float = 0.0
+@export var open_above_command: bool = false
 @export var prompt_label: Label
 @export var track_option: OptionButton
 @export var might_button: Button
@@ -280,6 +282,8 @@ func _position_next_to_command() -> void:
 		anchor_rect.get_center().y - panel_size.y * 0.5
 	)
 	wanted_position += command_offset
+	if open_above_command:
+		wanted_position = Vector2(anchor_rect.end.x - panel_size.x, anchor_rect.position.y - panel_size.y - 12.0)
 	wanted_position.x = clampf(
 		wanted_position.x,
 		12.0,
@@ -288,7 +292,7 @@ func _position_next_to_command() -> void:
 	wanted_position.y = clampf(
 		wanted_position.y,
 		68.0,
-		viewport_size.y - panel_size.y - 12.0
+		viewport_size.y - reserved_bottom_height - panel_size.y - 12.0
 	)
 	position = wanted_position
 

@@ -6,6 +6,7 @@ const SPELL_LIGHT: Shader = preload("res://scripts/battle/presentation/spell_lig
 
 var profile: CombatPresentationProfile
 var markers: Array[BattleMarker] = []
+var tactical_home: Vector2 = HOME
 var camera: Camera2D
 var camera_tween: Tween
 var movement_tween: Tween
@@ -20,8 +21,10 @@ func initialize(new_profile: CombatPresentationProfile, new_markers: Array[Battl
 	markers = new_markers
 	camera = Camera2D.new()
 	camera.name = "PresentationCamera"
-	camera.position = HOME
-	camera.enabled = profile.cinematic_camera_enabled
+	tactical_home = _safe_focus(HOME, 1.0)
+	camera.position = tactical_home
+	# A passive camera still reserves the dock when cinematic motion is off.
+	camera.enabled = profile.cinematic_camera_enabled or profile.reserved_bottom_height > 0.0
 	add_child(camera)
 	set_process(true)
 
@@ -117,18 +120,19 @@ func is_moving(marker: BattleMarker) -> bool:
 func restore_camera() -> void:
 	if camera == null or not camera.enabled:
 		return
+	tactical_home = _safe_focus(HOME, 1.0)
 	if camera_tween != null and camera_tween.is_valid():
 		camera_tween.kill()
 	camera.offset = Vector2.ZERO
 	camera_tween = create_tween().set_parallel(true)
 	camera_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	camera_tween.tween_property(camera, "position", HOME, 0.25)
+	camera_tween.tween_property(camera, "position", tactical_home, 0.25)
 	camera_tween.tween_property(camera, "zoom", Vector2.ONE, 0.25)
 	await camera_tween.finished
 
 
 func _focus(actor: BattleMarker, target: BattleMarker) -> void:
-	if not camera.enabled:
+	if not camera.enabled or not profile.cinematic_camera_enabled:
 		return
 	if camera_tween != null and camera_tween.is_valid():
 		camera_tween.kill()
@@ -136,6 +140,7 @@ func _focus(actor: BattleMarker, target: BattleMarker) -> void:
 	var half_view: Vector2 = HOME / zoom_value
 	var focus: Vector2 = (_body_point(actor) + _body_point(target)) * 0.5
 	focus = focus.clamp(half_view, Vector2(1920.0, 1080.0) - half_view)
+	focus = _safe_focus(focus, zoom_value)
 	camera_tween = create_tween().set_parallel(true)
 	camera_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	camera_tween.tween_property(camera, "position", focus, 0.18)
@@ -143,7 +148,7 @@ func _focus(actor: BattleMarker, target: BattleMarker) -> void:
 
 
 func _shake() -> void:
-	if not camera.enabled:
+	if not camera.enabled or not profile.cinematic_camera_enabled:
 		return
 	var shake: Tween = create_tween()
 	shake.tween_property(camera, "offset", Vector2(3.0, -2.0), 0.035)
@@ -194,7 +199,23 @@ func _restore_lights() -> void:
 	temporary_lights.clear()
 
 
+func _safe_focus(wanted: Vector2, zoom_value: float) -> Vector2:
+	if profile == null or profile.reserved_bottom_height <= 0.0:
+		return wanted
+	var safe_bottom: float = 1080.0 - profile.reserved_bottom_height - 8.0
+	for marker: BattleMarker in markers:
+		if not is_instance_valid(marker):
+			continue
+		var foot: float = marker.position.y + marker.cluster_display_offset.y
+		foot += 13.0 * marker.battlefield_presentation_scale
+		wanted.y = maxf(wanted.y, foot - (safe_bottom - HOME.y) / zoom_value)
+	return wanted
+
+
 func _process(_delta: float) -> void:
+	if not busy and camera != null and camera.enabled:
+		tactical_home = _safe_focus(HOME, 1.0)
+		camera.position = tactical_home
 	queue_redraw()
 
 

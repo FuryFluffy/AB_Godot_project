@@ -420,6 +420,17 @@ func _initialize_combat_engine() -> String:
 
 
 func _initialize_reusable_presentation() -> void:
+	# Replace the stage's view before any presenter intention is connected.
+	if active_combat_stage != null and active_combat_stage.presentation_profile != null:
+		var scene: PackedScene = active_combat_stage.presentation_profile.hud_scene
+		if scene != null:
+			var replacement := scene.instantiate() as ReusableCombatHUD
+			assert(replacement != null, "Stage HUD must extend ReusableCombatHUD.")
+			var host: Node = reusable_hud.get_parent()
+			host.remove_child(reusable_hud)
+			reusable_hud.free()
+			reusable_hud = replacement
+			host.add_child(reusable_hud)
 	if combat_presenter == null or reusable_hud == null:
 		push_error(
 			"Reusable CombatPresenter or CombatHUD scene instance is missing."

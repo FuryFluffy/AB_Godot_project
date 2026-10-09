@@ -3,6 +3,8 @@ class_name CombatPresentationProfile
 extends Resource
 
 ## Optional visual treatment. Does not define combat ranges, movement or damage.
+@export var hud_scene: PackedScene
+@export_range(0.0, 300.0) var reserved_bottom_height: float = 0.0
 @export var cinematic_camera_enabled: bool = true
 @export_range(1.0, 1.2, 0.01) var camera_zoom: float = 1.12
 @export var smooth_movement_enabled: bool = true

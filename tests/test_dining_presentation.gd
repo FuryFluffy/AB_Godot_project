@@ -136,6 +136,27 @@ func _run() -> void:
 		"Temporary spell lighting must restore original sprite materials.")
 	_expect(not director.camera.enabled and director.camera.zoom == Vector2.ONE,
 		"Disabling cinematic camera must leave tactical framing intact.")
+	# Let the previous camera-disabled effect finish its independent lifetime.
+	await create_timer(0.3).timeout
+	# Profile toggles retain safe tactical framing without VFX or camera motion.
+	director.profile.effects_enabled = false
+	director.camera.enabled = true
+	director.camera.position = director._safe_focus(CombatPresentationDirector.HOME, 1.0)
+	var passive_position: Vector2 = director.camera.position
+	director.play_action(request, result)
+	await create_timer(0.1).timeout
+	_expect(director.camera.position == passive_position and director.camera.zoom == Vector2.ONE
+		and director.camera.offset == Vector2.ZERO, "Disabled cinematic motion must retain passive dock clearance.")
+	var effect_count: int = 0
+	for child: Node in director.get_children():
+		if child is CombatActionEffect:
+			effect_count += 1
+	_expect(effect_count == 0 and director.temporary_lights.is_empty(),
+		"Disabling effects through the profile must create no effect nodes or sprite lights.")
+	await create_timer(1.0).timeout
+	_expect(not director.busy and target.battler_state.current_hp == hp
+		and caster.battler_state.current_mp == mp, "Disabled presentation must finish without changing state.")
+	director.profile.effects_enabled = true
 	request.ability = null
 	request.source = ActionRequest.Source.ITEM
 	_expect(not director.supports_action(request), "Unconfigured item attacks must keep their existing presentation.")
