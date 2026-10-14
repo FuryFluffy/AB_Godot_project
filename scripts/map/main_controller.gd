@@ -1,6 +1,9 @@
 class_name AbyssalBloomMainController
 extends Node
 
+signal refuge_visibility_changed(visible: bool)
+signal refuge_system_requested(action: StringName, slot_id: int)
+
 
 @export var combat_scene: PackedScene
 @export var event_room_scene: PackedScene
@@ -1620,7 +1623,13 @@ func _show_refuge_hub(
 	active_refuge.start_new_story_requested.connect(
 		_on_refuge_start_new_story_requested
 	)
+	active_refuge.system_action_requested.connect(_on_refuge_system_action)
 	refuge_host.add_child(active_refuge)
+	active_refuge.configure_system(
+		CampaignSaveSlotStore.is_valid_slot_id(active_save_slot_id),
+		not refuge_system_requested.get_connections().is_empty()
+	)
+	refuge_visibility_changed.emit(true)
 	map_screen.visible = false
 	return_overlay.visible = false
 	var refuge_management := RefugeManagementController.new()
@@ -1864,6 +1873,7 @@ func _retire_active_refuge() -> void:
 		parent.remove_child(active_refuge)
 	active_refuge.queue_free()
 	active_refuge = null
+	refuge_visibility_changed.emit(false)
 
 
 func _resolve_story_background(
@@ -1990,3 +2000,14 @@ func _node_behavior_text(node: MapNodeState) -> String:
 	if node.node_type == MapNodeState.NodeType.START:
 		return "Generated Layer 1 routes begin here after the Refuge."
 	return "Temporary non-combat resolution; room content is deferred."
+
+
+func _on_refuge_system_action(action: StringName, slot_id: int) -> void:
+	if active_refuge == null:
+		return
+	if action == &"save":
+		var error: String = _save_active_refuge()
+		active_refuge.show_status("Campaign saved at the Refuge." if error.is_empty() else error, not error.is_empty())
+	else:
+		# Session replacement must occur after the emitting UI callback returns.
+		refuge_system_requested.emit.call_deferred(action, slot_id)

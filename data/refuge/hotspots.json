@@ -1,0 +1,287 @@
+{
+  "reference_canvas": [
+    1344,
+    768
+  ],
+  "status": "Review geometry; confirm visible-object silhouettes and controller routes in Godot.",
+  "stations": [
+    {
+      "id": "rest",
+      "name": "Rest",
+      "polygon": [
+        [
+          154,
+          411
+        ],
+        [
+          250,
+          412
+        ],
+        [
+          335,
+          440
+        ],
+        [
+          335,
+          481
+        ],
+        [
+          300,
+          518
+        ],
+        [
+          214,
+          506
+        ],
+        [
+          153,
+          481
+        ]
+      ],
+      "hint": "Choose a heroine, then Restore Resolve or Cleanse Corruption with indicated costs.",
+      "neighbors": {
+        "right": "stash",
+        "up": "crafting",
+        "down": "stash",
+        "left": "rest"
+      }
+    },
+    {
+      "id": "stash",
+      "name": "Stash",
+      "polygon": [
+        [
+          343,
+          480
+        ],
+        [
+          414,
+          476
+        ],
+        [
+          444,
+          496
+        ],
+        [
+          443,
+          535
+        ],
+        [
+          351,
+          531
+        ]
+      ],
+      "hint": "Stash and Backpacks tabs. Select a heroine; show the shared Item Bar when editing Backpacks.",
+      "neighbors": {
+        "left": "rest",
+        "right": "alchemy",
+        "up": "crafting",
+        "down": "alchemy"
+      }
+    },
+    {
+      "id": "crafting",
+      "name": "Crafting",
+      "sprite": "crafting_toolbox",
+      "hint": "Regular item recipes, Material checklist, result preview and Craft. Results go to Stash.",
+      "reference": "reference/approved_ui/03_crafting.png",
+      "neighbors": {
+        "left": "stash",
+        "right": "alchemy",
+        "up": "repair",
+        "down": "stash"
+      },
+      "polygon": [
+        [
+          458,
+          389.6293375394322
+        ],
+        [
+          554,
+          389.6293375394322
+        ],
+        [
+          554,
+          461
+        ],
+        [
+          458,
+          461
+        ]
+      ]
+    },
+    {
+      "id": "alchemy",
+      "name": "Alchemy",
+      "sprite": "alchemy_apparatus",
+      "hint": "Potion and vial recipes. Ingredients above, final result below, then Brew. Results go to Stash.",
+      "reference": "reference/approved_ui/02_alchemy.png",
+      "neighbors": {
+        "left": "crafting",
+        "right": "repair",
+        "up": "repair",
+        "down": "stash"
+      },
+      "polygon": [
+        [
+          644.5,
+          393.7450682852807
+        ],
+        [
+          795.5,
+          393.7450682852807
+        ],
+        [
+          795.5,
+          508
+        ],
+        [
+          644.5,
+          508
+        ]
+      ]
+    },
+    {
+      "id": "repair",
+      "name": "Workbench",
+      "sprite": "repair_toolkit",
+      "hint": "Repair and Salvage tabs. Show condition and costs, or exact Material yield before confirmed destruction.",
+      "neighbors": {
+        "left": "crafting",
+        "right": "records",
+        "up": "records",
+        "down": "loadouts"
+      },
+      "polygon": [
+        [
+          969.5,
+          337.2025405786874
+        ],
+        [
+          1064.5,
+          337.2025405786874
+        ],
+        [
+          1064.5,
+          391
+        ],
+        [
+          969.5,
+          391
+        ]
+      ]
+    },
+    {
+      "id": "loadouts",
+      "name": "Loadouts",
+      "sprite": "weapon_stand",
+      "hint": "Heroine selector and equipped slots. Change opens compatible choices from Stash and every Refuge Backpack, including Nothing.",
+      "reference": "reference/approved_ui/01_loadouts.png",
+      "neighbors": {
+        "left": "alchemy",
+        "right": "records",
+        "up": "records",
+        "down": "expedition"
+      },
+      "polygon": [
+        [
+          1109.5,
+          364.47947947947944
+        ],
+        [
+          1230.5,
+          364.47947947947944
+        ],
+        [
+          1230.5,
+          526
+        ],
+        [
+          1109.5,
+          526
+        ]
+      ]
+    },
+    {
+      "id": "records",
+      "name": "Records",
+      "polygon": [
+        [
+          1180,
+          318
+        ],
+        [
+          1237,
+          303
+        ],
+        [
+          1271,
+          319
+        ],
+        [
+          1271,
+          463
+        ],
+        [
+          1235,
+          465
+        ],
+        [
+          1235,
+          360
+        ],
+        [
+          1180,
+          360
+        ]
+      ],
+      "hint": "Lore, Bestiary, Run History and Gallery. Gallery offers View Image and Replay Scene where available.",
+      "reference": "reference/approved_ui/08_records.png",
+      "neighbors": {
+        "left": "repair",
+        "right": "records",
+        "up": "records",
+        "down": "loadouts"
+      }
+    },
+    {
+      "id": "expedition",
+      "name": "Expedition Map",
+      "sprite": "expedition_map",
+      "hint": "Accessed-floor map with Party, Intel, Level Up and Explore. Gameplay data and launch commits require local mapping.",
+      "reference": "reference/approved_ui/04_expedition.png",
+      "neighbors": {
+        "left": "alchemy",
+        "right": "expedition",
+        "up": "loadouts",
+        "down": "expedition"
+      },
+      "polygon": [
+        [
+          1179,
+          630
+        ],
+        [
+          1274,
+          586
+        ],
+        [
+          1335,
+          610
+        ],
+        [
+          1335,
+          661
+        ],
+        [
+          1235,
+          690
+        ],
+        [
+          1173,
+          662
+        ]
+      ]
+    }
+  ]
+}

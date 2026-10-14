@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/refuge/bloom_refuge_screen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_2/sdxl_curated/07_Bloom_Refuge_Transformed.png" id="2_background"]
-[ext_resource type="StyleBox" path="res://scenes/battle/ui/reusable/styles/hud_frame_style.tres" id="3_frame"]
-[ext_resource type="PackedScene" path="res://scenes/refuge/components/refuge_slot_grid.tscn" id="4_slot_grid"]
+[ext_resource type="PackedScene" path="res://scenes/inventory/backpack_view.tscn" id="4_backpack"]
+[ext_resource type="Script" path="res://scripts/refuge/ui/refuge_room_shell.gd" id="5_shell"]
+
+[ext_resource type="Script" path="res://scripts/inventory/inventory_panel_view.gd" id="6_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/battle/ui/reusable/components/item_bar_view.tscn" id="7_bar"]
 
 [node name="BloomRefugeScreen" type="Control"]
 layout_mode = 3
@@ -14,238 +16,150 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="RoomShell" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_background")
-expand_mode = 1
-stretch_mode = 6
-mouse_filter = 2
+script = ExtResource("5_shell")
 
-[node name="Shade" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.02, 0.018, 0.025, 0.68)
-mouse_filter = 2
+[node name="ServicePages" type="Control" parent="."]
+visible = false
 
-[node name="Margin" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = 22.0
-offset_right = -28.0
-offset_bottom = -22.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Frame" type="PanelContainer" parent="Margin"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("3_frame")
-
-[node name="Padding" type="MarginContainer" parent="Margin/Frame"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 16
-
-[node name="Root" type="VBoxContainer" parent="Margin/Frame/Padding"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Header" type="HBoxContainer" parent="Margin/Frame/Padding/Root"]
-layout_mode = 2
-theme_override_constants/separation = 18
-
-[node name="TitleBlock" type="VBoxContainer" parent="Margin/Frame/Padding/Root/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Title" type="Label" parent="Margin/Frame/Padding/Root/Header/TitleBlock"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "BLOOM REFUGE"
-
-[node name="Subtitle" type="Label" parent="Margin/Frame/Padding/Root/Header/TitleBlock"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.76, 0.69, 0.62, 1)
-text = "Layer 2 — Farthest Cell  •  Preparation Headquarters"
-
-[node name="ResourceSummary" type="HBoxContainer" parent="Margin/Frame/Padding/Root/Header"]
-layout_mode = 2
-theme_override_constants/separation = 18
-
-[node name="HeaderPartyOrder" type="Label" parent="Margin/Frame/Padding/Root/Header/ResourceSummary"]
+[node name="HeaderPartyOrder" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Party: Lysandra → Mira → Seraphine"
+visible = false
 
-[node name="BloomValue" type="Label" parent="Margin/Frame/Padding/Root/Header/ResourceSummary"]
+[node name="BloomValue" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0 Bloom"
+visible = false
 
-[node name="KnowledgeValue" type="Label" parent="Margin/Frame/Padding/Root/Header/ResourceSummary"]
+[node name="KnowledgeValue" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0 entries discovered"
+visible = false
 
-[node name="ManagementTabs" type="TabContainer" parent="Margin/Frame/Padding/Root"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Party & Loadouts" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs"]
+[node name="Loadouts" type="VBoxContainer" parent="ServicePages"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="PartyColumn" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts"]
+[node name="PartyColumn" type="VBoxContainer" parent="ServicePages/Loadouts"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/PartyColumn"]
+[node name="Header" type="Label" parent="ServicePages/Loadouts/PartyColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Selected Party Order"
 
-[node name="PartyList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/PartyColumn"]
+[node name="PartyList" type="ItemList" parent="ServicePages/Loadouts/PartyColumn"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 allow_reselect = true
+custom_minimum_size = Vector2(0, 145)
 
-[node name="OrderButtons" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/PartyColumn"]
+[node name="OrderButtons" type="HBoxContainer" parent="ServicePages/Loadouts/PartyColumn"]
 layout_mode = 2
 
-[node name="MovePartyUp" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/PartyColumn/OrderButtons"]
+[node name="MovePartyUp" type="Button" parent="ServicePages/Loadouts/PartyColumn/OrderButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Move Up"
 
-[node name="MovePartyDown" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/PartyColumn/OrderButtons"]
+[node name="MovePartyDown" type="Button" parent="ServicePages/Loadouts/PartyColumn/OrderButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Move Down"
 
-[node name="LoadoutColumn" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts"]
+[node name="LoadoutColumn" type="VBoxContainer" parent="ServicePages/Loadouts"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="PartyDetails" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn"]
+[node name="PartyDetails" type="Label" parent="ServicePages/Loadouts/LoadoutColumn"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Select a heroine."
 autowrap_mode = 2
 
-[node name="LoadoutHeader" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn"]
+[node name="LoadoutHeader" type="Label" parent="ServicePages/Loadouts/LoadoutColumn"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Owned Equipment and Current Loadout"
+autowrap_mode = 2
 
-[node name="HeroineEquipmentList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn"]
+[node name="HeroineEquipmentList" type="ItemList" parent="ServicePages/Loadouts/LoadoutColumn"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 190)
 layout_mode = 2
 size_flags_vertical = 3
 allow_reselect = true
 
-[node name="EquipmentActions" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn"]
+[node name="EquipmentActions" type="VBoxContainer" parent="ServicePages/Loadouts/LoadoutColumn"]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="EquipmentSlot" type="OptionButton" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn/EquipmentActions"]
+[node name="EquipmentSlot" type="OptionButton" parent="ServicePages/Loadouts/LoadoutColumn/EquipmentActions"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EquipSelected" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn/EquipmentActions"]
+[node name="EquipSelected" type="Button" parent="ServicePages/Loadouts/LoadoutColumn/EquipmentActions"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Equip"
 
-[node name="UnequipSlot" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn/EquipmentActions"]
+[node name="UnequipSlot" type="Button" parent="ServicePages/Loadouts/LoadoutColumn/EquipmentActions"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Unequip Slot"
 
-[node name="MoveEquipmentToStash" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Party & Loadouts/LoadoutColumn/EquipmentActions"]
+[node name="MoveEquipmentToStash" type="Button" parent="ServicePages/Loadouts/LoadoutColumn/EquipmentActions"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Move to Stash"
 
-[node name="Inventory & Stash" type="ScrollContainer" parent="Margin/Frame/Padding/Root/ManagementTabs"]
+[node name="Stash" type="VBoxContainer" parent="ServicePages"]
 layout_mode = 2
-horizontal_scroll_mode = 0
+script = ExtResource("6_inventory")
 
-[node name="Content" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash"]
+[node name="Backpacks" parent="ServicePages/Stash" instance=ExtResource("4_backpack")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="ServicePages/Stash"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="HeroineRow" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/HeroineRow"]
-layout_mode = 2
-text = "Preparation owner"
-
-[node name="InventoryHeroine" type="OptionButton" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/HeroineRow"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 0)
-layout_mode = 2
-
-[node name="InventoryColumns" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content"]
+[node name="InventoryColumns" type="VBoxContainer" parent="ServicePages/Stash/Content"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Preparation" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns/Preparation"]
-layout_mode = 2
-text = "Personal Preparation — 3×5"
-
-[node name="PreparationGrid" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns/Preparation" instance=ExtResource("4_slot_grid")]
+[node name="ItemBarGrid" parent="." instance=ExtResource("7_bar")]
 unique_name_in_owner = true
-layout_mode = 2
+visible = false
 
-[node name="ItemBar" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns"]
-custom_minimum_size = Vector2(250, 0)
-layout_mode = 2
-
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns/ItemBar"]
-layout_mode = 2
-text = "Shared Item Bar — 6 slots"
-
-[node name="ItemBarGrid" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns/ItemBar" instance=ExtResource("4_slot_grid")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Stash" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns"]
+[node name="Stash" type="VBoxContainer" parent="ServicePages/Stash/Content/InventoryColumns"]
 custom_minimum_size = Vector2(270, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns/Stash"]
+[node name="Header" type="Label" parent="ServicePages/Stash/Content/InventoryColumns/Stash"]
 layout_mode = 2
 text = "Safe Stash — Item stacks"
 
-[node name="StashItems" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/InventoryColumns/Stash"]
+[node name="StashItems" type="ItemList" parent="ServicePages/Stash/Content/InventoryColumns/Stash"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 170)
 layout_mode = 2
@@ -253,204 +167,189 @@ size_flags_vertical = 3
 allow_reselect = true
 fixed_icon_size = Vector2i(48, 48)
 
-[node name="TransferActions" type="GridContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content"]
+[node name="TransferActions" type="GridContainer" parent="ServicePages/Stash/Content"]
 layout_mode = 2
-columns = 3
+columns = 1
 
-[node name="PrepToBar" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/TransferActions"]
+[node name="PrepToBar" type="Button" parent="ServicePages/Stash/Content/TransferActions"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Preparation → Item Bar"
+text = "Backpack → Item Bar"
 
-[node name="BarToPrep" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/TransferActions"]
+[node name="BarToPrep" type="Button" parent="ServicePages/Stash/Content/TransferActions"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Item Bar → Preparation"
+text = "Item Bar → Backpack"
 
-[node name="PrepToStash" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/TransferActions"]
+[node name="PrepToStash" type="Button" parent="ServicePages/Stash/Content/TransferActions"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Preparation → Stash"
+text = "Backpack → Stash"
 
-[node name="StashToPrep" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/TransferActions"]
+[node name="StashToPrep" type="Button" parent="ServicePages/Stash/Content/TransferActions"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Stash → Preparation"
+text = "Stash → Backpack"
 
-[node name="BarToStash" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/TransferActions"]
+[node name="BarToStash" type="Button" parent="ServicePages/Stash/Content/TransferActions"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Item Bar → Stash"
 
-[node name="StashToBar" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content/TransferActions"]
+[node name="StashToBar" type="Button" parent="ServicePages/Stash/Content/TransferActions"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Stash → Item Bar"
 
-[node name="StashEquipmentHeader" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content"]
+[node name="StashEquipmentHeader" type="Label" parent="ServicePages/Stash/Content"]
 layout_mode = 2
 text = "Safe Stash — Authored player equipment instances"
+autowrap_mode = 2
 
-[node name="StashEquipmentList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content"]
+[node name="StashEquipmentList" type="ItemList" parent="ServicePages/Stash/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 allow_reselect = true
 
-[node name="MoveStashEquipmentToHeroine" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Inventory & Stash/Content"]
+[node name="MoveStashEquipmentToHeroine" type="Button" parent="ServicePages/Stash/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Move selected equipment to preparation owner"
+text = "Move equipment to selected Backpack"
 
-[node name="Materials & Services" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs"]
+[node name="Workbench" type="VBoxContainer" parent="ServicePages"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Materials" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services"]
+[node name="Materials" type="VBoxContainer" parent="ServicePages/Workbench"]
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Materials"]
+[node name="Header" type="Label" parent="ServicePages/Workbench/Materials"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Banked Materials"
 
-[node name="MaterialList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Materials"]
+[node name="MaterialList" type="ItemList" parent="ServicePages/Workbench/Materials"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 fixed_icon_size = Vector2i(48, 48)
+custom_minimum_size = Vector2(0, 145)
 
-[node name="Notice" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Materials"]
+[node name="Notice" type="Label" parent="ServicePages/Workbench/Materials"]
 layout_mode = 2
 text = "Banked Materials cannot be withdrawn into a run."
 autowrap_mode = 2
 
-[node name="Services" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services"]
+[node name="Services" type="VBoxContainer" parent="ServicePages/Workbench"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="Header" type="Label" parent="ServicePages/Workbench/Services"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Authored Services"
 
-[node name="RecipeList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="RecipeList" type="ItemList" parent="ServicePages/Workbench/Services"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 allow_reselect = true
 
-[node name="RecipeDetails" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="RecipeDetails" type="Label" parent="ServicePages/Workbench/Services"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Select an authored service."
 autowrap_mode = 2
 
-[node name="RepairTarget" type="OptionButton" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="RepairTarget" type="OptionButton" parent="ServicePages/Workbench/Services"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RepairSelected" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="RepairSelected" type="Button" parent="ServicePages/Workbench/Services"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Repair selected equipment"
 
-[node name="SalvageHeader" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="SalvageHeader" type="Label" parent="ServicePages/Workbench/Services"]
 layout_mode = 2
 text = "Salvage — destroys one exact equipment instance"
+autowrap_mode = 2
 
-[node name="SalvageList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="SalvageList" type="ItemList" parent="ServicePages/Workbench/Services"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 size_flags_vertical = 3
 allow_reselect = true
 
-[node name="SalvageSelected" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Materials & Services/Services"]
+[node name="SalvageSelected" type="Button" parent="ServicePages/Workbench/Services"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Review salvage…"
 
-[node name="Key Chain" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Key Chain"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Shared Key Chain"
-
-[node name="KeyList" type="ItemList" parent="Margin/Frame/Padding/Root/ManagementTabs/Key Chain"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-fixed_icon_size = Vector2i(48, 48)
-
-[node name="Rules" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Key Chain"]
-layout_mode = 2
-text = "Keys are assigned automatically. Ordinary run keys are lost on defeat; authored persistent keys survive at the Refuge. Keys cannot enter backpacks or the Item Bar."
-autowrap_mode = 2
-
-[node name="Launch & Return" type="VBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs"]
+[node name="Expedition" type="VBoxContainer" parent="ServicePages"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Header" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return"]
+[node name="Header" type="Label" parent="ServicePages/Expedition"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Launch the next descent"
 
-[node name="PartySummary" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return"]
+[node name="PartySummary" type="Label" parent="ServicePages/Expedition"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Party state"
 autowrap_mode = 2
 
-[node name="OwnershipRules" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return"]
+[node name="OwnershipRules" type="Label" parent="ServicePages/Expedition"]
 layout_mode = 2
-text = "Launch moves selected heroine preparation, equipped gear, Mementos, the six Item Bar slots, and Key Chain into the run without duplication. Stash and banked Materials remain safe. Voluntary return preserves carried items and banks Materials; defeat loses Item Bar, backpacks, and ordinary run keys while preserving equipped gear, Mementos, Stash, and banked Materials."
+text = "Prepared items enter the run once. Stash and banked Materials stay safe. Unspent Bloom is discarded on departure."
 autowrap_mode = 2
 
-[node name="SeedRow" type="HBoxContainer" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return"]
+[node name="SeedRow" type="VBoxContainer" parent="ServicePages/Expedition"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SeedLabel" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return/SeedRow"]
+[node name="SeedLabel" type="Label" parent="ServicePages/Expedition/SeedRow"]
 layout_mode = 2
 text = "Run Seed"
 
-[node name="RunSeed" type="LineEdit" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return/SeedRow"]
+[node name="RunSeed" type="LineEdit" parent="ServicePages/Expedition/SeedRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 42)
 layout_mode = 2
 text = "27072026"
 
-[node name="BeginLayer2Run" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return/SeedRow"]
+[node name="BeginLayer2Run" type="Button" parent="ServicePages/Expedition/SeedRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(260, 44)
 layout_mode = 2
 text = "Begin Layer 2 Run"
 
-[node name="StartNewStory" type="Button" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return"]
+[node name="StartNewStory" type="Button" parent="ServicePages/Expedition"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Restart Layer 1 for Testing — Keep Refuge Save"
+visible = false
 
-[node name="DeferredServices" type="Label" parent="Margin/Frame/Padding/Root/ManagementTabs/Launch & Return"]
+[node name="DeferredServices" type="Label" parent="ServicePages/Expedition"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.69, 0.65, 1)
 text = "Resolve restoration, Corruption cleansing, training, upgrades, shops, and additional crafting remain unavailable until authored."
 autowrap_mode = 2
 
-[node name="Status" type="Label" parent="Margin/Frame/Padding/Root"]
+[node name="Status" type="Label" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.82, 0.68, 1)
 text = "The farthest cell is warm."
 autowrap_mode = 2
+visible = false
 
 [node name="SalvageConfirmation" type="ConfirmationDialog" parent="."]
 unique_name_in_owner = true

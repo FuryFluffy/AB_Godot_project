@@ -29,6 +29,8 @@ func _run() -> void:
 	await _test_scene_construction_and_rendering()
 	await _test_repair_ui_preserves_exact_target()
 	await _test_salvage_confirmation_action()
+	await _test_room_navigation_and_system()
+	await _test_refuge_application_menu()
 	if failures == 0:
 		print("Refuge management UI tests passed.")
 	else:
@@ -366,26 +368,27 @@ func _test_scene_construction_and_rendering() -> void:
 		false
 	)
 	await process_frame
-	var tabs := screen.get_node("%ManagementTabs") as TabContainer
+	var shell := screen.get_node("%RoomShell") as RefugeRoomShell
 	var material_list := screen.get_node("%MaterialList") as ItemList
 	var stash_list := screen.get_node("%StashItems") as ItemList
-	var key_list := screen.get_node("%KeyList") as ItemList
-	var item_bar_grid := screen.get_node("%ItemBarGrid") as RefugeSlotGrid
+	var key_list := screen.key_list as ItemList
+	var item_bar_grid := screen.get_node("%ItemBarGrid") as ItemBarView
 	var first_item_bar_slot := (
-		item_bar_grid.get_child(0) as Button
-		if item_bar_grid.get_child_count() > 0
+		item_bar_grid.slot_buttons[0]
+		if item_bar_grid.slot_buttons.size() > 0
 		else null
 	)
 	_expect(
 		present_error.is_empty()
-		and tabs != null
-		and tabs.get_tab_count() == 5
-		and screen.get_node("%PreparationGrid") is RefugeSlotGrid
-		and screen.get_node("%ItemBarGrid") is RefugeSlotGrid
+		and shell != null
+		and shell.pages.size() == 8
+		and not shell.modal.visible
+		and screen.preparation_grid is RefugeSlotGrid
+		and screen.get_node("%ItemBarGrid") is ItemBarView
 		and (screen.get_node("%PartyList") as ItemList).item_count == 3
 		and material_list.item_count == 4
 		and (screen.get_node("%RecipeList") as ItemList).item_count == 1,
-		"The scene must construct and safely render all five Refuge management areas from default ownership state."
+		"The scene must construct eight contextual stations while preserving the existing management controls and default ownership state."
 	)
 	_expect(
 		material_list.fixed_icon_size == Vector2i(48, 48)
@@ -640,3 +643,171 @@ func _expect(condition: bool, message: String) -> void:
 		return
 	failures += 1
 	push_error(message)
+
+
+func _test_room_navigation_and_system() -> void:
+	var screen := load("res://scenes/refuge/bloom_refuge_screen.tscn").instantiate() as BloomRefugeScreen
+	root.add_child(screen)
+	await process_frame
+	var run := _make_established_run()
+	var error: String = screen.present(run, BATTLER_CATALOG, KnowledgeState.new(), false)
+	var shell: RefugeRoomShell = screen.room_shell
+	var before: Dictionary = run.refuge_ownership.to_snapshot()
+	_expect(error.is_empty() and shell.hotspots.size() == 8 and shell.props.get_child_count() == 5, "Room must expose eight spatial stations and five independent props.")
+	_expect(not shell.modal.visible and screen.bloom_label.is_visible_in_tree() and not screen.knowledge_label.is_visible_in_tree() and not screen.header_party_label.is_visible_in_tree(), "Only Bloom remains visible in the default room.")
+	# Hit geometry and transform: no transparent prop rectangle becomes an action.
+	var records: RefugeRoomHotspot = shell.hotspots[&"records"]
+	_expect(not records._has_point(Vector2(20, 120)) and records._has_point(Vector2(80, 120)), "Records' cutout must not cover the neighboring Loadouts rack.")
+	for dimensions: Vector2 in [Vector2(1920, 1080), Vector2(1280, 720), Vector2(1024, 768)]:
+		shell.size = dimensions
+		shell._layout()
+		var fit: float = minf(dimensions.x / 1344.0, dimensions.y / 768.0)
+		_expect(shell.canvas.scale.is_equal_approx(Vector2.ONE * fit) and (shell.canvas.position * 2 + shell.canvas.size * fit).is_equal_approx(dimensions), "Room art/props/hotspots must use one centered uniform fit at %s." % dimensions)
+	shell.size = screen.size
+	shell._layout()
+	for id: StringName in shell.hotspots:
+		var hotspot: RefugeRoomHotspot = shell.hotspots[id]
+		var hit: Vector2 = hotspot.size * 0.5
+		if id == &"records": hit = Vector2(80, 120)
+		await _room_click(hotspot.get_global_transform() * hit)
+		await process_frame
+		var visible_pages: int = 0
+		for page: Control in shell.pages.values():
+			visible_pages += int(page.is_visible_in_tree())
+		_expect(shell.active_station == id and visible_pages == 1 and shell.panel.is_ancestor_of(root.gui_get_focus_owner()), "Opening %s must focus exactly its own contextual panel." % id)
+		# Cycling focus stays inside the panel, including a scrollable service page.
+		var control: Control = shell.close_button
+		for step: int in range(45):
+			var next: Control = control.get_node_or_null(control.focus_next) as Control
+			_expect(next != null and shell.panel.is_ancestor_of(next), "Tab focus must remain inside %s." % id)
+			if next == null: break
+			control = next
+		await _room_action("ui_cancel")
+		_expect(not shell.modal.visible and root.gui_get_focus_owner() == hotspot, "One Escape must close %s, restore origin focus, and not open System." % id)
+	_expect(run.refuge_ownership.to_snapshot() == before, "Browsing all eight stations must not mutate ownership.")
+	# Directional navigation uses authored spatial neighbors and controller Accept.
+	(shell.hotspots[&"rest"] as Control).grab_focus()
+	await _room_action("ui_right")
+	_expect(root.gui_get_focus_owner() == shell.hotspots[&"stash"], "Right from Rest must follow its authored Stash neighbor.")
+	await _room_action("ui_accept")
+	_expect(shell.active_station == &"stash", "Keyboard/controller Accept must activate the focused station.")
+	var rest: RefugeRoomHotspot = shell.hotspots[&"rest"]
+	await _room_click(rest.get_global_transform() * (rest.size * 0.5))
+	_expect(shell.active_station == &"stash", "The panel's modal input surface must prevent clicks reaching a room station behind it.")
+	await _room_action("ui_cancel")
+	await _room_action("ui_cancel")
+	_expect(shell.active_station == &"system" and shell.modal.visible, "Escape from the unobstructed room opens System.")
+	shell._system_action(&"settings")
+	await process_frame
+	var had_settings: bool = FileAccess.file_exists(UserSettingsStore.SETTINGS_PATH)
+	var previous_settings_text: String = FileAccess.get_file_as_string(UserSettingsStore.SETTINGS_PATH) if had_settings else ""
+	var room_scale_before: Vector2 = shell.canvas.scale
+	shell.scale_slider.value = 1.3
+	shell._save_settings()
+	_expect(is_equal_approx(float(UserSettingsStore.load_settings().get("refuge_ui_scale", 0)), 1.3) and shell.canvas.scale == room_scale_before, "Applying Refuge UI scale must persist through the settings owner without moving room artwork or hotspots.")
+	UserSettingsStore.save_settings({"master_volume": 0.6, "fullscreen": false})
+	_expect(is_equal_approx(float(UserSettingsStore.load_settings().get("refuge_ui_scale", 0)), 1.3), "Main Menu settings updates must preserve the additive Refuge scale setting.")
+	if had_settings:
+		var settings_file := FileAccess.open(UserSettingsStore.SETTINGS_PATH, FileAccess.WRITE)
+		settings_file.store_string(previous_settings_text)
+		settings_file.close()
+	else:
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(UserSettingsStore.SETTINGS_PATH))
+	UserSettingsStore.apply_settings(UserSettingsStore.load_settings())
+	await _room_action("ui_cancel")
+	_expect(shell.active_station == &"system" and shell.nested_action.is_empty() and root.gui_get_focus_owner() == shell.system_buttons[&"settings"], "Nested Settings cancels to System and restores its opening button.")
+	await _room_action("ui_cancel")
+	_expect(not shell.modal.visible, "A second Escape closes System.")
+	shell.open_station(&"loadouts")
+	screen.equipment_slot.get_popup().popup()
+	screen.handle_cancel()
+	_expect(shell.active_station == &"loadouts" and not screen.equipment_slot.get_popup().visible and root.gui_get_focus_owner() == screen.equipment_slot, "Cancel must dismiss an equipment selector before Loadouts and restore selector focus.")
+	shell.open_station(&"expedition")
+	shell._open_preparation()
+	screen.handle_cancel()
+	_expect(root.gui_get_focus_owner() == shell.hotspots[&"expedition"], "Preparation opened through Expedition must return to its originating map hotspot.")
+	# A child salvage confirmation closes before Workbench and cannot spend.
+	shell.open_station(&"repair")
+	screen.salvage_confirmation.popup_centered()
+	screen.handle_cancel()
+	_expect(shell.active_station == &"repair" and not screen.salvage_confirmation.visible and run.refuge_ownership.to_snapshot() == before, "Cancel must dismiss the child confirmation without closing Workbench or changing ownership.")
+	screen.queue_free()
+	await process_frame
+
+
+func _room_action(action: String) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	root.push_input(event, true)
+	await process_frame
+	event = InputEventAction.new()
+	event.action = action
+	event.pressed = false
+	root.push_input(event, true)
+	await process_frame
+
+
+func _test_refuge_application_menu() -> void:
+	CampaignSaveSlotStore.set_test_save_directory("user://refuge_ui_test_%d" % Time.get_ticks_usec())
+	var app := load("res://scenes/app/application_root.tscn").instantiate() as ApplicationRoot
+	root.add_child(app)
+	await process_frame
+	var error: String = app._create_session()
+	_expect(error.is_empty(), "Application fixture must create its normal gameplay session.")
+	var controller: AbyssalBloomMainController = app.active_controller
+	controller.active_save_slot_id = 1
+	controller.run_state = _make_established_run()
+	controller.knowledge_state = KnowledgeState.new()
+	controller._show_refuge_hub()
+	app._enter_active_session()
+	await process_frame
+	var screen: BloomRefugeScreen = controller.active_refuge
+	var shell: RefugeRoomShell = screen.room_shell
+	_expect(not app.session_menu_button.visible, "Application MAIN MENU chrome must be absent over Refuge.")
+	shell.open_station(&"rest")
+	await _room_action("ui_cancel")
+	_expect(not shell.modal.visible and not app.return_confirmation.visible, "Application routing must not reopen a menu on the same station-closing Escape.")
+	await _room_action("ui_cancel")
+	_expect(shell.active_station == &"system" and not app.return_confirmation.visible, "Bare-room Escape must reach the Refuge system menu before generic application handling.")
+	controller.run_state.bloom = 7
+	shell._system_action(&"save")
+	var saved: Dictionary = CampaignSaveSlotStore.read_document_for_load(1)
+	_expect(String(saved.get("error", "")).is_empty() and screen.status_label.text == "Campaign saved at the Refuge.", "System Save must use the existing validated Refuge slot writer.")
+	controller.run_state.bloom = 19
+	shell._system_action(&"load")
+	shell._request_load(1)
+	await process_frame
+	await process_frame
+	_expect(app.active_controller.active_refuge != null and app.active_controller.run_state.bloom == 7 and not app.session_menu_button.visible, "System Load must return through the production load path and restore the saved Refuge wallet.")
+	shell = app.active_controller.active_refuge.room_shell
+	shell.open_system()
+	shell._system_action(&"main_menu")
+	await _room_action("ui_cancel")
+	_expect(app.active_session != null and shell.nested_action.is_empty(), "Cancelling Main Menu confirmation preserves the active session.")
+	shell._system_action(&"main_menu")
+	shell.system_action_requested.emit(&"main_menu", 0)
+	await process_frame
+	await process_frame
+	_expect(app.active_session == null and app.main_menu.visible, "Confirmed Main Menu returns through the application lifecycle.")
+	app.queue_free()
+	await process_frame
+	CampaignSaveSlotStore.delete_slot(1)
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(CampaignSaveSlotStore.get_save_directory()))
+	CampaignSaveSlotStore.clear_test_save_directory()
+
+
+func _room_click(position: Vector2) -> void:
+	var motion := InputEventMouseMotion.new()
+	motion.position = position
+	motion.global_position = position
+	root.push_input(motion, true)
+	await process_frame
+	for pressed: bool in [true, false]:
+		var click := InputEventMouseButton.new()
+		click.button_index = MOUSE_BUTTON_LEFT
+		click.position = position
+		click.global_position = position
+		click.pressed = pressed
+		root.push_input(click, true)
+		await process_frame

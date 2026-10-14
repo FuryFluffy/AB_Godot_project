@@ -117,6 +117,18 @@ func initialize_from_snapshot(
 		if loadout.owner_heroine_id != heroine_id:
 			return "Run equipment loadout owner does not match heroine '%s'." % heroine_id
 		staged_loadouts[heroine_id] = loadout
+	var location_snapshots: Dictionary = {}
+	var seen_instance_ids: Dictionary = {}
+	for heroine: Variant in staged_loadouts:
+		var registered := staged_loadouts[heroine] as PersonalEquipmentLoadoutState
+		location_snapshots[heroine] = registered.to_snapshot()
+		for id: Variant in registered.instances_by_id:
+			if seen_instance_ids.has(id):
+				return "Equipment instance '%s' has multiple run owners." % id
+			seen_instance_ids[id] = true
+	var location_error: String = BackpackPayload.validate_locations(new_run_inventory.backpacks_by_heroine, location_snapshots)
+	if not location_error.is_empty():
+		return location_error
 	definitions_by_id = staged_definitions
 	loadouts_by_heroine = staged_loadouts
 	run_inventory = new_run_inventory

@@ -1,0 +1,50 @@
+{
+  "handoff_date": "2026-10-14",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "structural_validation": {
+    "exit_code": 0,
+    "named_classes": 231
+  },
+  "regression_suite": {
+    "exit_code": 0,
+    "scripts_passed": 49,
+    "scripts_total": 49
+  },
+  "validator_tests": {
+    "exit_code": 0,
+    "passed": 9
+  },
+  "runner_tests": {
+    "exit_code": 0,
+    "passed": 4
+  },
+  "focused_shared_inventory": {
+    "exit_code": 0,
+    "failures": 0,
+    "includes_keyboard_focus_steps": 40
+  },
+  "visual_fixture": {
+    "capture_date": "2026-10-11",
+    "renderer": "Compatibility / Intel Iris Xe / Mesa",
+    "successful_captures": 45,
+    "retained_images": 7,
+    "resolutions": [
+      [
+        1280,
+        720
+      ],
+      [
+        1920,
+        1080
+      ],
+      [
+        1024,
+        768
+      ]
+    ]
+  },
+  "physical_controller_tested": false,
+  "new_normal_campaign_playthrough_tested": false,
+  "stage03_started": false,
+  "committed": false
+}

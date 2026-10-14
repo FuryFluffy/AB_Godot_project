@@ -100,6 +100,8 @@ func _create_session() -> String:
 	) as AbyssalBloomMainController
 	if active_controller == null:
 		return "The gameplay session has no main controller."
+	active_controller.refuge_visibility_changed.connect(_on_refuge_visibility_changed)
+	active_controller.refuge_system_requested.connect(_on_refuge_system_requested)
 	return ""
 
 
@@ -107,7 +109,9 @@ func _enter_active_session() -> void:
 	main_menu.visible = false
 	session_menu_layer.visible = true
 	return_confirmation.visible = false
-	session_menu_button.grab_focus()
+	_on_refuge_visibility_changed(active_controller.active_refuge != null)
+	if session_menu_button.visible:
+		session_menu_button.grab_focus()
 
 
 func _show_return_confirmation() -> void:
@@ -162,7 +166,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	):
 		return
 	get_viewport().set_input_as_handled()
+	if active_controller != null and active_controller.active_refuge != null:
+		active_controller.active_refuge.handle_cancel()
+		return
 	if return_confirmation.visible:
 		_hide_return_confirmation()
 	else:
 		_show_return_confirmation()
+
+
+func _on_refuge_visibility_changed(refuge_visible: bool) -> void:
+	session_menu_button.visible = not refuge_visible
+	if refuge_visible:
+		return_confirmation.hide()
+
+
+func _on_refuge_system_requested(action: StringName, slot_id: int) -> void:
+	match action:
+		&"load":
+			_on_load_requested(slot_id)
+		&"main_menu":
+			_return_to_main_menu()
+		&"quit":
+			_on_quit_requested()

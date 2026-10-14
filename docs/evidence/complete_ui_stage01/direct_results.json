@@ -1,0 +1,290 @@
+[
+  {
+    "test": "tests/test_content_workbench.gd",
+    "exit_code": 0,
+    "seconds": 10.09,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_combat_kernel.gd",
+    "exit_code": 0,
+    "seconds": 0.44,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_battle_flow.gd",
+    "exit_code": 0,
+    "seconds": 0.45,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_spatial_battle.gd",
+    "exit_code": 0,
+    "seconds": 0.54,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_spatial_combat.gd",
+    "exit_code": 0,
+    "seconds": 0.64,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_position_contacts.gd",
+    "exit_code": 0,
+    "seconds": 0.45,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_enemy_ai.gd",
+    "exit_code": 0,
+    "seconds": 0.63,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_ordinary_combat.gd",
+    "exit_code": 0,
+    "seconds": 0.53,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_board_interaction.gd",
+    "exit_code": 0,
+    "seconds": 0.44,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_cancel_input_routing.gd",
+    "exit_code": 0,
+    "seconds": 8.89,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_grapple_foundation.gd",
+    "exit_code": 0,
+    "seconds": 0.53,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_grapple_move_reactions.gd",
+    "exit_code": 0,
+    "seconds": 0.62,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_item_system.gd",
+    "exit_code": 0,
+    "seconds": 9.63,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_canonical_item_ids.gd",
+    "exit_code": 0,
+    "seconds": 8.41,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_reward_sources.gd",
+    "exit_code": 0,
+    "seconds": 9.64,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_item_sprite_library.gd",
+    "exit_code": 0,
+    "seconds": 0.63,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_node_map.gd",
+    "exit_code": 0,
+    "seconds": 9.44,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_layer_room_registry.gd",
+    "exit_code": 0,
+    "seconds": 9.09,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_registered_room_presentations.gd",
+    "exit_code": 0,
+    "seconds": 9.65,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_layer_generator_activation.gd",
+    "exit_code": 0,
+    "seconds": 9.92,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_opening_event_room_flow.gd",
+    "exit_code": 0,
+    "seconds": 10.11,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_dialogue_foundation.gd",
+    "exit_code": 0,
+    "seconds": 1.11,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_production_dialogue_authoring.gd",
+    "exit_code": 0,
+    "seconds": 9.73,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_layer1_novel_integration.gd",
+    "exit_code": 0,
+    "seconds": 0.35,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_layer_transition.gd",
+    "exit_code": 0,
+    "seconds": 9.73,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_jailer_refuge_origin.gd",
+    "exit_code": 0,
+    "seconds": 9.63,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_bloom_refuge_hub.gd",
+    "exit_code": 0,
+    "seconds": 9.53,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_production_save_slots.gd",
+    "exit_code": 0,
+    "seconds": 9.63,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_active_run_safe_points.gd",
+    "exit_code": 0,
+    "seconds": 9.83,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_campaign_lifecycle.gd",
+    "exit_code": 0,
+    "seconds": 9.44,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_l1_l2_demo_flow.gd",
+    "exit_code": 0,
+    "seconds": 9.53,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_layer_2_first_slice.gd",
+    "exit_code": 0,
+    "seconds": 9.44,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_heroine_kits.gd",
+    "exit_code": 0,
+    "seconds": 0.36,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_ability_resources.gd",
+    "exit_code": 0,
+    "seconds": 0.44,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_weapon_resources.gd",
+    "exit_code": 0,
+    "seconds": 8.41,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_refuge_salvage_recipes.gd",
+    "exit_code": 0,
+    "seconds": 0.54,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_refuge_management_ui.gd",
+    "exit_code": 0,
+    "seconds": 12.61,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_weapon_techniques.gd",
+    "exit_code": 0,
+    "seconds": 9.62,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_layer_1_enemy_roster.gd",
+    "exit_code": 0,
+    "seconds": 0.35,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_combat_hud.gd",
+    "exit_code": 0,
+    "seconds": 9.15,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_reusable_merge.gd",
+    "exit_code": 0,
+    "seconds": 8.88,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_encounter_startup.gd",
+    "exit_code": 0,
+    "seconds": 9.43,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_battle_composition.gd",
+    "exit_code": 0,
+    "seconds": 8.88,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_battlefield_authoring.gd",
+    "exit_code": 0,
+    "seconds": 8.0,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_battler_visual_profiles.gd",
+    "exit_code": 0,
+    "seconds": 7.8,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_static_png_combat_presentation.gd",
+    "exit_code": 0,
+    "seconds": 12.07,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_combat_stage_triggers.gd",
+    "exit_code": 0,
+    "seconds": 0.46,
+    "script_error": false
+  },
+  {
+    "test": "tests/test_milestone_15_pilot_a.gd",
+    "exit_code": 0,
+    "seconds": 11.69,
+    "script_error": false
+  }
+]

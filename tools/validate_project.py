@@ -44,6 +44,31 @@ CONNECTION_RE = re.compile(
 )
 
 
+def root_resource_properties(text: str) -> dict[str, str]:
+    """Read assignments only in [resource], never a nested sub_resource."""
+    match = re.search(r"^\[resource\]\s*$", text, re.MULTILINE)
+    if match is None:
+        return {}
+    body = re.split(r"^\[", text[match.end():], maxsplit=1, flags=re.MULTILINE)[0]
+    return dict(re.findall(r"^([A-Za-z_][A-Za-z_0-9]*)\s*=\s*(.*?)\s*$", body, re.MULTILINE))
+
+
+def exported_scalar_default(script_path: Path, field: str) -> str:
+    """Use the declared GDScript default; fail closed if it cannot be read."""
+    text = script_path.read_text(encoding="utf-8")
+    match = re.search(r"^@export[^\n]*\bvar\s+" + re.escape(field) + r"\s*:\s*(?:int|bool)\s*=\s*([^\n#]+)", text, re.MULTILINE)
+    if match is None:
+        raise ValueError(f"Cannot read exported scalar default for {field}: {script_path}")
+    return match.group(1).strip()
+
+
+def effective_resource_integer(properties: dict[str, str], field: str, default: str) -> int:
+    value = properties.get(field, default)
+    if re.fullmatch(r"[+-]?[0-9]+", value) is None:
+        raise ValueError(f"{field} must be an integer, got {value!r}")
+    return int(value)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Validate the Abyssal Bloom Godot project.",
@@ -2586,13 +2611,23 @@ def validate_combat_hud(errors: list[str]) -> None:
             errors.append(
                 f"{component}: missing compact authored size {expected_size}"
             )
-        if (
-            component_name == "item_bar_view.tscn"
-            and 'name="Slots" type="VBoxContainer"' not in component_text
-        ):
-            errors.append(
-                f"{component}: Item tray must remain a vertical icon stack"
+        if component_name == "item_bar_view.tscn":
+            # Stage 02 reuses these six buttons horizontally in Refuge only.
+            # The authored combat default must still be one vertical column.
+            slots = re.search(
+                r'^\[node name="Slots" type="(VBoxContainer|GridContainer)" '
+                r'parent="Margin"\]\n(.*?)(?=^\[|\Z)',
+                component_text,
+                re.MULTILINE | re.DOTALL,
             )
+            vertical = slots is not None and (
+                slots.group(1) == "VBoxContainer"
+                or re.search(r"^columns = 1$", slots.group(2), re.MULTILINE)
+            )
+            if not vertical:
+                errors.append(
+                    f"{component}: Item tray must default to one vertical column"
+                )
     reaction_scene = (
         ROOT
         / "scenes"
@@ -2802,15 +2837,16 @@ def validate_item_system(errors: list[str]) -> None:
                         f"{resource}: workbook item is not marked canonical"
                     )
             elif item_id == "quiet_cell_blanket":
-                for fragment in (
-                    "content_category = 7",
-                    "canonical_workbook_item = false",
-                ):
-                    if fragment not in resource_text:
-                        errors.append(
-                            f"{resource}: legacy Quiet Cell Blanket must contain "
-                            f"{fragment}"
-                        )
+                properties = root_resource_properties(resource_text)
+                default = exported_scalar_default(
+                    ROOT / "scripts/data/items/item_definition.gd",
+                    "canonical_workbook_item",
+                )
+                if properties.get("content_category") != "7":
+                    errors.append(f"{resource}: legacy Quiet Cell Blanket must have content_category = 7")
+                if properties.get("canonical_workbook_item", default) != "false":
+                    errors.append(f"{resource}: legacy Quiet Cell Blanket must not be canonical")
+
 
     missing_items = sorted(expected_items.keys() - discovered.keys())
     unexpected_items = sorted(discovered.keys() - expected_items.keys())
@@ -3429,9 +3465,9 @@ def validate_layer_room_registry(errors: list[str]) -> None:
             "sealed_exercise_yard",
         ),
     }
-    room_id_re = re.compile(r'^room_id = &"([^"]+)"$', re.MULTILINE)
-    layer_re = re.compile(r"^layer_number = ([0-9]+)$", re.MULTILINE)
-    order_re = re.compile(r"^canonical_order = ([0-9]+)$", re.MULTILINE)
+    room_script = ROOT / "scripts/data/rooms/layer_room_definition.gd"
+    layer_default = exported_scalar_default(room_script, "layer_number")
+    order_default = exported_scalar_default(room_script, "canonical_order")
     texture_re = re.compile(
         r'path="res://(assets/backgrounds/layer_[12]/sdxl_curated/[^"]+\.png)"'
     )
@@ -3454,15 +3490,24 @@ def validate_layer_room_registry(errors: list[str]) -> None:
         for resource in resources:
             text = resource.read_text(encoding="utf-8")
             room_texts[resource] = text
-            id_match = room_id_re.search(text)
-            layer_match = layer_re.search(text)
-            order_match = order_re.search(text)
-            if id_match is None or layer_match is None or order_match is None:
-                errors.append(f"{resource}: incomplete Layer room identity")
+            # Texture coverage is independent of identity validity: do not
+            # manufacture missing-art diagnostics when an identity is invalid.
+            for texture_match in texture_re.finditer(text):
+                registered_paths.add(ROOT / texture_match.group(1))
+            properties = root_resource_properties(text)
+            id_match = re.fullmatch(r'&"([^"\n]+)"', properties.get("room_id", ""))
+            if id_match is None:
+                errors.append(f"{resource}: missing or invalid root room_id")
                 continue
             room_id = id_match.group(1)
-            authored_layer = int(layer_match.group(1))
-            canonical_order = int(order_match.group(1))
+            try:
+                authored_layer = effective_resource_integer(properties, "layer_number", layer_default)
+                canonical_order = effective_resource_integer(properties, "canonical_order", order_default)
+            except ValueError as error:
+                errors.append(f"{resource}: {error}")
+                continue
+            if canonical_order <= 0:
+                errors.append(f"{resource}: canonical_order must be positive")
             if room_id in seen_ids:
                 errors.append(f"duplicate registered Layer room_id: {room_id}")
             seen_ids.add(room_id)
@@ -3472,8 +3517,6 @@ def validate_layer_room_registry(errors: list[str]) -> None:
                     f"but stored in layer_{layer}"
                 )
             discovered[layer].append((canonical_order, room_id))
-            for texture_match in texture_re.finditer(text):
-                registered_paths.add(ROOT / texture_match.group(1))
 
     for layer, ids in expected_ids.items():
         actual_ids = tuple(

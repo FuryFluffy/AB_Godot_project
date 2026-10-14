@@ -1,0 +1,171 @@
+{
+  "reference_canvas": [
+    1344,
+    768
+  ],
+  "placement_status": "Authored review layout. The layered composition has been inspected at full scale; final placement and navigation require local Godot validation. Not yet approved as final room composition.",
+  "background": {
+    "file": "reference/07_Bloom_Refuge_Transformed.png",
+    "repo_path": "assets/backgrounds/layer_2/sdxl_curated/07_Bloom_Refuge_Transformed.png",
+    "git_blob": "6e4d5fb347abe7a3b29a64e1146707bd7af607a6",
+    "sha256": "2ecc1b1705148364aa2789734bbd0922a4329a2d70300db3054412d9a53f82f1"
+  },
+  "sprites": [
+    {
+      "id": "alchemy_apparatus",
+      "file": "sprites/alchemy_apparatus.png",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "alpha_bbox_at_128": [
+        110,
+        17,
+        1428,
+        1001
+      ],
+      "source_anchor_bottom_center": [
+        769,
+        1001
+      ],
+      "room_anchor_bottom_center": [
+        720,
+        505
+      ],
+      "visible_width": 145,
+      "uniform_scale": 0.11001517450682853,
+      "top_left": [
+        635.3983308042489,
+        394.87481031866463
+      ],
+      "placement_note": "On the center round table",
+      "transparent_pixel_fraction": 0.5685691833496094,
+      "sha256": "bf45c2caa9df559d185a7b88225b4c1e1bef837901a6b7142ff67e6e5cec8128"
+    },
+    {
+      "id": "weapon_stand",
+      "file": "sprites/weapon_stand.png",
+      "image_size": [
+        1024,
+        1536
+      ],
+      "alpha_bbox_at_128": [
+        14,
+        88,
+        1013,
+        1439
+      ],
+      "source_anchor_bottom_center": [
+        513.5,
+        1439
+      ],
+      "room_anchor_bottom_center": [
+        1170,
+        523
+      ],
+      "visible_width": 115,
+      "uniform_scale": 0.11511511511511512,
+      "top_left": [
+        1110.8883883883884,
+        357.3493493493494
+      ],
+      "placement_note": "At the right wall, clear of the Records shelf and foreground desk",
+      "transparent_pixel_fraction": 0.5586859385172526,
+      "sha256": "f3bc3a028f55f4f0926a680b59e72954308ea925783f5485c6699d755d27cb65"
+    },
+    {
+      "id": "repair_toolkit",
+      "file": "sprites/repair_toolkit.png",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "alpha_bbox_at_128": [
+        84,
+        174,
+        1501,
+        935
+      ],
+      "source_anchor_bottom_center": [
+        792.5,
+        935
+      ],
+      "room_anchor_bottom_center": [
+        1017,
+        388
+      ],
+      "visible_width": 89,
+      "uniform_scale": 0.06280875088214538,
+      "top_left": [
+        967.2240649258998,
+        329.27381792519407
+      ],
+      "placement_note": "On the existing right midground work surface",
+      "transparent_pixel_fraction": 0.5844548543294271,
+      "sha256": "0bd75b063fd776d94a42680a18068276e7d76805a5187cefa6af6c6e671d5ed6"
+    },
+    {
+      "id": "crafting_toolbox",
+      "file": "sprites/crafting_toolbox.png",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "alpha_bbox_at_128": [
+        135,
+        67,
+        1403,
+        988
+      ],
+      "source_anchor_bottom_center": [
+        769,
+        988
+      ],
+      "room_anchor_bottom_center": [
+        506,
+        458
+      ],
+      "visible_width": 90,
+      "uniform_scale": 0.07097791798107256,
+      "top_left": [
+        451.4179810725552,
+        387.8738170347003
+      ],
+      "placement_note": "On the left midground table, behind the Stash chest",
+      "transparent_pixel_fraction": 0.4663136800130208,
+      "sha256": "9c8d7eee50fa7e9f266b8309c537161e777f0ad3e19e8e628b4bfe8438b71f29"
+    },
+    {
+      "id": "expedition_map",
+      "file": "sprites/expedition_map.png",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "alpha_bbox_at_128": [
+        28,
+        49,
+        1530,
+        964
+      ],
+      "source_anchor_bottom_center": [
+        779,
+        964
+      ],
+      "room_anchor_bottom_center": [
+        1255,
+        686
+      ],
+      "visible_width": 162,
+      "uniform_scale": 0.10785619174434088,
+      "top_left": [
+        1170.9800266311584,
+        582.0266311584554
+      ],
+      "placement_note": "On the right foreground desk, to the right of the existing lantern",
+      "transparent_pixel_fraction": 0.4891885121663411,
+      "sha256": "04511b60d183920d1ecc316b571d95f3b55ab89df7fccac556fd23e152abd736"
+    }
+  ],
+  "pending_assets": []
+}

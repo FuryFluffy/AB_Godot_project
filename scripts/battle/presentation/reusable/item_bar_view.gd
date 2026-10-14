@@ -62,3 +62,23 @@ func _compact_slot_label(label: String, has_icon: bool) -> String:
 	if initials.is_empty():
 		initials = slot_number
 	return "%s\n%s" % [initials, quantity]
+
+
+func use_horizontal_layout() -> void:
+	# Same six native buttons; the existing combat layout remains vertical until Stage 10.
+	var slots := get_node("Margin/Slots") as GridContainer
+	slots.columns = 6
+	slots.add_theme_constant_override("h_separation", 6)
+	for button: Button in slot_buttons:
+		button.custom_minimum_size = Vector2(66, 66)
+		button.add_theme_constant_override("icon_max_width", 40)
+	custom_maximum_size = Vector2(442, 86)
+	custom_minimum_size = Vector2(442, 86)
+	reset_size()
+
+
+func present_inventory(entries: Array[Dictionary], selected_index: int = -1) -> void:
+	for index: int in range(slot_buttons.size()):
+		var entry: Dictionary = entries[index] if index < entries.size() else {}
+		var empty: bool = bool(entry.get("empty", true))
+		display_slot(index, "%d\n%s\n×%d" % [index + 1, "Empty" if empty else entry.get("display_name", ""), int(entry.get("quantity", 0))], not empty, String(entry.get("details", "Empty slot")), index == selected_index, entry.get("icon", null))

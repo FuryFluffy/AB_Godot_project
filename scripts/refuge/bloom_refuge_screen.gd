@@ -4,6 +4,9 @@ extends Control
 
 signal begin_layer_2_run_requested(run_seed: int)
 signal start_new_story_requested(run_seed: int)
+signal system_action_requested(action: StringName, slot_id: int)
+
+@onready var room_shell: RefugeRoomShell = %RoomShell
 
 
 @onready var bloom_label: Label = %BloomValue
@@ -18,9 +21,10 @@ signal start_new_story_requested(run_seed: int)
 @onready var party_details: Label = %PartyDetails
 @onready var heroine_equipment_list: ItemList = %HeroineEquipmentList
 @onready var equipment_slot: OptionButton = %EquipmentSlot
-@onready var inventory_heroine: OptionButton = %InventoryHeroine
-@onready var preparation_grid: RefugeSlotGrid = %PreparationGrid
-@onready var item_bar_grid: RefugeSlotGrid = %ItemBarGrid
+@onready var backpack_view: BackpackView = %Backpacks
+@onready var inventory_heroine: OptionButton = backpack_view.heroine_selector
+@onready var preparation_grid: RefugeSlotGrid = backpack_view.grid
+@onready var item_bar_grid: ItemBarView = %ItemBarGrid
 @onready var stash_items: ItemList = %StashItems
 @onready var stash_equipment_list: ItemList = %StashEquipmentList
 @onready var material_list: ItemList = %MaterialList
@@ -29,13 +33,16 @@ signal start_new_story_requested(run_seed: int)
 @onready var repair_target: OptionButton = %RepairTarget
 @onready var salvage_list: ItemList = %SalvageList
 @onready var salvage_confirmation: ConfirmationDialog = %SalvageConfirmation
-@onready var key_list: ItemList = %KeyList
+@onready var key_list: ItemList = backpack_view.key_ring
 
 
 var management: RefugeManagementController
 var current_run_state: RunState
 var current_battler_catalog: BattlerCatalogDefinition
 var current_knowledge_state: KnowledgeState
+var backpack_heroine_id: StringName = &""
+var backpack_details: Label
+var backpack_destination: Label
 var selected_heroine_id: StringName = &""
 var selected_preparation_entry: Dictionary = {}
 var selected_item_bar_entry: Dictionary = {}
@@ -57,7 +64,7 @@ func _ready() -> void:
 	%MoveEquipmentToStash.pressed.connect(_on_move_equipment_to_stash)
 	inventory_heroine.item_selected.connect(_on_inventory_heroine_selected)
 	preparation_grid.slot_selected.connect(_on_preparation_slot_selected)
-	item_bar_grid.slot_selected.connect(_on_item_bar_slot_selected)
+	item_bar_grid.slot_requested.connect(_on_item_bar_requested)
 	stash_items.item_selected.connect(_on_stash_item_selected)
 	%PrepToBar.pressed.connect(
 		_on_transfer_selected.bind(&"preparation", &"item_bar")
@@ -85,6 +92,15 @@ func _ready() -> void:
 	%RepairSelected.pressed.connect(_on_repair_selected)
 	%SalvageSelected.pressed.connect(_on_review_salvage)
 	salvage_confirmation.confirmed.connect(_on_salvage_confirmed)
+	salvage_confirmation.canceled.connect(_restore_salvage_focus)
+	room_shell.configure($ServicePages, bloom_label, status_label)
+	knowledge_label.reparent(room_shell.pages[&"records"])
+	knowledge_label.show()
+	header_party_label.reparent(room_shell.pages[&"expedition"])
+	header_party_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	header_party_label.show()
+	_configure_inventory_views()
+	room_shell.system_action_requested.connect(system_action_requested.emit)
 
 
 func present(
@@ -120,6 +136,8 @@ func present(
 
 func show_status(message: String, is_error: bool = false) -> void:
 	status_label.text = message
+	if is_error and not room_shell.modal.visible:
+		room_shell.open_system()
 	status_label.modulate = (
 		Color(1.0, 0.55, 0.55) if is_error else Color(0.88, 0.82, 0.68)
 	)
@@ -160,6 +178,8 @@ func _refresh_all() -> void:
 	_refresh_materials_and_services()
 	_refresh_key_chain()
 	party_label.text = _make_party_summary()
+	room_shell._trap_focus.call_deferred()
+	room_shell._layout.call_deferred()
 
 
 func _refresh_party() -> void:
@@ -175,8 +195,7 @@ func _refresh_party() -> void:
 			String(entry.get("display_name", heroine_id)),
 		])
 		party_list.set_item_metadata(index, entry)
-		inventory_heroine.add_item(String(entry.get("display_name", heroine_id)))
-		inventory_heroine.set_item_metadata(index, heroine_id)
+
 	var party_names: Array[String] = []
 	for entry: Dictionary in entries:
 		party_names.append(String(entry.get("display_name", "Unknown")))
@@ -191,9 +210,18 @@ func _refresh_party() -> void:
 			selected_index = index
 			break
 	party_list.select(selected_index)
-	inventory_heroine.select(selected_index)
 	selected_heroine_id = StringName(entries[selected_index].get("heroine_id", ""))
 	_show_party_entry(entries[selected_index])
+	var bag_index: int = 0
+	for entry: Dictionary in management.get_backpack_heroine_entries():
+		var index: int = inventory_heroine.item_count
+		inventory_heroine.add_item(String(entry.display_name))
+		inventory_heroine.set_item_metadata(index, entry.heroine_id)
+		if StringName(entry.heroine_id) == backpack_heroine_id:
+			bag_index = index
+	if inventory_heroine.item_count > 0:
+		inventory_heroine.select(bag_index)
+		backpack_heroine_id = StringName(inventory_heroine.get_item_metadata(bag_index))
 
 
 func _show_party_entry(entry: Dictionary) -> void:
@@ -228,7 +256,7 @@ func _refresh_heroine_equipment() -> void:
 		var location_text: String = (
 			"Equipped: %s" % _slot_key_label(equipped_slot)
 			if equipped_slot != &""
-			else "Unequipped personal gear"
+			else String(entry.get("storage_label", "Personal reserve"))
 		)
 		var condition: int = int(entry.get("condition", 0))
 		var maximum: int = int(entry.get("condition_maximum", 0))
@@ -260,11 +288,11 @@ func _refresh_inventory() -> void:
 	selected_preparation_entry = {}
 	selected_item_bar_entry = {}
 	selected_stash_entry = {}
-	preparation_grid.present(
-		management.get_preparation_entries(selected_heroine_id),
-		3
-	)
-	item_bar_grid.present(management.get_item_bar_entries(), 2)
+	backpack_view.present_slots(management.get_preparation_entries(backpack_heroine_id))
+	item_bar_grid.present_inventory(management.get_item_bar_entries())
+	if backpack_details != null:
+		backpack_details.text = "Select an item to inspect it."
+		backpack_destination.text = "Transfer destination: %s’s Backpack" % inventory_heroine.get_item_text(inventory_heroine.selected)
 	stash_items.clear()
 	for entry: Dictionary in management.get_stash_item_entries():
 		stash_items.add_item("%s ×%d" % [
@@ -403,7 +431,7 @@ func _refresh_key_chain() -> void:
 		var index: int = key_list.item_count - 1
 		key_list.set_item_icon(index, entry.get("icon", null) as Texture2D)
 	if key_list.item_count == 0:
-		key_list.add_item("The shared Key Chain is empty.")
+		key_list.add_item("The shared Key-ring is empty.")
 		key_list.set_item_disabled(0, true)
 
 
@@ -424,11 +452,6 @@ func _on_party_selected(index: int) -> void:
 	var entry := value as Dictionary
 	selected_heroine_id = StringName(entry.get("heroine_id", ""))
 	_show_party_entry(entry)
-	for inventory_index: int in range(inventory_heroine.item_count):
-		if StringName(inventory_heroine.get_item_metadata(inventory_index)) == selected_heroine_id:
-			inventory_heroine.select(inventory_index)
-			break
-	_refresh_inventory()
 
 
 func _on_move_party(offset: int) -> void:
@@ -436,22 +459,20 @@ func _on_move_party(offset: int) -> void:
 
 
 func _on_inventory_heroine_selected(index: int) -> void:
-	selected_heroine_id = StringName(inventory_heroine.get_item_metadata(index))
-	for party_index: int in range(party_list.item_count):
-		var value: Variant = party_list.get_item_metadata(party_index)
-		if value is Dictionary and StringName((value as Dictionary).get("heroine_id", "")) == selected_heroine_id:
-			party_list.select(party_index)
-			_show_party_entry(value as Dictionary)
-			break
+	backpack_heroine_id = StringName(inventory_heroine.get_item_metadata(index))
 	_refresh_inventory()
+	room_shell._trap_focus.call_deferred()
 
 
 func _on_preparation_slot_selected(entry: Dictionary) -> void:
 	selected_preparation_entry = entry.duplicate(true)
+	backpack_details.text = String(entry.get("details", ""))
 
 
-func _on_item_bar_slot_selected(entry: Dictionary) -> void:
-	selected_item_bar_entry = entry.duplicate(true)
+func _on_item_bar_requested(index: int) -> void:
+	selected_item_bar_entry = management.get_item_bar_entries()[index].duplicate(true)
+	backpack_details.text = String(selected_item_bar_entry.get("details", ""))
+	item_bar_grid.present_inventory(management.get_item_bar_entries(), index)
 
 
 func _on_stash_item_selected(index: int) -> void:
@@ -471,12 +492,18 @@ func _on_transfer_selected(source: StringName, destination: StringName) -> void:
 	if entry.is_empty():
 		show_status("Select a source item before transferring it.", true)
 		return
+	if entry.has("equipment_instance_id"):
+		if destination == &"stash":
+			_apply_result(management.move_heroine_equipment_to_stash(backpack_heroine_id, StringName(entry.equipment_instance_id)), "Equipment moved to Stash.")
+		else:
+			show_status("Equipment cannot enter the Item Bar.", true)
+		return
 	var item_id := StringName(entry.get("item_id", ""))
 	_apply_result(
 		management.transfer_item(
 			source,
 			destination,
-			selected_heroine_id,
+			backpack_heroine_id,
 			item_id,
 			1
 		),
@@ -533,7 +560,7 @@ func _on_move_stash_equipment_to_heroine() -> void:
 	_apply_result(
 		management.move_stash_equipment_to_heroine(
 			StringName(entry.get("instance_id", "")),
-			selected_heroine_id
+			backpack_heroine_id
 		),
 		"Equipment moved to the selected heroine."
 	)
@@ -672,3 +699,61 @@ func _slot_key_label(slot_key: StringName) -> String:
 		&"armor":
 			return "Armor"
 	return "Unknown slot"
+
+
+func configure_system(can_save: bool, has_application: bool) -> void:
+	room_shell.configure_system(can_save, has_application)
+
+
+func handle_cancel() -> void:
+	for selector: OptionButton in [equipment_slot, inventory_heroine, repair_target]:
+		if selector.get_popup().visible:
+			selector.get_popup().hide()
+			selector.grab_focus()
+			return
+	if salvage_confirmation.visible:
+		salvage_confirmation.hide()
+		_restore_salvage_focus()
+		return
+	room_shell.handle_cancel()
+
+
+func _restore_salvage_focus() -> void:
+	pending_salvage_instance_id = &""
+	if room_shell.active_station == &"repair":
+		%SalvageSelected.grab_focus()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_visible_in_tree():
+		return
+	if event.is_action_pressed("ui_cancel"):
+		handle_cancel()
+		get_viewport().set_input_as_handled()
+	elif event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_START:
+		handle_cancel()
+		get_viewport().set_input_as_handled()
+	elif not room_shell.modal.visible and get_viewport().gui_get_focus_owner() == null:
+		for direction: String in ["ui_left", "ui_right", "ui_up", "ui_down", "ui_focus_next"]:
+			if event.is_action_pressed(direction):
+				(room_shell.hotspots[room_shell.origin_station] as Control).grab_focus()
+				get_viewport().set_input_as_handled()
+				break
+
+
+func _configure_inventory_views() -> void:
+	room_shell.attach_inventory_bar(item_bar_grid)
+	var inventory: InventoryPanelView = room_shell.inventory_panel
+	backpack_details = Label.new()
+	backpack_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inventory.backpacks_page.add_child(backpack_details)
+	backpack_destination = Label.new()
+	backpack_destination.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inventory.stash_page.add_child(backpack_destination)
+	inventory.stash_page.move_child(backpack_destination, 0)
+	var actions := GridContainer.new()
+	actions.columns = 2
+	inventory.backpacks_page.add_child(actions)
+	for button: Button in [%PrepToBar, %BarToPrep, %PrepToStash, %BarToStash]:
+		button.reparent(actions)
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL

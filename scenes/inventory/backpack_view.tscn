@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/inventory/backpack_view.gd" id="1_backpack"]
+[ext_resource type="PackedScene" path="res://scenes/refuge/components/refuge_slot_grid.tscn" id="4_slot_grid"]
+
+[node name="Backpacks" type="VBoxContainer"]
+script = ExtResource("1_backpack")
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeroineRow" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HeroineRow"]
+layout_mode = 2
+text = "Backpack owner"
+
+[node name="InventoryHeroine" type="OptionButton" parent="HeroineRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+
+[node name="Preparation" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="Label" parent="Preparation"]
+layout_mode = 2
+text = "Backpack — 15 slots · 3 × 5"
+
+[node name="PreparationGrid" parent="Preparation" instance=ExtResource("4_slot_grid")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Keys" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="Label" parent="Keys"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Shared Key-ring"
+
+[node name="KeyList" type="ItemList" parent="Keys"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+fixed_icon_size = Vector2i(48, 48)
+custom_minimum_size = Vector2(0, 145)
+
+[node name="Rules" type="Label" parent="Keys"]
+layout_mode = 2
+text = "Keys are assigned automatically. Ordinary run keys are lost on defeat; authored persistent keys survive at the Refuge. Keys cannot enter backpacks or the Item Bar."
+autowrap_mode = 2

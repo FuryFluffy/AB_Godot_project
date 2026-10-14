@@ -1,0 +1,25 @@
+Project validation failed:
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/items/layer_2/quiet_cell_blanket.tres: legacy Quiet Cell Blanket must contain canonical_workbook_item = false
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/01_opening_servant_corridor.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/02_servant_ledger_alcove.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/03_wine_cellar_warm_bottles.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/04_servant_dormitory.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/05_ruined_confessional.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/06_coat_beside_service_door.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/07_ruined_chapel.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/08_blood_nun_processing_chapel.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/10_cold_pantry.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/11_linen_sorting_room.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/12_bell_pull_gallery.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/13_butlers_office.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/14_dishwashing_hall.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/15_service_stair_landing.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/16_wax_prep_room.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/17_abandoned_guest_bedroom.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/18_laundry_boiler_room.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/19_dining_service_hall.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_1/20_sorting_vestibule.tres: incomplete Layer room identity
+- /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/data/rooms/layer_2/01_offering_list_room.tres: incomplete Layer room identity
+- Layer 1 room registry order/IDs differ from the canonical twenty-room list
+- Layer 2 room registry order/IDs differ from the canonical twenty-room list
+- delivered L1–2 backgrounds absent from the room registry: 01_Opening_Servant_Corridor.png, 02_Servant_Ledger_Alcove.png, 03_Servant_Dormitory.png, 04_Wine_Cellar_of_Warm_Bottles.png, 06_Cold_Pantry.png, 07_Linen_Sorting_Room.png, 08_Dishwashing_Hall.png, 09_Butlers_Office.png, 10_Service_Stair_Landing.png, 11_Bell_Pull_Gallery.png, 12_Coat_Beside_the_Service_Door.png, 13_Wax_Preparation_Room.png, 14_Abandoned_Guest_Bedroom.png, 15_Ruined_Confessional.png, 16_Laundry_Boiler_Room.png, 17_Dining_Service_Hall.png, 18_Sorting_Vestibule.png, 19_Ruined_Chapel_Exploration.png, 20_Ruined_Chapel_Battle.png, 21_Blood_Nun_Processing_Chapel.png, 01_Offering_List_Room.png

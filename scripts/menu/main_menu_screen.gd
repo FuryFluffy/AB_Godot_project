@@ -371,7 +371,7 @@ func _set_content_panel(active_panel: Control) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed("ui_cancel"):
+	if not is_visible_in_tree() or not event.is_action_pressed("ui_cancel"):
 		return
 	get_viewport().set_input_as_handled()
 	if confirmation_overlay.visible:

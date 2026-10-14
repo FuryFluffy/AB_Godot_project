@@ -153,6 +153,8 @@ func _test_live_battle_uses_art_hud() -> void:
 		item_bar != null
 		and command_bar != null
 		and item_bar.custom_minimum_size == Vector2(74.0, 384.0)
+		and (item_bar.get_node("Margin/Slots") as GridContainer).columns == 1
+		and item_bar.slot_buttons.size() == 6
 		and command_bar.custom_minimum_size == Vector2(88.0, 372.0),
 		"Items should use the right-edge tray and Commands the vertical icon bar."
 	)

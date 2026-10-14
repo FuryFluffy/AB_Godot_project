@@ -487,6 +487,7 @@ func equip_owned_instance(
 	if not equip_error.is_empty():
 		return equip_error
 	equipment_loadouts_by_heroine[heroine_id] = loadout.to_snapshot()
+	_clear_backpack_equipment_reference(heroine_id, instance_id)
 	ownership_changed.emit()
 	return ""
 
@@ -533,6 +534,7 @@ func move_unequipped_equipment_to_stash(
 	staged_stash[instance_id] = instance.to_snapshot()
 	equipment_loadouts_by_heroine[heroine_id] = loadout.to_snapshot()
 	stash_equipment_instances = staged_stash
+	_clear_backpack_equipment_reference(heroine_id, instance_id)
 	ownership_changed.emit()
 	return ""
 
@@ -561,6 +563,15 @@ func move_stash_equipment_to_heroine(
 	var loadout: PersonalEquipmentLoadoutState = loadout_result.get(
 		"loadout"
 	) as PersonalEquipmentLoadoutState
+	var backpack: Array[Dictionary] = _duplicate_slots(preparation_slots_by_heroine[heroine_id])
+	var free_slot: int = -1
+	for index: int in range(backpack.size()):
+		if BackpackPayload.is_empty(backpack[index]):
+			free_slot = index
+			break
+	if free_slot < 0:
+		return "The selected Backpack has no free equipment slot."
+	backpack[free_slot] = BackpackPayload.equipment_slot(free_slot, instance_id)
 	var register_error: String = loadout.register_instance(instance)
 	if not register_error.is_empty():
 		return register_error
@@ -569,6 +580,7 @@ func move_stash_equipment_to_heroine(
 	staged_stash.erase(String(instance_id))
 	equipment_loadouts_by_heroine[heroine_id] = loadout.to_snapshot()
 	stash_equipment_instances = staged_stash
+	preparation_slots_by_heroine[heroine_id] = backpack
 	ownership_changed.emit()
 	return ""
 
@@ -774,6 +786,12 @@ func make_run_return_transfer(
 			staged_refuge.preparation_slots_by_heroine[heroine_id] = (
 				run_inventory.get_backpack_snapshot(heroine_id)
 			)
+		else:
+			var retained: Array[Dictionary] = _make_empty_slots()
+			for entry: Dictionary in run_inventory.get_backpack_snapshot(heroine_id):
+				if entry.has("equipment_instance_id"):
+					retained[int(entry.slot_index)] = entry.duplicate(true)
+			staged_refuge.preparation_slots_by_heroine[heroine_id] = retained
 	staged_refuge.stash_item_stacks = stash_item_stacks.duplicate(true)
 	staged_refuge.stash_equipment_instances = stash_equipment_instances.duplicate(true)
 	staged_refuge.key_chain = {}
@@ -1027,6 +1045,7 @@ func _remove_owned_equipment(location: Dictionary) -> Dictionary:
 	if not remove_error.is_empty():
 		return {"error": remove_error}
 	equipment_loadouts_by_heroine[heroine_id] = loadout.to_snapshot()
+	_clear_backpack_equipment_reference(heroine_id, instance.instance_id)
 	return {"error": "", "removed_slot": String(removed_slot)}
 
 
@@ -1294,6 +1313,9 @@ func _restore_snapshot_fields(
 	)
 	if not material_error.is_empty():
 		return material_error
+	var location_error: String = BackpackPayload.validate_locations(staged_preparation, staged_loadouts)
+	if not location_error.is_empty():
+		return location_error
 	selected_party_ids = staged_selected
 	prepared_item_bar_slots = staged_item_bar
 	preparation_slots_by_heroine = staged_preparation
@@ -1332,6 +1354,12 @@ func _normalize_preparation_slots(
 		var slot: Dictionary = slot_value as Dictionary
 		if int(slot.get("slot_index", -1)) != slot_index:
 			return "Heroine preparation slot indices must be deterministic."
+		if slot.has("equipment_instance_id"):
+			var reference_error: String = BackpackPayload.validate_reference(slot)
+			if not reference_error.is_empty():
+				return reference_error
+			result.append(BackpackPayload.equipment_slot(slot_index, StringName(slot.equipment_instance_id)))
+			continue
 		var item_id := StringName(slot.get("item_id", ""))
 		var quantity_value: Variant = slot.get("quantity", null)
 		if item_id == &"":
@@ -1376,11 +1404,12 @@ func _normalize_quantity_collection(
 
 
 func _validate_ordinary_item(item_id: StringName) -> String:
-	return _validate_item_category(
-		item_id,
-		ItemDefinition.ContentCategory.ACTIVE,
-		"ordinary Refuge item"
-	)
+	var definition: ItemDefinition = item_catalog.get_item(item_id)
+	if definition == null or not definition.canonical_workbook_item:
+		return "Unknown canonical stored item '%s'." % item_id
+	if definition.content_category not in [ItemDefinition.ContentCategory.ACTIVE, ItemDefinition.ContentCategory.MEMENTO]:
+		return "Item '%s' cannot enter Stash/Backpacks." % item_id
+	return ""
 
 
 func _validate_item_bar_item(item_id: StringName) -> String:
@@ -1553,7 +1582,7 @@ func _add_to_slots(
 		var stored_id := StringName(slot.get("item_id", ""))
 		if stored_id == item_id:
 			capacity += maxi(stack_limit - int(slot.get("quantity", 0)), 0)
-		elif stored_id == &"":
+		elif BackpackPayload.is_empty(slot):
 			capacity += stack_limit
 	if capacity < quantity:
 		return "Preparation inventory has insufficient capacity for '%s'." % item_id
@@ -1571,7 +1600,7 @@ func _add_to_slots(
 		if remaining == 0:
 			return ""
 	for slot_index: int in range(slots.size()):
-		if StringName(slots[slot_index].get("item_id", "")) != &"":
+		if not BackpackPayload.is_empty(slots[slot_index]):
 			continue
 		var added: int = mini(remaining, stack_limit)
 		slots[slot_index] = {
@@ -1676,3 +1705,10 @@ func _remove_from_stash_stacks(
 	for stack_index: int in range(stacks.size()):
 		stacks[stack_index]["stack_index"] = stack_index
 	return ""
+
+
+func _clear_backpack_equipment_reference(heroine_id: StringName, instance_id: StringName) -> void:
+	var slots: Array = preparation_slots_by_heroine.get(heroine_id, [])
+	for index: int in range(slots.size()):
+		if StringName(slots[index].get("equipment_instance_id", "")) == instance_id:
+			slots[index] = _make_empty_slot(index)

@@ -11,6 +11,7 @@ static func default_settings() -> Dictionary:
 		"settings_version": SETTINGS_VERSION,
 		"master_volume": 0.8,
 		"fullscreen": false,
+		"refuge_ui_scale": 1.0,
 	}
 
 
@@ -34,6 +35,7 @@ static func load_settings() -> Dictionary:
 		1.0
 	)
 	settings["fullscreen"] = bool(document.get("fullscreen", false))
+	settings["refuge_ui_scale"] = clampf(float(document.get("refuge_ui_scale", 1.0)), 1.0, 1.3)
 	return settings
 
 
@@ -45,6 +47,7 @@ static func save_settings(settings: Dictionary) -> String:
 		1.0
 	)
 	sanitized["fullscreen"] = bool(settings.get("fullscreen", false))
+	sanitized["refuge_ui_scale"] = clampf(float(settings.get("refuge_ui_scale", load_settings().get("refuge_ui_scale", 1.0))), 1.0, 1.3)
 	var file: FileAccess = FileAccess.open(SETTINGS_PATH, FileAccess.WRITE)
 	if file == null:
 		return "Could not save settings."

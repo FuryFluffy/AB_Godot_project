@@ -148,6 +148,16 @@ func restore_from_snapshot(
 			return backpack_error
 		staged_backpacks[heroine_id] = staged_slots
 
+	var carried_ids: Dictionary = {}
+	for slots: Array in staged_backpacks.values():
+		for slot: Dictionary in slots:
+			if not slot.has("equipment_instance_id"):
+				continue
+			var id := StringName(slot.equipment_instance_id)
+			if carried_ids.has(id):
+				return "Equipment instance '%s' occupies multiple Backpack slots." % id
+			carried_ids[id] = true
+
 	var staged_key_chain: Dictionary = {}
 	var key_error: String = _normalize_quantity_dictionary(
 		key_chain_value as Dictionary,
@@ -615,6 +625,14 @@ func _normalize_ordered_slots(
 		var slot: Dictionary = slot_value as Dictionary
 		if int(slot.get("slot_index", -1)) != slot_index:
 			return "%s slot indices must be deterministic." % _get_domain_label(domain)
+		if slot.has("equipment_instance_id"):
+			if domain != DOMAIN_BACKPACK:
+				return "Equipment cannot enter the shared Item Bar."
+			var reference_error: String = BackpackPayload.validate_reference(slot)
+			if not reference_error.is_empty():
+				return reference_error
+			result.append(BackpackPayload.equipment_slot(slot_index, StringName(slot.equipment_instance_id)))
+			continue
 		var item_id := StringName(slot.get("item_id", ""))
 		var quantity: int = int(slot.get("quantity", 0))
 		if item_id == &"":
@@ -697,8 +715,8 @@ func _validate_item_for_domain(
 			):
 				return "Item '%s' is not eligible for the combat Item Bar." % item_id
 		DOMAIN_BACKPACK:
-			if item.content_category != ItemDefinition.ContentCategory.ACTIVE:
-				return "Item '%s' is not an ordinary backpack item." % item_id
+			if item.content_category not in [ItemDefinition.ContentCategory.ACTIVE, ItemDefinition.ContentCategory.MEMENTO]:
+				return "Item '%s' is not a Backpack item." % item_id
 		DOMAIN_KEY_CHAIN:
 			if item.content_category != ItemDefinition.ContentCategory.KEY:
 				return "Item '%s' is not a Key Chain item." % item_id
@@ -736,7 +754,7 @@ func _add_to_slots(
 		var stored_quantity: int = int(slot.get("quantity", 0))
 		if stored_id == item_id:
 			available_capacity += maxi(stack_limit - stored_quantity, 0)
-		elif stored_id == &"" and stored_quantity == 0:
+		elif BackpackPayload.is_empty(slot):
 			available_capacity += stack_limit
 	if available_capacity < quantity:
 		return "%s has insufficient capacity for '%s'." % [
@@ -760,7 +778,7 @@ func _add_to_slots(
 			return ""
 	for slot_index: int in range(slots.size()):
 		var empty_slot: Dictionary = slots[slot_index]
-		if StringName(empty_slot.get("item_id", "")) != &"":
+		if not BackpackPayload.is_empty(empty_slot):
 			continue
 		var added: int = mini(remaining, stack_limit)
 		slots[slot_index] = {

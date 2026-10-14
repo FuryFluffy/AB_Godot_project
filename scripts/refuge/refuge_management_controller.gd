@@ -189,7 +189,8 @@ func get_party_entries() -> Array[Dictionary]:
 func get_preparation_entries(heroine_id: StringName) -> Array[Dictionary]:
 	return _make_slot_entries(
 		_ownership().preparation_slots_by_heroine.get(heroine_id, []) as Array,
-		&"preparation"
+		&"backpack",
+		(_ownership().equipment_loadouts_by_heroine.get(heroine_id, {}) as Dictionary).get("instances", {})
 	)
 
 
@@ -390,6 +391,9 @@ func _mutate(operation: Callable) -> Dictionary:
 	var operation_error: String = String(result.get("error", ""))
 	if not operation_error.is_empty():
 		return result
+	var validation_error: String = RefugeOwnershipState.validate_snapshot(staged.to_snapshot(), ITEM_CATALOG, battler_catalog, staged.known_heroine_ids)
+	if not validation_error.is_empty():
+		return _error(validation_error)
 	var original: RefugeOwnershipState = run_state.refuge_ownership
 	run_state.refuge_ownership = staged
 	var save_error: String = ""
@@ -404,26 +408,15 @@ func _mutate(operation: Callable) -> Dictionary:
 	return result
 
 
-func _make_slot_entries(
-	slots: Array,
-	domain: StringName
-) -> Array[Dictionary]:
+func _make_slot_entries(slots: Array, domain: StringName, instances: Dictionary = {}) -> Array[Dictionary]:
+	return InventorySlotPresenter.entries(slots, domain, ITEM_CATALOG, EQUIPMENT_CATALOG, instances)
+
+
+func get_backpack_heroine_entries() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	for index: int in range(slots.size()):
-		var slot: Dictionary = slots[index] as Dictionary
-		var item_id := StringName(slot.get("item_id", ""))
-		var definition: ItemDefinition = ITEM_CATALOG.get_item(item_id)
-		result.append({
-			"slot_index": int(slot.get("slot_index", index)),
-			"item_id": item_id,
-			"display_name": (
-				definition.display_name if definition != null else "Empty"
-			),
-			"quantity": int(slot.get("quantity", 0)),
-			"icon": definition.icon if definition != null else null,
-			"domain": domain,
-			"combat_usable": definition.combat_usable if definition != null else false,
-		})
+	for heroine_id: StringName in _ownership().known_heroine_ids:
+		var definition: BattlerDefinition = battler_catalog.get_battler(heroine_id)
+		result.append({"heroine_id": heroine_id, "display_name": definition.display_name if definition != null else String(heroine_id)})
 	return result
 
 
@@ -445,6 +438,7 @@ func _make_equipment_entry(
 		"location": location,
 		"heroine_id": heroine_id,
 		"equipped_slot": equipped_slot,
+		"storage_label": _equipment_storage_label(heroine_id, StringName(snapshot.get("instance_id", "")), location, equipped_slot),
 		"condition": condition,
 		"condition_maximum": definition.condition_maximum if definition != null else 0,
 		"broken": condition <= 0,
@@ -453,6 +447,18 @@ func _make_equipment_entry(
 		"salvage_material_id": definition.salvage_material_id if definition != null else &"",
 		"salvage_yield": definition.get_salvage_yield() if definition != null else 0,
 	}
+
+
+func _equipment_storage_label(heroine_id: StringName, instance_id: StringName, location: StringName, equipped_slot: StringName) -> String:
+	if location == &"stash":
+		return "Stash"
+	if equipped_slot != &"":
+		return "Equipped"
+	for entry: Dictionary in _ownership().preparation_slots_by_heroine.get(heroine_id, []):
+		if StringName(entry.get("equipment_instance_id", "")) == instance_id:
+			return "Backpack · slot %d" % (int(entry.slot_index) + 1)
+	# Preserve old registered reserves until Stage 04's Loadouts exchange.
+	return "Personal reserve"
 
 
 func _find_equipped_slot(slots: Dictionary, instance_id: StringName) -> StringName:
