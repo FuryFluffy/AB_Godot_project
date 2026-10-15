@@ -1,0 +1,68 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.6-1~24.04-tux1 - Compatibility - Using Device: Intel - Mesa Intel(R) Iris(R) Xe Graphics (ADL GT2)
+
+PASS: (1280, 720) native mouse drag to empty bar slot
+PASS: Exact capture dimensions (1280, 720)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1280x720_moved.png
+PASS: (1280, 720) controller context menu
+PASS: Exact capture dimensions (1280, 720)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1280x720_context.png
+PASS: (1280, 720) split picker
+PASS: Exact capture dimensions (1280, 720)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1280x720_split.png
+PASS: (1280, 720) split arms quantity without mutation
+PASS: (1280, 720) native split drag conserves remainder
+PASS: Exact capture dimensions (1280, 720)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1280x720_split_result.png
+PASS: (1280, 720) native drag starts
+PASS: (1280, 720) cancelled drag leaves inventory and parent open
+PASS: (1280, 720) Stash context opens
+PASS: (1280, 720) named heroine submenu
+PASS: Exact capture dimensions (1280, 720)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1280x720_named_transfer.png
+PASS: (1280, 720) named quick transfer completes
+PASS: (1920, 1080) native mouse drag to empty bar slot
+PASS: Exact capture dimensions (1920, 1080)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1920x1080_moved.png
+PASS: (1920, 1080) controller context menu
+PASS: Exact capture dimensions (1920, 1080)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1920x1080_context.png
+PASS: (1920, 1080) split picker
+PASS: Exact capture dimensions (1920, 1080)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1920x1080_split.png
+PASS: (1920, 1080) split arms quantity without mutation
+PASS: (1920, 1080) native split drag conserves remainder
+PASS: Exact capture dimensions (1920, 1080)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1920x1080_split_result.png
+PASS: (1920, 1080) native drag starts
+PASS: (1920, 1080) cancelled drag leaves inventory and parent open
+PASS: (1920, 1080) Stash context opens
+PASS: (1920, 1080) named heroine submenu
+PASS: Exact capture dimensions (1920, 1080)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1920x1080_named_transfer.png
+PASS: (1920, 1080) named quick transfer completes
+PASS: (1024, 768) native mouse drag to empty bar slot
+PASS: Exact capture dimensions (1024, 768)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1024x768_moved.png
+PASS: (1024, 768) controller context menu
+PASS: Exact capture dimensions (1024, 768)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1024x768_context.png
+PASS: (1024, 768) split picker
+PASS: Exact capture dimensions (1024, 768)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1024x768_split.png
+PASS: (1024, 768) split arms quantity without mutation
+PASS: (1024, 768) native split drag conserves remainder
+PASS: Exact capture dimensions (1024, 768)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1024x768_split_result.png
+PASS: (1024, 768) native drag starts
+PASS: (1024, 768) cancelled drag leaves inventory and parent open
+PASS: (1024, 768) Stash context opens
+PASS: (1024, 768) named heroine submenu
+PASS: Exact capture dimensions (1024, 768)
+PASS: Screenshot /tmp/ab-stage03-input-captures/1024x768_named_transfer.png
+PASS: (1024, 768) named quick transfer completes
+Stage 03 native input/visual fixture: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

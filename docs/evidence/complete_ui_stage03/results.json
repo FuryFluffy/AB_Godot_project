@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-15",
+  "validator": "passed, 233 named classes",
+  "regression_scripts_passed": 50,
+  "python_tests_passed": 13,
+  "focused_transfer_failures": 0,
+  "seeded_conservation_operations": 100,
+  "native_fixture_failures": 0,
+  "native_fixture_pass_checks": 60,
+  "capture_dimensions": {
+    "1920x1080_context.png": [
+      1920,
+      1080
+    ],
+    "1280x720_moved.png": [
+      1280,
+      720
+    ],
+    "1280x720_split.png": [
+      1280,
+      720
+    ],
+    "1280x720_named_transfer.png": [
+      1280,
+      720
+    ],
+    "1920x1080_split_result.png": [
+      1920,
+      1080
+    ],
+    "1280x720_split_result.png": [
+      1280,
+      720
+    ],
+    "1024x768_moved.png": [
+      1024,
+      768
+    ],
+    "1920x1080_moved.png": [
+      1920,
+      1080
+    ],
+    "1024x768_split_result.png": [
+      1024,
+      768
+    ],
+    "1024x768_named_transfer.png": [
+      1024,
+      768
+    ],
+    "1920x1080_named_transfer.png": [
+      1920,
+      1080
+    ],
+    "1920x1080_split.png": [
+      1920,
+      1080
+    ],
+    "1280x720_context.png": [
+      1280,
+      720
+    ],
+    "1024x768_split.png": [
+      1024,
+      768
+    ],
+    "1024x768_context.png": [
+      1024,
+      768
+    ]
+  },
+  "retained_images": [
+    "1280x720_context.png",
+    "1280x720_split_result.png",
+    "1920x1080_named_transfer.png",
+    "1024x768_split.png"
+  ],
+  "physical_controller_tested": false,
+  "normal_campaign_playthrough_tested": false,
+  "stage03_committed": false,
+  "stage03_pushed": false,
+  "prior_stages_github_commit": "41fae9555a95b9f31d8a23e1e53d019b89db16ac"
+}

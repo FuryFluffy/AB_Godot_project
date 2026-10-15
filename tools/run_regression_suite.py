@@ -54,6 +54,7 @@ TESTS = (
     "tests/test_refuge_salvage_recipes.gd",
     "tests/test_refuge_management_ui.gd",
     "tests/test_shared_inventory_views.gd",
+    "tests/test_inventory_transfers.gd",
     "tests/test_weapon_techniques.gd",
     "tests/test_layer_1_enemy_roster.gd",
     "tests/test_combat_hud.gd",

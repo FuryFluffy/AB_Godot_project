@@ -90,6 +90,18 @@ func transfer_item(
 	)
 
 
+func inventory_request(source: Dictionary) -> Dictionary:
+	return {"source": source.duplicate(true), "snapshot": _ownership().to_snapshot()}
+
+
+func transfer_inventory(request: Dictionary, target: Dictionary, quantity: int, quick: bool = false) -> Dictionary:
+	if request.get("snapshot", {}) != _ownership().to_snapshot():
+		return _error("Inventory changed. Select the source again.")
+	return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
+		return RefugeInventoryTransfer.apply(staged, request.get("source", {}), target, quantity, quick)
+	)
+
+
 func equip_instance(
 	heroine_id: StringName,
 	slot: EquipmentDefinition.Slot,
@@ -390,6 +402,8 @@ func _mutate(operation: Callable) -> Dictionary:
 	)
 	var operation_error: String = String(result.get("error", ""))
 	if not operation_error.is_empty():
+		return result
+	if result.has("changed") and not result.changed:
 		return result
 	var validation_error: String = RefugeOwnershipState.validate_snapshot(staged.to_snapshot(), ITEM_CATALOG, battler_catalog, staged.known_heroine_ids)
 	if not validation_error.is_empty():

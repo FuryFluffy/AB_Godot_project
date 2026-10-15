@@ -36,6 +36,7 @@ signal system_action_requested(action: StringName, slot_id: int)
 @onready var key_list: ItemList = backpack_view.key_ring
 
 
+var inventory_interaction: RefugeInventoryInteraction
 var management: RefugeManagementController
 var current_run_state: RunState
 var current_battler_catalog: BattlerCatalogDefinition
@@ -100,6 +101,9 @@ func _ready() -> void:
 	header_party_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	header_party_label.show()
 	_configure_inventory_views()
+	inventory_interaction = RefugeInventoryInteraction.new()
+	add_child(inventory_interaction)
+	inventory_interaction.configure(self)
 	room_shell.system_action_requested.connect(system_action_requested.emit)
 
 
@@ -144,6 +148,7 @@ func show_status(message: String, is_error: bool = false) -> void:
 
 
 func set_actions_enabled(enabled: bool) -> void:
+	inventory_interaction.enabled = enabled
 	begin_button.disabled = not enabled
 	new_story_button.disabled = not enabled
 	seed_edit.editable = enabled
@@ -290,8 +295,9 @@ func _refresh_inventory() -> void:
 	selected_stash_entry = {}
 	backpack_view.present_slots(management.get_preparation_entries(backpack_heroine_id))
 	item_bar_grid.present_inventory(management.get_item_bar_entries())
+	inventory_interaction.bind_slots()
 	if backpack_details != null:
-		backpack_details.text = "Select an item to inspect it."
+		backpack_details.text = "Drag items, or open their menu (right-click / Menu key / controller Y)."
 		backpack_destination.text = "Transfer destination: %s’s Backpack" % inventory_heroine.get_item_text(inventory_heroine.selected)
 	stash_items.clear()
 	for entry: Dictionary in management.get_stash_item_entries():
@@ -459,6 +465,7 @@ func _on_move_party(offset: int) -> void:
 
 
 func _on_inventory_heroine_selected(index: int) -> void:
+	inventory_interaction.cancel()
 	backpack_heroine_id = StringName(inventory_heroine.get_item_metadata(index))
 	_refresh_inventory()
 	room_shell._trap_focus.call_deferred()
@@ -473,6 +480,7 @@ func _on_item_bar_requested(index: int) -> void:
 	selected_item_bar_entry = management.get_item_bar_entries()[index].duplicate(true)
 	backpack_details.text = String(selected_item_bar_entry.get("details", ""))
 	item_bar_grid.present_inventory(management.get_item_bar_entries(), index)
+	inventory_interaction.bind_slots()
 
 
 func _on_stash_item_selected(index: int) -> void:
@@ -492,22 +500,11 @@ func _on_transfer_selected(source: StringName, destination: StringName) -> void:
 	if entry.is_empty():
 		show_status("Select a source item before transferring it.", true)
 		return
-	if entry.has("equipment_instance_id"):
-		if destination == &"stash":
-			_apply_result(management.move_heroine_equipment_to_stash(backpack_heroine_id, StringName(entry.equipment_instance_id)), "Equipment moved to Stash.")
-		else:
-			show_status("Equipment cannot enter the Item Bar.", true)
-		return
-	var item_id := StringName(entry.get("item_id", ""))
-	_apply_result(
-		management.transfer_item(
-			source,
-			destination,
-			backpack_heroine_id,
-			item_id,
-			1
-		),
-		"Moved one %s." % String(entry.get("display_name", item_id))
+	var source_domain: StringName = &"backpack" if source == &"preparation" else source
+	var target_domain: StringName = &"backpack" if destination == &"preparation" else destination
+	inventory_interaction.quick(
+		RefugeInventoryTransfer.address(source_domain, int(entry.get("stack_index", entry.get("slot_index", -1))), backpack_heroine_id),
+		RefugeInventoryTransfer.address(target_domain, -1, backpack_heroine_id)
 	)
 
 
@@ -706,6 +703,8 @@ func configure_system(can_save: bool, has_application: bool) -> void:
 
 
 func handle_cancel() -> void:
+	if inventory_interaction.cancel():
+		return
 	for selector: OptionButton in [equipment_slot, inventory_heroine, repair_target]:
 		if selector.get_popup().visible:
 			selector.get_popup().hide()
