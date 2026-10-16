@@ -4,6 +4,8 @@ extends Control
 
 signal system_action_requested(action: StringName, slot_id: int)
 
+var station_cancel_handler: Callable
+
 const CANVAS_SIZE := Vector2(1344, 768)
 const BACKGROUND = preload("res://assets/backgrounds/layer_2/sdxl_curated/07_Bloom_Refuge_Transformed.png")
 const FRAME = preload("res://scenes/battle/ui/reusable/styles/hud_frame_style.tres")
@@ -85,7 +87,7 @@ func configure(service_pages: Control, bloom: Label, status: Label) -> void:
 				for section: String in ["Lore", "Bestiary", "Run History", "Gallery"]:
 					_unavailable(page, section)
 	var expedition: Control = pages[&"expedition"]
-	_button(expedition, "Party & preparation", _open_preparation)
+	_button(expedition, "Loadouts", _open_preparation)
 	_unavailable(expedition, "Intel")
 	_unavailable(expedition, "Level Up")
 
@@ -245,6 +247,8 @@ func _open_panel() -> void:
 
 
 func handle_cancel() -> void:
+	if station_cancel_handler.is_valid() and bool(station_cancel_handler.call()):
+		return
 	if not nested_action.is_empty():
 		var previous: StringName = nested_action
 		nested_action = &""
@@ -360,7 +364,7 @@ func _layout() -> void:
 	bloom_frame.position = Vector2(size.x - bloom_frame.size.x - 24, 20)
 	var fraction: float = 0.43 if active_station in [&"stash", &"loadouts", &"repair", &"expedition"] else 0.33
 	var width: float = minf(size.x - 40, maxf(480, size.x * fraction * ui_scale))
-	var left: bool = origin_station in [&"alchemy", &"repair", &"loadouts", &"records", &"expedition"]
+	var left: bool = active_station != &"loadouts" and origin_station in [&"alchemy", &"repair", &"loadouts", &"records", &"expedition"]
 	panel.position = Vector2(20 if left else size.x - width - 20, 76)
 	var bar_visible: bool = inventory_bar != null and inventory_bar.visible
 	panel.size = Vector2(width, maxf(200, size.y - (190 if bar_visible else 100)))

@@ -893,6 +893,12 @@ func _apply_salvage(instance_id: StringName) -> Dictionary:
 	var salvage_yield: int = definition.get_salvage_yield()
 	if salvage_yield <= 0:
 		return {"error": "Equipment '%s' has an invalid salvage yield." % definition.equipment_id}
+	var loadout: PersonalEquipmentLoadoutState = location.get("loadout") as PersonalEquipmentLoadoutState
+	if loadout != null:
+		for slot: EquipmentDefinition.Slot in _equipment_slots():
+			var equipped: EquipmentInstance = loadout.get_equipped_instance(slot)
+			if equipped != null and equipped.instance_id == instance_id:
+				return {"error": "Unequip this equipment before salvaging it."}
 	var removal_result: Dictionary = _remove_owned_equipment(location)
 	var removal_error: String = String(removal_result.get("error", ""))
 	if not removal_error.is_empty():

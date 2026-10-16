@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/inventory/backpack_view.gd" id="1_backpack"]
 [ext_resource type="PackedScene" path="res://scenes/refuge/components/refuge_slot_grid.tscn" id="4_slot_grid"]
+
+[ext_resource type="Script" path="res://scripts/inventory/heroine_selector.gd" id="5_selector"]
 
 [node name="Backpacks" type="VBoxContainer"]
 script = ExtResource("1_backpack")
@@ -16,6 +18,7 @@ layout_mode = 2
 text = "Backpack owner"
 
 [node name="InventoryHeroine" type="OptionButton" parent="HeroineRow"]
+script = ExtResource("5_selector")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2

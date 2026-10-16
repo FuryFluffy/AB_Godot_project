@@ -10,9 +10,9 @@ Executed evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_00_BASELINE_2026-10-09.md`.
 | 00 | Local audit and combined plan | Complete (audit documents only) | Baseline complete; 48/48 direct Godot scripts, 4/4 Python; structural gate fails; graphical QA unavailable | Accepted to proceed | Audit committed as `cdd0830`; no gameplay/UI edits |
 | 01 | Refuge room framework | Complete; committed/pushed | 48/48 direct Godot scripts; expanded UI checks; 4/4 Python; 36 graphical fixture captures; historical structural failures repaired in Stage 02 | Continue authorized; player QA pending | `COMPLETE_UI_MAP_ROOMS_STAGE_01_REVIEW_2026-10-10.md`; original background, five props/eight hotspots, menus/focus; Compatibility explicit |
 | 02 | Shared inventory views | Complete; committed/pushed | Structural validator passes; 49/49 regression scripts; 9/9 validator tests and 4/4 runner tests; 45 actual Godot captures | Continue authorized; player QA pending | `COMPLETE_UI_MAP_ROOMS_STAGE_02_REVIEW_2026-10-14.md`; mixed ownership, independent selector, native contextual bar |
-| 03 | Atomic inventory transfers/stacks | Complete; local/uncommitted | 50/50 Godot scripts; 13/13 Python tests; 100-operation conservation sequence; 60 native-input/capture checks | Pending | `COMPLETE_UI_MAP_ROOMS_STAGE_03_REVIEW_2026-10-15.md` |
-| 04 | Refuge Loadouts | Not started | Not run for new target | Pending | All named sources; exact-source exchange; Shield/Off Hand mapping |
-| 05 | Repair/Salvage | Not started | Not run for new target | Pending | Reuse repair recipe, condition and salvage yields |
+| 03 | Atomic inventory transfers/stacks | Complete; committed/pushed | 50/50 Godot scripts; 13/13 Python tests; 100-operation conservation sequence; 60 native-input/capture checks | Continue authorized; player QA pending | `COMPLETE_UI_MAP_ROOMS_STAGE_03_REVIEW_2026-10-15.md` |
+| 04 | Refuge Loadouts | Complete; local/uncommitted | Validator passes; 51/51 Godot scripts; 13/13 Python tests; 58 native-input/capture checks | Continue authorized; player QA pending | `COMPLETE_UI_MAP_ROOMS_STAGE_04_REVIEW_2026-10-15.md`; exact-source exchange, Nothing, rollback/reload |
+| 05 | Repair/Salvage | Complete; local/uncommitted | Validator passes; 52/52 Godot scripts; 13/13 Python tests; 53 native-input/capture checks | Pending | `COMPLETE_UI_MAP_ROOMS_STAGE_05_REVIEW_2026-10-15.md`; production salvage candidates absent, fixture explicitly labelled |
 | 06 | Alchemy/Crafting | Not started | Not run for new target | Pending | Explicit production providers; authored output recipes missing |
 | 07 | Refuge bed | Not started | Not run for new target | Pending | Recovery amounts/costs missing |
 | 08 | Expedition/Party/Level Up/Intel shells | Not started | Not run for new target | Pending | Subset ownership must preserve inactive heroines; no paid shells |
@@ -73,8 +73,29 @@ Executed evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_00_BASELINE_2026-10-09.md`.
 - Outcome: exact-slot moves/merges/swaps, Split, named quick transfers, stale-request rejection and controller-owned save rollback. Existing ownership state remains authoritative.
 - Compatibility: no serialized changes; current equipment protection, scoped keys and Materials boundaries preserved. No Loadout/run/combat mutation permissions added.
 - Validation: validator passes (233 classes), 50/50 Godot scripts and 13/13 Python tests pass. Focused transfers/rollback/reload and 100 seeded operations pass. Native fixture passes 60 interaction/capture checks at three exact resolutions; four images retained. Full suite preceded the final dialog font adjustment; focused/native/validator reruns pass afterward.
-- Evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_03_REVIEW_2026-10-15.md` and `evidence/complete_ui_stage03/`. User verification, physical controller and normal-campaign save/load checks remain pending. No design blocker. Stage 04 has not started.
-- Git: Stage 03 remains local and uncommitted, subsequent to the verified Stage 01–02 upload.
+- Evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_03_REVIEW_2026-10-15.md` and `evidence/complete_ui_stage03/`. User verification, physical controller and normal-campaign save/load checks remain pending. No design blocker. The user subsequently authorized Stage 04; this does not assert physical-controller or campaign verification.
+- Git: Stage 03 committed locally as `27f658871a0ca41b90856ef3782092838bfadc47`; published as `ca244c83359c74bfb4c72b29ca8321534f184dfd` on `codex/refuge-room-inventory-stages-01-02`. Remote SHA verified. Source/publication trees match (`03f73f393f6abea2ac1ca30ba9af98c91daf8516`). The separate publication history and unrelated Workbench changes were preserved. Publication validator passes (233 classes) and focused inventory transfers report zero failures.
+
+## Stage 04 execution record
+
+- Authorization: “Good, comit, upload to github and proceed with stage 4”, followed by resume requests. Stage 03 was committed and uploaded before implementation continued.
+- Outcome: right-side four-row Loadouts, shared named selector, all compatible Stash/named-Backpack sources, explicit preview/Equip, atomic exact-source return, Nothing-to-Stash and nested cancellation/focus. Existing party ordering is accessible in Expedition.
+- Ownership/compatibility: existing state/transaction/save owners retained; no schema/version/ID changes. Shield remains Off Hand, current Memento ownership restrictions remain, unavailable equipment art is not fabricated, and multi-slot displacement is excluded. No run/combat permissions added.
+- Validation: structural validator passes (236 classes), official suite 51/51 Godot scripts, Python 13/13. Focused full-bag/same-owner exchanges, duplicate instances, conditions, JSON reload, equipment/Memento save rollback, stale browsing and UI tests pass. Final graphical fixture passes 58 checks and produces twelve captures at three exact sizes; four retained.
+- Review/evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_04_REVIEW_2026-10-15.md`, `evidence/complete_ui_stage04/`. Actual Godot fixture and screenshot inspection completed. Physical controller and normal-campaign save/load player verification remain pending. Existing engine teardown diagnostics are recorded in the report/logs.
+- Git: Stage 04 remains local/uncommitted after source Stage 03 `27f6588` and published `ca244c8`. Unrelated Workbench changes preserved.
+- No blocking design decision for current authored gear. The user subsequently authorized Stage 05 via “Proceed to stage 5”; this does not assert manual campaign/controller acceptance.
+
+## Stage 05 execution record
+
+- Authorization: “Proceed to stage 5.” Stage 04 work retained locally; no commit/upload requested this turn.
+- Outcome: contextual Repair/Salvage tabs; named Stash/Backpack/equipped sources; actual condition, authored cost and capped outcome; named salvage yield and destruction confirmation; nested cancellation and focus restoration. Equipped salvage now rejects at controller and ownership levels.
+- Ownership/compatibility: existing repair/salvage state and transactional persistence reused; failed saves/stale previews cannot spend/destroy. No schema/version/ID/economy/Resource activation change. The old test permitting equipped salvage was superseded explicitly, with unchanged-state rejection followed by explicit unequip and original-yield verification.
+- Catalog limit: one existing Armor recipe (one banked Servant Cloth → +1 condition); no currently player-available destructible gear. Production Salvage stays empty. Tests/graphics temporarily expose one existing definition in memory only; no production eligibility was changed.
+- Validation: structural validator passes (237 classes); official suite 52/52 Godot scripts; Python 13/13. Focused location/affordability/cap/rollback/stale/reload and confirmation tests pass. Graphical fixture passes 53 checks, twelve captures at three verified resolutions; four retained.
+- Review/evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_05_REVIEW_2026-10-15.md`, `evidence/complete_ui_stage05/`. Native Godot fixture/screenshot review complete; physical-controller and normal-campaign save/load acceptance pending. Existing engine teardown diagnostics documented.
+- Git: Stages 04–05 remain local/uncommitted after source Stage 03 `27f6588` and published `ca244c8`. Unrelated Content Workbench changes preserved.
+- No blocking Stage 05 rule; extra salvageable player content/repair recipes require future authoring. Stop for review/continue; Stage 06 has not begun.
 
 ## Recorded boundary proposals for later stages
 

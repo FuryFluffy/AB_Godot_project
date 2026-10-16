@@ -1,0 +1,61 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.6-1~24.04-tux1 - Compatibility - Using Device: Intel - Mesa Intel(R) Iris(R) Xe Graphics (ADL GT2)
+
+PASS: Create fixture-only salvage instance
+PASS: Place fixture in Mira Backpack
+PASS: Reset fixture
+PASS: (1280, 720) repair shows equipped source and actual result
+PASS: Exact capture (1280, 720)
+PASS: Capture repair
+PASS: (1280, 720) native Repair preserves source and charges once
+PASS: (1280, 720) native Salvage tab
+PASS: (1280, 720) native candidate selection names Mira
+PASS: Exact capture (1280, 720)
+PASS: Capture salvage
+PASS: (1280, 720) native review opens confirmation
+PASS: Exact capture (1280, 720)
+PASS: Capture confirmation
+PASS: (1280, 720) native Cancel preserves equipment and Materials
+PASS: (1280, 720) native confirmation destroys one instance and banks one yield
+PASS: Exact capture (1280, 720)
+PASS: Capture empty_salvage
+PASS: (1280, 720) Cancel restores Workbench hotspot focus
+PASS: Reset fixture
+PASS: (1920, 1080) repair shows equipped source and actual result
+PASS: Exact capture (1920, 1080)
+PASS: Capture repair
+PASS: (1920, 1080) native Repair preserves source and charges once
+PASS: (1920, 1080) native Salvage tab
+PASS: (1920, 1080) native candidate selection names Mira
+PASS: Exact capture (1920, 1080)
+PASS: Capture salvage
+PASS: (1920, 1080) native review opens confirmation
+PASS: Exact capture (1920, 1080)
+PASS: Capture confirmation
+PASS: (1920, 1080) native Cancel preserves equipment and Materials
+PASS: (1920, 1080) native confirmation destroys one instance and banks one yield
+PASS: Exact capture (1920, 1080)
+PASS: Capture empty_salvage
+PASS: (1920, 1080) Cancel restores Workbench hotspot focus
+PASS: Reset fixture
+PASS: (1024, 768) repair shows equipped source and actual result
+PASS: Exact capture (1024, 768)
+PASS: Capture repair
+PASS: (1024, 768) native Repair preserves source and charges once
+PASS: (1024, 768) native Salvage tab
+PASS: (1024, 768) native candidate selection names Mira
+PASS: Exact capture (1024, 768)
+PASS: Capture salvage
+PASS: (1024, 768) native review opens confirmation
+PASS: Exact capture (1024, 768)
+PASS: Capture confirmation
+PASS: (1024, 768) native Cancel preserves equipment and Materials
+PASS: (1024, 768) native confirmation destroys one instance and banks one yield
+PASS: Exact capture (1024, 768)
+PASS: Capture empty_salvage
+PASS: (1024, 768) Cancel restores Workbench hotspot focus
+Stage 05 native Workbench fixture: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

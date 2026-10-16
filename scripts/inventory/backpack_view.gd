@@ -2,7 +2,7 @@ class_name BackpackView
 extends VBoxContainer
 ## Passive shared component for Refuge and run inventory. No Stash/service access.
 
-@onready var heroine_selector: OptionButton = %InventoryHeroine
+@onready var heroine_selector: HeroineSelector = %InventoryHeroine
 @onready var grid: RefugeSlotGrid = %PreparationGrid
 @onready var key_ring: ItemList = %KeyList
 

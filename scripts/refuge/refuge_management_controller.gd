@@ -102,6 +102,22 @@ func transfer_inventory(request: Dictionary, target: Dictionary, quantity: int, 
 	)
 
 
+func get_loadout_candidates(heroine: StringName, slot: StringName) -> Array[Dictionary]:
+	return RefugeLoadoutExchange.candidates(_ownership(), heroine, slot)
+
+
+func get_equipped_entries(heroine: StringName) -> Array[Dictionary]:
+	return RefugeLoadoutExchange.equipped_entries(_ownership(), heroine)
+
+
+func exchange_loadout(heroine: StringName, slot: StringName, source: Dictionary, expected_snapshot: Dictionary) -> Dictionary:
+	if expected_snapshot != _ownership().to_snapshot():
+		return _error("Ownership changed. Reopen Change to refresh the available sources.")
+	return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
+		return RefugeLoadoutExchange.apply(staged, heroine, slot, source)
+	)
+
+
 func equip_instance(
 	heroine_id: StringName,
 	slot: EquipmentDefinition.Slot,
@@ -147,10 +163,16 @@ func move_stash_equipment_to_heroine(
 	)
 
 
-func salvage_equipment(instance_id: StringName) -> Dictionary:
+func salvage_equipment(instance_id: StringName, expected_snapshot: Dictionary = {}) -> Dictionary:
+	if not expected_snapshot.is_empty() and expected_snapshot != _ownership().to_snapshot():
+		return _error("Ownership changed. Review salvage again before confirming.")
 	var entry: Dictionary = get_equipment_entry(instance_id)
 	if entry.is_empty() or not bool(entry.get("player_available", false)):
 		return _error("That equipment is not an authored player salvage choice.")
+	if StringName(entry.get("equipped_slot", "")) != &"":
+		return _error("Unequip this equipment before salvaging it.")
+	if not bool(entry.get("workbench_source", false)):
+		return _error("Move this equipment to Stash or a Backpack first.")
 	if not bool(entry.get("salvageable", false)):
 		return _error("That equipment cannot be salvaged.")
 	return _mutate(func(staged: RefugeOwnershipState) -> Variant:
@@ -160,8 +182,11 @@ func salvage_equipment(instance_id: StringName) -> Dictionary:
 
 func execute_repair(
 	recipe_id: StringName,
-	instance_id: StringName
+	instance_id: StringName,
+	expected_snapshot: Dictionary = {}
 ) -> Dictionary:
+	if not expected_snapshot.is_empty() and expected_snapshot != _ownership().to_snapshot():
+		return _error("Ownership changed. Review the repair again before confirming.")
 	return _mutate(func(staged: RefugeOwnershipState) -> Variant:
 		return staged.execute_refuge_recipe(recipe_id, instance_id)
 	)
@@ -281,6 +306,7 @@ func get_recipe_entries() -> Array[Dictionary]:
 			"recipe_id": recipe.recipe_id,
 			"display_name": recipe.display_name,
 			"inputs_text": ", ".join(inputs),
+			"condition_restore_amount": recipe.condition_restore_amount,
 			"effect_text": "Restore %d condition to eligible %s." % [
 				recipe.condition_restore_amount,
 				_recipe_target_label(recipe.equipment_target),
@@ -357,6 +383,7 @@ func get_repair_target_entries(recipe_id: StringName) -> Array[Dictionary]:
 		if (
 			definition != null
 			and bool(entry.get("player_available", false))
+			and bool(entry.get("workbench_source", false))
 			and recipe.accepts_target(definition)
 			and int(entry.get("condition", 0)) < int(entry.get("condition_maximum", 0))
 		):
@@ -370,6 +397,8 @@ func get_salvage_entries() -> Array[Dictionary]:
 		if (
 			bool(entry.get("player_available", false))
 			and bool(entry.get("salvageable", false))
+			and bool(entry.get("workbench_source", false))
+			and StringName(entry.get("equipped_slot", "")) == &""
 		):
 			result.append(entry)
 	return result
@@ -445,6 +474,14 @@ func _make_equipment_entry(
 		definition_id
 	)
 	var condition: int = int(snapshot.get("current_condition", 0))
+	var storage: String = _equipment_storage_label(heroine_id, StringName(snapshot.get("instance_id", "")), location, equipped_slot)
+	var source: String = storage
+	if heroine_id != &"":
+		var owner: BattlerDefinition = battler_catalog.get_battler(heroine_id)
+		var owner_name: String = owner.display_name if owner != null else String(heroine_id)
+		source = storage.replace("Backpack ·", "Backpack · %s ·" % owner_name) if storage.begins_with("Backpack") else "%s · %s" % [storage, owner_name]
+		if equipped_slot != &"":
+			source += " · " + String(equipped_slot).replace("_", " ").capitalize()
 	return {
 		"instance_id": StringName(snapshot.get("instance_id", "")),
 		"definition_id": definition_id,
@@ -452,7 +489,9 @@ func _make_equipment_entry(
 		"location": location,
 		"heroine_id": heroine_id,
 		"equipped_slot": equipped_slot,
-		"storage_label": _equipment_storage_label(heroine_id, StringName(snapshot.get("instance_id", "")), location, equipped_slot),
+		"storage_label": storage,
+		"source_label": source,
+		"workbench_source": storage != "Personal reserve",
 		"condition": condition,
 		"condition_maximum": definition.condition_maximum if definition != null else 0,
 		"broken": condition <= 0,
@@ -471,7 +510,7 @@ func _equipment_storage_label(heroine_id: StringName, instance_id: StringName, l
 	for entry: Dictionary in _ownership().preparation_slots_by_heroine.get(heroine_id, []):
 		if StringName(entry.get("equipment_instance_id", "")) == instance_id:
 			return "Backpack · slot %d" % (int(entry.slot_index) + 1)
-	# Preserve old registered reserves until Stage 04's Loadouts exchange.
+	# Legacy registry reserves are not implicitly Backpack contents.
 	return "Personal reserve"
 
 

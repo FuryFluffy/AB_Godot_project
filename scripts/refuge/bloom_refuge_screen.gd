@@ -22,7 +22,7 @@ signal system_action_requested(action: StringName, slot_id: int)
 @onready var heroine_equipment_list: ItemList = %HeroineEquipmentList
 @onready var equipment_slot: OptionButton = %EquipmentSlot
 @onready var backpack_view: BackpackView = %Backpacks
-@onready var inventory_heroine: OptionButton = backpack_view.heroine_selector
+@onready var inventory_heroine: HeroineSelector = backpack_view.heroine_selector
 @onready var preparation_grid: RefugeSlotGrid = backpack_view.grid
 @onready var item_bar_grid: ItemBarView = %ItemBarGrid
 @onready var stash_items: ItemList = %StashItems
@@ -36,6 +36,9 @@ signal system_action_requested(action: StringName, slot_id: int)
 @onready var key_list: ItemList = backpack_view.key_ring
 
 
+var workbench_view: RefugeWorkbenchView
+var salvage_snapshot: Dictionary = {}
+var loadouts_view: RefugeLoadoutsView
 var inventory_interaction: RefugeInventoryInteraction
 var management: RefugeManagementController
 var current_run_state: RunState
@@ -104,6 +107,8 @@ func _ready() -> void:
 	inventory_interaction = RefugeInventoryInteraction.new()
 	add_child(inventory_interaction)
 	inventory_interaction.configure(self)
+	_configure_loadouts_view()
+	_configure_workbench_view()
 	room_shell.system_action_requested.connect(system_action_requested.emit)
 
 
@@ -149,6 +154,11 @@ func show_status(message: String, is_error: bool = false) -> void:
 
 func set_actions_enabled(enabled: bool) -> void:
 	inventory_interaction.enabled = enabled
+	workbench_view.enabled = enabled
+	workbench_view.update_repair_preview()
+	workbench_view.update_salvage_preview()
+	loadouts_view.enabled = enabled
+	loadouts_view.refresh()
 	begin_button.disabled = not enabled
 	new_story_button.disabled = not enabled
 	seed_edit.editable = enabled
@@ -165,8 +175,6 @@ func set_actions_enabled(enabled: bool) -> void:
 		%BarToStash,
 		%StashToBar,
 		%MoveStashEquipmentToHeroine,
-		%RepairSelected,
-		%SalvageSelected,
 	]:
 		button.disabled = not enabled
 
@@ -179,6 +187,7 @@ func _refresh_all() -> void:
 		current_knowledge_state.discovered_entries.size()
 	)
 	_refresh_party()
+	loadouts_view.refresh()
 	_refresh_inventory()
 	_refresh_materials_and_services()
 	_refresh_key_chain()
@@ -217,16 +226,7 @@ func _refresh_party() -> void:
 	party_list.select(selected_index)
 	selected_heroine_id = StringName(entries[selected_index].get("heroine_id", ""))
 	_show_party_entry(entries[selected_index])
-	var bag_index: int = 0
-	for entry: Dictionary in management.get_backpack_heroine_entries():
-		var index: int = inventory_heroine.item_count
-		inventory_heroine.add_item(String(entry.display_name))
-		inventory_heroine.set_item_metadata(index, entry.heroine_id)
-		if StringName(entry.heroine_id) == backpack_heroine_id:
-			bag_index = index
-	if inventory_heroine.item_count > 0:
-		inventory_heroine.select(bag_index)
-		backpack_heroine_id = StringName(inventory_heroine.get_item_metadata(bag_index))
+	backpack_heroine_id = inventory_heroine.present_heroines(management.get_backpack_heroine_entries(), backpack_heroine_id)
 
 
 func _show_party_entry(entry: Dictionary) -> void:
@@ -329,6 +329,7 @@ func _refresh_inventory() -> void:
 
 
 func _refresh_materials_and_services() -> void:
+	workbench_view.ownership_snapshot = current_run_state.refuge_ownership.to_snapshot()
 	var previous_recipe_id: StringName = selected_recipe_id
 	material_list.clear()
 	for entry: Dictionary in management.get_material_entries():
@@ -367,22 +368,25 @@ func _refresh_materials_and_services() -> void:
 	salvage_list.clear()
 	for entry: Dictionary in management.get_salvage_entries():
 		salvage_list.add_item(
-			"%s — Condition %d/%d → %d × %s" % [
+			"%s — %s — Condition %d/%d → %d × %s" % [
 				String(entry.get("display_name", "Unknown equipment")),
+				String(entry.get("source_label", "")),
 				int(entry.get("condition", 0)),
 				int(entry.get("condition_maximum", 0)),
 				int(entry.get("salvage_yield", 0)),
-				String(entry.get("salvage_material_id", "Material")),
+				workbench_view.material_name(StringName(entry.get("salvage_material_id", ""))),
 			]
 		)
 		var index: int = salvage_list.item_count - 1
 		salvage_list.set_item_metadata(index, entry)
+		salvage_list.set_item_tooltip(index, salvage_list.get_item_text(index))
 	if salvage_list.item_count == 0:
-		salvage_list.add_item("No authored player equipment can currently be salvaged.")
+		salvage_list.add_item("No unused salvageable equipment in Stash or Backpacks.")
 		salvage_list.set_item_disabled(0, true)
 		%SalvageSelected.disabled = true
 	else:
 		%SalvageSelected.disabled = false
+	workbench_view.update_salvage_preview()
 
 
 func _show_recipe(entry: Dictionary) -> void:
@@ -401,8 +405,9 @@ func _show_recipe(entry: Dictionary) -> void:
 	var selected_target_index: int = 0
 	for index: int in range(repair_target_entries.size()):
 		var target: Dictionary = repair_target_entries[index]
-		repair_target.add_item("%s — %d/%d" % [
+		repair_target.add_item("%s — %s — %d/%d" % [
 			String(target.get("display_name", "Unknown equipment")),
+			String(target.get("source_label", "")),
 			int(target.get("condition", 0)),
 			int(target.get("condition_maximum", 0)),
 		])
@@ -410,7 +415,7 @@ func _show_recipe(entry: Dictionary) -> void:
 			selected_target_index = index
 	if repair_target_entries.is_empty():
 		selected_repair_target_instance_id = &""
-		repair_target.add_item("No damaged eligible authored equipment")
+		repair_target.add_item("No damaged equipment matches this repair.")
 		repair_target.disabled = true
 		%RepairSelected.disabled = true
 	elif not bool(entry.get("can_pay", false)):
@@ -424,6 +429,8 @@ func _show_recipe(entry: Dictionary) -> void:
 		selected_repair_target_instance_id = StringName(
 			repair_target_entries[selected_target_index].get("instance_id", "")
 		)
+
+	workbench_view.update_repair_preview()
 
 
 func _refresh_key_chain() -> void:
@@ -577,8 +584,12 @@ func _on_repair_target_selected(index: int) -> void:
 		repair_target_entries[index].get("instance_id", "")
 	)
 
+	workbench_view.update_repair_preview()
+
 
 func _on_repair_selected() -> void:
+	if not workbench_view.enabled:
+		return
 	var selected_recipes: PackedInt32Array = recipe_list.get_selected_items()
 	if selected_recipes.is_empty() or repair_target_entries.is_empty():
 		show_status("Select an authored service and damaged target first.", true)
@@ -596,7 +607,8 @@ func _on_repair_selected() -> void:
 	)
 	var result: Dictionary = management.execute_repair(
 		StringName(recipe.get("recipe_id", "")),
-		selected_repair_target_instance_id
+		selected_repair_target_instance_id,
+		workbench_view.repair_snapshot
 	)
 	_apply_result(
 		result,
@@ -607,36 +619,52 @@ func _on_repair_selected() -> void:
 		]
 	)
 
+	if not String(result.error).is_empty() and workbench_view.repair_snapshot != current_run_state.refuge_ownership.to_snapshot():
+		_refresh_materials_and_services()
+
 
 func _on_review_salvage() -> void:
+	if not workbench_view.enabled:
+		return
 	var selected: PackedInt32Array = salvage_list.get_selected_items()
 	if selected.is_empty():
 		show_status("Select an equipment instance to salvage.", true)
 		return
-	var entry: Dictionary = salvage_list.get_item_metadata(selected[0]) as Dictionary
+	var value: Variant = salvage_list.get_item_metadata(selected[0])
+	if not value is Dictionary:
+		return
+	var entry: Dictionary = value
+	salvage_snapshot = workbench_view.ownership_snapshot.duplicate(true)
 	pending_salvage_instance_id = StringName(entry.get("instance_id", ""))
 	salvage_confirmation.dialog_text = (
-		"Destroy %s (%d/%d condition) for %d × %s?\nThis cannot be undone."
+		"Destroy %s (%d/%d condition) for %d × %s?\n%s\nMaterials will be banked. This cannot be undone."
 		% [
 			String(entry.get("display_name", pending_salvage_instance_id)),
 			int(entry.get("condition", 0)),
 			int(entry.get("condition_maximum", 0)),
 			int(entry.get("salvage_yield", 0)),
-			String(entry.get("salvage_material_id", "Material")),
+			workbench_view.material_name(StringName(entry.get("salvage_material_id", ""))),
+			String(entry.source_label),
 		]
 	)
-	salvage_confirmation.popup_centered()
+	salvage_confirmation.theme = room_shell.theme
+	salvage_confirmation.popup_centered(Vector2i(720, 240))
 
 
 func _on_salvage_confirmed() -> void:
-	if pending_salvage_instance_id == &"":
+	if pending_salvage_instance_id == &"" or not workbench_view.enabled:
 		return
 	var instance_id: StringName = pending_salvage_instance_id
 	pending_salvage_instance_id = &""
+	var result: Dictionary = management.salvage_equipment(instance_id, salvage_snapshot)
 	_apply_result(
-		management.salvage_equipment(instance_id),
+		result,
 		"Equipment salvaged and Materials banked."
 	)
+	if not String(result.error).is_empty() and salvage_snapshot != current_run_state.refuge_ownership.to_snapshot():
+		_refresh_materials_and_services()
+	salvage_snapshot = {}
+	_restore_salvage_focus()
 
 
 func _apply_result(result: Dictionary, success_message: String) -> void:
@@ -703,6 +731,8 @@ func configure_system(can_save: bool, has_application: bool) -> void:
 
 
 func handle_cancel() -> void:
+	if loadouts_view.handle_cancel():
+		return
 	if inventory_interaction.cancel():
 		return
 	for selector: OptionButton in [equipment_slot, inventory_heroine, repair_target]:
@@ -719,8 +749,12 @@ func handle_cancel() -> void:
 
 func _restore_salvage_focus() -> void:
 	pending_salvage_instance_id = &""
+	salvage_snapshot = {}
 	if room_shell.active_station == &"repair":
-		%SalvageSelected.grab_focus()
+		if %SalvageSelected.disabled:
+			workbench_view.tabs.grab_focus()
+		else:
+			%SalvageSelected.grab_focus()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -756,3 +790,34 @@ func _configure_inventory_views() -> void:
 	for button: Button in [%PrepToBar, %BarToPrep, %PrepToStash, %BarToStash]:
 		button.reparent(actions)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+
+func _configure_loadouts_view() -> void:
+	var page: Control = room_shell.pages[&"loadouts"]
+	# Party ordering stays with the existing Expedition service, outside Loadouts.
+	page.get_node("PartyColumn").reparent(room_shell.pages[&"expedition"])
+	page.get_node("LoadoutColumn").hide()
+	loadouts_view = RefugeLoadoutsView.new()
+	page.add_child(loadouts_view)
+	loadouts_view.configure(self)
+	room_shell.station_cancel_handler = _cancel_station_overlay
+
+
+func _configure_workbench_view() -> void:
+	workbench_view = RefugeWorkbenchView.new()
+	room_shell.pages[&"repair"].add_child(workbench_view)
+	workbench_view.configure(self)
+
+
+func _cancel_station_overlay() -> bool:
+	if loadouts_view.handle_cancel():
+		return true
+	if repair_target.get_popup().visible:
+		repair_target.get_popup().hide()
+		repair_target.grab_focus()
+		return true
+	if salvage_confirmation.visible:
+		salvage_confirmation.hide()
+		_restore_salvage_focus()
+		return true
+	return false

@@ -173,6 +173,10 @@ func _test_salvage_yields_locations_and_rollback() -> void:
 	var full_common: Dictionary = refuge.salvage_owned_equipment(
 		&"salvage:cloth:full"
 	)
+	var before_equipped: Dictionary = refuge.to_snapshot()
+	var rejected_equipped: Dictionary = refuge.salvage_owned_equipment(&"salvage:chain:equipped")
+	_expect(not String(rejected_equipped.get("error", "")).is_empty() and refuge.to_snapshot() == before_equipped, "Stage 05 rejects equipped salvage without destroying or crediting anything.")
+	_expect(refuge.unequip_owned_slot(&"lysandra", EquipmentDefinition.Slot.MAIN_HAND).is_empty(), "Explicitly unequip before salvage.")
 	var equipped_uncommon: Dictionary = refuge.salvage_owned_equipment(
 		&"salvage:chain:equipped"
 	)
@@ -200,11 +204,11 @@ func _test_salvage_yields_locations_and_rollback() -> void:
 	_expect(
 		String(equipped_uncommon.get("error", "")).is_empty()
 		and int(equipped_uncommon.get("quantity", 0)) == 2
-		and String(equipped_uncommon.get("removed_slot", "")) == "main_hand"
+		and String(equipped_uncommon.get("removed_slot", "")).is_empty()
 		and String(lysandra_slots.get("main_hand", "")).is_empty()
 		and not lysandra_instances.has("salvage:chain:equipped")
 		and refuge.get_banked_material_quantity(&"mat_l02_chain_links") == 2,
-		"Uncommon equipped salvage must yield two and clear only its exact slot/reference."
+		"Uncommon salvage after explicit unequip must yield two and remove only its exact instance."
 	)
 	_expect(
 		String(rare.get("error", "")).is_empty()

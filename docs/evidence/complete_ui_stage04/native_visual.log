@@ -1,0 +1,66 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.6-1~24.04-tux1 - Compatibility - Using Device: Intel - Mesa Intel(R) Iris(R) Xe Graphics (ADL GT2)
+
+PASS: Equip authored fixture Memento
+PASS: Reset isolated fixture
+PASS: (1280, 720) four rows and named selector
+PASS: Exact capture (1280, 720)
+PASS: Screenshot /tmp/ab-stage04-captures/1280x720_main.png
+PASS: (1280, 720) Change opens candidates and focuses list
+PASS: (1280, 720) native direction input selects next candidate
+PASS: (1280, 720) preview names source without mutation
+PASS: Exact capture (1280, 720)
+PASS: Screenshot /tmp/ab-stage04-captures/1280x720_weapon_sources.png
+PASS: (1280, 720) Equip commits through native button
+PASS: Exact capture (1280, 720)
+PASS: Screenshot /tmp/ab-stage04-captures/1280x720_equipped.png
+PASS: (1280, 720) Memento source available
+PASS: Exact capture (1280, 720)
+PASS: Screenshot /tmp/ab-stage04-captures/1280x720_memento_sources.png
+PASS: (1280, 720) Escape backs out without equipping
+PASS: (1280, 720) Off Hand does not invent gear
+PASS: (1280, 720) Close behaves as Back and restores Change focus
+PASS: (1280, 720) Cancel returns to weapon stand
+PASS: Reset isolated fixture
+PASS: (1920, 1080) four rows and named selector
+PASS: Exact capture (1920, 1080)
+PASS: Screenshot /tmp/ab-stage04-captures/1920x1080_main.png
+PASS: (1920, 1080) Change opens candidates and focuses list
+PASS: (1920, 1080) native direction input selects next candidate
+PASS: (1920, 1080) preview names source without mutation
+PASS: Exact capture (1920, 1080)
+PASS: Screenshot /tmp/ab-stage04-captures/1920x1080_weapon_sources.png
+PASS: (1920, 1080) Equip commits through native button
+PASS: Exact capture (1920, 1080)
+PASS: Screenshot /tmp/ab-stage04-captures/1920x1080_equipped.png
+PASS: (1920, 1080) Memento source available
+PASS: Exact capture (1920, 1080)
+PASS: Screenshot /tmp/ab-stage04-captures/1920x1080_memento_sources.png
+PASS: (1920, 1080) Escape backs out without equipping
+PASS: (1920, 1080) Off Hand does not invent gear
+PASS: (1920, 1080) Close behaves as Back and restores Change focus
+PASS: (1920, 1080) Cancel returns to weapon stand
+PASS: Reset isolated fixture
+PASS: (1024, 768) four rows and named selector
+PASS: Exact capture (1024, 768)
+PASS: Screenshot /tmp/ab-stage04-captures/1024x768_main.png
+PASS: (1024, 768) Change opens candidates and focuses list
+PASS: (1024, 768) native direction input selects next candidate
+PASS: (1024, 768) preview names source without mutation
+PASS: Exact capture (1024, 768)
+PASS: Screenshot /tmp/ab-stage04-captures/1024x768_weapon_sources.png
+PASS: (1024, 768) Equip commits through native button
+PASS: Exact capture (1024, 768)
+PASS: Screenshot /tmp/ab-stage04-captures/1024x768_equipped.png
+PASS: (1024, 768) Memento source available
+PASS: Exact capture (1024, 768)
+PASS: Screenshot /tmp/ab-stage04-captures/1024x768_memento_sources.png
+PASS: (1024, 768) Escape backs out without equipping
+PASS: (1024, 768) Off Hand does not invent gear
+PASS: (1024, 768) Close behaves as Back and restores Change focus
+PASS: (1024, 768) Cancel returns to weapon stand
+Stage 04 native Loadouts fixture: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
