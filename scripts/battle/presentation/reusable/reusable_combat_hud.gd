@@ -32,6 +32,7 @@ signal move_reaction_selected(react: bool)
 @onready var struggle_panel: StrugglePanel = %StrugglePanel
 
 var log_is_open: bool = false
+var dock: RunHUDDock
 
 
 func _ready() -> void:
@@ -43,9 +44,15 @@ func _ready() -> void:
 		card.selected.connect(heroine_selected.emit)
 	command_bar.attack_requested.connect(attack_requested.emit)
 	command_bar.move_requested.connect(move_requested.emit)
-	command_bar.ability_requested.connect(ability_requested.emit)
+	command_bar.ability_requested.connect(func() -> void:
+		close_log()
+		ability_requested.emit()
+	)
 	command_bar.end_phase_requested.connect(end_phase_requested.emit)
-	command_bar.struggle_requested.connect(struggle_requested.emit)
+	command_bar.struggle_requested.connect(func() -> void:
+		close_log()
+		struggle_requested.emit()
+	)
 	command_bar.grapple_wait_requested.connect(
 		grapple_wait_requested.emit
 	)
@@ -72,13 +79,26 @@ func _ready() -> void:
 	struggle_panel.attach_to_command(command_bar.struggle_button)
 	ability_panel.close_panel()
 	struggle_panel.close_panel()
-	# Preserve the reusable UI project's authored drawer lifecycle. The log
-	# remains visible as a Control and is moved just outside the 1920-wide
-	# design canvas at rest; the AnimationPlayer brings it on-screen.
+	dock = RunHUDDock.new()
+	add_child(dock)
+	dock.configure(root, party_strip, item_bar, command_bar, combat_log, command_bar.log_button, "Combat Log")
+	# Keep the authored drawer animation, with endpoints fitted to the dock.
+	var library: AnimationLibrary = log_animation.get_animation_library(&"").duplicate(true)
+	log_animation.remove_animation_library(&"")
+	log_animation.add_animation_library(&"", library)
+	dock.layout_changed.connect(_fit_log_animation)
+	_fit_log_animation()
 	log_animation.play(&"log_open")
 	log_animation.seek(0.0, true)
 	log_animation.pause()
 	log_is_open = false
+
+
+func _fit_log_animation() -> void:
+	var animation: Animation = log_animation.get_animation(&"log_open")
+	animation.track_set_key_value(0, 0, dock.log_position(false))
+	animation.track_set_key_value(0, 1, dock.log_position(true))
+	combat_log.position = dock.log_position(log_is_open)
 
 
 func set_header(
@@ -104,25 +124,7 @@ func display_heroine(
 func set_active_party_ids(
 	active_party_ids: Array[StringName]
 ) -> void:
-	var active_count: int = 0
-	for card: HeroineCardView in [
-		lysandra_card,
-		mira_card,
-		seraphine_card,
-	]:
-		card.visible = active_party_ids.has(card.battler_id)
-		if card.visible:
-			active_count += 1
-
-	# The authored three-card frame is 364 px tall: 16 px frame margin,
-	# three 112 px cards, and two 6 px separations. Preserve its bottom-left
-	# position while fitting solo and two-member encounters to visible cards.
-	var content_height: float = (
-		16.0
-		+ float(active_count * 112)
-		+ float(maxi(active_count - 1, 0) * 6)
-	)
-	party_strip.offset_top = party_strip.offset_bottom - content_height
+	dock.set_active_party_ids(active_party_ids)
 
 
 func set_heroine_portrait(
@@ -192,6 +194,7 @@ func set_grapple_context(
 	can_act: bool,
 	can_submit: bool = false
 ) -> void:
+	dock.set_grapple_context(grapple_mode)
 	command_bar.set_grapple_context(
 		grapple_mode,
 		can_act,
@@ -309,8 +312,13 @@ func toggle_log() -> void:
 	if log_is_open:
 		log_animation.play_backwards(&"log_open")
 	else:
+		if ability_panel.visible:
+			ability_panel.cancelled.emit()
+		if struggle_panel.visible:
+			struggle_panel.cancelled.emit()
 		log_animation.play(&"log_open")
 	log_is_open = not log_is_open
+	dock.log_open = log_is_open
 
 
 func close_log() -> void:
@@ -318,6 +326,8 @@ func close_log() -> void:
 		return
 	log_animation.play_backwards(&"log_open")
 	log_is_open = false
+	dock.log_open = false
+	dock.log_tab.grab_focus()
 
 
 func _get_card(battler_id: StringName) -> HeroineCardView:

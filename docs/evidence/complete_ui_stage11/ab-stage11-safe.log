@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3901766672
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3901766672
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3568875708
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3901766672
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] read_document_for_load (res://scripts/save/campaign_save_slot_store.gd:350)
+       [2] _test_backup_recovery_and_clear (res://tests/test_active_run_safe_points.gd:351)
+       [3] _init (res://tests/test_active_run_safe_points.gd:25)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] read_document_for_load (res://scripts/save/campaign_save_slot_store.gd:350)
+       [2] clear_active_run_snapshot (res://scripts/save/campaign_save_slot_store.gd:199)
+       [3] _test_backup_recovery_and_clear (res://tests/test_active_run_safe_points.gd:362)
+       [4] _init (res://tests/test_active_run_safe_points.gd:25)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] _is_valid_document_file (res://scripts/save/campaign_save_slot_store.gd:609)
+       [2] _write_document_atomic (res://scripts/save/campaign_save_slot_store.gd:561)
+       [3] clear_active_run_snapshot (res://scripts/save/campaign_save_slot_store.gd:215)
+       [4] _test_backup_recovery_and_clear (res://tests/test_active_run_safe_points.gd:362)
+       [5] _init (res://tests/test_active_run_safe_points.gd:25)
+Active-run safe-point tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

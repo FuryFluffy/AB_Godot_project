@@ -146,6 +146,11 @@ var archived_layer_graphs: Dictionary = {}
 var campaign_lifecycle: CampaignLifecycleState = CampaignLifecycleState.new()
 var refuge_ownership: RefugeOwnershipState = RefugeOwnershipState.new()
 var active_run_refuge_boundary_snapshot: Dictionary = {}
+# Only inactive heroines remain here while the selected party is deployed.
+var inactive_party_snapshot: Dictionary = {}
+var party_display_order: Array[StringName] = []
+const ORDINARY_REST_LIMIT: int = 2
+var ordinary_rest_uses: int = 0
 
 
 func _init() -> void:
@@ -196,12 +201,15 @@ func initialize(
 		):
 			return "Tutorial recovery must reuse the original Layer 1 seed."
 	graph = new_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = graph.start_node_id
 	selected_node_id = current_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
 	pending_node_seed = 0
 	party_snapshot = new_run_party_snapshot.duplicate(true)
+	party_display_order.clear()
+	ordinary_rest_uses = 0
 	heroine_progression_snapshot = make_default_heroine_progression_snapshot()
 	var inventory_error: String = run_inventory.initialize(
 		ITEM_CATALOG,
@@ -239,6 +247,7 @@ func initialize(
 	reward_resolutions.clear()
 	refuge_ownership = RefugeOwnershipState.new()
 	active_run_refuge_boundary_snapshot.clear()
+	inactive_party_snapshot.clear()
 
 	var placement_result := (
 		GeneratedRoomItemPlacementResolver.resolve(
@@ -956,6 +965,11 @@ func _allocate_combat_seed(
 
 func _make_current_party_ids() -> Array[StringName]:
 	var result: Array[StringName] = []
+	if not active_run_refuge_boundary_snapshot.is_empty():
+		for id: StringName in refuge_ownership.selected_party_ids:
+			if party_snapshot.has(id):
+				result.append(id)
+		return result
 	# Keep the established heroine order, then append any future party
 	# members deterministically. The party snapshot is the run-time source
 	# of truth; EncounterDefinition's prototype defaults must not recruit
@@ -1294,6 +1308,7 @@ func apply_blood_nun_aftermath(
 	archived_layer_graphs[&"layer_1"] = completed_layer_graph
 
 	graph = next_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	run_seed = next_graph.run_seed
 	current_node_id = graph.start_node_id
 	selected_node_id = graph.start_node_id
@@ -1437,6 +1452,7 @@ func apply_jailer_victory(
 	completed_encounters[JAILER_FIRST_ENCOUNTER_ID] = true
 	campaign_lifecycle.mark_boss_defeated(JAILER_BOSS_ID)
 	graph = reverse_layer_2_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	run_seed = reverse_layer_2_graph.run_seed
 	current_node_id = reverse_layer_2_graph.boss_node_id
 	selected_node_id = reverse_layer_2_graph.boss_node_id
@@ -1558,6 +1574,7 @@ func establish_refuge_at_farthest_cell(
 	bloom += story_outcome.bloom_delta
 	campaign_lifecycle.establish_refuge()
 	graph = refuge_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = refuge_graph.start_node_id
 	selected_node_id = refuge_graph.start_node_id
 	pending_node_id = &""
@@ -1568,6 +1585,7 @@ func establish_refuge_at_farthest_cell(
 	generated_room_item_requests.clear()
 	reward_resolutions.clear()
 	active_run_refuge_boundary_snapshot.clear()
+	inactive_party_snapshot.clear()
 	opening_completed = true
 	run_changed.emit()
 	return ""
@@ -1703,6 +1721,7 @@ func apply_refugeless_defeat_and_refuge_origin(
 	campaign_lifecycle.establish_refuge()
 	bloom += story_outcome.bloom_delta
 	graph = refuge_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = graph.start_node_id
 	selected_node_id = graph.start_node_id
 	pending_node_id = &""
@@ -1884,6 +1903,7 @@ func restore_refuge_campaign_snapshot(
 	narrative_state = restored_narrative
 	campaign_lifecycle = restored_lifecycle
 	graph = refuge_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	graph.run_seed = run_seed
 	current_node_id = graph.start_node_id
 	selected_node_id = graph.start_node_id
@@ -1896,6 +1916,7 @@ func restore_refuge_campaign_snapshot(
 	reward_resolutions.clear()
 	archived_layer_graphs.clear()
 	active_run_refuge_boundary_snapshot.clear()
+	inactive_party_snapshot.clear()
 	opening_completed = true
 	run_changed.emit()
 	return ""
@@ -1953,6 +1974,10 @@ func begin_next_layer_2_run(next_graph: LayerMapGraph) -> String:
 	if not transfer_error.is_empty():
 		return transfer_error
 
+	inactive_party_snapshot.clear()
+	for heroine: Variant in party_snapshot:
+		if not refuge_ownership.selected_party_ids.has(StringName(heroine)):
+			inactive_party_snapshot[StringName(heroine)] = (party_snapshot[heroine] as Dictionary).duplicate(true)
 	archived_layer_graphs[&"bloom_refuge"] = graph
 	refuge_ownership = transfer.get("refuge_state") as RefugeOwnershipState
 	active_run_refuge_boundary_snapshot = refuge_boundary_snapshot.duplicate(true)
@@ -1961,7 +1986,10 @@ func begin_next_layer_2_run(next_graph: LayerMapGraph) -> String:
 	party_snapshot = (
 		party_order_result.get("party_snapshot", {}) as Dictionary
 	).duplicate(true)
+	party_display_order.clear()
+	ordinary_rest_uses = 0
 	graph = next_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	run_seed = next_graph.run_seed
 	campaign_lifecycle.begin_refuge_run(next_graph.run_seed)
 	current_node_id = graph.start_node_id
@@ -2081,7 +2109,10 @@ func _commit_refuge_return(
 		return "Refuge return produced incomplete ownership state."
 	if graph != null and graph.layer_id != &"bloom_refuge":
 		archived_layer_graphs[graph.layer_id] = graph
-	party_snapshot = recovered_party.duplicate(true)
+	var reunited: Dictionary = inactive_party_snapshot.duplicate(true)
+	for heroine: Variant in recovered_party:
+		reunited[StringName(heroine)] = (recovered_party[heroine] as Dictionary).duplicate(true)
+	party_snapshot = reunited
 	refuge_ownership = staged_refuge
 	run_inventory = staged_inventory
 	run_equipment = staged_equipment
@@ -2089,6 +2120,7 @@ func _commit_refuge_return(
 		_merge_heroine_progression_snapshot(progression_snapshot)
 	narrative_state = next_narrative
 	graph = refuge_graph
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = graph.start_node_id
 	selected_node_id = graph.start_node_id
 	pending_node_id = &""
@@ -2100,6 +2132,7 @@ func _commit_refuge_return(
 	reward_resolutions.clear()
 	campaign_lifecycle.finish_active_run()
 	active_run_refuge_boundary_snapshot.clear()
+	inactive_party_snapshot.clear()
 	opening_completed = true
 	run_changed.emit()
 	return ""
@@ -2460,7 +2493,7 @@ func apply_event_room_outcome(
 	var staged_run_inventory := RunInventoryState.new()
 	var inventory_error: String = staged_run_inventory.initialize(
 		ITEM_CATALOG,
-		DEMO_HEROINE_IDS
+		_inventory_heroine_ids()
 	)
 	if inventory_error.is_empty():
 		inventory_error = staged_run_inventory.restore_from_snapshot(
@@ -2610,7 +2643,7 @@ func retry_deferred_reward(node_id: StringName) -> Dictionary:
 	return _resolve_and_route_node_reward(node)
 
 
-func _resolve_and_route_node_reward(node: MapNodeState) -> Dictionary:
+func prepare_node_reward(node: MapNodeState) -> Dictionary:
 	if node == null or node.reward_source_id == &"":
 		return {"error": "Map node has no authored reward source.", "claimed": false}
 	var source: RoomLootSourceDefinition = REWARD_SOURCE_CATALOG.get_source(
@@ -2630,7 +2663,7 @@ func _resolve_and_route_node_reward(node: MapNodeState) -> Dictionary:
 		var stored_value: Variant = reward_resolutions.get(record_key)
 		if not (stored_value is Dictionary):
 			return {"error": "Stored reward resolution is malformed.", "claimed": false}
-		record = (stored_value as Dictionary).duplicate(true)
+		record = stored_value as Dictionary
 		var record_error: String = RewardSourceResolver.validate_resolution_record(
 			record,
 			REWARD_SOURCE_CATALOG,
@@ -2666,8 +2699,21 @@ func _resolve_and_route_node_reward(node: MapNodeState) -> Dictionary:
 				record.get("resolution_seed", 0),
 			]
 		)
+	reward_resolutions[record_key] = record
+	return {"error": "", "claimed": bool(record.get("claimed", false)), "record": record}
+
+
+func _resolve_and_route_node_reward(node: MapNodeState) -> Dictionary:
+	# Compatibility helper for legacy deferred node rewards and non-panel callers.
+	# Production fight UI prepares the same record and closes it before resolution.
+	var prepared: Dictionary = prepare_node_reward(node)
+	if not String(prepared.get("error", "")).is_empty() or bool(prepared.get("claimed", false)):
+		return prepared
+	var record: Dictionary = prepared.record
+	var source: RoomLootSourceDefinition = REWARD_SOURCE_CATALOG.get_source(node.reward_source_id)
+	var record_key: String = RewardSourceResolver.make_record_key(source.source_id, node.node_id)
 	var item_id := StringName(record.get("item_id", ""))
-	var quantity: int = int(record.get("quantity", 0))
+	var quantity: int = LootClaim.remaining(record)
 	var owner_heroine_id := StringName(record.get("owner_heroine_id", ""))
 	var route_error: String = run_inventory.route_reward(
 		item_id,
@@ -2689,6 +2735,7 @@ func _resolve_and_route_node_reward(node: MapNodeState) -> Dictionary:
 			"deferred": true,
 			"record": record,
 		}
+	LootClaim.accept(record, quantity)
 	record["claimed"] = true
 	record["deferred"] = false
 	reward_resolutions[record_key] = record.duplicate(true)
@@ -2726,7 +2773,7 @@ func _stage_outcome_run_inventory(
 	var staged := RunInventoryState.new()
 	var staged_error: String = staged.initialize(
 		ITEM_CATALOG,
-		DEMO_HEROINE_IDS
+		_inventory_heroine_ids()
 	)
 	if staged_error.is_empty():
 		staged_error = staged.restore_from_snapshot(
@@ -2788,6 +2835,9 @@ func make_active_run_snapshot(
 			"campaign_lifecycle": campaign_lifecycle.to_snapshot(),
 			"knowledge_state": knowledge_state.to_snapshot(),
 			"refuge_boundary_snapshot": active_run_refuge_boundary_snapshot.duplicate(true),
+			"inactive_party_snapshot": inactive_party_snapshot.duplicate(true),
+			"party_display_order": get_party_display_order(),
+			"ordinary_rest_uses": ordinary_rest_uses,
 		},
 		"selected_node_id": String(pending_node_id) if safe_point_kind == "pre_node" else null,
 		"selected_node_seed": pending_node_seed if safe_point_kind == "pre_node" else null,
@@ -2888,8 +2938,38 @@ func restore_active_run_snapshot(
 		or int(staged_snapshot.get("campaign_seed")) != restored_lifecycle.campaign_seed
 	):
 		return "Active-run snapshot campaign_seed does not match its lifecycle."
+	var active_ids: Array[StringName] = DEMO_HEROINE_IDS.duplicate()
+	var boundary_value: Dictionary = run_snapshot.get("refuge_boundary_snapshot") as Dictionary
+	if not boundary_value.is_empty():
+		var order_value: Variant = boundary_value.get("selected_party_ids", null)
+		if not order_value is Array or order_value.is_empty():
+			return "Active run is missing its selected party."
+		active_ids.clear()
+		var ordered_party: Dictionary = {}
+		for id: Variant in order_value:
+			if not (id is String or id is StringName) or not DEMO_HEROINE_IDS.has(StringName(id)) or active_ids.has(StringName(id)) or not restored_party_snapshot.has(id):
+				return "Active run contains an invalid selected heroine."
+			active_ids.append(StringName(id))
+			ordered_party[StringName(id)] = restored_party_snapshot[id]
+		if ordered_party.size() != restored_party_snapshot.size():
+			return "Active party does not match its Refuge departure."
+		restored_party_snapshot = ordered_party
+	var inactive_value: Variant = run_snapshot.get("inactive_party_snapshot", {})
+	if not inactive_value is Dictionary:
+		return "Active run contains invalid inactive heroine state."
+	var restored_inactive: Dictionary = {}
+	for id: Variant in inactive_value:
+		if not (id is String or id is StringName) or not DEMO_HEROINE_IDS.has(StringName(id)) or active_ids.has(StringName(id)) or not inactive_value[id] is Dictionary:
+			return "Inactive heroine state conflicts with the active party."
+		for field: String in ["hp", "mp", "resolve", "corruption"]:
+			var stat: Variant = inactive_value[id].get(field, null)
+			if typeof(stat) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(stat)) or float(stat) != floorf(float(stat)) or float(stat) < 0:
+				return "Inactive heroine snapshot contains invalid %s." % field
+		restored_inactive[StringName(id)] = (inactive_value[id] as Dictionary).duplicate(true)
+	if not boundary_value.is_empty() and active_ids.size() + restored_inactive.size() != DEMO_HEROINE_IDS.size():
+		return "Active run is missing inactive heroine state."
 	var restored_inventory := RunInventoryState.new()
-	var inventory_error: String = restored_inventory.initialize(ITEM_CATALOG, DEMO_HEROINE_IDS)
+	var inventory_error: String = restored_inventory.initialize(ITEM_CATALOG, active_ids)
 	if inventory_error.is_empty():
 		inventory_error = restored_inventory.restore_from_snapshot(
 			(run_snapshot.get("run_inventory") as Dictionary).duplicate(true)
@@ -2899,7 +2979,7 @@ func restore_active_run_snapshot(
 	var restored_equipment := RunEquipmentState.new()
 	var equipment_error: String = restored_equipment.initialize_from_snapshot(
 		battler_catalog,
-		DEMO_HEROINE_IDS,
+		active_ids,
 		restored_inventory,
 		(run_snapshot.get("run_equipment") as Dictionary).duplicate(true)
 	)
@@ -2926,7 +3006,12 @@ func restore_active_run_snapshot(
 		refuge_error = String(transfer.get("error", ""))
 		if not refuge_error.is_empty():
 			return refuge_error
+		if restored_refuge.selected_party_ids != active_ids:
+			return "Active party order does not match its Refuge departure."
 		restored_refuge = transfer.get("refuge_state") as RefugeOwnershipState
+		var reunion: Dictionary = restored_refuge.make_run_return_transfer(restored_inventory, restored_equipment, false)
+		if not String(reunion.get("error", "")).is_empty():
+			return String(reunion.error)
 	elif restored_lifecycle.has_refuge() and restored_lifecycle.active_run_seed > 0:
 		return "Active Refuge run is missing its ownership boundary."
 
@@ -2955,6 +3040,9 @@ func restore_active_run_snapshot(
 			if not (assignment_value is Dictionary):
 				return "Active-run snapshot contains an invalid Event-room item assignment."
 			var assignment: Dictionary = assignment_value as Dictionary
+			var claim_error: String = LootClaim.validate(assignment)
+			if not claim_error.is_empty():
+				return claim_error
 			if not assignment.has("resolution_seed"):
 				continue
 			var assignment_error: String = (
@@ -3083,6 +3171,22 @@ func restore_active_run_snapshot(
 		if layer_id != &"" and not restored_layers.has(layer_id):
 			restored_layers.append(layer_id)
 
+	var party_members: Array[StringName] = []
+	for id: Variant in restored_party_snapshot:
+		party_members.append(StringName(id))
+	var legacy_order: Array[StringName] = active_ids if not boundary_value.is_empty() else DEMO_HEROINE_IDS
+	var display_value: Variant = run_snapshot.get("party_display_order", RunPartyOrder.resolve(legacy_order, party_members))
+	var display_error: String = RunPartyOrder.validate(display_value, party_members)
+	if not display_error.is_empty():
+		return display_error
+	var restored_display_order: Array[StringName] = []
+	for id: Variant in display_value:
+		restored_display_order.append(StringName(id))
+
+	var rest_value: Variant = run_snapshot.get("ordinary_rest_uses", 0)
+	if typeof(rest_value) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(rest_value)) or float(rest_value) != floorf(float(rest_value)) or rest_value < 0 or rest_value > ORDINARY_REST_LIMIT:
+		return "Active-run ordinary Rest count is invalid."
+
 	# Commit only after every nested state model validates successfully.
 	run_seed = restored_run_seed
 	graph = restored_graph
@@ -3106,8 +3210,12 @@ func restore_active_run_snapshot(
 	narrative_state = restored_narrative
 	completed_layer_ids = restored_layers
 	campaign_lifecycle = restored_lifecycle
+	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	refuge_ownership = restored_refuge
 	active_run_refuge_boundary_snapshot = boundary_snapshot
+	inactive_party_snapshot = restored_inactive
+	party_display_order = restored_display_order
+	ordinary_rest_uses = int(rest_value)
 	archived_layer_graphs.clear()
 	run_changed.emit()
 	return ""
@@ -3135,3 +3243,106 @@ func get_progress_text() -> String:
 		cleared_count,
 		bloom,
 	]
+
+
+func _inventory_heroine_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for id: Variant in run_inventory.backpacks_by_heroine:
+		ids.append(StringName(id))
+	return ids
+
+
+func get_party_display_order() -> Array[StringName]:
+	return RunPartyOrder.resolve(party_display_order, _make_current_party_ids())
+
+func set_party_display_order(next: Array[StringName], expected: Array[StringName]) -> String:
+	if expected != get_party_display_order():
+		return "The current party changed. Reopen Party and try again."
+	var error: String = RunPartyOrder.validate(next, _make_current_party_ids())
+	if not error.is_empty():
+		return error
+	party_display_order = next.duplicate()
+	run_changed.emit()
+	return ""
+
+
+func prepare_refuge_return(outcome: EventRoomOutcome, refuge_graph: LayerMapGraph, battlers: BattlerCatalogDefinition, knowledge: KnowledgeState) -> Dictionary:
+	if not has_established_refuge() or graph == null or graph.layer_id == &"bloom_refuge":
+		return {"error": "Return requires an active run and an established Refuge."}
+	if outcome == null and pending_node_id != &"":
+		return {"error": "Resolve the current room before returning from the map."}
+	var snapshot: Dictionary = make_active_run_snapshot("pre_node" if pending_node_id != &"" else "post_node", knowledge)
+	if snapshot.is_empty():
+		return {"error": "The current run cannot prepare its return boundary."}
+	if outcome != null:
+		if outcome.source_node_id != current_node_id or outcome.run_inventory_snapshot.is_empty():
+			return {"error": "Return requires the current room's carried state."}
+		# Room inventory is a working copy, while equipped instances are shared.
+		# Validate the matching current ownership pair, not the room-entry bags.
+		snapshot.run_snapshot.run_inventory = outcome.run_inventory_snapshot.duplicate(true)
+		snapshot.run_snapshot.party_snapshot = outcome.party_snapshot.duplicate(true)
+	var staged := RunState.new()
+	var error: String = staged.restore_active_run_snapshot(snapshot, battlers)
+	if error.is_empty() and outcome != null:
+		error = staged.apply_event_room_outcome(outcome)
+	if error.is_empty():
+		# Preserve existing layer archives, including the graph archived by return.
+		staged.archived_layer_graphs = archived_layer_graphs.duplicate()
+		error = staged.return_current_run_to_refuge(refuge_graph, battlers)
+	return {"error": error, "state": staged if error.is_empty() else null}
+
+
+func ordinary_rest_access_error(states: Dictionary) -> String:
+	if has_established_refuge():
+		return "Rest is replaced by Return after the Refuge is established."
+	if ordinary_rest_uses >= ORDINARY_REST_LIMIT:
+		return "No Rest uses remain this run."
+	var ids: Array[StringName] = _make_current_party_ids()
+	if ids.is_empty() or states.size() != ids.size():
+		return "Rest requires the current party."
+	for id: StringName in ids:
+		var state: BattlerState = states.get(id)
+		if state == null or state.definition == null or state.definition.battler_id != id:
+			return "Rest requires valid current heroine states."
+	return ""
+
+func ordinary_rest_request(states: Dictionary) -> Dictionary:
+	var error: String = ordinary_rest_access_error(states)
+	if not error.is_empty():
+		return {"error": error}
+	return {"seed": run_seed, "uses": ordinary_rest_uses, "remaining": ORDINARY_REST_LIMIT - ordinary_rest_uses, "party": _ordinary_rest_inputs(states)}
+
+func _ordinary_rest_inputs(states: Dictionary) -> Dictionary:
+	var result: Dictionary = {}
+	for id: StringName in _make_current_party_ids():
+		var state: BattlerState = states.get(id)
+		if state != null:
+			result[id] = [state.current_hp, state.current_mp, state.current_corruption, state.get_max_hp(), state.get_max_mp(), state.is_defeated]
+	return result
+
+func apply_ordinary_rest(states: Dictionary, request: Dictionary) -> String:
+	var error: String = ordinary_rest_access_error(states)
+	if not error.is_empty():
+		return error
+	if request.get("seed", -1) != run_seed or request.get("uses", -1) != ordinary_rest_uses or request.get("party", {}) != _ordinary_rest_inputs(states):
+		return "The party changed. Please confirm Rest again."
+	# Commit every member and the counter before emitting observer signals.
+	var revived: Array[BattlerState] = []
+	ordinary_rest_uses += 1
+	for id: StringName in _make_current_party_ids():
+		var state: BattlerState = states[id]
+		if state.is_defeated:
+			revived.append(state)
+		state.current_hp = mini(state.get_max_hp(), state.current_hp + ceili(state.get_max_hp() / 2.0))
+		state.current_mp = mini(state.get_max_mp(), state.current_mp + ceili(state.get_max_mp() / 2.0))
+		state.current_corruption = mini(100, state.current_corruption + 10)
+		state.is_defeated = state.current_hp <= 0
+		party_snapshot[id]["hp"] = state.current_hp
+		party_snapshot[id]["mp"] = state.current_mp
+		party_snapshot[id]["corruption"] = state.current_corruption
+	for state: BattlerState in states.values():
+		if revived.has(state):
+			state.revived.emit()
+		state.state_changed.emit()
+	run_changed.emit()
+	return ""

@@ -30,6 +30,7 @@ var open_generation: int = 0
 
 
 func _ready() -> void:
+	get_viewport().size_changed.connect(func() -> void: _position_next_to_command.call_deferred())
 	assert(prompt_label != null)
 	assert(track_option != null)
 	assert(might_button != null)
@@ -276,8 +277,8 @@ func _position_next_to_command() -> void:
 		panel_size = custom_minimum_size
 	var viewport_size: Vector2 = get_viewport_rect().size
 	var wanted_position := Vector2(
-		anchor_rect.position.x - panel_size.x - command_gap,
-		anchor_rect.get_center().y - panel_size.y * 0.5
+		anchor_rect.end.x - panel_size.x,
+		anchor_rect.position.y - panel_size.y - 128.0
 	)
 	wanted_position += command_offset
 	wanted_position.x = clampf(

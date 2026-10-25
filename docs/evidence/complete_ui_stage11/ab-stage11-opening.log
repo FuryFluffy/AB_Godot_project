@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=3611604056
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Opening and Event-room flow tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

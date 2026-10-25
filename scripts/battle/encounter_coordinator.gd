@@ -74,6 +74,8 @@ var ability_controller: AbilityActionController
 var lifecycle_controller: BattleLifecycleController
 var grapple_controller: GrappleController
 var item_inventory: SixSlotInventoryState
+var party_display_order: Array[StringName] = []
+var backpack_panel: RunBackpackPanel
 var item_use_controller: ItemUseController
 var dodge_step_controller: DodgeStepController
 
@@ -107,6 +109,12 @@ const OVER_CAPACITY_MARKER_OFFSET: Vector2 = Vector2(170.0, 55.0)
 
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_B:
+		_toggle_backpack()
+		get_viewport().set_input_as_handled()
+		return
+	if backpack_panel != null and backpack_panel.is_slot_context_event(event):
+		return
 	if not _is_cancel_input(event):
 		return
 	if not _cancel_current_interaction():
@@ -115,6 +123,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _is_cancel_input(event: InputEvent) -> bool:
+	if event.is_action_pressed(&"ui_cancel"):
+		return true
 	if event is InputEventKey:
 		var key_event := event as InputEventKey
 		return (
@@ -159,6 +169,7 @@ func _ready() -> void:
 	_bind_battler_markers()
 	_initialize_spatial_presentation()
 	_initialize_reusable_presentation()
+	_initialize_run_backpack()
 
 	_connect_aoe_controls()
 	_connect_move_controls()
@@ -964,6 +975,8 @@ func _connect_move_controls() -> void:
 func _on_battler_selected(
 	battler_id: StringName
 ) -> void:
+	if backpack_panel != null and backpack_panel.visible:
+		return
 	var state: BattlerState = get_battler_state(
 		battler_id
 	)
@@ -1033,6 +1046,9 @@ func _on_battler_selected(
 func _on_item_slot_pressed(
 	slot_index: int
 ) -> void:
+	if backpack_panel != null and backpack_panel.visible:
+		backpack_panel.select_slot(RefugeInventoryTransfer.address(&"item_bar", slot_index))
+		return
 	if battle_runtime.is_selecting_item_target:
 		if slot_index == battle_runtime.pending_item_slot_index:
 			_cancel_item_targeting(
@@ -1252,6 +1268,8 @@ func _refresh_item_bar() -> void:
 
 
 func _on_attack_pressed() -> void:
+	if backpack_panel != null and backpack_panel.visible:
+		return
 	if battle_runtime.has_pending_reaction():
 		log_presenter.append(
 			"Resolve the pending reaction first."
@@ -1320,6 +1338,8 @@ func _on_attack_pressed() -> void:
 
 
 func _on_abilities_pressed() -> void:
+	if backpack_panel != null and backpack_panel.visible:
+		return
 	if battle_runtime.is_selecting_ability_target:
 		_cancel_ability_targeting("Ability targeting cancelled.")
 		return
@@ -1618,6 +1638,8 @@ func _on_aoe_cancelled() -> void:
 
 
 func _on_move_pressed() -> void:
+	if backpack_panel != null and backpack_panel.visible:
+		return
 	if battle_runtime.is_selecting_move:
 		_on_move_cancelled()
 		return
@@ -2295,6 +2317,8 @@ func _on_board_selection_cancelled() -> void:
 
 
 func _cancel_current_interaction() -> bool:
+	if backpack_panel != null and backpack_panel.cancel():
+		return true
 	if pending_grapple_dodge_attempt != null:
 		var heroine: BattlerState = get_battler_state(
 			pending_grapple_dodge_attempt.target_id
@@ -2339,6 +2363,9 @@ func _cancel_current_interaction() -> bool:
 	if battle_runtime.is_selecting_attack_target:
 		_cancel_attack_targeting()
 		log_presenter.append("Attack targeting cancelled.")
+		return true
+	if reusable_hud != null and reusable_hud.log_is_open:
+		reusable_hud.close_log()
 		return true
 	return false
 
@@ -3404,6 +3431,8 @@ func _set_commands_locked(
 	locked: bool
 ) -> void:
 	commands_locked = locked
+	if combat_engine != null:
+		combat_engine.backpack_commands_locked = locked
 	if combat_presenter != null:
 		combat_presenter.set_commands_locked(locked)
 
@@ -3501,7 +3530,7 @@ func _refresh_grapple_command_bar() -> void:
 		else "End this heroine's activation without resisting."
 	)
 	submit_button.tooltip_text = (
-		"Requires Refuge Grapple upgrade level 1."
+		"Submit unlock is not yet available."
 	)
 
 
@@ -4086,7 +4115,7 @@ func _on_grapple_wait_pressed() -> void:
 
 func _on_submit_pressed() -> void:
 	log_presenter.append(
-		"Submit is locked until Refuge Grapple upgrade level 1."
+		"Submit unlock is not yet available."
 	)
 
 
@@ -4192,6 +4221,8 @@ func _log_grapple_action_result(
 
 
 func _on_phase_button_pressed() -> void:
+	if backpack_panel != null and backpack_panel.visible:
+		return
 	if encounter_starting:
 		return
 	if not battle_runtime.can_change_phase():
@@ -4707,3 +4738,35 @@ func _refresh_battle_flow_ui() -> void:
 		combat_presenter.refresh_all()
 	_refresh_grapple_command_bar()
 	_refresh_item_bar()
+
+
+func _initialize_run_backpack() -> void:
+	var ids: Array[StringName] = []
+	for id: StringName in combat_engine.stable_battler_order:
+		var state: BattlerState = get_battler_state(id)
+		if state.definition.faction == BattlerDefinition.Faction.HEROINE and (pending_run_equipment == null or pending_run_equipment.get_loadout(id) != null):
+			ids.append(id)
+	reusable_hud.dock.preferred_party_order = party_display_order.duplicate()
+	reusable_hud.set_active_party_ids(reusable_hud.dock.active_ids)
+	ids = RunPartyOrder.resolve(party_display_order, ids)
+	combat_engine.configure_backpack(pending_run_equipment, ids)
+	backpack_panel = RunBackpackPanel.new()
+	reusable_hud.root.add_child(backpack_panel)
+	combat_engine.backpack.changed.connect(_refresh_battle_flow_ui)
+	backpack_panel.configure(combat_engine.backpack, reusable_hud.item_bar, reusable_hud.dock, battler_catalog)
+	backpack_panel.closed.connect(_refresh_battle_flow_ui)
+	reusable_hud.dock.backpack_access = combat_engine.backpack.access_error
+	reusable_hud.dock.backpack_button.pressed.connect(_toggle_backpack)
+
+func _toggle_backpack() -> void:
+	if backpack_panel == null:
+		return
+	if backpack_panel.visible:
+		backpack_panel.close_panel()
+		return
+	if not combat_engine.backpack.access_error().is_empty():
+		return
+	reusable_hud.close_log()
+	if ability_panel.visible:
+		ability_panel.cancelled.emit()
+	backpack_panel.open_panel(battle_runtime.selected_battler_id)

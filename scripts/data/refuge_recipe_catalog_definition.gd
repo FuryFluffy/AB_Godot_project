@@ -12,12 +12,12 @@ func get_recipe(recipe_id: StringName) -> RefugeRecipeDefinition:
 	return null
 
 
-func validate_catalog(material_catalog: MaterialCatalogDefinition) -> String:
+func validate_catalog(material_catalog: MaterialCatalogDefinition, item_catalog: ItemCatalogDefinition = null) -> String:
 	var seen_ids: Dictionary = {}
 	for recipe: RefugeRecipeDefinition in recipes:
 		if recipe == null:
 			return "The Refuge recipe catalog contains an empty entry."
-		var recipe_error: String = recipe.validate_definition(material_catalog)
+		var recipe_error: String = recipe.validate_definition(material_catalog, item_catalog)
 		if not recipe_error.is_empty():
 			return recipe_error
 		if seen_ids.has(recipe.recipe_id):

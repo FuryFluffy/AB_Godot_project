@@ -137,7 +137,7 @@ func _test_live_battle_uses_art_hud() -> void:
 		"The reusable UI must use its original imported frame StyleBox."
 	)
 	var party_strip := hud.get_node("Root/PartyStrip") as PanelContainer
-	var cards := hud.get_node("Root/PartyStrip/Cards") as VBoxContainer
+	var cards := hud.get_node("Root/PartyStrip/Cards") as HBoxContainer
 	_expect(
 		party_strip != null
 		and cards != null
@@ -145,18 +145,18 @@ func _test_live_battle_uses_art_hud() -> void:
 		and cards.get_child(0).name == "LysandraCard"
 		and cards.get_child(1).name == "MiraCard"
 		and cards.get_child(2).name == "SeraphineCard",
-		"Party HUD should be a three-card vertical stack at bottom-left."
+		"Party HUD should be a horizontal current-party strip at bottom-left."
 	)
 	var item_bar := hud.get_node("Root/ItemBar") as ItemBarView
 	var command_bar := hud.get_node("Root/CommandBar") as CommandBarView
 	_expect(
 		item_bar != null
 		and command_bar != null
-		and item_bar.custom_minimum_size == Vector2(74.0, 384.0)
-		and (item_bar.get_node("Margin/Slots") as GridContainer).columns == 1
+		and item_bar.custom_minimum_size == Vector2(442.0, 86.0)
+		and (item_bar.get_node("Margin/Slots") as GridContainer).columns == 6
 		and item_bar.slot_buttons.size() == 6
-		and command_bar.custom_minimum_size == Vector2(88.0, 372.0),
-		"Items should use the right-edge tray and Commands the vertical icon bar."
+		and command_bar.custom_minimum_size == Vector2(464.0, 104.0),
+		"Items and Commands should share the single bottom dock."
 	)
 	_expect(
 		hud.combat_log.custom_minimum_size == Vector2(320.0, 220.0)
@@ -174,9 +174,9 @@ func _test_live_battle_uses_art_hud() -> void:
 		var command := command_bar.get_node("%%%s" % command_name) as Button
 		_expect(
 			command != null
-			and command.text.is_empty()
+			and not command.text.is_empty()
 			and command.icon != null,
-			"Command %s should be icon-only." % command_name
+			"Command %s should retain its icon with a visible label." % command_name
 		)
 	_expect(
 		hud.find_child("SystemControls", true, false) == null,
@@ -208,8 +208,8 @@ func _test_live_battle_uses_art_hud() -> void:
 		== Control.SIZE_EXPAND_FILL
 		and sample_entry.tooltip_text == "Phase-start effects: none."
 		and sample_entry.mouse_filter == Control.MOUSE_FILTER_STOP
-		and sample_entry.get_theme_font_size("font_size") == 12,
-		"Compact Log entries should expose technical details on hover."
+		and sample_entry.get_theme_font_size("font_size") == 16,
+		"Readable dock Log entries should retain technical details on hover."
 	)
 	_expect(
 		hud.reaction_exchange.custom_minimum_size

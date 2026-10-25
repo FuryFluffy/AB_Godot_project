@@ -1,0 +1,86 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.6-1~24.04-tux1 - Compatibility - Using Device: Intel - Mesa Intel(R) Iris(R) Xe Graphics (ADL GT2)
+
+PASS: Reset isolated ownership
+PASS: (1280, 720) alchemy separate right-side station
+PASS: Four-ingredient browsing changes no ownership
+PASS: Exact capture (1280, 720)
+PASS: Capture alchemy_preview
+PASS: Native production creates exact output once in Stash
+PASS: Native production consumes one Red Wax
+PASS: Native production consumes one Servant Cloth
+PASS: Native production consumes one Chain Links
+PASS: Native production consumes one Prison Iron
+PASS: Exact capture (1280, 720)
+PASS: Capture alchemy_produced
+PASS: Cancel restores dedicated station hotspot
+PASS: Reset isolated ownership
+PASS: (1280, 720) crafting separate right-side station
+PASS: Four-ingredient browsing changes no ownership
+PASS: Exact capture (1280, 720)
+PASS: Capture crafting_preview
+PASS: Native production creates exact output once in Stash
+PASS: Native production consumes one Red Wax
+PASS: Native production consumes one Servant Cloth
+PASS: Native production consumes one Chain Links
+PASS: Native production consumes one Prison Iron
+PASS: Exact capture (1280, 720)
+PASS: Capture crafting_produced
+PASS: Cancel restores dedicated station hotspot
+PASS: Reset isolated ownership
+PASS: (1920, 1080) alchemy separate right-side station
+PASS: Four-ingredient browsing changes no ownership
+PASS: Exact capture (1920, 1080)
+PASS: Capture alchemy_preview
+PASS: Native production creates exact output once in Stash
+PASS: Native production consumes one Red Wax
+PASS: Native production consumes one Servant Cloth
+PASS: Native production consumes one Chain Links
+PASS: Native production consumes one Prison Iron
+PASS: Exact capture (1920, 1080)
+PASS: Capture alchemy_produced
+PASS: Cancel restores dedicated station hotspot
+PASS: Reset isolated ownership
+PASS: (1920, 1080) crafting separate right-side station
+PASS: Four-ingredient browsing changes no ownership
+PASS: Exact capture (1920, 1080)
+PASS: Capture crafting_preview
+PASS: Native production creates exact output once in Stash
+PASS: Native production consumes one Red Wax
+PASS: Native production consumes one Servant Cloth
+PASS: Native production consumes one Chain Links
+PASS: Native production consumes one Prison Iron
+PASS: Exact capture (1920, 1080)
+PASS: Capture crafting_produced
+PASS: Cancel restores dedicated station hotspot
+PASS: Reset isolated ownership
+PASS: (1024, 768) alchemy separate right-side station
+PASS: Four-ingredient browsing changes no ownership
+PASS: Exact capture (1024, 768)
+PASS: Capture alchemy_preview
+PASS: Native production creates exact output once in Stash
+PASS: Native production consumes one Red Wax
+PASS: Native production consumes one Servant Cloth
+PASS: Native production consumes one Chain Links
+PASS: Native production consumes one Prison Iron
+PASS: Exact capture (1024, 768)
+PASS: Capture alchemy_produced
+PASS: Cancel restores dedicated station hotspot
+PASS: Reset isolated ownership
+PASS: (1024, 768) crafting separate right-side station
+PASS: Four-ingredient browsing changes no ownership
+PASS: Exact capture (1024, 768)
+PASS: Capture crafting_preview
+PASS: Native production creates exact output once in Stash
+PASS: Native production consumes one Red Wax
+PASS: Native production consumes one Servant Cloth
+PASS: Native production consumes one Chain Links
+PASS: Native production consumes one Prison Iron
+PASS: Exact capture (1024, 768)
+PASS: Capture crafting_produced
+PASS: Cancel restores dedicated station hotspot
+Stage 06 native production fixture: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

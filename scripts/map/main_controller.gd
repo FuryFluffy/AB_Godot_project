@@ -39,6 +39,7 @@ signal refuge_system_requested(action: StringName, slot_id: int)
 var generator: LayerMapGenerator = LayerMapGenerator.new()
 var run_state: RunState = RunState.new()
 var active_battle: CombatEncounter
+var map_return_dialog: RunRecoveryDialog
 var active_event_room: EventRoomScreen
 var active_refuge: BloomRefugeScreen
 var pending_outcome: EncounterOutcome
@@ -435,6 +436,7 @@ func _launch_encounter(
 	if active_battle == null:
 		_show_battle_launch_error("CombatEncounter could not be instantiated.")
 		return
+	active_battle.party_display_order = run_state.get_party_display_order()
 	active_battle.base_seed = encounter.encounter_seed
 	active_battle.prepare_run_encounter(
 		encounter,
@@ -528,6 +530,10 @@ func _launch_event_room(
 		_on_event_room_encounter_requested
 	)
 
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 
 	var room_state: EventRoomInstanceState
@@ -638,6 +644,11 @@ func _on_event_room_outcome_ready(
 func _on_encounter_outcome_ready(
 	outcome: EncounterOutcome
 ) -> void:
+	if outcome.result == EncounterOutcome.Result.VICTORY and _offer_fight_loot(outcome):
+		return
+	_show_encounter_summary(outcome)
+
+func _show_encounter_summary(outcome: EncounterOutcome) -> void:
 	pending_outcome = outcome
 	var is_opening: bool = (
 		run_state.is_opening_encounter_outcome(outcome)
@@ -928,6 +939,10 @@ func _launch_mira_recruitment_aftermath() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_mira_recruitment_story_outcome_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var present_actor_ids: Array[StringName] = [
 		&"lysandra",
@@ -1021,6 +1036,10 @@ func _launch_seraphine_recruitment_prelude() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_seraphine_recruitment_prelude_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var present_actor_ids: Array[StringName] = [
 		&"lysandra",
@@ -1103,6 +1122,10 @@ func _launch_seraphine_recruitment_aftermath() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_seraphine_recruitment_aftermath_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var present_actor_ids: Array[StringName] = [
 		&"lysandra",
@@ -1196,6 +1219,10 @@ func _launch_blood_nun_aftermath() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_blood_nun_aftermath_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var present_actor_ids: Array[StringName] = [
 		&"lysandra",
@@ -1335,6 +1362,10 @@ func _launch_jailer_victory_aftermath() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_jailer_victory_aftermath_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var preparation_error: String = active_event_room.prepare_story_dialogue(
 		RunState.JAILER_VICTORY_STORY_ID,
@@ -1422,6 +1453,10 @@ func _launch_farthest_cell_refuge_establishment() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_farthest_cell_refuge_establishment_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var preparation_error: String = active_event_room.prepare_story_dialogue(
 		RunState.FARTHEST_CELL_REFUGE_STORY_ID,
@@ -1533,6 +1568,10 @@ func _launch_refuge_origin() -> void:
 	active_event_room.story_dialogue_outcome_ready.connect(
 		_on_refuge_origin_ready
 	)
+	active_event_room.heroine_progression_snapshot = (
+		run_state.heroine_progression_snapshot.duplicate(true)
+	)
+	_configure_room_party(active_event_room)
 	event_room_host.add_child(active_event_room)
 	var present_actor_ids: Array[StringName] = [
 		&"lysandra",
@@ -1646,7 +1685,8 @@ func _show_refuge_hub(
 		battler_catalog,
 		knowledge_state,
 		CampaignSaveSlotStore.has_loadable_slot(active_save_slot_id),
-		refuge_management
+		refuge_management,
+		lore_catalog
 	)
 	if not present_error.is_empty():
 		active_refuge.show_status(present_error, true)
@@ -1784,24 +1824,40 @@ func _on_refuge_start_new_story_requested(next_seed: int) -> void:
 
 
 func _on_return_to_refuge_pressed() -> void:
-	var refuge_graph: LayerMapGraph = (
-		generator.generate_bloom_refuge_holding_state(run_state.run_seed)
-	)
-	var return_error: String = run_state.return_current_run_to_refuge(
-		refuge_graph,
-		battler_catalog
-	)
-	if not return_error.is_empty():
-		node_detail_label.text = return_error
-		return
-	var save_error: String = _save_active_refuge()
+	if map_return_dialog == null:
+		map_return_dialog = RunRecoveryDialog.new()
+		add_child(map_return_dialog)
+		map_return_dialog.preview = func() -> Dictionary:
+			return {"title": "Return", "text": "Return to the Bloom Refuge?", "snapshot": run_state.make_active_run_snapshot("post_node", knowledge_state)}
+		map_return_dialog.commit = func(request: Dictionary) -> String:
+			if request.get("snapshot", {}) != run_state.make_active_run_snapshot("post_node", knowledge_state):
+				return "The run changed. Please confirm Return again."
+			return _commit_refuge_return(null)
+		map_return_dialog.access_guard = _map_return_access_error
+		map_return_dialog.failed.connect(func(message: String) -> void: node_detail_label.text = message)
+	map_return_dialog.open_confirmation(return_to_refuge_button)
+
+func _map_return_access_error() -> String:
+	if active_event_room != null or active_battle != null or active_refuge != null or run_state.pending_node_id != &"":
+		return "Return is unavailable in this context."
+	return "" if run_state.has_established_refuge() else "The Bloom Refuge has not been established."
+
+func _commit_refuge_return(outcome: EventRoomOutcome) -> String:
+	var prepared: Dictionary = run_state.prepare_refuge_return(outcome, generator.generate_bloom_refuge_holding_state(run_state.run_seed), battler_catalog, knowledge_state)
+	var error: String = String(prepared.get("error", ""))
+	if not error.is_empty():
+		return error
+	var staged: RunState = prepared.state
+	error = CampaignSaveSlotStore.save_refuge_slot(active_save_slot_id, staged, knowledge_state)
+	if not error.is_empty():
+		return error
+	if run_state.run_changed.is_connected(_refresh_map):
+		run_state.run_changed.disconnect(_refresh_map)
+	run_state = staged
+	run_state.run_changed.connect(_refresh_map)
 	map_view.bind_map(run_state.graph, run_state)
-	_show_refuge_hub(
-		"Returned to the Bloom Refuge. HP and MP restored; campaign saved."
-		if save_error.is_empty()
-		else save_error,
-		not save_error.is_empty()
-	)
+	_show_refuge_hub("Returned to the Bloom Refuge. HP and MP restored; campaign saved.")
+	return ""
 
 
 func _return_failed_run_to_refuge() -> void:
@@ -2011,3 +2067,66 @@ func _on_refuge_system_action(action: StringName, slot_id: int) -> void:
 	else:
 		# Session replacement must occur after the emitting UI callback returns.
 		refuge_system_requested.emit.call_deferred(action, slot_id)
+
+func _offer_fight_loot(outcome: EncounterOutcome) -> bool:
+	var node: MapNodeState = run_state.graph.get_map_node(outcome.source_node_id) if run_state.graph != null else null
+	if node == null or node.reward_source_id == &"" or node.reward_claimed or active_battle == null:
+		return false
+	var prepared: Dictionary = run_state.prepare_node_reward(node)
+	if not String(prepared.get("error", "")).is_empty():
+		push_error(String(prepared.error))
+		return false
+	var record: Dictionary = prepared.record
+	if LootClaim.remaining(record) == 0:
+		return false
+	var battle: CombatEncounter = active_battle
+	var service := RunLootController.new()
+	service.configure(run_state.run_inventory, battle.item_inventory, run_state.run_equipment, battle.combat_engine.backpack.heroine_ids)
+	service.party_states = battle.combat_engine.battler_states
+	service.bind_sources([record])
+	# Replace the panel's controller after combat; combat permission checks remain
+	# authoritative on its original controller, which is never repurposed.
+	var panel: RunBackpackPanel = battle.backpack_panel
+	if panel.controller.changed.is_connected(panel.refresh):
+		panel.controller.changed.disconnect(panel.refresh)
+	panel.controller = service
+	service.changed.connect(panel.refresh)
+	panel.closed.connect(func() -> void:
+		node.reward_claimed = bool(record.get("claimed", false))
+		outcome.inventory_snapshot = battle.item_inventory.get_snapshot()
+		outcome.party_snapshot = battle._capture_party_run_snapshot()
+		_show_encounter_summary(outcome)
+		return_to_map_button.grab_focus.call_deferred(), CONNECT_ONE_SHOT)
+	return_overlay.hide()
+	battle.reusable_hud.close_log()
+	panel.open_panel(service.heroine_ids[0])
+	return true
+
+func _configure_room_party(room: EventRoomScreen) -> void:
+	room.party_display_order = run_state.get_party_display_order()
+	room.party_order_commit = run_state.set_party_display_order
+	room.recovery_access = func() -> String:
+		return "" if run_state.has_established_refuge() else run_state.ordinary_rest_access_error(room.party_states)
+	room.recovery_preview = func() -> Dictionary:
+		if run_state.has_established_refuge():
+			return {"title": "Return", "text": "Return to the Bloom Refuge?"}
+		var request: Dictionary = run_state.ordinary_rest_request(room.party_states)
+		if not String(request.get("error", "")).is_empty():
+			return request
+		request.title = "Rest"
+		request.text = "Restore half maximum HP and MP to all active heroines.\nRevive defeated heroines. +10 Corruption each.\n%d of 2 uses remaining. Rest?" % int(request.remaining)
+		return request
+	room.recovery_commit = func(request: Dictionary) -> String:
+		if request.get("title", "") != ("Return" if run_state.has_established_refuge() else "Rest"):
+			return "Recovery context changed. Please confirm again."
+		var error: String = room._recovery_access_error()
+		if not error.is_empty():
+			return error
+		if not run_state.has_established_refuge():
+			error = run_state.apply_ordinary_rest(room.party_states, request)
+			room._refresh_party_strip()
+			room._refresh_item_bar()
+			return error
+		var outcome: EventRoomOutcome = room.capture_room_outcome(false)
+		return "The room state could not be captured." if outcome == null else _commit_refuge_return(outcome)
+	room.recovery_remaining = func() -> int: return RunState.ORDINARY_REST_LIMIT - run_state.ordinary_rest_uses

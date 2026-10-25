@@ -18,6 +18,7 @@ var open_tween: Tween
 
 
 func _ready() -> void:
+	get_viewport().size_changed.connect(func() -> void: _position_next_to_command.call_deferred())
 	if cancel_button != null and not cancel_button.pressed.is_connected(
 		_on_cancel_pressed
 	):
@@ -48,6 +49,10 @@ func present(
 		availability_by_id[ability.ability_id] = reason
 		_add_ability_button(ability, reason)
 
+	_finish_present(caster)
+
+
+func _finish_present(caster: BattlerState) -> void:
 	title_label.text = "%s — Abilities" % (
 		caster.definition.display_name
 	)
@@ -56,11 +61,16 @@ func present(
 		empty_label.text = "No active abilities are available."
 
 	show()
+	reset_size()
 	_position_next_to_command()
+	_position_next_to_command.call_deferred()
 	_play_roll_open()
+	cancel_button.grab_focus()
 
 
 func close_panel() -> void:
+	if visible and is_instance_valid(command_anchor) and command_anchor.is_inside_tree():
+		command_anchor.grab_focus()
 	if open_tween != null and open_tween.is_valid():
 		open_tween.kill()
 	hide()
@@ -120,8 +130,8 @@ func _position_next_to_command() -> void:
 		panel_size = size
 	var viewport_size: Vector2 = get_viewport_rect().size
 	var wanted_position := Vector2(
-		anchor_rect.position.x - panel_size.x - 10.0,
-		anchor_rect.get_center().y - panel_size.y * 0.5
+		anchor_rect.end.x - panel_size.x,
+		anchor_rect.position.y - panel_size.y - 128.0
 	)
 	wanted_position.x = clampf(
 		wanted_position.x,
@@ -156,3 +166,17 @@ func _on_ability_pressed(ability_id: StringName) -> void:
 
 func _on_cancel_pressed() -> void:
 	cancelled.emit()
+
+
+func present_exploration(caster: BattlerState) -> void:
+	# Existing definitions are inspectable. No field execution contract is
+	# authored, so this does not instantiate combat controllers or spend resources.
+	close_panel()
+	for ability: AbilityDefinition in caster.get_available_abilities():
+		if ability == null or ability.is_passive():
+			continue
+		presented_abilities.append(ability)
+		var reason := "This ability is unavailable during exploration."
+		availability_by_id[ability.ability_id] = reason
+		_add_ability_button(ability, reason)
+	_finish_present(caster)

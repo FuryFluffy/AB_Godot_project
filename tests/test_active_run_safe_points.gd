@@ -18,6 +18,7 @@ func _init() -> void:
 	CampaignSaveSlotStore.set_test_save_directory(TEST_DIRECTORY)
 	_cleanup()
 	_test_pre_and_post_round_trip()
+	_test_backpack_safe_point_boundary()
 	_test_jailer_to_reverse_layer_2_safe_points_and_refuge_clear()
 	_test_malformed_restore_is_transactional()
 	_test_write_failure_and_latest_continue_selection()
@@ -583,3 +584,40 @@ func _expect(condition: bool, message: String) -> void:
 		return
 	failures += 1
 	push_error(message)
+
+
+func _test_backpack_safe_point_boundary() -> void:
+	var run: RunState = _make_active_layer_2_run(LayerMapGenerator.new())
+	var knowledge := KnowledgeState.new()
+	var ids: Array[StringName] = [&"lysandra", &"mira", &"seraphine"]
+	run.run_inventory.backpacks_by_heroine[&"lysandra"][0] = {"slot_index": 0, "item_id": "l01_bandage_roll", "quantity": 2}
+	_expect(run.travel_to(&"l2_c1_n0").is_empty() and run.prepare_pending_node_seed().is_empty(), "Backpack safe-point fixture enters node")
+	_expect(CampaignSaveSlotStore.save_active_run_slot(3, run, knowledge, "pre_node").is_empty(), "Backpack fixture saves pre-node")
+	var pre_document: Dictionary = _read_json(CampaignSaveSlotStore.get_slot_path(3))
+	var bar := SixSlotInventoryState.new()
+	bar.initialize(RunState.ITEM_CATALOG)
+	var item_ids: Array[StringName] = []
+	var counts: Array[int] = []
+	for slot: Dictionary in run.inventory_snapshot:
+		item_ids.append(StringName(slot.item_id))
+		counts.append(int(slot.quantity))
+	bar.load_items(item_ids, counts)
+	var service := RunBackpackController.new()
+	service.configure(run.run_inventory, bar, run.run_equipment, ids)
+	var source: Dictionary = RefugeInventoryTransfer.address(&"backpack", 0, &"lysandra")
+	var target: Dictionary = RefugeInventoryTransfer.address(&"item_bar", 3)
+	var result: Dictionary = service.transfer(service.request(source), target, 2)
+	_expect(result.changed and run.inventory_snapshot[3].quantity == 2, "Run owner receives atomic Backpack transfer")
+	_expect(_read_json(CampaignSaveSlotStore.get_slot_path(3)) == pre_document, "Inventory management never writes a mid-node save")
+	var interrupted := RunState.new()
+	_expect(interrupted.restore_active_run_snapshot(pre_document.active_run_snapshot, BATTLER_CATALOG).is_empty() and interrupted.pending_node_seed == run.pending_node_seed and interrupted.run_inventory.get_backpack_snapshot(&"lysandra")[0].quantity == 2 and interrupted.inventory_snapshot[3].quantity == 0, "Interrupted node restores pre-transfer inventory and same seed")
+	_expect(run.complete_pending_node(0).is_empty(), "Backpack fixture resolves node")
+	CampaignSaveSlotStore.force_test_write_failure = true
+	var failed: String = CampaignSaveSlotStore.save_active_run_slot(3, run, knowledge, "post_node")
+	CampaignSaveSlotStore.force_test_write_failure = false
+	_expect(not failed.is_empty() and _read_json(CampaignSaveSlotStore.get_slot_path(3)) == pre_document, "Failed post-node write preserves recoverable pre-node ownership")
+	_expect(CampaignSaveSlotStore.save_active_run_slot(3, run, knowledge, "post_node").is_empty(), "Resolved transfer persists through normal safe point")
+	var restored := RunState.new()
+	var document: Dictionary = _read_json(CampaignSaveSlotStore.get_slot_path(3))
+	_expect(restored.restore_active_run_snapshot(document.active_run_snapshot, BATTLER_CATALOG).is_empty() and restored.inventory_snapshot[3].quantity == 2 and BackpackPayload.is_empty(restored.run_inventory.get_backpack_snapshot(&"lysandra")[0]), "Post-node reload retains transfer without duplicating source")
+	CampaignSaveSlotStore.delete_slot(3)

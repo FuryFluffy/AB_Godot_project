@@ -22,7 +22,7 @@ func append_entry(text: String) -> void:
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.mouse_filter = Control.MOUSE_FILTER_STOP
 	label.mouse_default_cursor_shape = Control.CURSOR_HELP
-	label.add_theme_font_size_override("font_size", 12)
+	label.add_theme_font_size_override("font_size", 16)
 	entries.add_child(label)
 	call_deferred("_scroll_to_bottom")
 

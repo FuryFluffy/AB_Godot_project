@@ -448,7 +448,7 @@ func _test_exploration_party_strip_reflow() -> void:
 		hud.lysandra_card.visible
 		and hud.mira_card.visible
 		and not hud.seraphine_card.visible
-		and is_equal_approx(hud.party_strip.offset_top, -270.0),
+		and is_equal_approx(hud.party_strip.size.x, 574.0),
 		"The exploration Party Strip must collapse to two visible heroine cards."
 	)
 	hud.set_active_party_ids([&"lysandra"])
@@ -456,14 +456,14 @@ func _test_exploration_party_strip_reflow() -> void:
 		hud.lysandra_card.visible
 		and not hud.mira_card.visible
 		and not hud.seraphine_card.visible
-		and is_equal_approx(hud.party_strip.offset_top, -152.0),
+		and is_equal_approx(hud.party_strip.size.x, 292.0),
 		"The exploration Party Strip must collapse to one visible heroine card."
 	)
 	hud.set_active_party_ids([&"lysandra", &"mira", &"seraphine"])
 	_expect(
 		hud.seraphine_card.visible
-		and is_equal_approx(hud.party_strip.offset_top, -388.0),
-		"The exploration Party Strip must restore its authored three-card height."
+		and is_equal_approx(hud.party_strip.size.x, 856.0),
+		"The exploration Party Strip must restore its three-card horizontal width."
 	)
 	root.remove_child(hud)
 	hud.free()

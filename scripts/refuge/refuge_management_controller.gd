@@ -279,6 +279,8 @@ func get_material_entries() -> Array[Dictionary]:
 func get_recipe_entries() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	for recipe: RefugeRecipeDefinition in RECIPE_CATALOG.recipes:
+		if recipe.action != RefugeRecipeDefinition.Action.REPAIR_EQUIPMENT:
+			continue
 		var inputs: Array[String] = []
 		var missing_inputs: Array[String] = []
 		for key: Variant in recipe.material_inputs.keys():
@@ -374,7 +376,7 @@ func get_stash_equipment_entries() -> Array[Dictionary]:
 func get_repair_target_entries(recipe_id: StringName) -> Array[Dictionary]:
 	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(recipe_id)
 	var result: Array[Dictionary] = []
-	if recipe == null:
+	if recipe == null or recipe.action != RefugeRecipeDefinition.Action.REPAIR_EQUIPMENT:
 		return result
 	for entry: Dictionary in get_all_equipment_entries():
 		var definition: EquipmentDefinition = EQUIPMENT_CATALOG.get_equipment(
@@ -463,6 +465,21 @@ func get_backpack_heroine_entries() -> Array[Dictionary]:
 	return result
 
 
+func get_rest_heroine_entries() -> Array[Dictionary]:
+	# Recovery has no authored service rules yet. This projection cannot mutate
+	# campaign state or substitute starting stats for a missing current snapshot.
+	if run_state == null or battler_catalog == null or _ownership() == null:
+		return []
+	var result: Array[Dictionary] = get_backpack_heroine_entries()
+	for entry: Dictionary in result:
+		var id := StringName(entry.heroine_id)
+		var value: Variant = run_state.party_snapshot.get(id, run_state.party_snapshot.get(String(id), null))
+		var snapshot: Dictionary = value if value is Dictionary else {}
+		entry["resolve"] = snapshot.get("resolve", null)
+		entry["corruption"] = snapshot.get("corruption", null)
+	return result
+
+
 func _make_equipment_entry(
 	snapshot: Dictionary,
 	location: StringName,
@@ -545,3 +562,49 @@ func _ownership() -> RefugeOwnershipState:
 
 func _error(message: String) -> Dictionary:
 	return {"error": message}
+
+
+func get_production_entries(station: RefugeRecipeDefinition.Station) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if station not in [RefugeRecipeDefinition.Station.ALCHEMY, RefugeRecipeDefinition.Station.CRAFTING]:
+		return result
+	for recipe: RefugeRecipeDefinition in RECIPE_CATALOG.recipes:
+		if recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM or recipe.station != station:
+			continue
+		var error: String = recipe.validate_definition(MATERIAL_CATALOG, ITEM_CATALOG)
+		if not error.is_empty():
+			continue
+		var inputs: Array[Dictionary] = []
+		var can_pay: bool = true
+		for id: Variant in recipe.material_inputs:
+			var material: MaterialDefinition = MATERIAL_CATALOG.get_material(StringName(id))
+			var owned: int = _ownership().get_banked_material_quantity(StringName(id))
+			var required: int = int(recipe.material_inputs[id])
+			inputs.append({"id": StringName(id), "name": material.display_name, "icon": material.icon, "owned": owned, "required": required})
+			can_pay = can_pay and owned >= required
+		var output: ItemDefinition = ITEM_CATALOG.get_item(recipe.output_item_id)
+		result.append({"recipe_id": recipe.recipe_id, "name": recipe.display_name, "inputs": inputs, "can_pay": can_pay, "output_name": output.display_name, "output_icon": output.icon, "quantity": recipe.output_quantity})
+	return result
+
+
+func produce_item(station: RefugeRecipeDefinition.Station, recipe_id: StringName, expected_snapshot: Dictionary) -> Dictionary:
+	if expected_snapshot != _ownership().to_snapshot():
+		return _error("Ownership changed. Review the recipe again.")
+	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(recipe_id)
+	if recipe == null or recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM or recipe.station != station or station == RefugeRecipeDefinition.Station.WORKBENCH:
+		return _error("This recipe is unavailable at this station.")
+	return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
+		return staged.execute_production_recipe(recipe_id)
+	)
+
+
+func apply_party_order(ids: Array[StringName], expected_order: Array[StringName]) -> Dictionary:
+	if run_state == null or run_state.graph == null or run_state.graph.layer_id != &"bloom_refuge":
+		return _error("Party preparation requires the Refuge.")
+	if _ownership().selected_party_ids != expected_order:
+		return _error("Party changed. Use Reset Draft before editing again.")
+	if ids == expected_order:
+		return {"error": "", "changed": false}
+	return _mutate(func(staged: RefugeOwnershipState) -> Variant:
+		return staged.set_selected_party_order(ids)
+	)

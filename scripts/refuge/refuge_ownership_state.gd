@@ -717,11 +717,12 @@ func make_run_start_transfer() -> Dictionary:
 	staged_refuge.prepared_item_bar_slots = _make_slots(
 		RunInventoryState.ITEM_BAR_SLOT_COUNT
 	)
-	staged_refuge.preparation_slots_by_heroine = {}
-	staged_refuge.equipment_loadouts_by_heroine = {}
-	staged_refuge.memento_slots_by_heroine = {}
-	for heroine_id: StringName in known_heroine_ids:
+	staged_refuge.preparation_slots_by_heroine = preparation_slots_by_heroine.duplicate(true)
+	staged_refuge.equipment_loadouts_by_heroine = equipment_loadouts_by_heroine.duplicate(true)
+	staged_refuge.memento_slots_by_heroine = memento_slots_by_heroine.duplicate(true)
+	for heroine_id: StringName in selected_party_ids:
 		staged_refuge.preparation_slots_by_heroine[heroine_id] = _make_empty_slots()
+		staged_refuge.equipment_loadouts_by_heroine.erase(heroine_id)
 		staged_refuge.memento_slots_by_heroine[heroine_id] = null
 	staged_refuge.stash_item_stacks = stash_item_stacks.duplicate(true)
 	staged_refuge.stash_equipment_instances = stash_equipment_instances.duplicate(true)
@@ -763,9 +764,9 @@ func make_run_return_transfer(
 		else run_inventory.get_item_bar_snapshot()
 	)
 	staged_refuge.preparation_slots_by_heroine = preparation_slots_by_heroine.duplicate(true)
-	staged_refuge.equipment_loadouts_by_heroine = {}
-	staged_refuge.memento_slots_by_heroine = {}
-	for heroine_id: StringName in known_heroine_ids:
+	staged_refuge.equipment_loadouts_by_heroine = equipment_loadouts_by_heroine.duplicate(true)
+	staged_refuge.memento_slots_by_heroine = memento_slots_by_heroine.duplicate(true)
+	for heroine_id: StringName in selected_party_ids:
 		var loadout_value: Variant = run_loadouts.get(
 			heroine_id,
 			run_loadouts.get(String(heroine_id), null)
@@ -928,6 +929,8 @@ func _apply_recipe(
 	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(recipe_id)
 	if recipe == null:
 		return {"error": "Unknown Refuge recipe '%s'." % recipe_id}
+	if recipe.action != RefugeRecipeDefinition.Action.REPAIR_EQUIPMENT:
+		return {"error": "This service requires a repair recipe."}
 	var recipe_error: String = recipe.validate_definition(MATERIAL_CATALOG)
 	if not recipe_error.is_empty():
 		return {"error": recipe_error}
@@ -1100,7 +1103,7 @@ func _initialize_base(
 	)
 	if not equipment_error.is_empty():
 		return equipment_error
-	var recipe_error: String = RECIPE_CATALOG.validate_catalog(MATERIAL_CATALOG)
+	var recipe_error: String = RECIPE_CATALOG.validate_catalog(MATERIAL_CATALOG, new_item_catalog)
 	if not recipe_error.is_empty():
 		return recipe_error
 	var reference_error: String = MATERIAL_CATALOG.validate_references(
@@ -1335,8 +1338,8 @@ func _restore_snapshot_fields(
 
 
 func _validate_selected_party(heroine_ids: Array[StringName]) -> String:
-	if heroine_ids.size() != known_heroine_ids.size():
-		return "The current demo requires every recruited heroine in the selected party."
+	if heroine_ids.is_empty() or heroine_ids.size() > 3:
+		return "Select one to three recruited heroines."
 	var seen: Dictionary = {}
 	for heroine_id: StringName in heroine_ids:
 		if heroine_id == &"" or not known_heroine_ids.has(heroine_id):
@@ -1718,3 +1721,10 @@ func _clear_backpack_equipment_reference(heroine_id: StringName, instance_id: St
 	for index: int in range(slots.size()):
 		if StringName(slots[index].get("equipment_instance_id", "")) == instance_id:
 			slots[index] = _make_empty_slot(index)
+
+
+func execute_production_recipe(recipe_id: StringName) -> Dictionary:
+	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(recipe_id)
+	if recipe == null:
+		return {"error": "Unknown production recipe."}
+	return recipe.execute_production(RefugeProductionProvider.new(self))

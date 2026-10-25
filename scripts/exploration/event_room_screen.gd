@@ -38,6 +38,7 @@ var definition: EventRoomDefinition
 var instance_state: EventRoomInstanceState
 var presentation: Node
 var inventory: SixSlotInventoryState
+var backpack_controller: RunBackpackController
 var run_inventory: RunInventoryState
 var run_equipment: RunEquipmentState
 
@@ -63,6 +64,15 @@ var dialogue_runner: DialogueRunner
 var dialogue_context: DialogueContext
 var pending_dialogue_results: Array[Dictionary] = []
 var narrative_context_snapshot: Dictionary = {}
+# Read-only input for the shared Ability view; never returned as a mutation.
+var heroine_progression_snapshot: Dictionary = {}
+var party_display_order: Array[StringName] = []
+var party_order_commit: Callable
+var recovery_preview: Callable
+var recovery_commit: Callable
+var recovery_access: Callable
+var recovery_remaining: Callable
+var recovery_dialog: RunRecoveryDialog
 var current_party_ids: Array[StringName] = []
 var story_dialogue_mode: bool = false
 var story_dialogue_id: StringName = &""
@@ -816,9 +826,13 @@ func _prepare_party_strip(
 		var personal_loadout: PersonalEquipmentLoadoutState
 		if run_equipment != null:
 			personal_loadout = run_equipment.get_loadout(battler_id)
+		var progression := HeroineProgressionState.new(
+			battler_id,
+			heroine_progression_snapshot.get(battler_id, {}) as Dictionary
+		)
 		var state := BattlerState.new(
 			battler_definition,
-			null,
+			progression,
 			personal_loadout
 		)
 
@@ -915,6 +929,9 @@ func _prepare_party_strip(
 		party_states[battler_id] = state
 
 	_refresh_party_strip()
+	_initialize_run_backpack(battler_catalog)
+	_initialize_run_party()
+	_initialize_run_recovery()
 
 	return ""
 
@@ -1078,6 +1095,7 @@ func _refresh_dialogue_presentation() -> void:
 	mode_controller.set_mode(mode)
 	exploration_hud.set_dialogue_active(true, node.mandatory)
 	exploration_hud.dialogue_panel.present(dialogue_runner)
+	exploration_hud.record_dialogue("%s: %s" % [node.speaker_name, node.text])
 	_refresh_item_bar()
 
 
@@ -1280,29 +1298,23 @@ func _consume_room_item(item_id: StringName, quantity: int) -> String:
 	var assignments: Array = (
 		instance_state.local_state.get("item_spawns", []) as Array
 	).duplicate(true)
-	var eligible_indices: Array[int] = []
-	for assignment_index: int in range(assignments.size()):
-		var assignment := assignments[assignment_index] as Dictionary
-		if bool(assignment.get("collected", false)):
-			continue
+	var available: int = 0
+	for assignment: Dictionary in assignments:
 		var item: ItemDefinition = _get_assignment_item(assignment)
 		if item != null and item.item_id == item_id:
-			eligible_indices.append(assignment_index)
-	if eligible_indices.size() < quantity:
+			available += LootClaim.remaining(assignment)
+	if available < quantity:
 		return "The room no longer contains %s ×%d." % [item_id, quantity]
-	for consumed_index: int in range(quantity):
-		var assignment_index: int = eligible_indices[consumed_index]
-		var assignment := assignments[assignment_index] as Dictionary
-		assignment["collected"] = true
-		assignment["claimed"] = true
-		assignment["deferred"] = false
-		assignments[assignment_index] = assignment
-		var spawn_id := StringName(assignment.get("spawn_id", ""))
-		var pickup := active_pickups.get(spawn_id) as WorldItemPickup
-		if pickup != null:
-			active_pickups.erase(spawn_id)
-			pickup.queue_free()
-	instance_state.local_state["item_spawns"] = assignments.duplicate(true)
+	var remaining: int = quantity
+	for assignment: Dictionary in assignments:
+		var item: ItemDefinition = _get_assignment_item(assignment)
+		if item == null or item.item_id != item_id or remaining == 0:
+			continue
+		var consumed: int = mini(remaining, LootClaim.remaining(assignment))
+		LootClaim.accept(assignment, consumed)
+		remaining -= consumed
+	instance_state.local_state["item_spawns"] = assignments
+	_refresh_loot_pickups()
 	return ""
 
 
@@ -1366,7 +1378,12 @@ func _restore_party_equipment_state(
 
 
 func _refresh_party_strip() -> void:
-	exploration_hud.set_active_party_ids(current_party_ids)
+	party_display_order = RunPartyOrder.resolve(party_display_order, current_party_ids)
+	exploration_hud.set_active_party_ids(party_display_order)
+	exploration_hud.set_selected_state(party_states.get(selected_heroine_id) as BattlerState)
+	var flags: Dictionary = narrative_context_snapshot.get("flags_by_scope", {})
+	var save_flags: Dictionary = flags.get("save", {})
+	exploration_command_bar.set_refuge_established(bool(save_flags.get(RunState.REFUGE_EVER_ESTABLISHED_FLAG_ID, false)))
 	for battler_id: StringName in [
 		&"lysandra",
 		&"mira",
@@ -1400,6 +1417,10 @@ func _get_party_card(
 func _on_heroine_card_selected(
 	battler_id: StringName
 ) -> void:
+	if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
+		return
+	if exploration_hud.backpack_panel != null and exploration_hud.backpack_panel.visible:
+		return
 	if selected_item_slot_index >= 0:
 		_try_use_selected_item_on(
 			battler_id
@@ -1478,6 +1499,11 @@ func _is_item_enabled_for_dialogue(item_id: StringName) -> bool:
 func _on_item_slot_requested(
 	slot_index: int
 ) -> void:
+	if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
+		return
+	if exploration_hud.backpack_panel != null and exploration_hud.backpack_panel.visible:
+		exploration_hud.backpack_panel.select_slot(RefugeInventoryTransfer.address(&"item_bar", slot_index))
+		return
 	if inventory == null:
 		return
 
@@ -1606,7 +1632,7 @@ func _try_use_selected_item_on(
 	var item: ItemDefinition = slot.item
 
 	var validation_error: String = (
-		_validate_exploration_item_use(
+		RunItemUse._validate_exploration_item_use(
 			item,
 			target
 		)
@@ -1620,7 +1646,7 @@ func _try_use_selected_item_on(
 
 	for effect: ItemEffectDefinition in item.effects:
 		var effect_log: String = (
-			_apply_exploration_item_effect(
+			RunItemUse._apply_exploration_item_effect(
 				target,
 				effect
 			)
@@ -1675,360 +1701,6 @@ func _try_use_selected_item_on(
 		]
 	)
 
-
-func _validate_exploration_item_use(
-	item: ItemDefinition,
-	target: BattlerState
-) -> String:
-	if item == null:
-		return (
-			"The selected item slot is empty."
-		)
-
-	if (
-		target == null
-		or target.definition == null
-	):
-		return "Select a valid heroine."
-
-	if (
-		target.definition.faction
-		!= BattlerDefinition.Faction.HEROINE
-	):
-		return (
-			"Exploration items require a heroine target."
-		)
-
-	match item.item_type:
-		ItemDefinition.ItemType.PASSIVE:
-			return (
-				"%s is passive and cannot be activated."
-				% item.display_name
-			)
-
-		ItemDefinition.ItemType.KEY:
-			return (
-				"%s must be used on an "
-				+ "environmental interaction."
-			) % item.display_name
-
-	if item.performs_attack:
-		return (
-			"%s can only be used through "
-			+ "the battle Attack system."
-		) % item.display_name
-
-	if item.target_rule not in [
-		ItemDefinition.TargetRule.SELF,
-		ItemDefinition.TargetRule.SELF_OR_ADJACENT_HEROINE,
-		ItemDefinition.TargetRule.ANY_HEROINE,
-	]:
-		return (
-			"%s requires a battle or "
-			+ "environmental target."
-		) % item.display_name
-
-	if item.effects.is_empty():
-		return (
-			"%s has no active effects."
-			% item.display_name
-		)
-
-	if (
-		target.is_defeated
-		and not _item_has_effect_kind(
-			item,
-			ItemEffectDefinition.Kind.REVIVE
-		)
-	):
-		return (
-			"%s is defeated and requires "
-			+ "a revival item."
-		) % target.definition.display_name
-
-	if not _has_applicable_exploration_effect(
-		item,
-		target
-	):
-		return (
-			"%s would have no effect on %s."
-			% [
-				item.display_name,
-				target.definition.display_name,
-			]
-		)
-
-	return ""
-
-
-func _item_has_effect_kind(
-	item: ItemDefinition,
-	kind: ItemEffectDefinition.Kind
-) -> bool:
-	for effect: ItemEffectDefinition in item.effects:
-		if (
-			effect != null
-			and effect.kind == kind
-		):
-			return true
-
-	return false
-
-
-func _has_applicable_exploration_effect(
-	item: ItemDefinition,
-	target: BattlerState
-) -> bool:
-	for effect: ItemEffectDefinition in item.effects:
-		if _is_exploration_effect_applicable(
-			target,
-			effect
-		):
-			return true
-
-	return false
-
-
-func _is_exploration_effect_applicable(
-	target: BattlerState,
-	effect: ItemEffectDefinition
-) -> bool:
-	if target == null or effect == null:
-		return false
-
-	match effect.kind:
-		ItemEffectDefinition.Kind.HEAL_HP:
-			return (
-				not target.is_defeated
-				and effect.amount > 0
-				and target.current_hp
-				< target.get_max_hp()
-			)
-
-		ItemEffectDefinition.Kind.RESTORE_MP:
-			return (
-				not target.is_defeated
-				and effect.amount > 0
-				and target.current_mp
-				< target.get_max_mp()
-			)
-
-		ItemEffectDefinition.Kind.CHANGE_RESOLVE:
-			return (
-				(
-					effect.amount > 0
-					and target.current_resolve < 100
-				)
-				or (
-					effect.amount < 0
-					and target.current_resolve > 0
-				)
-			)
-
-		ItemEffectDefinition.Kind.CHANGE_CORRUPTION:
-			return (
-				(
-					effect.amount > 0
-					and target.current_corruption < 100
-				)
-				or (
-					effect.amount < 0
-					and target.current_corruption > 0
-				)
-			)
-
-		ItemEffectDefinition.Kind.REVIVE:
-			return target.is_defeated
-
-		ItemEffectDefinition.Kind.ADD_GUARD:
-			return (
-				not target.is_defeated
-				and effect.amount > 0
-				and target.item_guard_points < 99
-			)
-
-		ItemEffectDefinition.Kind.REPAIR_WEAPON:
-			return (
-				target.weapon_state != null
-				and (
-					target.weapon_state.is_broken
-					or target.weapon_state.durability_damage > 0
-				)
-			)
-
-		ItemEffectDefinition.Kind.REPAIR_ARMOR:
-			return (
-				target.armor_state != null
-				and (
-					target.armor_state.is_broken
-					or target.armor_state.absorbed_damage > 0
-				)
-			)
-
-		ItemEffectDefinition.Kind.REPAIR_SHIELD:
-			return (
-				target.shield_state != null
-				and (
-					target.shield_state.is_broken
-					or target.shield_state.absorbed_damage > 0
-				)
-			)
-
-	return false
-
-
-func _apply_exploration_item_effect(
-	target: BattlerState,
-	effect: ItemEffectDefinition
-) -> String:
-	if not _is_exploration_effect_applicable(
-		target,
-		effect
-	):
-		return ""
-
-	var display_name: String = (
-		target.definition.display_name
-	)
-
-	match effect.kind:
-		ItemEffectDefinition.Kind.HEAL_HP:
-			var restored_hp: int = target.heal(
-				effect.amount
-			)
-
-			if restored_hp > 0:
-				return (
-					"%s restored %d HP."
-					% [
-						display_name,
-						restored_hp,
-					]
-				)
-
-		ItemEffectDefinition.Kind.RESTORE_MP:
-			var restored_mp: int = target.restore_mp(
-				effect.amount
-			)
-
-			if restored_mp > 0:
-				return (
-					"%s restored %d MP."
-					% [
-						display_name,
-						restored_mp,
-					]
-				)
-
-		ItemEffectDefinition.Kind.CHANGE_RESOLVE:
-			var resolve_change: int = (
-				target.change_resolve(
-					effect.amount
-				)
-			)
-
-			if resolve_change != 0:
-				return (
-					"%s's Resolve changed by %d."
-					% [
-						display_name,
-						resolve_change,
-					]
-				)
-
-		ItemEffectDefinition.Kind.CHANGE_CORRUPTION:
-			var corruption_change: int = (
-				target.change_corruption(
-					effect.amount
-				)
-			)
-
-			if corruption_change != 0:
-				return (
-					"%s's Corruption changed by %d."
-					% [
-						display_name,
-						corruption_change,
-					]
-				)
-
-		ItemEffectDefinition.Kind.REVIVE:
-			if target.revive(
-				maxi(
-					effect.amount,
-					1
-				)
-			):
-				return (
-					"%s was revived."
-					% display_name
-				)
-
-		ItemEffectDefinition.Kind.ADD_GUARD:
-			var guard_added: int = (
-				target.add_item_guard(
-					effect.amount
-				)
-			)
-
-			if guard_added > 0:
-				return (
-					"%s gained %d Item Guard."
-					% [
-						display_name,
-						guard_added,
-					]
-				)
-
-		ItemEffectDefinition.Kind.REPAIR_WEAPON:
-			var weapon_repaired: int = (
-				target.repair_weapon(
-					effect.amount
-				)
-			)
-
-			if weapon_repaired > 0:
-				return (
-					"%s repaired %d Weapon damage."
-					% [
-						display_name,
-						weapon_repaired,
-					]
-				)
-
-		ItemEffectDefinition.Kind.REPAIR_ARMOR:
-			var armor_repaired: int = (
-				target.repair_armor(
-					effect.amount
-				)
-			)
-
-			if armor_repaired > 0:
-				return (
-					"%s repaired %d Armor damage."
-					% [
-						display_name,
-						armor_repaired,
-					]
-				)
-
-		ItemEffectDefinition.Kind.REPAIR_SHIELD:
-			var shield_repaired: int = (
-				target.repair_shield(
-					effect.amount
-				)
-			)
-
-			if shield_repaired > 0:
-				return (
-					"%s repaired %d Shield damage."
-					% [
-						display_name,
-						shield_repaired,
-					]
-				)
-
-	return ""
 
 func _prepare_room_items() -> String:
 	active_pickups.clear()
@@ -4068,133 +3740,32 @@ func _restore_selected_item_description() -> void:
 		]
 
 
-func _on_world_item_pickup_requested(
-	world_item_id: StringName
-) -> void:
-	var assignments: Array = (
-		instance_state.local_state.get(
-			"item_spawns",
-			[]
-		) as Array
-	)
-
-	for assignment_index: int in range(
-		assignments.size()
-	):
-		var assignment: Dictionary = (
-			assignments[
-				assignment_index
-			] as Dictionary
-		)
-
-		if StringName(
-			assignment.get(
-				"spawn_id",
-				""
-			)
-		) != world_item_id:
+func _on_world_item_pickup_requested(world_item_id: StringName) -> void:
+	if backpack_controller == null or not backpack_controller.access_error().is_empty():
+		return
+	var panel: RunBackpackPanel = exploration_hud.backpack_panel
+	if panel.visible:
+		return
+	var assignments: Array = instance_state.local_state.get("item_spawns", [])
+	for assignment: Dictionary in assignments:
+		if StringName(assignment.get("spawn_id", "")) != world_item_id or LootClaim.remaining(assignment) == 0:
 			continue
-
-		if bool(
-			assignment.get(
-				"collected",
-				false
-			)
-		):
-			return
-
-		var item : ItemDefinition = (
-			_get_assignment_item(
-				assignment
-			)
-		)
-		
-		if item == null:
-			hover_label.text = "That room item is no longer defined"
-			
-			return
-
-		var quantity: int = int(
-			assignment.get(
-				"quantity",
-				1
-			)
-		)
-
-		var inventory_error: String = _route_carried_item_reward(
-			item.item_id,
-			quantity
-		)
-
-		if not inventory_error.is_empty():
-			if assignment.has("resolution_seed"):
-				assignment["deferred"] = true
-				assignment["claimed"] = false
-				assignments[assignment_index] = assignment
-				instance_state.local_state[
-					"item_spawns"
-				] = assignments.duplicate(true)
-				print(
-					"Reward deferred: source=%s binding=%s item=%s quantity=%d reason=%s"
-					% [
-						assignment.get("source_id", ""),
-						assignment.get("binding_id", ""),
-						item.item_id,
-						quantity,
-						inventory_error,
-					]
-				)
-			hover_label.text = inventory_error
-			return
-
-		assignment["collected"] = true
-		if assignment.has("resolution_seed"):
-			assignment["claimed"] = true
-			assignment["deferred"] = false
-			print(
-				"Reward claimed: source=%s binding=%s item=%s quantity=%d domain=%s"
-				% [
-					assignment.get("source_id", ""),
-					assignment.get("binding_id", ""),
-					item.item_id,
-					quantity,
-					run_inventory.get_runtime_domain(item.item_id),
-				]
-			)
-		assignments[assignment_index] = assignment
-
-		instance_state.local_state[
-			"item_spawns"
-		] = assignments.duplicate(true)
-
-		var pickup := active_pickups.get(
-			world_item_id
-		) as WorldItemPickup
-
-		if pickup != null:
-			active_pickups.erase(
-				world_item_id
-			)
-
-			pickup.queue_free()
-
-		var domain_label: String = _get_carried_domain_label(
-			run_inventory.get_runtime_domain(item.item_id)
-		)
-		hover_label.text = "Added %s ×%d to the %s." % [
-			item.display_name,
-			quantity,
-			domain_label,
-		]
-
-		selected_item_slot_index = -1
-		selected_heroine_id = &""
-
-		_refresh_item_bar()
-		_refresh_party_strip()
-
+		var service := backpack_controller as RunLootController
+		service.bind_sources([assignment])
+		exploration_hud.ability_panel.close_panel()
+		exploration_hud.dock.set_log_open(false)
+		panel.open_panel(selected_heroine_id)
 		return
 
+func _refresh_loot_pickups() -> void:
+	if instance_state == null:
+		return
+	for assignment: Dictionary in instance_state.local_state.get("item_spawns", []):
+		var id := StringName(assignment.get("spawn_id", ""))
+		if LootClaim.remaining(assignment) == 0 and active_pickups.has(id):
+			active_pickups[id].queue_free()
+			active_pickups.erase(id)
+	_refresh_party_strip()
 
 func _is_room_lock_unlocked(
 	lock_id: StringName
@@ -4420,13 +3991,11 @@ func show_story_holding_message(message: String) -> void:
 	hover_label.text = message
 
 
-func _emit_room_outcome(
-	clear_node: bool
-) -> void:
+func capture_room_outcome(clear_node: bool = false) -> EventRoomOutcome:
 	var inventory_error: String = _sync_run_inventory_item_bar()
 	if not inventory_error.is_empty():
 		hover_label.text = inventory_error
-		return
+		return null
 	var outcome := EventRoomOutcome.new()
 
 	outcome.source_node_id = (
@@ -4455,9 +4024,12 @@ func _emit_room_outcome(
 
 	outcome.clear_node = clear_node
 
-	room_outcome_ready.emit(
-		outcome
-	)
+	return outcome
+
+func _emit_room_outcome(clear_node: bool) -> void:
+	var outcome: EventRoomOutcome = capture_room_outcome(clear_node)
+	if outcome != null:
+		room_outcome_ready.emit(outcome)
 
 
 func _route_carried_item_reward(
@@ -4510,3 +4082,121 @@ func _get_carried_domain_label(domain: StringName) -> String:
 		RunInventoryState.DOMAIN_MEMENTO:
 			return "Memento slot"
 	return "carried inventory"
+
+
+func _initialize_run_backpack(battlers: BattlerCatalogDefinition) -> void:
+	if run_inventory == null or inventory == null or exploration_hud.backpack_panel != null:
+		return
+	var ids: Array[StringName] = []
+	for id: StringName in current_party_ids:
+		if run_inventory.backpacks_by_heroine.has(id):
+			ids.append(id)
+	if ids.is_empty():
+		return
+	backpack_controller = RunLootController.new()
+	(backpack_controller as RunLootController).party_states = party_states
+	backpack_controller.changed.connect(_refresh_loot_pickups)
+	ids = RunPartyOrder.resolve(party_display_order, ids)
+	backpack_controller.configure(run_inventory, inventory, run_equipment, ids)
+	backpack_controller.exploration_guard = func() -> String:
+		if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
+			return "Close Party first."
+		if mode_controller.is_dialogue_active():
+			return "Finish the current dialogue first."
+		return "Finish or cancel the Item Bar selection first." if selected_item_slot_index >= 0 else ""
+	var panel := RunBackpackPanel.new()
+	exploration_hud.add_child(panel)
+	exploration_hud.backpack_panel = panel
+	panel.configure(backpack_controller, item_bar, exploration_hud.dock, battlers)
+	panel.closed.connect(_refresh_item_bar)
+	exploration_hud.dock.backpack_access = backpack_controller.access_error
+	exploration_hud.dock.backpack_button.pressed.connect(_toggle_backpack)
+	exploration_hud.backpack_requested.connect(_toggle_backpack)
+
+func _toggle_backpack() -> void:
+	var panel: RunBackpackPanel = exploration_hud.backpack_panel
+	if panel == null:
+		return
+	if panel.visible:
+		panel.close_panel()
+		return
+	if not backpack_controller.access_error().is_empty():
+		return
+	exploration_hud.ability_panel.close_panel()
+	exploration_hud.dock.set_log_open(false)
+	panel.open_panel(selected_heroine_id)
+
+func _party_access_error() -> String:
+	if story_dialogue_mode or mode_controller.is_dialogue_active():
+		return "Finish the current dialogue first."
+	if selected_item_slot_index >= 0:
+		return "Finish or cancel the Item Bar selection first."
+	if exploration_hud.backpack_panel != null and exploration_hud.backpack_panel.visible:
+		return "Close Backpack or Loot first."
+	return ""
+
+func _initialize_run_party() -> void:
+	if exploration_hud.party_panel != null:
+		return
+	var panel := RunPartyPanel.new()
+	exploration_hud.add_child(panel)
+	exploration_hud.party_panel = panel
+	exploration_hud.command_bar.party_access = _party_access_error
+	exploration_hud.command_bar.party_requested.connect(_toggle_party)
+
+func _toggle_party() -> void:
+	var panel: RunPartyPanel = exploration_hud.party_panel
+	if panel == null:
+		return
+	if panel.visible:
+		panel.close_panel()
+		return
+	if not _party_access_error().is_empty():
+		return
+	exploration_hud.ability_panel.close_panel()
+	exploration_hud.dock.set_log_open(false)
+	panel.configure(party_states, party_display_order, run_inventory, run_equipment, _apply_party_display_order, _party_access_error, exploration_hud.dock, exploration_hud.command_bar.party_button)
+	panel.open_panel(selected_heroine_id)
+
+func _apply_party_display_order(next: Array[StringName], expected: Array[StringName]) -> String:
+	var error: String = _party_access_error()
+	if not error.is_empty():
+		return error
+	if expected != party_display_order:
+		return "Party order changed. Reopen Party and try again."
+	error = RunPartyOrder.validate(next, current_party_ids)
+	if not error.is_empty():
+		return error
+	if party_order_commit.is_valid():
+		error = String(party_order_commit.call(next, expected))
+		if not error.is_empty():
+			return error
+	party_display_order = next.duplicate()
+	_refresh_party_strip()
+	if backpack_controller != null:
+		backpack_controller.heroine_ids = RunPartyOrder.resolve(next, backpack_controller.heroine_ids)
+	return ""
+
+func _recovery_access_error() -> String:
+	var error: String = _party_access_error()
+	if not error.is_empty():
+		return error
+	if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
+		return "Close Party first."
+	return String(recovery_access.call()) if recovery_access.is_valid() else "Recovery is unavailable."
+
+func _initialize_run_recovery() -> void:
+	if recovery_dialog != null:
+		return
+	recovery_dialog = RunRecoveryDialog.new()
+	exploration_hud.add_child(recovery_dialog)
+	recovery_dialog.preview = recovery_preview
+	recovery_dialog.commit = recovery_commit
+	recovery_dialog.access_guard = _recovery_access_error
+	recovery_dialog.failed.connect(func(message: String) -> void: hover_label.text = message)
+	exploration_command_bar.recovery_access = _recovery_access_error
+	exploration_command_bar.recovery_remaining = recovery_remaining
+	exploration_command_bar.recovery_requested.connect(func() -> void:
+		exploration_hud.ability_panel.close_panel()
+		exploration_hud.dock.set_log_open(false)
+		recovery_dialog.open_confirmation(exploration_command_bar.recovery_button))

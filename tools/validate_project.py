@@ -1188,14 +1188,15 @@ def validate_opening_event_room_flow(errors: list[str]) -> None:
         errors.append(f"{hud}: combat HUD is not solo-party aware")
     for fragment in (
         "func set_active_party_ids(",
-        "party_strip.offset_top = party_strip.offset_bottom - content_height",
+        "dock.set_active_party_ids(active_party_ids)",
     ):
         if fragment not in exploration_hud_text:
             errors.append(
                 f"{exploration_hud}: exploration Party Strip does not reflow: "
                 f"{fragment}"
             )
-    if "exploration_hud.set_active_party_ids(current_party_ids)" not in event_screen_text:
+    if ("party_display_order = RunPartyOrder.resolve(party_display_order, current_party_ids)" not in event_screen_text
+            or "exploration_hud.set_active_party_ids(party_display_order)" not in event_screen_text):
         errors.append(
             f"{event_screen}: current party is not handed to the adaptive Party Strip"
         )
@@ -2513,7 +2514,7 @@ def validate_combat_hud(errors: list[str]) -> None:
             )
         for layout_fragment in (
             'node name="PartyStrip" type="PanelContainer" parent="Root"',
-            'node name="Cards" type="VBoxContainer" parent="Root/PartyStrip"',
+            'node name="Cards" type="HBoxContainer" parent="Root/PartyStrip"',
             'node name="ItemBar" parent="Root"',
             'node name="CommandBar" parent="Root"',
             "offset_left = -90.0",
@@ -2521,7 +2522,7 @@ def validate_combat_hud(errors: list[str]) -> None:
         ):
             if layout_fragment not in hud_text:
                 errors.append(
-                    f"{reusable_hud}: compact edge HUD is missing "
+                    f"{reusable_hud}: shared bottom HUD is missing "
                     f"{layout_fragment!r}"
                 )
         if not re.search(
@@ -2581,7 +2582,7 @@ def validate_combat_hud(errors: list[str]) -> None:
             not in log_drawer_script_text
             or "label.mouse_filter = Control.MOUSE_FILTER_STOP"
             not in log_drawer_script_text
-            or 'label.add_theme_font_size_override("font_size", 12)'
+            or 'label.add_theme_font_size_override("font_size", 16)'
             not in log_drawer_script_text
             or "label.custom_minimum_size.x = 1.0"
             in log_drawer_script_text
@@ -2592,7 +2593,7 @@ def validate_combat_hud(errors: list[str]) -> None:
             )
     expected_component_sizes = {
         "item_bar_view.tscn": "Vector2(74, 384)",
-        "command_bar_view.tscn": "Vector2(88, 372)",
+        "command_bar_view.tscn": "Vector2(464, 104)",
     }
     for component_name, expected_size in expected_component_sizes.items():
         component = (
@@ -2612,8 +2613,8 @@ def validate_combat_hud(errors: list[str]) -> None:
                 f"{component}: missing compact authored size {expected_size}"
             )
         if component_name == "item_bar_view.tscn":
-            # Stage 02 reuses these six buttons horizontally in Refuge only.
-            # The authored combat default must still be one vertical column.
+            # The standalone tray retains its legacy default. Stage 10 calls
+            # use_horizontal_layout through RunHUDDock in both run contexts.
             slots = re.search(
                 r'^\[node name="Slots" type="(VBoxContainer|GridContainer)" '
                 r'parent="Margin"\]\n(.*?)(?=^\[|\Z)',
@@ -3262,8 +3263,8 @@ def validate_reward_sources(errors: list[str]) -> None:
         ),
         ROOT / "scripts" / "exploration" / "event_room_screen.gd": (
             "RewardSourceResolver.resolve(",
-            'assignment["deferred"] = true',
-            'assignment["claimed"] = true',
+            "service.bind_sources([assignment])",
+            "LootClaim.accept(assignment, consumed)",
         ),
         ROOT / "scripts" / "exploration" / "generated_items" / "generated_room_item_placement_rule.gd": (
             "@export var reward_source: RoomLootSourceDefinition",

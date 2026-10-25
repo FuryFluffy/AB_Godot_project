@@ -9,6 +9,13 @@ extends Resource
 @export_multiline var discovery_text: String = ""
 @export_multiline var archive_text: String = ""
 
+@export_group("Optional Archive Media")
+## Opt-in media for this discovered entry. Registration grants no discovery.
+@export var archive_image: Texture2D
+@export var archive_replay: DialogueDefinition
+## Authored starting DialogueContext snapshot, never live campaign state.
+@export var archive_replay_context: Dictionary = {}
+
 
 func validate_definition() -> String:
 	if lore_id == &"":

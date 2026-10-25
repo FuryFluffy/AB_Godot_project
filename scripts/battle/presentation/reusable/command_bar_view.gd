@@ -31,7 +31,7 @@ func _ready() -> void:
 	struggle_button.pressed.connect(struggle_requested.emit)
 	grapple_wait_button.pressed.connect(grapple_wait_requested.emit)
 	submit_button.pressed.connect(submit_requested.emit)
-	_clear_visible_button_text()
+	_set_visible_button_text()
 	set_grapple_context(false, false, false)
 
 
@@ -85,14 +85,14 @@ func set_grapple_context(
 			else "Wait is unavailable in the current state."
 		)
 		submit_button.tooltip_text = (
-			"Requires Refuge Grapple upgrade level 1."
+			"Submit unlock is not yet available."
 			if not can_submit
 			else "Submit to the active Grapple."
 		)
 
 
 func set_phase_label(label: String) -> void:
-	end_phase_button.text = ""
+	end_phase_button.text = "Begin" if label.to_upper().contains("BEGIN") else "End Phase"
 	end_phase_button.tooltip_text = (
 		"Begin the encounter."
 		if label.to_upper().contains("BEGIN")
@@ -105,26 +105,26 @@ func set_action_labels(
 	move_label: String,
 	ability_label: String
 ) -> void:
-	attack_button.text = ""
-	move_button.text = ""
-	ability_button.text = ""
+	attack_button.text = "Attack"
+	move_button.text = "Move"
+	ability_button.text = "Ability"
 	attack_button.tooltip_text = _state_tooltip("Attack", attack_label)
 	move_button.tooltip_text = _state_tooltip("Move", move_label)
 	ability_button.tooltip_text = _state_tooltip("Ability", ability_label)
 
 
 func set_attack_hint(hint: String) -> void:
-	attack_button.text = ""
+	attack_button.text = "Attack"
 	attack_button.tooltip_text = hint
 
 
 func set_move_hint(hint: String) -> void:
-	move_button.text = ""
+	move_button.text = "Move"
 	move_button.tooltip_text = hint
 
 
 func set_ability_hint(hint: String) -> void:
-	ability_button.text = ""
+	ability_button.text = "Ability"
 	ability_button.tooltip_text = hint
 
 
@@ -134,15 +134,9 @@ func _state_tooltip(command_name: String, state_label: String) -> String:
 	return command_name
 
 
-func _clear_visible_button_text() -> void:
-	for button: Button in [
-		attack_button,
-		move_button,
-		ability_button,
-		end_phase_button,
-		log_button,
-		struggle_button,
-		grapple_wait_button,
-		submit_button,
-	]:
-		button.text = ""
+func _set_visible_button_text() -> void:
+	var labels: Array[String] = ["Attack", "Move", "Ability", "End Phase", "Combat Log", "Struggle", "Wait", "Submit"]
+	var buttons: Array[Button] = [attack_button, move_button, ability_button, end_phase_button, log_button, struggle_button, grapple_wait_button, submit_button]
+	for index: int in range(buttons.size()):
+		buttons[index].text = labels[index]
+	log_button.hide()

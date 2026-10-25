@@ -6,6 +6,8 @@ signal slot_requested(slot_index: int)
 
 
 var slot_buttons: Array[Button] = []
+# Presentation mode: empty slots accept moves; callers still own permissions.
+var management_mode: bool = false
 
 
 func _ready() -> void:
@@ -32,14 +34,14 @@ func display_slot(
 	var button: Button = slot_buttons[slot_index]
 	button.icon = icon
 	button.text = _compact_slot_label(label, icon != null)
-	button.disabled = not enabled
+	button.disabled = not enabled and not management_mode
 	button.tooltip_text = tooltip
 	button.button_pressed = selected
 
 
 func set_locked(locked: bool) -> void:
 	for button: Button in slot_buttons:
-		button.disabled = locked
+		button.disabled = locked and not management_mode
 
 
 func _compact_slot_label(label: String, has_icon: bool) -> String:
@@ -65,7 +67,7 @@ func _compact_slot_label(label: String, has_icon: bool) -> String:
 
 
 func use_horizontal_layout() -> void:
-	# Same six native buttons; the existing combat layout remains vertical until Stage 10.
+	# Same six native buttons shared by Refuge and the run dock.
 	var slots := get_node("Margin/Slots") as GridContainer
 	slots.columns = 6
 	slots.add_theme_constant_override("h_separation", 6)

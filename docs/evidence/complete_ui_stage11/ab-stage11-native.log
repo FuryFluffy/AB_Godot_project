@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.6-1~24.04-tux1 - Compatibility - Using Device: Intel - Mesa Intel(R) Iris(R) Xe Graphics (ADL GT2)
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler, Hollow Servant (2 enemy/enemies).
+Stage 11 native Backpack: 50 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

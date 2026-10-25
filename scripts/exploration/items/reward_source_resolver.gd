@@ -196,6 +196,9 @@ static func validate_resolution_record(
 	item_catalog: ItemCatalogDefinition,
 	expected_key: String = ""
 ) -> String:
+	var claim_error: String = LootClaim.validate(record)
+	if not claim_error.is_empty():
+		return claim_error
 	var source_id := StringName(record.get("source_id", ""))
 	var binding_id := StringName(record.get("binding_id", ""))
 	if source_id == &"" or binding_id == &"":

@@ -14,10 +14,17 @@ signal selected(battler_id: StringName)
 @onready var resolve_bar: ProgressBar = %ResolveBar
 @onready var corruption_bar: ProgressBar = %CorruptionBar
 @onready var action_pips: HBoxContainer = %ActionPips
+var status_label: Label
 
 
 func _ready() -> void:
 	gui_input.connect(_on_gui_input)
+	focus_mode = Control.FOCUS_ALL
+	var normal_frame: StyleBox = get_theme_stylebox("panel")
+	var focus_frame: StyleBoxFlat = normal_frame.duplicate()
+	focus_frame.border_color = Color(1.0, 0.92, 0.68)
+	focus_entered.connect(func() -> void: add_theme_stylebox_override("panel", focus_frame))
+	focus_exited.connect(func() -> void: add_theme_stylebox_override("panel", normal_frame))
 
 
 func set_portrait(texture: Texture2D) -> void:
@@ -42,6 +49,14 @@ func display_state(state: BattlerState, is_selected: bool) -> void:
 		state.current_corruption,
 		100
 	)
+	if status_label != null:
+		var grid := hp_bar.get_parent()
+		grid.get_node("HPLabel").text = "HP %d/%d" % [state.current_hp, state.get_max_hp()]
+		grid.get_node("MPLabel").text = "MP %d/%d" % [state.current_mp, state.get_max_mp()]
+		grid.get_node("ResLabel").text = "Resolve %d" % state.current_resolve
+		grid.get_node("CorLabel").text = "Corrupt. %d" % state.current_corruption
+		status_label.text = "Status: " + state.get_status_summary()
+		status_label.tooltip_text = status_label.text
 	_refresh_action_pips(
 		state.current_actions,
 		state.get_max_actions()
@@ -98,9 +113,41 @@ func _refresh_action_pips(current: int, maximum: int) -> void:
 
 func _on_gui_input(event: InputEvent) -> void:
 	if (
-		event is InputEventMouseButton
+		(event is InputEventMouseButton
 		and event.pressed
-		and event.button_index == MOUSE_BUTTON_LEFT
+		and event.button_index == MOUSE_BUTTON_LEFT)
+		or event.is_action_pressed(&"ui_accept")
 	):
 		selected.emit(battler_id)
 		accept_event()
+
+
+func use_dock_layout() -> void:
+	custom_maximum_size = Vector2(-1, -1)
+	custom_minimum_size = Vector2(276, 180)
+	size_flags_horizontal = Control.SIZE_FILL
+	var frame: Control = portrait.get_parent()
+	frame.custom_maximum_size = Vector2(-1, -1)
+	frame.custom_minimum_size = Vector2(56, 80)
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", 18)
+	for label: Node in hp_bar.get_parent().get_children():
+		if label is Label:
+			label.add_theme_font_size_override("font_size", 16)
+	var actions: Label = action_pips.get_parent().get_node("ActLabel")
+	actions.add_theme_font_size_override("font_size", 16)
+	status_label = Label.new()
+	status_label.name = "Status"
+	status_label.add_theme_font_size_override("font_size", 14)
+	status_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	status_label.custom_minimum_size.x = 1
+	name_label.get_parent().add_child(status_label)
+	_ignore_child_mouse(self)
+	reset_size()
+
+
+func _ignore_child_mouse(node: Node) -> void:
+	for child: Node in node.get_children():
+		if child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_ignore_child_mouse(child)

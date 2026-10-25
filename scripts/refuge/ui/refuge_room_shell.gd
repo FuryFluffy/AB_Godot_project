@@ -39,6 +39,7 @@ var fullscreen_check: CheckBox
 var scale_slider: HSlider
 var settings_status: Label
 var ui_scale: float = 1.0
+var expedition_party_open: bool = false
 
 
 func _ready() -> void:
@@ -362,9 +363,9 @@ func _layout() -> void:
 	canvas.scale = Vector2.ONE * fit
 	canvas.position = (size - CANVAS_SIZE * fit) * 0.5
 	bloom_frame.position = Vector2(size.x - bloom_frame.size.x - 24, 20)
-	var fraction: float = 0.43 if active_station in [&"stash", &"loadouts", &"repair", &"expedition"] else 0.33
+	var fraction: float = (0.94 if expedition_party_open else 0.50) if active_station == &"expedition" else 0.50 if active_station == &"records" else 0.48 if active_station in [&"alchemy", &"crafting"] else 0.43 if active_station in [&"stash", &"loadouts", &"repair", &"expedition"] else 0.33
 	var width: float = minf(size.x - 40, maxf(480, size.x * fraction * ui_scale))
-	var left: bool = active_station != &"loadouts" and origin_station in [&"alchemy", &"repair", &"loadouts", &"records", &"expedition"]
+	var left: bool = active_station not in [&"loadouts", &"alchemy", &"crafting", &"expedition", &"records"] and origin_station in [&"alchemy", &"repair", &"loadouts", &"records", &"expedition"]
 	panel.position = Vector2(20 if left else size.x - width - 20, 76)
 	var bar_visible: bool = inventory_bar != null and inventory_bar.visible
 	panel.size = Vector2(width, maxf(200, size.y - (190 if bar_visible else 100)))

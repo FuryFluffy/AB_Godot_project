@@ -70,6 +70,23 @@ static func apply(state: RefugeOwnershipState, source: Dictionary, target: Dicti
 			from[from_index] = _at(item, available - moved, from_index, String(source.domain))
 			_cleanup_stash(state)
 		return _result(moved, available - moved)
+	return apply_ordered(state.item_catalog, source, target, quantity, from, to)
+
+# Shared fixed-slot algorithm. Callers stage their own existing ownership state.
+static func apply_ordered(catalog: ItemCatalogDefinition, source: Dictionary, target: Dictionary, quantity: int, from: Array, to: Array) -> Dictionary:
+	var from_index: int = int(source.get("index", -1))
+	if from_index < 0 or from_index >= from.size():
+		return _error("Choose a valid source slot.")
+	var item: Dictionary = from[from_index].duplicate(true)
+	var available: int = int(item.get("quantity", 0))
+	if BackpackPayload.is_empty(item) or quantity <= 0 or quantity > available:
+		return _error("Choose a quantity from 1 to the source quantity.")
+	var domain := String(target.get("domain", ""))
+	if domain not in ["backpack", "item_bar"] or String(source.get("domain", "")) not in ["backpack", "item_bar"]:
+		return _error("Unsupported inventory destination.")
+	var incoming_error: String = _eligible_item(catalog, item, domain)
+	if not incoming_error.is_empty():
+		return _error(incoming_error)
 	if domain == "stash" or String(source.domain) == "stash":
 		return _error("Use named quick transfers between Stash and Backpacks.")
 	if domain == "backpack" and String(source.domain) == "backpack" and String(source.heroine) != String(target.heroine):
@@ -82,14 +99,14 @@ static func apply(state: RefugeOwnershipState, source: Dictionary, target: Dicti
 	var displaced: Dictionary = to[target_index].duplicate(true)
 	if _matches(item, displaced) or BackpackPayload.is_empty(displaced):
 		var count: int = 0 if BackpackPayload.is_empty(displaced) else int(displaced.quantity)
-		var accepted: int = mini(quantity, _limit(state, item) - count)
+		var accepted: int = mini(quantity, _item_limit(catalog, item) - count)
 		if accepted > 0:
 			to[target_index] = _at(item, count + accepted, target_index, domain)
 			from[from_index] = _at(item, available - accepted, from_index, String(source.domain))
 		return _result(accepted, available - accepted)
 	if quantity != available:
 		return _error("A partial stack cannot swap with a different occupied item.")
-	eligibility = _eligible(state, displaced, String(source.domain))
+	var eligibility: String = _eligible_item(catalog, displaced, String(source.domain))
 	if not eligibility.is_empty():
 		return _error(eligibility)
 	to[target_index] = _at(item, available, target_index, domain)
@@ -114,9 +131,12 @@ static func _quick_equipment(state: RefugeOwnershipState, source: Dictionary, ta
 	return _result(1, 0) if error.is_empty() else _error(error)
 
 static func _eligible(state: RefugeOwnershipState, item: Dictionary, domain: String) -> String:
+	return _eligible_item(state.item_catalog, item, domain)
+
+static func _eligible_item(catalog: ItemCatalogDefinition, item: Dictionary, domain: String) -> String:
 	if item.has("equipment_instance_id"):
 		return "Equipment cannot enter the Item Bar." if domain == "item_bar" else ""
-	var definition: ItemDefinition = state.item_catalog.get_item(StringName(item.get("item_id", "")))
+	var definition: ItemDefinition = catalog.get_item(StringName(item.get("item_id", "")))
 	if definition == null or not definition.canonical_workbook_item:
 		return "Unknown inventory item."
 	if domain == "item_bar":
@@ -127,7 +147,10 @@ static func _eligible(state: RefugeOwnershipState, item: Dictionary, domain: Str
 	return ""
 
 static func _limit(state: RefugeOwnershipState, item: Dictionary) -> int:
-	return 1 if item.has("equipment_instance_id") else state.item_catalog.get_item(StringName(item.item_id)).stack_limit
+	return _item_limit(state.item_catalog, item)
+
+static func _item_limit(catalog: ItemCatalogDefinition, item: Dictionary) -> int:
+	return 1 if item.has("equipment_instance_id") else catalog.get_item(StringName(item.item_id)).stack_limit
 
 static func _matches(a: Dictionary, b: Dictionary) -> bool:
 	# Canonical definitions currently carry no per-stack modifiers. Stable ID is

@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Chain Thrall, Iron-Masked Guard (2 enemy/enemies).
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3197432318
+Stage 12 native Loot: 30 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

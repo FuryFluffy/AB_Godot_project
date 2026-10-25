@@ -204,3 +204,40 @@ func _reset_systems() -> void:
 	item_use_controller = ItemUseController.new()
 	dodge_step_controller = DodgeStepController.new()
 	reaction_exchange_controller = ReactionExchangeController.new()
+
+
+# Backpack permission is authoritative here, including calls outside the HUD.
+var backpack: RunBackpackController
+var backpack_commands_locked: bool = false
+
+func configure_backpack(run_equipment: RunEquipmentState, ids: Array[StringName]) -> void:
+	backpack = RunBackpackController.new()
+	if run_equipment != null and run_equipment.run_inventory != null:
+		backpack.configure(run_equipment.run_inventory, item_inventory, run_equipment, ids, self)
+	else:
+		var bags := RunInventoryState.new()
+		bags.initialize(item_inventory.catalog, ids, false)
+		var gear := RunEquipmentState.new()
+		gear.run_inventory = bags
+		for id: StringName in ids:
+			gear.loadouts_by_heroine[id] = get_battler_state(id).equipment_loadout_state
+		backpack.configure(bags, item_inventory, gear, ids, self)
+
+func backpack_access_error() -> String:
+	var actor: BattlerState = get_battler_state(battle_runtime.selected_battler_id)
+	if actor == null or actor.definition.faction != BattlerDefinition.Faction.HEROINE or actor.is_defeated:
+		return "Select an active heroine."
+	if actor.is_grappled():
+		return "Unavailable while grappled."
+	if backpack_commands_locked or not battle_runtime.can_change_phase():
+		return "Finish or cancel the current resolution first."
+	if battle_runtime.battle_state.outcome != BattleState.Outcome.NONE:
+		return "The encounter has ended."
+	return battle_flow_controller.validate_active_actor(actor)
+
+func backpack_mutation_error() -> String:
+	var error: String = backpack_access_error()
+	if not error.is_empty():
+		return error
+	var actor: BattlerState = get_battler_state(battle_runtime.selected_battler_id)
+	return "This change requires 1 Action." if actor.current_actions < 1 else ""

@@ -36,6 +36,10 @@ signal system_action_requested(action: StringName, slot_id: int)
 @onready var key_list: ItemList = backpack_view.key_ring
 
 
+var production_views: Array[RefugeProductionView] = []
+var rest_view: RefugeRestView
+var records_view: RefugeRecordsView
+var expedition_view: RefugeExpeditionView
 var workbench_view: RefugeWorkbenchView
 var salvage_snapshot: Dictionary = {}
 var loadouts_view: RefugeLoadoutsView
@@ -109,6 +113,10 @@ func _ready() -> void:
 	inventory_interaction.configure(self)
 	_configure_loadouts_view()
 	_configure_workbench_view()
+	_configure_production_views()
+	_configure_rest_view()
+	_configure_expedition_view()
+	_configure_records_view()
 	room_shell.system_action_requested.connect(system_action_requested.emit)
 
 
@@ -117,7 +125,8 @@ func present(
 	battler_catalog: BattlerCatalogDefinition,
 	knowledge_state: KnowledgeState,
 	_slot_save_available: bool,
-	management_controller: RefugeManagementController = null
+	management_controller: RefugeManagementController = null,
+	lore_catalog: LoreCatalogDefinition = null
 ) -> String:
 	if run_state == null or battler_catalog == null or knowledge_state == null:
 		return "Bloom Refuge screen received incomplete campaign state."
@@ -126,6 +135,7 @@ func present(
 	current_run_state = run_state
 	current_battler_catalog = battler_catalog
 	current_knowledge_state = knowledge_state
+	records_view.catalog = lore_catalog if lore_catalog != null else RefugeRecordsView.LORE
 	management = management_controller
 	if management == null:
 		management = RefugeManagementController.new()
@@ -153,6 +163,14 @@ func show_status(message: String, is_error: bool = false) -> void:
 
 
 func set_actions_enabled(enabled: bool) -> void:
+	records_view.enabled = enabled
+	records_view.refresh()
+	expedition_view.enabled = enabled
+	rest_view.enabled = enabled
+	rest_view.refresh()
+	for view: RefugeProductionView in production_views:
+		view.enabled = enabled
+		view.refresh()
 	inventory_interaction.enabled = enabled
 	workbench_view.enabled = enabled
 	workbench_view.update_repair_preview()
@@ -177,6 +195,7 @@ func set_actions_enabled(enabled: bool) -> void:
 		%MoveStashEquipmentToHeroine,
 	]:
 		button.disabled = not enabled
+	expedition_view.refresh()
 
 
 func _refresh_all() -> void:
@@ -191,7 +210,12 @@ func _refresh_all() -> void:
 	_refresh_inventory()
 	_refresh_materials_and_services()
 	_refresh_key_chain()
+	rest_view.refresh()
+	for view: RefugeProductionView in production_views:
+		view.refresh()
+	records_view.refresh()
 	party_label.text = _make_party_summary()
+	expedition_view.refresh()
 	room_shell._trap_focus.call_deferred()
 	room_shell._layout.call_deferred()
 
@@ -677,6 +701,9 @@ func _apply_result(result: Dictionary, success_message: String) -> void:
 
 
 func _on_begin_pressed() -> void:
+	if not expedition_view.can_explore():
+		show_status("Apply the Party draft before exploring.", true)
+		return
 	var seed_text: String = seed_edit.text.strip_edges()
 	if not seed_text.is_valid_int() or seed_text.to_int() <= 0:
 		show_status("Enter a positive whole-number run seed.", true)
@@ -810,6 +837,12 @@ func _configure_workbench_view() -> void:
 
 
 func _cancel_station_overlay() -> bool:
+	if records_view != null and records_view.handle_cancel():
+		return true
+	if expedition_view != null and expedition_view.handle_cancel():
+		return true
+	if rest_view.handle_cancel():
+		return true
 	if loadouts_view.handle_cancel():
 		return true
 	if repair_target.get_popup().visible:
@@ -821,3 +854,53 @@ func _cancel_station_overlay() -> bool:
 		_restore_salvage_focus()
 		return true
 	return false
+
+
+func _configure_production_views() -> void:
+	for id: StringName in [&"alchemy", &"crafting"]:
+		var page: Control = room_shell.pages[id]
+		for child: Node in page.get_children():
+			page.remove_child(child)
+			child.queue_free()
+		var view := RefugeProductionView.new()
+		page.add_child(view)
+		view.configure(self, RefugeRecipeDefinition.Station.ALCHEMY if id == &"alchemy" else RefugeRecipeDefinition.Station.CRAFTING)
+		production_views.append(view)
+
+
+func _configure_rest_view() -> void:
+	var page: Control = room_shell.pages[&"rest"]
+	for child: Node in page.get_children():
+		page.remove_child(child)
+		child.queue_free()
+	rest_view = RefugeRestView.new()
+	page.add_child(rest_view)
+	rest_view.configure(self)
+
+
+func _configure_expedition_view() -> void:
+	var page: Control = room_shell.pages[&"expedition"]
+	for child: Control in page.get_children():
+		child.hide()
+	expedition_view = RefugeExpeditionView.new()
+	page.add_child(expedition_view)
+	expedition_view.configure(self)
+	page.visibility_changed.connect(func() -> void:
+		if page.is_visible_in_tree():
+			expedition_view.show_section(&"hub")
+	)
+
+
+func _configure_records_view() -> void:
+	var page: Control = room_shell.pages[&"records"]
+	for child: Control in page.get_children():
+		child.hide()
+	records_view = RefugeRecordsView.new()
+	page.add_child(records_view)
+	records_view.configure(self)
+	page.visibility_changed.connect(func() -> void:
+		if page.is_visible_in_tree():
+			records_view.refresh()
+		elif records_view.nested_mode != &"":
+			records_view._close_viewer()
+	)
