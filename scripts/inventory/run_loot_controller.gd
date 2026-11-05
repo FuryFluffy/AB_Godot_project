@@ -4,6 +4,10 @@ extends RunBackpackController
 ## A preview validates capacity before any claim (and future trap commitment).
 var sources: Array[Dictionary] = []
 var party_states: Dictionary = {}
+# Optional room-owned transaction hooks. Validation is read-only; the effect
+# commits after capacity/ownership validation and before change notifications.
+var collection_guard: Callable
+var collection_effect: Callable
 
 func snapshot() -> Dictionary:
 	var value: Dictionary = super.snapshot()
@@ -47,6 +51,10 @@ func collect(transaction: Dictionary, target: Dictionary, quantity: int, preview
 	var owner := StringName(target.get("heroine", ""))
 	if String(target.get("domain", "")) != "backpack" or not heroine_ids.has(owner) or not inventory.backpacks_by_heroine.has(owner):
 		return _error("Collect into a current heroine's Backpack first.")
+	if collection_guard.is_valid():
+		error = String(collection_guard.call(record, owner))
+		if not error.is_empty():
+			return _error(error)
 	var staged: RunInventoryState = _stage_inventory()
 	var item: ItemDefinition = inventory.catalog.get_item(StringName(record.get("item_id", "")))
 	var incoming: Dictionary = {"item_id": record.get("item_id", ""), "quantity": quantity}
@@ -105,8 +113,11 @@ func collect(transaction: Dictionary, target: Dictionary, quantity: int, preview
 	if not String(checked.error).is_empty() or preview:
 		return checked
 	# Validation is complete. Publish source + destination before any observer.
-	LootClaim.accept(record, moved)
-	return _commit(staged, {}, result, false, registries)
+	var effects: Callable = func() -> void:
+		LootClaim.accept(record, moved)
+		if collection_effect.is_valid():
+			collection_effect.call(record, owner)
+	return _commit(staged, {}, result, false, registries, effects)
 
 func has_fight_sources() -> bool:
 	for record: Dictionary in sources:

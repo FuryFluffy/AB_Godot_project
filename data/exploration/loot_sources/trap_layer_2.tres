@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomLootSourceDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="source"]
+[ext_resource type="Resource" path="res://data/exploration/item_pools/treasury_layer_2.tres" id="pool"]
+
+[resource]
+script = ExtResource("source")
+source_id = &"trap_layer_2_supplies"
+source_channel = 2
+eligible_layers = Array[int]([2])
+once_only = true
+pool = ExtResource("pool")
+minimum_draws = 4
+maximum_draws = 4
+allow_duplicate_entries = true

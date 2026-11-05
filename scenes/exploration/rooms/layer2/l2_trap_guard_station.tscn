@@ -1,0 +1,70 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/backgrounds/layer_2/sdxl_curated/12_Guard_Station_Without_Guards.png" id="background"]
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_spawn_anchor.gd" id="anchor"]
+[ext_resource type="Script" path="res://scripts/exploration/interactions/room_loot_container_hotspot.gd" id="container"]
+[ext_resource type="Script" path="res://scripts/exploration/room_exit_hotspot.gd" id="exit"]
+
+[sub_resource type="RectangleShape2D" id="CacheShape"]
+size = Vector2(100, 65)
+[sub_resource type="RectangleShape2D" id="ExitShape"]
+size = Vector2(90, 180)
+
+[node name="TrapRoom" type="Node2D"]
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("background")
+centered = false
+[node name="WorldItemLayer" type="Node2D" parent="."]
+[node name="ItemSpawnAnchors" type="Node2D" parent="."]
+
+[node name="Supply0" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(130, 450)
+script = ExtResource("anchor")
+anchor_id = &"supply_0"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+trap_capable = true
+place_name = "Left cabinet"
+
+[node name="Supply1" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(800, 440)
+script = ExtResource("anchor")
+anchor_id = &"supply_1"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+trap_capable = true
+place_name = "Side table"
+
+[node name="Supply2" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(1030, 480)
+script = ExtResource("anchor")
+anchor_id = &"supply_2"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+trap_capable = true
+place_name = "Guard desk"
+
+[node name="Supply3" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(1130, 590)
+script = ExtResource("anchor")
+anchor_id = &"supply_3"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+container_id = &"hidden_cache"
+
+[node name="HiddenCache" type="Area2D" parent="."]
+position = Vector2(1130, 590)
+script = ExtResource("container")
+container_id = &"hidden_cache"
+display_name = "Hidden Cache"
+concealed = true
+inspection_name = "Cabinet"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HiddenCache"]
+shape = SubResource("CacheShape")
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(580, 340)
+script = ExtResource("exit")
+display_name = "Passage"
+hover_prompt = "Return to the map"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("ExitShape")

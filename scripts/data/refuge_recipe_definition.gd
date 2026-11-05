@@ -20,6 +20,7 @@ enum EquipmentTarget {
 
 
 @export_group("Identity")
+@export var starts_known: bool = true
 @export var recipe_id: StringName
 @export var display_name: String = "Unnamed Refuge Service"
 

@@ -771,8 +771,8 @@ def validate_battler_visual_profiles(errors: list[str]) -> None:
         stage_text = stage_catalog_path.read_text(encoding="utf-8")
         if len(re.findall(r'^stage_id = &"', stage_text, re.MULTILINE)) != 7:
             errors.append(f"{stage_catalog_path}: expected seven active stage variants")
-        if len(re.findall(r'^binding_id = &"', stage_text, re.MULTILINE)) != 7:
-            errors.append(f"{stage_catalog_path}: expected seven reachable bindings")
+        if len(re.findall(r'^binding_id = &"', stage_text, re.MULTILINE)) != 9:
+            errors.append(f"{stage_catalog_path}: expected seven story bindings and two generated-combat template bindings")
         reviewed_assets = (
             "l01_room_opening_servant_corridor.png",
             "l01_room_ruined_chapel.png",
@@ -3633,8 +3633,8 @@ def validate_layer_room_registry(errors: list[str]) -> None:
                 "func generate_layer_1(",
                 "func generate_layer_2_run(",
                 "func validate_generated_layer(",
-                "MIN_PLAYABLE_NODES: int = 10",
-                "MAX_PLAYABLE_NODES: int = 13",
+                "MIN_PLAYABLE_NODES: int = 14",
+                "MAX_PLAYABLE_NODES: int = 18",
                 "StableSeedMixer.make_seed(",
                 "func _configure_registered_room_content(",
             ),
@@ -3885,9 +3885,9 @@ def validate_node_map(errors: list[str]) -> None:
 
     if generator.is_file():
         generator_text = generator.read_text(encoding="utf-8")
-        if "const COLUMN_COUNT: int = 7" not in generator_text:
+        if "const COLUMN_COUNT: int = 10" not in generator_text:
             errors.append(
-                f"{generator}: provisional Layer 1 map must use seven columns"
+                f"{generator}: Stage 15 full-layer spine must use ten columns"
             )
         if '&"blood_nun_processing_chapel"' not in generator_text:
             errors.append(

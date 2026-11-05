@@ -8,6 +8,22 @@
 [ext_resource type="Resource" path="res://data/exploration/rooms/layer1/dining_service_hall.tres" id="5_dining"]
 [ext_resource type="Resource" path="res://data/exploration/rooms/layer1/bell_pull_gallery.tres" id="6_bell"]
 
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/l1_treasury_servants_storehouse.tres" id="treasury1"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer2/l2_treasury_confiscated_belongings.tres" id="treasury2"]
+
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/l1_trap_cold_pantry.tres" id="trap1"]
+
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer2/l2_trap_guard_station.tres" id="trap2"]
+
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/l1_rest_guest_bedroom.tres" id="rest1"]
+
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer2/l2_rest_prison_infirmary.tres" id="rest2"]
+
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/l1_alchemy_distillation.tres" id="l1_alchemy_distillation"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer1/l1_workshop_maintenance.tres" id="l1_workshop_maintenance"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer2/l2_alchemy_distillation.tres" id="l2_alchemy_distillation"]
+[ext_resource type="Resource" path="res://data/exploration/rooms/layer2/l2_workshop_maintenance.tres" id="l2_workshop_maintenance"]
+
 [resource]
 script = ExtResource("2_rmiw1")
-rooms = Array[ExtResource("1_piqhc")]([ExtResource("2_icm5j"), ExtResource("3_icm5j"), ExtResource("4_ly4h1"), ExtResource("5_dining"), ExtResource("6_bell")])
+rooms = Array[ExtResource("1_piqhc")]([ExtResource("2_icm5j"), ExtResource("3_icm5j"), ExtResource("4_ly4h1"), ExtResource("5_dining"), ExtResource("6_bell"), ExtResource("treasury1"), ExtResource("treasury2"), ExtResource("trap1"), ExtResource("trap2"), ExtResource("rest1"), ExtResource("rest2"), ExtResource("l1_alchemy_distillation"), ExtResource("l1_workshop_maintenance"), ExtResource("l2_alchemy_distillation"), ExtResource("l2_workshop_maintenance")])

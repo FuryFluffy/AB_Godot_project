@@ -413,9 +413,11 @@ func get_equipment_entry(instance_id: StringName) -> Dictionary:
 	return {}
 
 
-func _mutate(operation: Callable) -> Dictionary:
+func _mutate(operation: Callable, bloom_cost: int = 0) -> Dictionary:
 	if _ownership() == null:
 		return _error("Refuge management is not bound to ownership state.")
+	if bloom_cost < 0 or run_state.bloom < bloom_cost:
+		return _error("Not enough Bloom.")
 	var staged := RefugeOwnershipState.new()
 	var restore_error: String = staged.restore_from_snapshot(
 		_ownership().to_snapshot(),
@@ -440,12 +442,15 @@ func _mutate(operation: Callable) -> Dictionary:
 	if not validation_error.is_empty():
 		return _error(validation_error)
 	var original: RefugeOwnershipState = run_state.refuge_ownership
+	var original_bloom: int = run_state.bloom
 	run_state.refuge_ownership = staged
+	run_state.bloom -= bloom_cost
 	var save_error: String = ""
 	if persist_callback.is_valid():
 		save_error = String(persist_callback.call())
 	if not save_error.is_empty():
 		run_state.refuge_ownership = original
+		run_state.bloom = original_bloom
 		return _error(save_error)
 	run_state.run_changed.emit()
 	state_changed.emit()
@@ -565,33 +570,14 @@ func _error(message: String) -> Dictionary:
 
 
 func get_production_entries(station: RefugeRecipeDefinition.Station) -> Array[Dictionary]:
-	var result: Array[Dictionary] = []
-	if station not in [RefugeRecipeDefinition.Station.ALCHEMY, RefugeRecipeDefinition.Station.CRAFTING]:
-		return result
-	for recipe: RefugeRecipeDefinition in RECIPE_CATALOG.recipes:
-		if recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM or recipe.station != station:
-			continue
-		var error: String = recipe.validate_definition(MATERIAL_CATALOG, ITEM_CATALOG)
-		if not error.is_empty():
-			continue
-		var inputs: Array[Dictionary] = []
-		var can_pay: bool = true
-		for id: Variant in recipe.material_inputs:
-			var material: MaterialDefinition = MATERIAL_CATALOG.get_material(StringName(id))
-			var owned: int = _ownership().get_banked_material_quantity(StringName(id))
-			var required: int = int(recipe.material_inputs[id])
-			inputs.append({"id": StringName(id), "name": material.display_name, "icon": material.icon, "owned": owned, "required": required})
-			can_pay = can_pay and owned >= required
-		var output: ItemDefinition = ITEM_CATALOG.get_item(recipe.output_item_id)
-		result.append({"recipe_id": recipe.recipe_id, "name": recipe.display_name, "inputs": inputs, "can_pay": can_pay, "output_name": output.display_name, "output_icon": output.icon, "quantity": recipe.output_quantity})
-	return result
+	return RECIPE_CATALOG.production_entries(station,RefugeProductionProvider.new(_ownership()),_ownership().knows_recipe)
 
 
 func produce_item(station: RefugeRecipeDefinition.Station, recipe_id: StringName, expected_snapshot: Dictionary) -> Dictionary:
 	if expected_snapshot != _ownership().to_snapshot():
 		return _error("Ownership changed. Review the recipe again.")
 	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(recipe_id)
-	if recipe == null or recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM or recipe.station != station or station == RefugeRecipeDefinition.Station.WORKBENCH:
+	if recipe == null or not _ownership().knows_recipe(recipe_id) or recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM or recipe.station != station or station == RefugeRecipeDefinition.Station.WORKBENCH:
 		return _error("This recipe is unavailable at this station.")
 	return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
 		return staged.execute_production_recipe(recipe_id)
@@ -607,4 +593,51 @@ func apply_party_order(ids: Array[StringName], expected_order: Array[StringName]
 		return {"error": "", "changed": false}
 	return _mutate(func(staged: RefugeOwnershipState) -> Variant:
 		return staged.set_selected_party_order(ids)
+	)
+
+
+func purchase_intel(id: StringName, permanent: bool, expected_price: int, layer: int = 0) -> Dictionary:
+	if run_state == null or run_state.graph == null or run_state.graph.layer_id != &"bloom_refuge":
+		return _error("Intel is available only in Refuge preparation.")
+	var option: IntelOptionDefinition = RefugeOwnershipState.INTEL_CATALOG.get_option(id)
+	if option == null or not option.available or (option.permanent_only and not permanent) or option.price(permanent) <= 0:
+		return _error("This option is not available yet.")
+	if option.effect == IntelOptionDefinition.Effect.CONQUEROR_PASSAGE:
+		if not run_state.is_passage_eligible(layer):
+			return _error("This layer's boss is not eligible for Passage.")
+		if _ownership().permanent_passage_layers.has(layer) or (not permanent and _ownership().pending_passage_layers.has(layer)):
+			return {"error":"", "changed":false}
+		if expected_price != option.price(permanent, layer):
+			return _error("The price changed. Review this layer again.")
+		return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
+			if permanent:
+				staged.permanent_passage_layers.append(layer)
+			else:
+				staged.pending_passage_layers.append(layer)
+			staged.selected_passage_layer = layer
+			return {"error":"", "changed":true}
+		, expected_price)
+	if _ownership().permanent_intel.has(id) or (not permanent and _ownership().pending_intel.has(id)):
+		return {"error":"", "changed":false}
+	if expected_price != option.price(permanent):
+		return _error("The price changed. Review this option again.")
+	return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
+		if permanent:
+			staged.permanent_intel.append(id)
+		else:
+			staged.pending_intel.append(id)
+		return {"error":"", "changed":true}
+	, expected_price)
+
+
+func select_passage(layer: int) -> Dictionary:
+	if run_state == null or run_state.graph == null or run_state.graph.layer_id != &"bloom_refuge":
+		return _error("Choose departure in Refuge preparation.")
+	if layer != 0 and (not run_state.is_passage_eligible(layer) or not _ownership().owns_passage(layer)):
+		return _error("This Passage is not owned or eligible.")
+	return _mutate(func(staged: RefugeOwnershipState) -> Dictionary:
+		if staged.selected_passage_layer == layer:
+			return {"error":"", "changed":false}
+		staged.selected_passage_layer = layer
+		return {"error":"", "changed":true}
 	)

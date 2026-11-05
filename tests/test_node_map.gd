@@ -564,8 +564,8 @@ func _test_seeded_generation_and_reachability() -> void:
 		"Identical run seeds must generate identical graphs."
 	)
 	_expect(
-		first.column_count == 7,
-		"The provisional vertical slice should use seven columns."
+		first.column_count == 10,
+		"Stage 15 should use a nine-room main route plus its start."
 	)
 	_expect(
 		first.get_map_node(first.boss_node_id).display_name

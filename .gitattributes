@@ -1,2 +1,6 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+
+# Preserve captured diagnostics and supplied upstream specifications verbatim.
+docs/evidence/**/*.log -whitespace
+docs/design/complete_ui_map_rooms_v1/02_IMPLEMENTATION_STAGES.md whitespace=-blank-at-eof

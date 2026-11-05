@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="RoomRestOfferDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/exploration/rest/room_rest_offer_definition.gd" id="offer"]
+[resource]
+script = ExtResource("offer")
+offer_id = 6
+display_name = "Full HP, MP and Resolve; +50 Corruption each"
+full_recovery = true
+corruption_delta = 50

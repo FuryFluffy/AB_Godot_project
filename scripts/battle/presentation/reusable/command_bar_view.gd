@@ -69,7 +69,7 @@ func set_grapple_context(
 	ability_button.visible = not grapple_mode
 	struggle_button.visible = grapple_mode
 	grapple_wait_button.visible = grapple_mode
-	submit_button.visible = grapple_mode
+	submit_button.visible = grapple_mode and can_submit
 	if grapple_mode:
 		struggle_button.disabled = not can_act
 		grapple_wait_button.disabled = not can_act
@@ -85,7 +85,7 @@ func set_grapple_context(
 			else "Wait is unavailable in the current state."
 		)
 		submit_button.tooltip_text = (
-			"Submit unlock is not yet available."
+			"Purchase Submit in Refuge Intel."
 			if not can_submit
 			else "Submit to the active Grapple."
 		)

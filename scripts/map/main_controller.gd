@@ -41,6 +41,7 @@ var run_state: RunState = RunState.new()
 var active_battle: CombatEncounter
 var map_return_dialog: RunRecoveryDialog
 var active_event_room: EventRoomScreen
+var active_room_alarm_id: String = ""
 var active_refuge: BloomRefugeScreen
 var pending_outcome: EncounterOutcome
 var knowledge_state: KnowledgeState = KnowledgeState.new()
@@ -126,6 +127,7 @@ func continue_active_run_slot(slot_id: int) -> String:
 	_retire_active_battle()
 	_retire_active_event_room()
 	_retire_active_refuge()
+	active_room_alarm_id = ""
 	active_save_slot_id = slot_id
 	run_state = staged_run
 	knowledge_state = staged_knowledge
@@ -137,6 +139,8 @@ func continue_active_run_slot(slot_id: int) -> String:
 	pending_outcome = null
 	if String((active_value as Dictionary).get("safe_point_kind", "")) == "pre_node":
 		_enter_pending_node_content()
+	elif not run_state.opening_completed:
+		_launch_opening_battle()
 	else:
 		map_screen.visible = true
 		_refresh_map()
@@ -152,6 +156,7 @@ func _start_new_run(
 	_retire_active_battle()
 	_retire_active_event_room()
 	_retire_active_refuge()
+	active_room_alarm_id = ""
 	if run_state.run_changed.is_connected(_refresh_map):
 		run_state.run_changed.disconnect(_refresh_map)
 	var graph: LayerMapGraph = (
@@ -226,16 +231,16 @@ func _refresh_map() -> void:
 		resolve_node_button.visible = false
 		return
 
-	node_title_label.text = selected.display_name
+	node_title_label.text = selected.display_name if selected.type_known else "Unknown room"
 	var map_state: MapNodeState.MapState = (
 		run_state.get_node_map_state(selected.node_id)
 	)
 	node_detail_label.text = (
 		"%s | Column %d | %s\n%s"
 		% [
-			selected.get_type_label(),
+			selected.get_type_label() if selected.type_known else "?",
 			selected.column,
-			_state_label(map_state),
+			("Solved" if selected.solved and map_state == MapNodeState.MapState.CLEARED else _state_label(map_state)) if selected.type_known else "Unknown",
 			_node_behavior_text(selected),
 		]
 	)
@@ -243,7 +248,7 @@ func _refresh_map() -> void:
 		selected.node_id
 	) or not autosave_blocking_error.is_empty()
 	travel_button.text = (
-		"Travel to %s" % selected.get_type_label()
+		"Travel to %s" % (selected.get_type_label() if selected.type_known else "unknown room")
 		if not travel_button.disabled
 		else "Select a connected node or reachable cleared passage"
 	)
@@ -267,6 +272,7 @@ func _on_map_node_pressed(node_id: StringName) -> void:
 func _on_travel_pressed() -> void:
 	var target: MapNodeState = run_state.graph.get_map_node(run_state.selected_node_id)
 	var target_was_visited: bool = target.visited if target != null else false
+	var target_type_was_known: bool = target.type_known if target != null else false
 	var lifecycle_before: Dictionary = run_state.make_campaign_lifecycle_snapshot()
 	var travel_error: String = run_state.travel_to(
 		run_state.selected_node_id
@@ -286,7 +292,8 @@ func _on_travel_pressed() -> void:
 			var rollback_error: String = run_state.rollback_pending_node_entry(
 				run_state.current_node_id,
 				target_was_visited,
-				lifecycle_before
+				lifecycle_before,
+				target_type_was_known
 			)
 			var displayed_error: String = (
 				save_error if rollback_error.is_empty()
@@ -311,7 +318,7 @@ func _enter_pending_node_content() -> void:
 	if node == null or run_state.pending_node_id != node.node_id:
 		node_detail_label.text = "The pending map node is unavailable."
 		return
-	if node.requires_battle() and not node.cleared:
+	if node.requires_battle() and not node.encounter_cleared:
 		if run_state.requires_seraphine_recruitment_prelude():
 			_launch_seraphine_recruitment_prelude()
 		else:
@@ -391,7 +398,8 @@ func _launch_encounter(
 		var stage_binding: CombatStageBindingDefinition = (
 			combat_stage_catalog.get_binding(
 				encounter.encounter_id,
-				encounter.authored_room_id
+				encounter.authored_room_id,
+				encounter.template.template_id if encounter.template != null and encounter.node_type in [MapNodeState.NodeType.BATTLE, MapNodeState.NodeType.ELITE] else &""
 			)
 		)
 		if stage_binding == null:
@@ -436,6 +444,7 @@ func _launch_encounter(
 	if active_battle == null:
 		_show_battle_launch_error("CombatEncounter could not be instantiated.")
 		return
+	active_battle.submit_unlocked = run_state.refuge_ownership.permanent_intel.has(&"submit")
 	active_battle.party_display_order = run_state.get_party_display_order()
 	active_battle.base_seed = encounter.encounter_seed
 	active_battle.prepare_run_encounter(
@@ -448,7 +457,7 @@ func _launch_encounter(
 	active_battle.encounter_outcome_ready.connect(
 		_on_encounter_outcome_ready
 	)
-	if requested_trigger_type == &"interaction":
+	if requested_trigger_type == &"interaction" or not encounter.room_trap_id.is_empty():
 		_retire_active_event_room()
 	combat_host.add_child(active_battle)
 	map_screen.visible = false
@@ -529,6 +538,15 @@ func _launch_event_room(
 	active_event_room.room_encounter_requested.connect(
 		_on_event_room_encounter_requested
 	)
+	active_event_room.room_alarm_requested.connect(_on_room_alarm_requested)
+	active_event_room.room_party_defeated.connect(_on_room_party_defeated)
+	active_event_room.trap_preparation_commit = _commit_trap_room_preparation
+	active_event_room.field_entries = _field_production_entries
+	active_event_room.field_commit = _commit_field_production
+	active_event_room.field_retry = _prepare_field_entry
+	active_event_room.room_rest_used = node.rest_used
+	active_event_room.room_rest_preview = func() -> Dictionary: return run_state.room_rest_request(active_event_room.party_states)
+	active_event_room.room_rest_commit = _commit_room_rest
 
 	active_event_room.heroine_progression_snapshot = (
 		run_state.heroine_progression_snapshot.duplicate(true)
@@ -575,6 +593,8 @@ func _launch_event_room(
 		run_state.run_equipment
 	)
 
+	if preparation_error.is_empty():
+		preparation_error = active_event_room.bind_map_exits(run_state.graph, node)
 	if not preparation_error.is_empty():
 		push_error(preparation_error)
 		var retreat_error: String = ""
@@ -591,7 +611,7 @@ func _launch_event_room(
 		_refresh_map()
 		return
 	active_event_room.set_room_encounter_resolved(
-		node.cleared
+		node.encounter_cleared
 		or (
 			node.encounter_id != &""
 			and run_state.completed_encounters.has(node.encounter_id)
@@ -600,6 +620,9 @@ func _launch_event_room(
 
 	map_screen.visible = false
 	return_overlay.visible = false
+	if definition.field_station != null and not bool(room_state.local_state.get("station_prepared",false)):
+		active_event_room.field_preparation_pending = true
+		_prepare_field_entry.call_deferred()
 
 
 func _on_event_room_encounter_requested(trigger_id: StringName) -> void:
@@ -608,7 +631,7 @@ func _on_event_room_encounter_requested(trigger_id: StringName) -> void:
 	) if run_state.graph != null else null
 	if (
 		node == null
-		or node.cleared
+		or node.encounter_cleared
 		or run_state.pending_node_id != node.node_id
 		or not node.requires_event_room()
 		or not node.has_encounter_content()
@@ -622,6 +645,74 @@ func _on_event_room_encounter_requested(trigger_id: StringName) -> void:
 		node_detail_label.text = "The room encounter could not be prepared."
 		return
 	_launch_encounter(encounter, &"interaction", trigger_id)
+
+
+func _commit_room_rest(request: Dictionary) -> String:
+	if active_event_room == null:
+		return "Rest room is unavailable."
+	var prepared: Dictionary = run_state.prepare_room_rest(active_event_room.capture_room_outcome(false),active_event_room.party_states,request,battler_catalog,knowledge_state)
+	var error: String = String(prepared.error)
+	if not error.is_empty():
+		return error
+	var staged: RunState = prepared.state
+	error = CampaignSaveSlotStore.save_active_run_slot(active_save_slot_id,staged,knowledge_state,"pre_node")
+	if not error.is_empty():
+		return error
+	# Publish only after a durable successful recovery; reopening binds fresh views.
+	if run_state.run_changed.is_connected(_refresh_map):
+		run_state.run_changed.disconnect(_refresh_map)
+	run_state = staged
+	run_state.run_changed.connect(_refresh_map)
+	map_view.bind_map(run_state.graph,run_state)
+	_launch_event_room(run_state.graph.get_map_node(run_state.current_node_id))
+	return ""
+
+
+func _commit_trap_room_preparation() -> String:
+	# Initial assignments/checks finish before ordinary room interactions begin.
+	if active_event_room == null:
+		return "Trap room is unavailable."
+	var error: String = run_state.apply_event_room_outcome(active_event_room.capture_room_outcome(false),true)
+	if not error.is_empty():
+		return error
+	run_state.prepare_room_continuation()
+	return _save_active_run_safe_point("pre_node")
+
+func _on_room_party_defeated() -> void:
+	if active_event_room == null:
+		return
+	var room_outcome: EventRoomOutcome = active_event_room.capture_room_outcome(false)
+	var error: String = run_state.apply_event_room_outcome(room_outcome,true)
+	if not error.is_empty():
+		active_event_room.hover_label.text = error
+		return
+	var outcome := EncounterOutcome.new()
+	outcome.result = EncounterOutcome.Result.DEFEAT
+	outcome.encounter_id = StringName("%s:trap_defeat" % run_state.current_node_id)
+	outcome.source_node_id = run_state.current_node_id
+	outcome.party_snapshot = room_outcome.party_snapshot.duplicate(true)
+	outcome.inventory_snapshot = run_state.inventory_snapshot.duplicate(true)
+	_retire_active_event_room()
+	_show_encounter_summary(outcome)
+
+func _on_room_alarm_requested(trap_id: String) -> void:
+	if active_event_room == null or active_battle != null:
+		return
+	var error: String = run_state.apply_event_room_outcome(active_event_room.capture_room_outcome(false),true)
+	if not error.is_empty():
+		active_event_room.hover_label.text = error
+		return
+	run_state.prepare_room_continuation()
+	var encounter: EncounterDefinition = run_state.make_room_alarm_encounter(trap_id)
+	if encounter == null:
+		active_event_room.hover_label.text = "The saved alarm encounter is unavailable."
+		return
+	error = _save_active_run_safe_point("pre_node")
+	if not error.is_empty():
+		active_event_room.trap_controller.offer_alarm_retry(trap_id,"The alarm checkpoint could not be saved. Retry to continue.\n" + error)
+		return
+	active_room_alarm_id = trap_id
+	_launch_encounter(encounter)
 
 
 func _on_event_room_outcome_ready(
@@ -644,12 +735,20 @@ func _on_event_room_outcome_ready(
 func _on_encounter_outcome_ready(
 	outcome: EncounterOutcome
 ) -> void:
+	if not active_room_alarm_id.is_empty():
+		_show_encounter_summary(outcome)
+		return
 	if outcome.result == EncounterOutcome.Result.VICTORY and _offer_fight_loot(outcome):
 		return
 	_show_encounter_summary(outcome)
 
 func _show_encounter_summary(outcome: EncounterOutcome) -> void:
 	pending_outcome = outcome
+	if not active_room_alarm_id.is_empty() and outcome.result == EncounterOutcome.Result.VICTORY:
+		return_to_map_button.text = "Return to room"
+		return_summary_label.text = "Victory\nBloom: +%d\nThe alarm is resolved. Remaining room contents are still available." % outcome.bloom_reward
+		return_overlay.show()
+		return
 	var is_opening: bool = (
 		run_state.is_opening_encounter_outcome(outcome)
 	)
@@ -757,13 +856,13 @@ func _show_encounter_summary(outcome: EncounterOutcome) -> void:
 			)
 		return_overlay.visible = true
 		return
-	return_to_map_button.text = "Return to Layer 1 Map"
+	return_to_map_button.text = "Return to Map"
 	return_summary_label.text = (
 		"%s\n%s"
 		% [
 			"Victory" if outcome.result == EncounterOutcome.Result.VICTORY
 			else "Defeat",
-			"Return to the Layer 1 map. Party and inventory state will persist.",
+			"Bloom: +%d\n%s\nReturn to %s. Party and inventory state will persist." % [outcome.bloom_reward, "No item findings." if run_state.graph.get_map_node(outcome.source_node_id).reward_source_id == &"" else "Item findings reviewed.", run_state.graph.display_name],
 		]
 	)
 	return_overlay.visible = true
@@ -772,6 +871,21 @@ func _show_encounter_summary(outcome: EncounterOutcome) -> void:
 func _on_return_to_map_pressed() -> void:
 	if pending_outcome == null:
 		return
+	if not active_room_alarm_id.is_empty() and pending_outcome.result == EncounterOutcome.Result.VICTORY:
+		var error: String = run_state.apply_room_alarm_victory(active_room_alarm_id,pending_outcome)
+		if error.is_empty():
+			error = _save_active_run_safe_point("pre_node")
+		if not error.is_empty():
+			return_summary_label.text = "The alarm resolved, but its continuation could not be saved. Retry.\n" + error
+			return
+		_retire_active_battle()
+		active_room_alarm_id = ""
+		pending_outcome = null
+		return_overlay.hide()
+		_launch_event_room(run_state.graph.get_map_node(run_state.current_node_id))
+		return
+	if not active_room_alarm_id.is_empty():
+		active_room_alarm_id = ""
 	if run_state.is_opening_encounter_outcome(pending_outcome):
 		if pending_outcome.result == EncounterOutcome.Result.DEFEAT:
 			_restart_failed_run_from_beginning()
@@ -863,6 +977,9 @@ func _restart_failed_run_from_beginning() -> void:
 		return
 	if run_state.has_established_refuge():
 		_return_failed_run_to_refuge()
+		return
+	if not run_state.refuge_ownership.discovered_recipe_ids.is_empty():
+		_restart_tutorial_with_recipe_knowledge()
 		return
 	var clear_error: String = CampaignSaveSlotStore.clear_active_run_snapshot(
 		active_save_slot_id
@@ -1652,6 +1769,7 @@ func _show_refuge_hub(
 	_retire_active_battle()
 	_retire_active_event_room()
 	_retire_active_refuge()
+	active_room_alarm_id = ""
 	active_refuge = refuge_scene.instantiate() as BloomRefugeScreen
 	if active_refuge == null:
 		push_error("Bloom Refuge screen could not be instantiated.")
@@ -1778,10 +1896,7 @@ func _write_post_node_safe_point() -> bool:
 
 
 func _on_begin_layer_2_run_requested(next_seed: int) -> void:
-	var next_graph: LayerMapGraph = generator.generate_layer_2_run(
-		next_seed,
-		run_state.get_defeated_boss_ids()
-	)
+	var next_graph: LayerMapGraph = run_state.generate_prepared_expedition(generator, next_seed)
 	if next_graph == null:
 		if active_refuge != null:
 			active_refuge.show_status(
@@ -1791,26 +1906,30 @@ func _on_begin_layer_2_run_requested(next_seed: int) -> void:
 				true
 			)
 		return
-	# Validate the complete in-memory transition before replacing the durable
-	# Refuge boundary with its zero-Bloom departure state.
-	var validation_error: String = run_state.validate_next_layer_2_run(
-		next_graph
-	)
-	if not validation_error.is_empty():
+	# Save the consumed pending entitlements and the new run in one atomic document.
+	var staged := RunState.new()
+	var error: String = staged.restore_refuge_campaign_snapshot(run_state.make_refuge_campaign_snapshot(),generator.generate_bloom_refuge_holding_state(run_state.run_seed),battler_catalog)
+	if error.is_empty():
+		error = staged.refuge_ownership.restore_from_snapshot(run_state.refuge_ownership.to_snapshot(),RunState.ITEM_CATALOG,battler_catalog,run_state.refuge_ownership.known_heroine_ids)
+	if error.is_empty():
+		var item_rules: Array[GeneratedRoomItemPlacementRule] = []
+		if next_graph.layer_id == &"layer_1":
+			item_rules = generator.make_layer_1_generated_room_item_rules()
+		error = staged.begin_next_layer_2_run(next_graph, item_rules)
+	if error.is_empty():
+		error = CampaignSaveSlotStore.save_departure_slot(active_save_slot_id,run_state,staged,knowledge_state)
+	if not error.is_empty():
 		if active_refuge != null:
-			active_refuge.show_status(validation_error, true)
+			active_refuge.show_status(error,true)
 		return
-	var departure_save_error: String = _save_active_refuge(true)
-	if not departure_save_error.is_empty():
-		if active_refuge != null:
-			active_refuge.show_status(departure_save_error, true)
-		return
-	var begin_error: String = run_state.begin_next_layer_2_run(next_graph)
-	if not begin_error.is_empty():
-		if active_refuge != null:
-			active_refuge.show_status(begin_error, true)
-		return
+	staged.archived_layer_graphs = run_state.archived_layer_graphs.duplicate()
+	staged.archived_layer_graphs[&"bloom_refuge"] = run_state.graph
+	if run_state.run_changed.is_connected(_refresh_map):
+		run_state.run_changed.disconnect(_refresh_map)
+	run_state = staged
+	run_state.run_changed.connect(_refresh_map)
 	_retire_active_refuge()
+	active_room_alarm_id = ""
 	map_view.bind_map(run_state.graph, run_state)
 	map_screen.visible = true
 	return_overlay.visible = false
@@ -2016,6 +2135,14 @@ func _state_label(map_state: MapNodeState.MapState) -> String:
 
 
 func _node_behavior_text(node: MapNodeState) -> String:
+	if not node.type_known:
+		return "Its position is visible. Discover a passage to learn more."
+	if node.node_type in [MapNodeState.NodeType.ALCHEMY,MapNodeState.NodeType.WORKSHOP]:
+		return "Production: use known recipes with run Materials. Output goes to Backpack; revisits remain available."
+	if node.node_type == MapNodeState.NodeType.REST:
+		return "Rest: this room's recovery has been used." if node.rest_used else "Rest: one fixed recovery offer remains available in this room."
+	if node.node_type == MapNodeState.NodeType.TREASURY:
+		return "Treasury: uncollected contents remain available when you return."
 	if not node.travel_enabled:
 		return node.locked_reason
 	if run_state.graph.layer_id == &"layer_3":
@@ -2029,13 +2156,13 @@ func _node_behavior_text(node: MapNodeState) -> String:
 		if node.node_type == MapNodeState.NodeType.START:
 			return "Ordinary Layer 2 runs begin here, at the farthest cell."
 		if node.node_type == MapNodeState.NodeType.BOSS:
-			return "The Jailer remains at Layer 2's exit end."
+			return "The Jailer is permanently defeated. Explore the remaining rooms through known, open passages." if node.encounter_cleared else "The Jailer remains at Layer 2's exit end."
 		return (
 			"This registered Dungeon room is part of the seeded route; "
 			+ "room-specific content remains inactive unless authored."
 		)
 	if node.node_type == MapNodeState.NodeType.BOSS:
-		return "Major Boss: Blood Nun with one Prayer-Rag support unit."
+		return "The Blood Nun is permanently defeated. Explore the remaining rooms through known, open passages." if node.encounter_cleared else "Major Boss: Blood Nun with one Prayer-Rag support unit."
 	if node.encounter_id == &"layer_1_corrupted_butler_opening":
 		return "Opening Special: Corrupted Butler alone."
 	if node.encounter_id == RunState.SERAPHINE_RECRUITMENT_ENCOUNTER_ID:
@@ -2130,3 +2257,83 @@ func _configure_room_party(room: EventRoomScreen) -> void:
 		var outcome: EventRoomOutcome = room.capture_room_outcome(false)
 		return "The room state could not be captured." if outcome == null else _commit_refuge_return(outcome)
 	room.recovery_remaining = func() -> int: return RunState.ORDINARY_REST_LIMIT - run_state.ordinary_rest_uses
+
+
+func _field_production_entries(station: RefugeRecipeDefinition.Station, recipient: StringName) -> Array[Dictionary]:
+	if active_event_room == null or active_event_room.definition.field_station == null or active_event_room.definition.field_station.station != station:
+		return []
+	return RefugeOwnershipState.RECIPE_CATALOG.production_entries(station,FieldProductionProvider.new(active_event_room.run_inventory,recipient),run_state.refuge_ownership.knows_recipe)
+
+func _publish_field_state(prepared: Dictionary, reopen: bool = true) -> String:
+	var error: String = String(prepared.error)
+	if not error.is_empty():
+		return error
+	var staged: RunState = prepared.state
+	error = CampaignSaveSlotStore.save_active_run_slot(active_save_slot_id,staged,knowledge_state,"pre_node")
+	if not error.is_empty():
+		return error
+	if run_state.run_changed.is_connected(_refresh_map):
+		run_state.run_changed.disconnect(_refresh_map)
+	run_state = staged
+	run_state.run_changed.connect(_refresh_map)
+	map_view.bind_map(run_state.graph,run_state)
+	if reopen:
+		_launch_event_room(run_state.graph.get_map_node(run_state.current_node_id))
+	else:
+		# Keep the open station and its live inventory bindings; only publish saved data.
+		active_event_room.run_inventory.restore_from_snapshot(staged.run_inventory.get_snapshot(),true)
+		run_state.run_inventory = active_event_room.run_inventory
+		run_state.run_equipment = active_event_room.run_equipment
+		active_event_room.instance_state = run_state.get_event_room_state(run_state.current_node_id,active_event_room.definition.room_id)
+	return ""
+
+func _prepare_field_entry() -> void:
+	if active_event_room == null or active_event_room.definition.field_station == null:
+		return
+	var prepared: Dictionary = run_state.prepare_field_station(active_event_room.capture_room_outcome(false),active_event_room.definition.field_station,battler_catalog,knowledge_state)
+	var error: String = _publish_field_state(prepared)
+	if not error.is_empty():
+		active_event_room.offer_field_preparation_retry(error)
+	else:
+		active_event_room.hover_label.text = "Station supplies received in the run Material pouch."
+
+func _commit_field_production(station: RefugeRecipeDefinition.Station, recipe_id: StringName, recipient: StringName, expected: Dictionary) -> Dictionary:
+	if active_event_room == null or active_event_room.definition.field_station == null or active_event_room.definition.field_station.station != station or active_event_room.field_preparation_pending:
+		return {"error":"Field station is unavailable."}
+	var prepared: Dictionary = run_state.prepare_field_station(active_event_room.capture_room_outcome(false),active_event_room.definition.field_station,battler_catalog,knowledge_state,recipe_id,recipient,expected)
+	var error: String = _publish_field_state(prepared,false)
+	if not error.is_empty():
+		return {"error":error}
+	var recipe: RefugeRecipeDefinition = RefugeOwnershipState.RECIPE_CATALOG.get_recipe(recipe_id)
+	return {"error":"","quantity":recipe.output_quantity}
+
+
+func _restart_tutorial_with_recipe_knowledge() -> void:
+	# Persist the resolved defeat before the next opening encounter. A write failure
+	# leaves the defeat summary and the prior knowledge checkpoint available to retry.
+	var recovered_party: Dictionary = run_state.make_full_wipe_recovery_party_snapshot(pending_outcome,battler_catalog)
+	var recovered_narrative: Dictionary = run_state.make_full_wipe_recovery_narrative_snapshot()
+	if recovered_party.is_empty() or recovered_narrative.is_empty():
+		return_summary_label.text = "The failed run could not preserve its recovery state."
+		return
+	var graph: LayerMapGraph = generator.generate_layer_1(run_state.run_seed)
+	var staged := RunState.new()
+	var error: String = staged.initialize(run_state.run_seed,graph,generator.make_layer_1_generated_room_item_rules(),recovered_party,recovered_narrative,run_state.make_campaign_lifecycle_snapshot())
+	if error.is_empty():
+		error = staged.refuge_ownership.restore_recipe_knowledge(run_state.refuge_ownership.discovered_recipe_ids)
+	if error.is_empty():
+		error = CampaignSaveSlotStore.save_active_run_slot(active_save_slot_id,staged,knowledge_state,"post_node")
+	if not error.is_empty():
+		return_summary_label.text = error
+		return
+	_retire_active_battle()
+	_retire_active_event_room()
+	if run_state.run_changed.is_connected(_refresh_map):
+		run_state.run_changed.disconnect(_refresh_map)
+	run_state = staged
+	run_state.run_changed.connect(_refresh_map)
+	map_view.bind_map(run_state.graph,run_state)
+	pending_outcome = null
+	return_overlay.hide()
+	_refresh_map()
+	_launch_opening_battle()

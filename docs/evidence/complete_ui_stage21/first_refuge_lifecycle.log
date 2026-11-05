@@ -1,0 +1,20 @@
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_jailer_refuge_origin.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Immediate Jailer and Bloom Refuge origin tests passed.
+WARNING: 7 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_l1_l2_demo_flow.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l02_punishment_room_prison_iron channel=4 binding=l2_c3_n1 item=mat_l02_prison_iron quantity=1 seed=1693621242
+Reward claimed: source=l02_punishment_room_prison_iron binding=l2_c3_n1 item=mat_l02_prison_iron quantity=1 domain=material_pouch
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3623249838
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Layer 1 to reverse Layer 2 demo-flow tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RoomLootProfileDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_loot_profile_definition.gd" id="profile"]
+[ext_resource type="Script" path="res://scripts/exploration/items/room_loot_source_definition.gd" id="type"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/treasury_layer_1.tres" id="source"]
+
+[resource]
+script = ExtResource("profile")
+profile_id = &"treasury_layer_1"
+sources = Array[ExtResource("type")]([ExtResource("source")])

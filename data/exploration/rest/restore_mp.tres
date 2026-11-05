@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RoomRestOfferDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/exploration/rest/room_rest_offer_definition.gd" id="offer"]
+[resource]
+script = ExtResource("offer")
+offer_id = 2
+display_name = "Restore 50% of maximum MP"
+mp_percent = 50

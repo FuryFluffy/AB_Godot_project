@@ -1,0 +1,79 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Invalid type in function 'begin_next_layer_2_run' in base 'RefCounted (RunState)'. The array of argument 2 (Array) does not have the same element type as the expected typed array argument.
+          at: AbyssalBloomMainController._on_begin_layer_2_run_requested (res://scripts/map/main_controller.gd:1915)
+          GDScript backtrace (most recent call first):
+              [0] _on_begin_layer_2_run_requested (res://scripts/map/main_controller.gd:1915)
+              [1] _on_begin_pressed (res://scripts/refuge/bloom_refuge_screen.gd:711)
+              [2] _click (res://tools/verify_run_hud.gd:222)
+SCRIPT ERROR: Invalid type in function 'begin_next_layer_2_run' in base 'RefCounted (RunState)'. The array of argument 2 (Array) does not have the same element type as the expected typed array argument.
+          at: AbyssalBloomMainController._on_begin_layer_2_run_requested (res://scripts/map/main_controller.gd:1915)
+          GDScript backtrace (most recent call first):
+              [0] _on_begin_layer_2_run_requested (res://scripts/map/main_controller.gd:1915)
+              [1] _on_begin_pressed (res://scripts/refuge/bloom_refuge_screen.gd:711)
+              [2] _click (res://tools/verify_run_hud.gd:222)
+ERROR: Actual Explore starts at defeated boss on remembered layout
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:150)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Only used Passage consumed, no departure recharge
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:151)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Fallback preserves unused entitlement, never used one
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:153)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Continue from real boss-start departure
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:155)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Continue preserves topology, knowledge and unused entitlement
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:157)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Adjacent backtracking available after Continue
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:159)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Production Return persists latest memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:165)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Returned layout and unused shortcut survive durable Load
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:169)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Layer 1 consumes only its entitlement and prepares fresh key placement
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:186)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+ERROR: Continue preserves fresh key placement instead of rerolling it
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/verify_run_hud.gd:208)
+       [1] _departure (res://tools/verify_castle_memory.gd:190)
+       [2] _settle (res://tools/verify_run_hud.gd:213)
+Stage 23 native Memory/Passage: 36 checks, 10 failures.
+WARNING: 44 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

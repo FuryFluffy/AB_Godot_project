@@ -19,6 +19,8 @@ const TRIGGER_TYPES: Array[StringName] = [
 
 @export_group("Encounter")
 @export var encounter_id: StringName
+# Optional fallback for generated encounter identities; exact story IDs win.
+@export var encounter_template_id: StringName
 @export var combat_stage_id: StringName
 @export var battlefield_id: StringName
 
@@ -46,7 +48,7 @@ func validate_definition() -> String:
 		return "Combat-stage binding '%s' has no exploration room identity." % binding_id
 	if trigger_id == &"":
 		return "Combat-stage binding '%s' has no trigger_id." % binding_id
-	if encounter_id == &"" or combat_stage_id == &"" or battlefield_id == &"":
+	if (encounter_id == &"" and encounter_template_id == &"") or combat_stage_id == &"" or battlefield_id == &"":
 		return "Combat-stage binding '%s' has incomplete encounter/stage identity." % binding_id
 	if trigger_type not in TRIGGER_TYPES:
 		return "Combat-stage binding '%s' has invalid trigger type '%s'." % [

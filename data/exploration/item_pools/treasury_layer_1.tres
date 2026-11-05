@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="RoomItemPoolDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_pool_definition.gd" id="pool"]
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_pool_entry_definition.gd" id="entry"]
+[ext_resource type="Resource" path="res://data/items/layer_1/bandage_roll.tres" id="item0"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_bandage_roll.png" id="art0"]
+[ext_resource type="Resource" path="res://data/items/layer_1/servants_tonic.tres" id="item1"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_servants_tonic.png" id="art1"]
+[ext_resource type="Resource" path="res://data/items/layer_1/smelling_salts.tres" id="item2"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/l01_smelling_salts.png" id="art2"]
+[ext_resource type="Resource" path="res://data/materials/layer_1/red_wax.tres" id="item3"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/mat_l01_red_wax.png" id="art3"]
+[ext_resource type="Resource" path="res://data/materials/layer_1/servant_cloth.tres" id="item4"]
+[ext_resource type="Texture2D" path="res://assets/items/by_stable_id/mat_l01_servant_cloth.png" id="art4"]
+
+[sub_resource type="Resource" id="Entry0"]
+script = ExtResource("entry")
+entry_id = &"treasury_l1_l01_bandage_roll"
+item = ExtResource("item0")
+world_texture = ExtResource("art0")
+world_visual_scale = Vector2(0.14, 0.14)
+required_anchor_tag = &"treasury_supply"
+quantity = 2
+weight = 3
+
+[sub_resource type="Resource" id="Entry1"]
+script = ExtResource("entry")
+entry_id = &"treasury_l1_l01_servants_tonic"
+item = ExtResource("item1")
+world_texture = ExtResource("art1")
+world_visual_scale = Vector2(0.14, 0.14)
+required_anchor_tag = &"treasury_supply"
+quantity = 1
+weight = 2
+
+[sub_resource type="Resource" id="Entry2"]
+script = ExtResource("entry")
+entry_id = &"treasury_l1_l01_smelling_salts"
+item = ExtResource("item2")
+world_texture = ExtResource("art2")
+world_visual_scale = Vector2(0.14, 0.14)
+required_anchor_tag = &"treasury_supply"
+quantity = 1
+weight = 2
+
+[sub_resource type="Resource" id="Entry3"]
+script = ExtResource("entry")
+entry_id = &"treasury_l1_mat_l01_red_wax"
+item = ExtResource("item3")
+world_texture = ExtResource("art3")
+world_visual_scale = Vector2(0.14, 0.14)
+required_anchor_tag = &"treasury_supply"
+quantity = 2
+weight = 3
+
+[sub_resource type="Resource" id="Entry4"]
+script = ExtResource("entry")
+entry_id = &"treasury_l1_mat_l01_servant_cloth"
+item = ExtResource("item4")
+world_texture = ExtResource("art4")
+world_visual_scale = Vector2(0.14, 0.14)
+required_anchor_tag = &"treasury_supply"
+quantity = 2
+weight = 3
+
+[resource]
+script = ExtResource("pool")
+pool_id = &"treasury_layer_1"
+entries = Array[ExtResource("entry")]([SubResource("Entry0"), SubResource("Entry1"), SubResource("Entry2"), SubResource("Entry3"), SubResource("Entry4")])

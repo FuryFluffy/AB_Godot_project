@@ -35,8 +35,8 @@ func _test_stage_catalog(catalog: CombatStageCatalog) -> void:
 		% catalog.validate_definition()
 	)
 	_expect(
-		catalog.stages.size() == 7 and catalog.bindings.size() == 7,
-		"Exactly the seven production-reachable encounter variants should be bound."
+		catalog.stages.size() == 7 and catalog.bindings.size() == 9,
+		"Seven existing stages retain their story bindings plus two generated-combat template bindings."
 	)
 	for stage_id: StringName in [
 		&"opening_servant_corridor_stage",

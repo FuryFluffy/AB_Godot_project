@@ -6,6 +6,9 @@ signal exit_requested
 
 
 @export_group("Interaction")
+# Explicit authored bindings override the generated single-exit fallback.
+@export var destination_node_ids: Array[StringName] = []
+var map_edge_ids: Array[String] = []
 @export var display_name: String = "Exit"
 @export var hover_prompt: String = "Click to leave"
 @export var hover_visual_path: NodePath

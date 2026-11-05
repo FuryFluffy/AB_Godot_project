@@ -3,6 +3,8 @@ extends RefCounted
 
 var source_node_id: StringName = &""
 var clear_node: bool = false
+var solved: bool = false
+var exit_states: Dictionary = {}
 var room_state_snapshot: Dictionary = {}
 var inventory_snapshot: Array[Dictionary] = []
 var run_inventory_snapshot: Dictionary = {}

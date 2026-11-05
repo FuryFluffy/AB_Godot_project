@@ -718,26 +718,15 @@ func _test_deterministic_event_room_assignment_and_key_reachability() -> void:
 	for seed: int in [27072026, 111, 222, 333, 56489751432]:
 		var first: LayerMapGraph = generator.generate_layer_1(seed)
 		var second: LayerMapGraph = generator.generate_layer_1(seed)
-		var chapel_nodes: Array[MapNodeState] = first.get_nodes_in_column(
-			LayerMapGenerator.COLUMN_COUNT - 2
-		)
-		var chapel: MapNodeState = (
-			chapel_nodes[0] if chapel_nodes.size() == 1 else null
-		)
+		var chapel: MapNodeState = first.get_map_node(&"l1_c5_n0")
+		# Genuine side dead ends need not converge, but no boss route may bypass
+		# the retained recruitment gate.
 		var chapel_is_mandatory: bool = (
 			chapel != null
-			and chapel.encounter_id
-			== RunState.SERAPHINE_RECRUITMENT_ENCOUNTER_ID
+			and chapel.encounter_id == RunState.SERAPHINE_RECRUITMENT_ENCOUNTER_ID
 			and chapel.outgoing_ids == [first.boss_node_id]
+			and not generator._can_reach_while_avoiding(first, first.boss_node_id, chapel.node_id)
 		)
-		if chapel_is_mandatory:
-			for approach: MapNodeState in first.get_nodes_in_column(
-				LayerMapGenerator.COLUMN_COUNT - 3
-			):
-				chapel_is_mandatory = (
-					chapel_is_mandatory
-					and approach.outgoing_ids.has(chapel.node_id)
-				)
 		_expect(
 			chapel_is_mandatory,
 			"Every generated route must pass through Seraphine's Ruined Chapel before the boss for seed %d."

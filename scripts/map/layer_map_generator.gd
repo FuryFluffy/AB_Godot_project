@@ -2,9 +2,9 @@ class_name LayerMapGenerator
 extends RefCounted
 
 
-const COLUMN_COUNT: int = 7
-const MIN_PLAYABLE_NODES: int = 10
-const MAX_PLAYABLE_NODES: int = 13
+const COLUMN_COUNT: int = 10
+const MIN_PLAYABLE_NODES: int = 14
+const MAX_PLAYABLE_NODES: int = 18
 const ROOM_CATALOG: LayerRoomCatalogDefinition = preload(
 	"res://data/rooms/layer_1_2_room_catalog.tres"
 )
@@ -134,6 +134,8 @@ func generate_layer_1(
 		boss.display_name = "Cleared Processing Chapel"
 		boss.encounter_id = &""
 		boss.encounter_template_id = &""
+		boss.encounter_cleared = true
+		boss.solved = true
 		boss.cleared = true
 		boss.reward_claimed = true
 	graph.add_node(boss)
@@ -381,6 +383,8 @@ func generate_layer_2_run(
 		jailer.display_name = "Cleared Dungeon Exit"
 		jailer.encounter_id = &""
 		jailer.encounter_template_id = &""
+		jailer.encounter_cleared = true
+		jailer.solved = true
 		jailer.cleared = true
 		jailer.reward_claimed = true
 	graph.add_node(jailer)
@@ -509,8 +513,8 @@ func _prepare_layer_1_rooms(run_seed: int) -> Dictionary:
 	excluded[first_battle.room_id] = true
 	var middle_counts: Array[int] = [
 		3,
-		2 + rng.randi_range(0, 1),
-		2 + rng.randi_range(0, 1),
+		4,
+		4 + rng.randi_range(0, 2),
 	]
 	var middle_size: int = middle_counts[0] + middle_counts[1] + middle_counts[2]
 	_shuffle_rooms(event_rooms, rng)
@@ -548,8 +552,8 @@ func _prepare_layer_2_rooms(run_seed: int) -> Dictionary:
 	var rng := _make_layer_rng(run_seed, &"layer_2_selection")
 	var middle_counts: Array[int] = [
 		3,
-		2 + rng.randi_range(0, 1),
-		2 + rng.randi_range(0, 1),
+		4,
+		4 + rng.randi_range(0, 2),
 	]
 	var middle_size: int = middle_counts[0] + middle_counts[1] + middle_counts[2]
 	var middle_rooms: Array[LayerRoomDefinition] = _get_generic_candidates(2, excluded)
@@ -654,29 +658,144 @@ func _connect_generated_columns(
 	graph: LayerMapGraph,
 	rng: RandomNumberGenerator
 ) -> void:
-	for column: int in range(graph.column_count - 1):
-		var left: Array[MapNodeState] = graph.get_nodes_in_column(column)
-		var right: Array[MapNodeState] = graph.get_nodes_in_column(column + 1)
-		if left.is_empty() or right.is_empty():
+	# Keep stable story IDs while extending their placement to a nine-room spine.
+	# The remaining rooms form three real dead-end branches (2, 2, 1–3 rooms).
+	var prefix: String = "l%d" % graph.layer_number
+	var first: MapNodeState = graph.get_map_node(StringName(prefix + "_c1_n0"))
+	var gate: MapNodeState = graph.get_map_node(StringName(prefix + "_c5_n0"))
+	var middle: Array[MapNodeState] = []
+	for column: int in range(2, 5):
+		middle.append_array(graph.get_nodes_in_column(column))
+	var spine: Array[MapNodeState] = [graph.get_map_node(graph.start_node_id), first]
+	for index: int in range(6):
+		middle[index].column = index + 2
+		middle[index].row = 0
+		spine.append(middle[index])
+	gate.column = 8
+	spine.append(gate)
+	spine.append(graph.get_map_node(graph.boss_node_id))
+	for index: int in range(spine.size() - 1):
+		graph.connect_nodes(spine[index].node_id, spine[index + 1].node_id)
+	var lengths: Array[int] = [2, 2, middle.size() - 10]
+	var cursor: int = 6
+	for branch: int in range(3):
+		var anchor: int = 2 + branch
+		# Branch attachment varies without bypassing either mandatory story gate.
+		anchor += rng.randi_range(0, 1)
+		var previous: MapNodeState = spine[anchor]
+		for step: int in range(lengths[branch]):
+			var node: MapNodeState = middle[cursor]
+			cursor += 1
+			node.column = previous.column + 1
+			node.row = branch + 1
+			graph.connect_nodes(previous.node_id, node.node_id)
+			previous = node
+	# Rows are presentation coordinates, not branch IDs; compact each column.
+	for column: int in range(graph.column_count):
+		var rows: Array[MapNodeState] = graph.get_nodes_in_column(column)
+		for row: int in range(rows.size()):
+			rows[row].row = row
+	_reserve_special_room_positions(graph, middle, rng)
+	_activate_elite_positions(graph)
+	_activate_treasury_positions(graph)
+	_activate_trap_positions(graph)
+	_activate_rest_positions(graph)
+	_activate_field_positions(graph)
+
+
+func _reserve_special_room_positions(
+	graph: LayerMapGraph,
+	middle: Array[MapNodeState],
+	rng: RandomNumberGenerator
+) -> void:
+	# Reserve only replaceable filler positions; preserve story/puzzle encounters
+	# and authored material sources. Each stage activates its executable types.
+	var candidates: Array[MapNodeState] = []
+	for node: MapNodeState in middle:
+		if node.authored_room_id in LAYER_1_EVENT_ROOM_POOL or node.authored_room_id == &"bell_pull_gallery" or node.has_encounter_content() or node.reward_source_id != &"":
 			continue
-		if column == 1:
-			for right_node: MapNodeState in right:
-				graph.connect_nodes(left[0].node_id, right_node.node_id)
+		candidates.append(node)
+	var kinds: Array[int] = [MapNodeState.NodeType.ELITE, MapNodeState.NodeType.TRAP, MapNodeState.NodeType.TREASURY]
+	for kind: int in [MapNodeState.NodeType.REST, MapNodeState.NodeType.ALCHEMY, MapNodeState.NodeType.WORKSHOP]:
+		if kinds.size() < candidates.size() and rng.randi_range(0, 1) == 1:
+			kinds.append(kind)
+	for kind: int in [MapNodeState.NodeType.ELITE, MapNodeState.NodeType.TRAP, MapNodeState.NodeType.TREASURY]:
+		if kinds.size() < candidates.size() and rng.randi_range(0, 1) == 1:
+			kinds.append(kind)
+	for index: int in range(kinds.size()):
+		var swap: int = rng.randi_range(index, candidates.size() - 1)
+		var node: MapNodeState = candidates[swap]
+		candidates[swap] = candidates[index]
+		candidates[index] = node
+		graph.reserved_node_types[String(node.node_id)] = kinds[index]
+
+
+func _activate_elite_positions(graph: LayerMapGraph) -> void:
+	# Only Stage 17's executable service is activated. Other reservations stay inert.
+	for id: String in graph.reserved_node_types:
+		if int(graph.reserved_node_types[id]) != MapNodeState.NodeType.ELITE:
 			continue
-		if column == graph.column_count - 3:
-			for left_node: MapNodeState in left:
-				graph.connect_nodes(left_node.node_id, right[0].node_id)
+		var node: MapNodeState = graph.get_map_node(StringName(id))
+		node.node_type = MapNodeState.NodeType.ELITE
+		node.display_name = "Elite — " + node.display_name
+		node.encounter_id = StringName("%s_elite_%s" % [graph.layer_id, node.node_id])
+		node.encounter_template_id = &"ruined_chapel_regular" if graph.layer_number == 1 else &"layer_2_chain_maintenance_regular"
+		node.room_definition_id = &""
+		node.reward_source_id = &""
+
+
+func _activate_treasury_positions(graph: LayerMapGraph) -> void:
+	for id: String in graph.reserved_node_types:
+		if int(graph.reserved_node_types[id]) != MapNodeState.NodeType.TREASURY:
 			continue
-		for left_index: int in range(left.size()):
-			var nearest_index: int = mini(left_index, right.size() - 1)
-			graph.connect_nodes(left[left_index].node_id, right[nearest_index].node_id)
-			if right.size() > 1 and rng.randi_range(0, 1) == 1:
-				var alternate: int = (nearest_index + 1) % right.size()
-				graph.connect_nodes(left[left_index].node_id, right[alternate].node_id)
-		for right_node: MapNodeState in right:
-			if right_node.incoming_ids.is_empty():
-				var source: MapNodeState = left[rng.randi_range(0, left.size() - 1)]
-				graph.connect_nodes(source.node_id, right_node.node_id)
+		var node: MapNodeState = graph.get_map_node(StringName(id))
+		node.node_type = MapNodeState.NodeType.TREASURY
+		node.room_definition_id = &"l1_treasury_servants_storehouse" if graph.layer_number == 1 else &"l2_treasury_confiscated_belongings"
+		node.display_name = "Servants' Storehouse" if graph.layer_number == 1 else "Confiscated Belongings Store"
+		node.encounter_id = &""
+		node.encounter_template_id = &""
+		node.reward_source_id = &""
+
+
+func _activate_trap_positions(graph: LayerMapGraph) -> void:
+	for id: String in graph.reserved_node_types:
+		if int(graph.reserved_node_types[id]) != MapNodeState.NodeType.TRAP:
+			continue
+		var node: MapNodeState = graph.get_map_node(StringName(id))
+		node.node_type = MapNodeState.NodeType.TRAP
+		node.room_definition_id = &"l1_trap_cold_pantry" if graph.layer_number == 1 else &"l2_trap_guard_station"
+		node.display_name = "Cold Pantry" if graph.layer_number == 1 else "Guard Station Without Guards"
+		node.encounter_id = &""
+		node.encounter_template_id = &""
+		node.reward_source_id = &""
+
+
+func _activate_rest_positions(graph: LayerMapGraph) -> void:
+	for id: String in graph.reserved_node_types:
+		if int(graph.reserved_node_types[id]) != MapNodeState.NodeType.REST:
+			continue
+		var node: MapNodeState = graph.get_map_node(StringName(id))
+		node.node_type = MapNodeState.NodeType.REST
+		node.room_definition_id = &"l1_rest_guest_bedroom" if graph.layer_number == 1 else &"l2_rest_prison_infirmary"
+		node.display_name = "Abandoned Guest Bedroom" if graph.layer_number == 1 else "Prison Infirmary"
+		node.encounter_id = &""
+		node.encounter_template_id = &""
+		node.reward_source_id = &""
+		node.rest_offer_id = RoomRestRules.assigned_offer(node.content_seed,node.node_id)
+
+
+func validate_special_room_quotas(graph: LayerMapGraph, use_reservations: bool = false) -> String:
+	for kind: int in [MapNodeState.NodeType.ELITE, MapNodeState.NodeType.TRAP, MapNodeState.NodeType.TREASURY, MapNodeState.NodeType.REST, MapNodeState.NodeType.ALCHEMY, MapNodeState.NodeType.WORKSHOP]:
+		var count: int = 0
+		for value: Variant in graph.nodes.values():
+			var node: MapNodeState = value
+			var type: int = int(graph.reserved_node_types.get(String(node.node_id), node.node_type)) if use_reservations else int(node.node_type)
+			if type == kind:
+				count += 1
+		var required: bool = kind in [MapNodeState.NodeType.ELITE, MapNodeState.NodeType.TRAP, MapNodeState.NodeType.TREASURY]
+		if count < (1 if required else 0) or count > (2 if required else 1):
+			return "Special-room type %d violates its layer quota." % kind
+	return ""
 
 
 func _make_registered_node(
@@ -743,13 +862,29 @@ func validate_generated_layer(graph: LayerMapGraph) -> String:
 	if not graph_error.is_empty():
 		return graph_error
 	var playable_count: int = 0
+	var elite_count: int = 0
+	var treasury_count: int = 0
+	var trap_count: int = 0
 	var used_rooms: Dictionary = {}
 	var has_branch: bool = false
-	var has_convergence: bool = false
+	var dead_ends: int = 0
+	var branch_count: int = 0
 	for value: Variant in graph.nodes.values():
 		var node: MapNodeState = value as MapNodeState
 		if node.node_type != MapNodeState.NodeType.START:
 			playable_count += 1
+		if node.node_type == MapNodeState.NodeType.ELITE:
+			elite_count += 1
+			if not node.has_encounter_content() or node.room_definition_id != &"" or node.reward_source_id != &"":
+				return "Generated Elite requires combat-only content without inherited room rewards."
+		if node.node_type == MapNodeState.NodeType.TRAP:
+			trap_count += 1
+			if not node.requires_event_room() or node.has_encounter_content() or node.reward_source_id != &"":
+				return "Generated Trap requires an authored room without a separate first-clear reward."
+		if node.node_type == MapNodeState.NodeType.TREASURY:
+			treasury_count += 1
+			if not node.requires_event_room() or node.has_encounter_content() or node.reward_source_id != &"":
+				return "Generated Treasury requires an authored room without a separate first-clear reward."
 		if node.authored_room_id == &"" or node.content_seed <= 0:
 			return "Generated node '%s' lacks authored room identity or content seed." % node.node_id
 		var room: LayerRoomDefinition = room_catalog.get_room(node.authored_room_id)
@@ -779,13 +914,47 @@ func validate_generated_layer(graph: LayerMapGraph) -> String:
 			):
 				return "Generated node '%s' has an invalid incoming edge." % node.node_id
 		has_branch = has_branch or node.outgoing_ids.size() > 1
-		has_convergence = has_convergence or (
-			node.node_id != graph.boss_node_id and node.incoming_ids.size() > 1
-		)
+		branch_count += maxi(node.outgoing_ids.size() - 1, 0)
+		if node.node_id not in [graph.start_node_id, graph.boss_node_id] and node.outgoing_ids.is_empty() and node.incoming_ids.size() == 1:
+			dead_ends += 1
+	if elite_count < 1 or elite_count > 2:
+		return "Generated layer requires one or two executable Elites."
+	if trap_count < 1 or trap_count > 2:
+		return "Generated layer requires one or two executable Trap rooms."
+	if treasury_count < 1 or treasury_count > 2:
+		return "Generated layer requires one or two executable Treasuries."
 	if playable_count < MIN_PLAYABLE_NODES or playable_count > MAX_PLAYABLE_NODES:
 		return "Generated Layer %d has %d playable nodes; expected %d–%d." % [graph.layer_number, playable_count, MIN_PLAYABLE_NODES, MAX_PLAYABLE_NODES]
-	if not has_branch or not has_convergence:
-		return "Generated layer requires a genuine branch and pre-exit convergence."
+	if not has_branch or dead_ends < 2 or branch_count < 2 or branch_count > 4:
+		return "Generated layer requires 2–4 branches and at least two genuine dead ends."
+	var quota_error: String = validate_special_room_quotas(graph, true)
+	if not quota_error.is_empty():
+		return quota_error
+	var spine: Array[StringName] = []
+	var cursor: StringName = graph.boss_node_id
+	while cursor != graph.start_node_id:
+		spine.push_front(cursor)
+		var current: MapNodeState = graph.get_map_node(cursor)
+		if current.incoming_ids.size() != 1:
+			return "Generated main route must preserve its mandatory story spine."
+		cursor = current.incoming_ids[0]
+	if spine.size() < 8 or spine.size() > 10:
+		return "Generated main route must contain 8–10 playable rooms."
+	spine.push_front(graph.start_node_id)
+	for value: Variant in graph.nodes.values():
+		var node: MapNodeState = value
+		if spine.has(node.node_id):
+			continue
+		var length: int = 0
+		cursor = node.node_id
+		while not spine.has(cursor):
+			var branch_node: MapNodeState = graph.get_map_node(cursor)
+			if branch_node.incoming_ids.size() != 1 or branch_node.outgoing_ids.size() > 1:
+				return "Generated side branches must be simple routes."
+			length += 1
+			cursor = branch_node.incoming_ids[0]
+		if length > 3:
+			return "Generated side branches must contain 1–3 rooms."
 	var required_rooms: Array[StringName] = []
 	if graph.layer_id == &"layer_1":
 		required_rooms.assign([
@@ -809,9 +978,6 @@ func validate_generated_layer(graph: LayerMapGraph) -> String:
 	var reachable: Dictionary = _collect_reachable_ids(graph, graph.start_node_id, false)
 	if reachable.size() != graph.nodes.size():
 		return "Generated layer contains an inaccessible selected room."
-	var reverse_reachable: Dictionary = _collect_reachable_ids(graph, graph.boss_node_id, true)
-	if reverse_reachable.size() != graph.nodes.size():
-		return "Generated layer contains a branch that cannot reach the exit route."
 	var required_gate_ids: Array[StringName] = []
 	if graph.layer_id == &"layer_1":
 		required_gate_ids.assign([&"l1_c1_n0", &"l1_c5_n0"])
@@ -883,3 +1049,18 @@ func _make_node(
 		)
 		node.encounter_template_id = &"ruined_chapel_regular"
 	return node
+
+
+func _activate_field_positions(graph: LayerMapGraph) -> void:
+	for id: String in graph.reserved_node_types:
+		var kind: int = int(graph.reserved_node_types[id])
+		if kind not in [MapNodeState.NodeType.ALCHEMY,MapNodeState.NodeType.WORKSHOP]:
+			continue
+		var node: MapNodeState = graph.get_map_node(StringName(id))
+		node.node_type = kind as MapNodeState.NodeType
+		var suffix: String = "alchemy_distillation" if kind == MapNodeState.NodeType.ALCHEMY else "workshop_maintenance"
+		node.room_definition_id = StringName("l%d_%s" % [graph.layer_number,suffix])
+		node.display_name = "Distillation Chamber" if kind == MapNodeState.NodeType.ALCHEMY else "Castle Maintenance Workshop"
+		node.encounter_id = &""
+		node.encounter_template_id = &""
+		node.reward_source_id = &""

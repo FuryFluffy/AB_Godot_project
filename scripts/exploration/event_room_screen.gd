@@ -11,6 +11,8 @@ const ROOM_ENCOUNTER_HOTSPOT_SCRIPT: Script = preload(
 
 signal room_outcome_ready(outcome: EventRoomOutcome)
 signal room_encounter_requested(trigger_id: StringName)
+signal room_alarm_requested(trap_id: String)
+signal room_party_defeated
 signal dialogue_story_request_ready(request: Dictionary)
 signal story_dialogue_outcome_ready(outcome: StoryDialogueOutcome)
 
@@ -47,7 +49,11 @@ var available_battler_catalog: BattlerCatalogDefinition
 var available_lore_catalog: LoreCatalogDefinition
 var persistent_knowledge_state: KnowledgeState
 
+var map_exits: Array[RoomExitHotspot] = []
 var active_pickups: Dictionary = {}
+var active_containers: Dictionary = {}
+var trap_preparation_commit: Callable
+var trap_controller: RoomTrapController
 var active_locks: Dictionary = {}
 var active_lore_pickups: Dictionary = {}
 var active_room_events: Dictionary = {}
@@ -72,6 +78,18 @@ var recovery_preview: Callable
 var recovery_commit: Callable
 var recovery_access: Callable
 var recovery_remaining: Callable
+var field_dialog: FieldProductionDialog
+var field_entries: Callable
+var field_commit: Callable
+var field_retry: Callable
+var field_preparation_pending: bool = false
+var field_retry_dialog: AcceptDialog
+var field_hotspot: FieldStationHotspot
+var room_rest_dialog: RunRecoveryDialog
+var room_rest_hotspot: RoomRestHotspot
+var room_rest_preview: Callable
+var room_rest_commit: Callable
+var room_rest_used: bool = false
 var recovery_dialog: RunRecoveryDialog
 var current_party_ids: Array[StringName] = []
 var story_dialogue_mode: bool = false
@@ -82,6 +100,7 @@ var suspended_interaction_states: Dictionary = {}
 
 
 func _ready() -> void:
+	exploration_hud.dock.layout_changed.connect(_fit_room_presentation)
 	if not item_bar.slot_requested.is_connected(
 		_on_item_slot_requested
 	):
@@ -147,6 +166,9 @@ func prepare_room(
 
 	if instance_state == null:
 		return "EventRoomScreen received no room instance state."
+	var container_error: String = EventRoomInstanceState.validate_container_state(instance_state.local_state)
+	if not container_error.is_empty():
+		return container_error
 
 	if item_catalog == null:
 		return "EventRoomScreen received no item catalog."
@@ -209,8 +231,19 @@ func prepare_room(
 	presentation = definition.presentation_scene.instantiate()
 	room_host.add_child(presentation)
 	_apply_definition_presentation_texture()
+	_fit_room_presentation()
 
+	map_exits.clear()
 	active_locks.clear()
+	active_containers.clear()
+	field_hotspot = null
+	if field_dialog != null:
+		field_dialog.queue_free()
+		field_dialog = null
+	room_rest_hotspot = null
+	if room_rest_dialog != null:
+		room_rest_dialog.queue_free()
+		room_rest_dialog = null
 	active_lore_pickups.clear()
 	active_room_events.clear()
 	active_encounter_hotspots.clear()
@@ -226,8 +259,31 @@ func prepare_room(
 				child as ExplorationInteractable
 			)
 
+		if child is FieldStationHotspot:
+			if field_hotspot != null or definition.field_station == null:
+				return "Field room requires one configured station."
+			field_hotspot = child
+			field_hotspot.station_requested.connect(_open_field_station)
+
+		if child is RoomRestHotspot:
+			if room_rest_hotspot != null:
+				return "Rest room must have exactly one recovery hotspot."
+			room_rest_hotspot = child
+			room_rest_hotspot.used = room_rest_used
+			room_rest_hotspot.rest_requested.connect(_open_room_rest)
+
+		if child is RoomLootContainerHotspot:
+			var container := child as RoomLootContainerHotspot
+			if container.container_id == &"" or active_containers.has(container.container_id):
+				return "Room container requires a unique stable ID."
+			active_containers[container.container_id] = container
+			container.revealed = bool(instance_state.local_state.get("revealed_containers", {}).get(String(container.container_id), false))
+			container.contents_requested.connect(_on_container_contents_requested)
+
 		if child is RoomExitHotspot:
 			var room_exit := child as RoomExitHotspot
+			if not map_exits.has(room_exit):
+				map_exits.append(room_exit)
 			var exit_callback: Callable = (
 				_on_exit_requested.bind(room_exit)
 			)
@@ -334,9 +390,14 @@ func prepare_room(
 			)
 
 	var preparation_warnings: Array[String] = []
+	for container: RoomLootContainerHotspot in active_containers.values():
+		if container.required_lock_id != &"" and not active_locks.has(container.required_lock_id):
+			return "Room container refers to a missing lock."
 	var item_error: String = _prepare_room_items()
 
 	if not item_error.is_empty():
+		if definition.solve_when_loot_exhausted:
+			return item_error
 		preparation_warnings.append(item_error)
 		push_warning(item_error)
 		
@@ -360,6 +421,18 @@ func prepare_room(
 
 	_refresh_item_bar()
 	_refresh_party_strip()
+	if field_hotspot != null:
+		field_dialog = FieldProductionDialog.new()
+		exploration_hud.add_child(field_dialog)
+		field_dialog.configure(self)
+	if room_rest_hotspot != null:
+		_initialize_room_rest()
+	if definition.trap_profile != null:
+		trap_controller = RoomTrapController.new()
+		add_child(trap_controller)
+		var trap_error: String = trap_controller.configure(self)
+		if not trap_error.is_empty():
+			return trap_error
 	if (
 		definition.entry_dialogue != null
 		and not definition.entry_dialogue.is_completed(
@@ -374,6 +447,15 @@ func prepare_room(
 		call_deferred("_start_developer_test_dialogue")
 
 	return ""
+
+
+func _fit_room_presentation() -> void:
+	if definition == null or definition.fitted_source_size == Vector2.ZERO or not presentation is Node2D:
+		return
+	var area := Vector2(get_viewport_rect().size.x, exploration_hud.dock.backdrop.position.y)
+	var fit: float = minf(area.x / definition.fitted_source_size.x, area.y / definition.fitted_source_size.y)
+	presentation.scale = Vector2.ONE * fit
+	presentation.position = (area - definition.fitted_source_size * fit) * 0.5
 
 
 func _apply_definition_presentation_texture() -> void:
@@ -1129,9 +1211,14 @@ func _handle_dialogue_result(result: DialogueResult) -> void:
 		or not result.automatic_transition_ids.is_empty()
 		or result.completed
 	):
-		pending_dialogue_results.append(result.to_snapshot())
+		# Detection notices use the production runner, but their completion is
+		# room-local trap state, not a newly authored campaign DialogueGraph.
+		if trap_controller == null or result.dialogue_id != trap_controller.notice_dialogue_id:
+			pending_dialogue_results.append(result.to_snapshot())
 	if result.completed:
 		stop_dialogue()
+		if trap_controller != null and result.dialogue_id == trap_controller.notice_dialogue_id:
+			trap_controller.commit_preparation()
 		if story_dialogue_mode:
 			_emit_story_dialogue_outcome()
 		return
@@ -1754,7 +1841,13 @@ func _prepare_room_items() -> String:
 			)
 	)
 
+	var anchor_ids: Dictionary = {}
 	for anchor: RoomItemSpawnAnchor in anchors:
+		if anchor_ids.has(anchor.anchor_id):
+			return "Duplicate room item anchor."
+		anchor_ids[anchor.anchor_id] = true
+		if anchor.container_id != &"" and not active_containers.has(anchor.container_id):
+			return "Room item anchor refers to a missing container."
 		var anchor_error: String = (
 			anchor.validate_anchor()
 		)
@@ -1769,7 +1862,7 @@ func _prepare_room_items() -> String:
 		) as Array
 	)
 
-	if assignments.is_empty():
+	if not instance_state.local_state.has("item_spawns"):
 		assignments = []
 
 		if definition.loot_profile != null:
@@ -2426,6 +2519,8 @@ func _make_item_assignment(
 		"quantity": entry.quantity,
 		"collected": false,
 	}
+	if anchor.container_id != &"":
+		assignment["container_id"] = String(anchor.container_id)
 	for record_key: Variant in resolution_record.keys():
 		assignment[record_key] = resolution_record[record_key]
 	return assignment
@@ -2490,6 +2585,11 @@ func _spawn_assigned_items(
 				"Missing room item anchor: %s."
 				% anchor_id
 			)
+
+		if anchor.container_id != &"":
+			if StringName(assignment.get("container_id", "")) != anchor.container_id:
+				return "Saved item container disagrees with its authored anchor."
+			continue
 
 		var item: ItemDefinition = (
 			_get_assignment_item(
@@ -3741,6 +3841,11 @@ func _restore_selected_item_description() -> void:
 
 
 func _on_world_item_pickup_requested(world_item_id: StringName) -> void:
+	if trap_controller != null and trap_controller.intercept(String(world_item_id)):
+		return
+	_open_world_item_loot(world_item_id)
+
+func _open_world_item_loot(world_item_id: StringName) -> void:
 	if backpack_controller == null or not backpack_controller.access_error().is_empty():
 		return
 	var panel: RunBackpackPanel = exploration_hud.backpack_panel
@@ -3757,9 +3862,49 @@ func _on_world_item_pickup_requested(world_item_id: StringName) -> void:
 		panel.open_panel(selected_heroine_id)
 		return
 
+func _on_container_contents_requested(container_id: StringName) -> void:
+	if backpack_controller == null or not backpack_controller.access_error().is_empty():
+		return
+	var panel: RunBackpackPanel = exploration_hud.backpack_panel
+	var container: RoomLootContainerHotspot = active_containers.get(container_id)
+	if container == null or panel.visible:
+		return
+	if container.required_lock_id != &"" and not _is_room_lock_unlocked(container.required_lock_id):
+		hover_label.text = "Locked."
+		return
+	var records: Array[Dictionary] = []
+	for assignment: Dictionary in instance_state.local_state.get("item_spawns", []):
+		if StringName(assignment.get("container_id", "")) == container_id and LootClaim.remaining(assignment) > 0:
+			records.append(assignment)
+	var revealed: Dictionary = instance_state.local_state.get("revealed_containers", {})
+	revealed[String(container_id)] = true
+	instance_state.local_state["revealed_containers"] = revealed
+	container.revealed = true
+	container.exhausted = records.is_empty()
+	if records.is_empty():
+		hover_label.text = "Empty."
+		return
+	(backpack_controller as RunLootController).bind_sources(records)
+	exploration_hud.ability_panel.close_panel()
+	exploration_hud.dock.set_log_open(false)
+	panel.open_panel(selected_heroine_id)
+
+func is_authored_loot_resolved() -> bool:
+	if definition == null or not definition.solve_when_loot_exhausted or not instance_state.local_state.has("item_spawns"):
+		return false
+	for record: Dictionary in instance_state.local_state.item_spawns:
+		if LootClaim.remaining(record) > 0:
+			return false
+	return RoomTrapState.resolved(instance_state.local_state)
+
 func _refresh_loot_pickups() -> void:
 	if instance_state == null:
 		return
+	for container: RoomLootContainerHotspot in active_containers.values():
+		container.exhausted = true
+		for record: Dictionary in instance_state.local_state.get("item_spawns", []):
+			if StringName(record.get("container_id", "")) == container.container_id and LootClaim.remaining(record) > 0:
+				container.exhausted = false
 	for assignment: Dictionary in instance_state.local_state.get("item_spawns", []):
 		var id := StringName(assignment.get("spawn_id", ""))
 		if LootClaim.remaining(assignment) == 0 and active_pickups.has(id):
@@ -3929,9 +4074,48 @@ func _capture_party_snapshot() -> Dictionary:
 	return snapshot
 
 
+func bind_map_exits(graph: LayerMapGraph, node: MapNodeState) -> String:
+	for room_exit: RoomExitHotspot in map_exits:
+		room_exit.map_edge_ids.clear()
+	var bound: Dictionary = {}
+	for room_exit: RoomExitHotspot in map_exits:
+		var targets: Array[StringName] = room_exit.destination_node_ids.duplicate()
+		if targets.is_empty() and map_exits.size() == 1:
+			targets.assign(node.outgoing_ids)
+		for target: StringName in targets:
+			if not node.outgoing_ids.has(target) or bound.has(target):
+				return "Room exit has a duplicate or invalid map destination."
+			bound[target] = true
+			room_exit.map_edge_ids.append(graph.edge_id(node.node_id, target))
+	if bound.size() != node.outgoing_ids.size():
+		return "Each outgoing map connection requires an explicit room exit binding."
+	return ""
+
+
+func capture_map_exit_states() -> Dictionary:
+	var result: Dictionary = {}
+	for room_exit: RoomExitHotspot in map_exits:
+		if not is_instance_valid(room_exit):
+			continue
+		var unlocked: bool = true
+		for value: Variant in active_locks.values():
+			var lock: RoomLockHotspot = value
+			if lock.get_exit_hotspot() == room_exit and not lock.is_unlocked:
+				unlocked = false
+		for edge: String in room_exit.map_edge_ids:
+			result[edge] = {"exit_id": String(presentation.get_path_to(room_exit)), "unlocked": unlocked}
+	return result
+
+
 func _on_exit_requested(
 	room_exit: RoomExitHotspot = null
 ) -> void:
+	if _field_blocking():
+		return
+	if room_rest_dialog != null and room_rest_dialog.visible:
+		return
+	if trap_controller != null and trap_controller.blocking():
+		return
 	for lock_value: Variant in active_locks.values():
 		var room_lock := lock_value as RoomLockHotspot
 		if (
@@ -3945,6 +4129,12 @@ func _on_exit_requested(
 
 
 func _on_back_requested() -> void:
+	if _field_blocking():
+		return
+	if room_rest_dialog != null and room_rest_dialog.visible:
+		return
+	if trap_controller != null and trap_controller.blocking():
+		return
 	if mode_controller.is_dialogue_active():
 		var node: DialogueNodeDefinition = (
 			dialogue_runner.get_current_node()
@@ -4022,6 +4212,8 @@ func capture_room_outcome(clear_node: bool = false) -> EventRoomOutcome:
 		pending_dialogue_results.duplicate(true)
 	)
 
+	outcome.solved = is_authored_loot_resolved() or (clear_node and definition != null and definition.solve_on_exit)
+	outcome.exit_states = capture_map_exit_states()
 	outcome.clear_node = clear_node
 
 	return outcome
@@ -4099,6 +4291,12 @@ func _initialize_run_backpack(battlers: BattlerCatalogDefinition) -> void:
 	ids = RunPartyOrder.resolve(party_display_order, ids)
 	backpack_controller.configure(run_inventory, inventory, run_equipment, ids)
 	backpack_controller.exploration_guard = func() -> String:
+		if _field_blocking():
+			return "Close the field station first."
+		if room_rest_dialog != null and room_rest_dialog.visible:
+			return "Finish the Rest room confirmation first."
+		if trap_controller != null and trap_controller.blocking():
+			return "Finish the current trap interaction first."
 		if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
 			return "Close Party first."
 		if mode_controller.is_dialogue_active():
@@ -4126,7 +4324,13 @@ func _toggle_backpack() -> void:
 	exploration_hud.dock.set_log_open(false)
 	panel.open_panel(selected_heroine_id)
 
-func _party_access_error() -> String:
+func _party_access_error(ignore_room_rest: bool = false) -> String:
+	if _field_blocking():
+		return "Close the field station first."
+	if not ignore_room_rest and room_rest_dialog != null and room_rest_dialog.visible:
+		return "Finish the Rest room confirmation first."
+	if trap_controller != null and trap_controller.blocking():
+		return "Finish the current trap interaction first."
 	if story_dialogue_mode or mode_controller.is_dialogue_active():
 		return "Finish the current dialogue first."
 	if selected_item_slot_index >= 0:
@@ -4200,3 +4404,59 @@ func _initialize_run_recovery() -> void:
 		exploration_hud.ability_panel.close_panel()
 		exploration_hud.dock.set_log_open(false)
 		recovery_dialog.open_confirmation(exploration_command_bar.recovery_button))
+
+
+func _room_rest_access_error() -> String:
+	var error: String = _party_access_error(true)
+	if not error.is_empty():
+		return error
+	if room_rest_used:
+		return "This room's Rest has already been used."
+	if recovery_dialog != null and recovery_dialog.visible:
+		return "Finish the ordinary recovery confirmation first."
+	if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
+		return "Close Party first."
+	return "" if room_rest_preview.is_valid() and room_rest_commit.is_valid() else "Room recovery is unavailable."
+
+func _initialize_room_rest() -> void:
+	room_rest_dialog = RunRecoveryDialog.new()
+	exploration_hud.add_child(room_rest_dialog)
+	room_rest_dialog.preview = room_rest_preview
+	room_rest_dialog.commit = room_rest_commit
+	room_rest_dialog.access_guard = _room_rest_access_error
+	room_rest_dialog.failed.connect(func(message: String) -> void: hover_label.text = message)
+
+func _open_room_rest() -> void:
+	if room_rest_dialog == null:
+		return
+	exploration_hud.ability_panel.close_panel()
+	exploration_hud.dock.set_log_open(false)
+	room_rest_dialog.open_confirmation(exploration_command_bar.recovery_button)
+
+
+func _field_blocking() -> bool:
+	return field_preparation_pending or (field_dialog != null and field_dialog.visible)
+
+func _open_field_station() -> void:
+	if field_dialog == null or not _party_access_error().is_empty():
+		return
+	if recovery_dialog != null and recovery_dialog.visible:
+		return
+	if exploration_hud.party_panel != null and exploration_hud.party_panel.visible:
+		return
+	exploration_hud.ability_panel.close_panel()
+	exploration_hud.dock.set_log_open(false)
+	field_dialog.open_station()
+
+func offer_field_preparation_retry(message: String) -> void:
+	field_preparation_pending = true
+	if field_retry_dialog == null:
+		field_retry_dialog = AcceptDialog.new()
+		exploration_hud.add_child(field_retry_dialog)
+		field_retry_dialog.title = "Station supplies could not be saved"
+		field_retry_dialog.exclusive = true
+		field_retry_dialog.get_ok_button().text = "Retry"
+		field_retry_dialog.confirmed.connect(func() -> void: field_retry.call_deferred())
+		field_retry_dialog.close_requested.connect(func() -> void: field_retry.call_deferred())
+	field_retry_dialog.dialog_text = message
+	field_retry_dialog.popup_centered(Vector2i(700,220))

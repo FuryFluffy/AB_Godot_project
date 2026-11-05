@@ -1,0 +1,71 @@
+{
+  "revision": 2,
+  "review_status": {
+    "approved": [
+      "five room backgrounds",
+      "flat parchment map",
+      "Combat / Elite / Treasury / Rest samples",
+      "engraved gold visual direction"
+    ],
+    "new_for_review": [
+      "remaining room symbols",
+      "state overlays",
+      "Intel symbols",
+      "alarm and disarmed markers",
+      "composed UI previews"
+    ],
+    "boss": "provisional"
+  },
+  "node_assets": {
+    "start": "map/nodes/node_start.png",
+    "exploration": "map/nodes/node_exploration.png",
+    "normal_combat": "map/nodes/node_normal_combat.png",
+    "elite_combat": "map/nodes/node_elite_combat.png",
+    "boss_provisional": "map/nodes/node_boss_provisional.png",
+    "rest": "map/nodes/node_rest.png",
+    "alchemy": "map/nodes/node_alchemy.png",
+    "workshop": "map/nodes/node_workshop.png",
+    "treasury": "map/nodes/node_treasury.png",
+    "trap": "map/nodes/node_trap.png",
+    "unknown": "map/nodes/node_unknown.png"
+  },
+  "intel_assets": {
+    "scouting": "map/intel/scouting.png",
+    "battle_sense": "map/nodes/node_normal_combat.png",
+    "smell_of_a_coin": "map/nodes/node_treasury.png",
+    "pathfinding": "map/intel/pathfinding.png",
+    "castle_memory": "map/intel/castle_memory.png",
+    "conquerors_passage": "map/intel/conquerors_passage.png",
+    "sanctuary_sense": "map/nodes/node_rest.png",
+    "danger_sense": "map/nodes/node_trap.png",
+    "artisans_eye": "map/nodes/node_workshop.png",
+    "submit_unlock": "map/intel/submit_unlock.png"
+  },
+  "state_assets": {
+    "current_bloom": "map/states/current_bloom.png",
+    "visited": "map/states/visited.png",
+    "solved": "map/states/solved.png",
+    "rest_exhausted": "map/states/rest_exhausted.png",
+    "known_lock": "map/states/known_lock.png",
+    "selection": "map/states/selection.svg",
+    "focus": "map/states/focus.svg"
+  },
+  "trap_markers": {
+    "trap_identified": "map/intel/scouting.png",
+    "trap_disarmed": "traps/markers/trap_disarmed.png",
+    "alarm_bell": "traps/markers/alarm_bell.png"
+  },
+  "aliases": {
+    "battle_sense": "normal_combat",
+    "smell_of_a_coin": "treasury",
+    "sanctuary_sense": "rest",
+    "danger_sense": "trap",
+    "artisans_eye": "workshop",
+    "trap_identified": "scouting"
+  },
+  "background": "map/background/occult_parchment_flat.png",
+  "native_particles_required": [
+    "poison_fog",
+    "corruption_cloud"
+  ]
+}

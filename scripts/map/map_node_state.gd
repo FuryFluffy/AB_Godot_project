@@ -10,6 +10,11 @@ enum NodeType {
 	ITEM,
 	ELITE,
 	BOSS,
+	TRAP,
+	TREASURY,
+	REST,
+	ALCHEMY,
+	WORKSHOP,
 }
 
 enum MapState {
@@ -36,6 +41,13 @@ var room_definition_id: StringName = &""
 var content_seed: int = 0
 var outgoing_ids: Array[StringName] = []
 var incoming_ids: Array[StringName] = []
+# Knowledge and service completion are independent from the legacy resolution flag.
+var type_known: bool = false
+var exit_completed: bool = false
+var encounter_cleared: bool = false
+var solved: bool = false
+var rest_used: bool = false
+var rest_offer_id: int = 0
 var visited: bool = false
 var cleared: bool = false
 var reward_claimed: bool = false
@@ -68,6 +80,12 @@ func to_snapshot() -> Dictionary:
 		"content_seed": content_seed,
 		"outgoing_ids": outgoing,
 		"incoming_ids": incoming,
+		"type_known": type_known,
+		"exit_completed": exit_completed,
+		"encounter_cleared": encounter_cleared,
+		"solved": solved,
+		"rest_used": rest_used,
+		"rest_offer_id": rest_offer_id,
 		"visited": visited,
 		"cleared": cleared,
 		"reward_claimed": reward_claimed,
@@ -82,7 +100,10 @@ func to_snapshot() -> Dictionary:
 
 static func from_snapshot(snapshot: Dictionary) -> Dictionary:
 	var restored_id := StringName(snapshot.get("node_id", ""))
-	var restored_type: int = int(snapshot.get("node_type", -1))
+	var type_value: Variant = snapshot.get("node_type", -1)
+	if not (type_value is int or type_value is float) or float(type_value) != floorf(float(type_value)):
+		return {"error": "Map snapshot contains an invalid node type.", "node": null}
+	var restored_type: int = int(type_value)
 	var outgoing_value: Variant = snapshot.get("outgoing_ids", null)
 	var incoming_value: Variant = snapshot.get("incoming_ids", null)
 	var authored_room_value: Variant = snapshot.get(
@@ -92,7 +113,7 @@ static func from_snapshot(snapshot: Dictionary) -> Dictionary:
 	var content_seed_value: Variant = snapshot.get("content_seed", 0)
 	if restored_id == &"":
 		return {"error": "Map snapshot contains an empty node ID.", "node": null}
-	if restored_type < NodeType.START or restored_type > NodeType.BOSS:
+	if restored_type < NodeType.START or restored_type > NodeType.WORKSHOP:
 		return {"error": "Map snapshot contains an invalid node type.", "node": null}
 	if not (outgoing_value is Array) or not (incoming_value is Array):
 		return {"error": "Map snapshot contains invalid node connections.", "node": null}
@@ -130,6 +151,18 @@ static func from_snapshot(snapshot: Dictionary) -> Dictionary:
 			return {"error": "Map snapshot contains invalid %s." % boolean_field, "node": null}
 	restored.visited = bool(snapshot.get("visited"))
 	restored.cleared = bool(snapshot.get("cleared"))
+	for field: String in ["type_known", "exit_completed", "encounter_cleared", "solved", "rest_used"]:
+		if snapshot.has(field) and not snapshot[field] is bool:
+			return {"error": "Map snapshot contains invalid %s." % field, "node": null}
+	restored.type_known = snapshot.get("type_known", restored.visited)
+	restored.exit_completed = snapshot.get("exit_completed", restored.cleared)
+	restored.encounter_cleared = snapshot.get("encounter_cleared", restored.cleared and restored.has_encounter_content())
+	restored.solved = snapshot.get("solved", restored.encounter_cleared and restored.requires_battle())
+	restored.rest_used = snapshot.get("rest_used", false)
+	var offer: Variant = snapshot.get("rest_offer_id",0)
+	if typeof(offer) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(offer)) or float(offer) != floorf(float(offer)) or offer < 0 or offer > 6:
+		return {"error":"Map snapshot contains an invalid Rest offer.","node":null}
+	restored.rest_offer_id = int(offer)
 	restored.reward_claimed = bool(snapshot.get("reward_claimed"))
 	restored.reward_source_id = StringName(snapshot.get("reward_source_id", ""))
 	restored.first_clear_item_id = StringName(snapshot.get("first_clear_item_id", ""))
@@ -173,6 +206,16 @@ func get_type_label() -> String:
 			return "Elite"
 		NodeType.BOSS:
 			return "Boss"
+		NodeType.TRAP:
+			return "Trap"
+		NodeType.TREASURY:
+			return "Treasury"
+		NodeType.REST:
+			return "Rest"
+		NodeType.ALCHEMY:
+			return "Alchemy"
+		NodeType.WORKSHOP:
+			return "Workshop"
 	return "Unknown"
 
 
@@ -194,6 +237,11 @@ func requires_event_room() -> bool:
 			NodeType.ROOM,
 			NodeType.EVENT,
 			NodeType.ITEM,
+			NodeType.TREASURY,
+			NodeType.TRAP,
+			NodeType.REST,
+			NodeType.ALCHEMY,
+			NodeType.WORKSHOP,
 		]
 		and room_definition_id != &""
 	)

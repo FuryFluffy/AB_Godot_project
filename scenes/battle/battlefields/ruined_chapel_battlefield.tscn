@@ -433,7 +433,7 @@ role_tags = Array[StringName]([&"enemy_entry", &"flank"])
 
 [node name="Enemy3" type="Marker2D" parent="SpawnSlots" unique_id=1516023262]
 z_index = -20
-position = Vector2(1300, 755)
+position = Vector2(1510, 755)
 script = ExtResource("5_spawn")
 slot_id = &"enemy_3"
 display_name = "Enemy Right"

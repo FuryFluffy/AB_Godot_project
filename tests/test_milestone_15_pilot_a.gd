@@ -90,6 +90,9 @@ func _test_optional_registered_generation() -> void:
 				continue
 			if node.authored_room_id == DINING_ROOM_ID:
 				continue
+			if node.node_type == MapNodeState.NodeType.ELITE:
+				_expect(int(first.reserved_node_types.get(String(node.node_id), -1)) == MapNodeState.NodeType.ELITE and node.has_encounter_content() and node.room_definition_id == &"", "Stage 17 activates only explicitly reserved combat-only Elite positions.")
+				continue
 			presentation_only_fillers_remain_noncombat = (
 				presentation_only_fillers_remain_noncombat
 				and node.node_type != MapNodeState.NodeType.BATTLE
@@ -125,7 +128,7 @@ func _test_optional_registered_generation() -> void:
 		(
 			"Both Pilot A rooms must be deterministic optional filler content, "
 			+ "never universal or substituted into the Corrupted Butler route; "
-			+ "presentation-only fillers such as Cold Pantry must remain noncombat."
+			+ "unreserved presentation-only fillers such as Cold Pantry remain noncombat; reserved Elites activate in Stage 17."
 		)
 	)
 

@@ -47,6 +47,7 @@ var ability_panel: AbilityPanel
 @export var reusable_hud: ReusableCombatHUD
 
 
+var submit_unlocked: bool = false
 var battler_states: Dictionary = {}
 var battler_markers: Array[BattleMarker] = []
 var battlefield_definition: BattlefieldDefinition
@@ -278,6 +279,9 @@ func _prepare_battle_composition() -> String:
 			)
 	if pending_encounter_definition.template == null:
 		pending_encounter_definition.template = default_encounter_template
+	var instance_error: String = _prepare_encounter_instances()
+	if not instance_error.is_empty():
+		return instance_error
 	var assignment_error: String = (
 		pending_encounter_definition.ensure_spawn_assignments()
 	)
@@ -354,6 +358,39 @@ func _create_dynamic_battler_markers() -> void:
 	)
 
 
+func _prepare_encounter_instances() -> String:
+	if pending_encounter_definition.instance_sources.is_empty():
+		return ""
+	# Clone only encounter-local registries; canonical sheets/art/AI stay shared.
+	battler_catalog = battler_catalog.duplicate()
+	battler_catalog.battlers = battler_catalog.battlers.duplicate()
+	marker_factory.view_catalog = marker_factory.view_catalog.duplicate()
+	marker_factory.view_catalog.views = marker_factory.view_catalog.views.duplicate()
+	marker_factory.visual_profile_catalog = marker_factory.visual_profile_catalog.duplicate()
+	marker_factory.visual_profile_catalog.profiles = marker_factory.visual_profile_catalog.profiles.duplicate()
+	for id: StringName in pending_encounter_definition.instance_sources:
+		if battler_catalog.get_battler(id) != null:
+			continue
+		var source: StringName = pending_encounter_definition.instance_sources[id]
+		var original: BattlerDefinition = battler_catalog.get_battler(source)
+		var profile: BattlerVisualProfile = marker_factory.visual_profile_catalog.get_profile(source)
+		var view: BattlerViewDefinition = marker_factory.view_catalog.get_view(source)
+		if original == null or original.faction != BattlerDefinition.Faction.ENEMY or profile == null:
+			return "Encounter instance requires an authored enemy sheet and presentation."
+		var copy: BattlerDefinition = original.duplicate()
+		copy.battler_id = id
+		battler_catalog.battlers.append(copy)
+		var profile_copy: BattlerVisualProfile = profile.duplicate()
+		profile_copy.battler_id = id
+		profile_copy.profile_id = StringName("%s_visual" % id)
+		marker_factory.visual_profile_catalog.profiles.append(profile_copy)
+		if view != null:
+			var view_copy: BattlerViewDefinition = view.duplicate()
+			view_copy.battler_id = id
+			marker_factory.view_catalog.views.append(view_copy)
+	return ""
+
+
 func _initialize_combat_engine() -> String:
 	if combat_engine == null:
 		return "CombatEngine scene instance is missing."
@@ -400,7 +437,8 @@ func _initialize_combat_engine() -> String:
 		initial_item_ids,
 		initial_item_quantities,
 		progression_snapshots,
-		pending_run_equipment
+		pending_run_equipment,
+		submit_unlocked
 	)
 	if not engine_error.is_empty():
 		return engine_error
@@ -3487,7 +3525,7 @@ func _refresh_grapple_command_bar() -> void:
 	aoe_button.visible = not grapple_mode
 	struggle_button.visible = grapple_mode
 	grapple_wait_button.visible = grapple_mode
-	submit_button.visible = grapple_mode
+	submit_button.visible = grapple_mode and combat_engine.submit_unlocked
 
 	if not grapple_mode:
 		return
@@ -3505,7 +3543,7 @@ func _refresh_grapple_command_bar() -> void:
 	)
 	struggle_button.disabled = not can_act
 	grapple_wait_button.disabled = not can_act
-	submit_button.disabled = true
+	submit_button.disabled = not can_act or not combat_engine.can_submit(battle_runtime.selected_battler_id)
 
 	var unavailable_reason: String = ""
 	if selected.is_defeated:
@@ -3530,7 +3568,7 @@ func _refresh_grapple_command_bar() -> void:
 		else "End this heroine's activation without resisting."
 	)
 	submit_button.tooltip_text = (
-		"Submit unlock is not yet available."
+		"Spend all remaining Actions to advance the main track and recover 1 HP, overflowing to MP." if combat_engine.submit_unlocked else "Purchase the permanent Submit upgrade in Refuge Intel."
 	)
 
 
@@ -4114,9 +4152,14 @@ func _on_grapple_wait_pressed() -> void:
 
 
 func _on_submit_pressed() -> void:
-	log_presenter.append(
-		"Submit unlock is not yet available."
-	)
+	if commands_locked:
+		return
+	var result: GrappleActionResult = combat_engine.submit(battle_runtime.selected_battler_id)
+	_log_grapple_action_result(result)
+	if result.succeeded:
+		log_presenter.append("Grapple recovery: +%d HP, +%d MP." % [result.hp_restored,result.mp_restored])
+	_refresh_grapple_command_bar()
+	_evaluate_and_present_outcome()
 
 
 func _log_grapple_action_result(
@@ -4143,7 +4186,7 @@ func _log_grapple_action_result(
 					result.track.grappler_id,
 					&"grapple_started"
 				)
-			"Progress", "Hold":
+			"Progress", "Hold", "Submit":
 				_present_battler_visual_event(
 					result.track.grappler_id,
 					&"grapple_progressed"
@@ -4190,17 +4233,11 @@ func _log_grapple_action_result(
 		)
 		return
 
+	var heroine_name: String = heroine.definition.display_name if heroine != null and heroine.definition != null else "the heroine"
+	var grappler_name: String = grappler.definition.display_name if grappler != null and grappler.definition != null else "the enemy"
+	var summary: String = "%s submitted to %s, advancing to Stage %d." % [heroine_name,grappler_name,result.stage_after] if result.action_name == "Submit" else "%s advanced the Grapple on %s to Stage %d." % [grappler_name,heroine_name,result.stage_after]
 	log_presenter.append(
-		"%s advanced the Grapple on %s to Stage %d."
-		% [
-			grappler.definition.display_name
-			if grappler != null and grappler.definition != null
-			else result.action_name,
-			heroine.definition.display_name
-			if heroine != null and heroine.definition != null
-			else "the heroine",
-			result.stage_after,
-		],
+		summary,
 		"%s: Stage %d → %d; Corruption %+d, Resolve %+d."
 		% [
 			result.action_name,

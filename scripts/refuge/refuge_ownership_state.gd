@@ -31,6 +31,14 @@ var stash_item_stacks: Array[Dictionary] = []
 var stash_equipment_instances: Dictionary = {}
 var key_chain: Dictionary = {}
 var banked_materials: Dictionary = {}
+const INTEL_CATALOG = preload("res://data/intel/intel_catalog.tres")
+var pending_intel: Array[StringName] = []
+var permanent_intel: Array[StringName] = []
+var pending_passage_layers: Array[int] = []
+var permanent_passage_layers: Array[int] = []
+var selected_passage_layer: int = 0
+var castle_layouts: Dictionary = {}
+var discovered_recipe_ids: Array[StringName] = []
 
 
 func initialize_default(
@@ -98,6 +106,13 @@ func initialize_default(
 	stash_equipment_instances = {}
 	key_chain = {}
 	banked_materials = {}
+	discovered_recipe_ids = []
+	pending_intel = []
+	permanent_intel = []
+	pending_passage_layers = []
+	permanent_passage_layers = []
+	selected_passage_layer = 0
+	castle_layouts = {}
 	ownership_changed.emit()
 	return ""
 
@@ -186,6 +201,13 @@ func to_snapshot() -> Dictionary:
 		},
 		"key_chain": key_chain.duplicate(true),
 		"banked_materials": banked_materials.duplicate(true),
+		"discovered_recipe_ids": discovered_recipe_ids.duplicate(),
+		"pending_intel": pending_intel.duplicate(),
+		"permanent_intel": permanent_intel.duplicate(),
+		"pending_passage_layers": pending_passage_layers.duplicate(),
+		"permanent_passage_layers": permanent_passage_layers.duplicate(),
+		"selected_passage_layer": selected_passage_layer,
+		"castle_layouts": castle_layouts.duplicate(true),
 	}
 
 
@@ -727,6 +749,11 @@ func make_run_start_transfer() -> Dictionary:
 	staged_refuge.stash_item_stacks = stash_item_stacks.duplicate(true)
 	staged_refuge.stash_equipment_instances = stash_equipment_instances.duplicate(true)
 	staged_refuge.key_chain = {}
+	staged_refuge.discovered_recipe_ids = discovered_recipe_ids.duplicate()
+	staged_refuge.permanent_intel = permanent_intel.duplicate()
+	staged_refuge.copy_expedition_from(self)
+	staged_refuge.pending_passage_layers.erase(selected_passage_layer)
+	staged_refuge.selected_passage_layer = 0
 	staged_refuge.banked_materials = banked_materials.duplicate(true)
 	return {
 		"error": "",
@@ -808,6 +835,9 @@ func make_run_return_transfer(
 		staged_refuge.key_chain[String(key_id)] = int(
 			run_inventory.key_chain[key_value]
 		)
+	staged_refuge.discovered_recipe_ids = discovered_recipe_ids.duplicate()
+	staged_refuge.permanent_intel = permanent_intel.duplicate()
+	staged_refuge.copy_expedition_from(self)
 	staged_refuge.banked_materials = banked_materials.duplicate(true)
 	for material_value: Variant in run_inventory.material_pouch.keys():
 		var material_id := StringName(material_value)
@@ -1140,6 +1170,18 @@ func _restore_snapshot_fields(
 	snapshot: Dictionary,
 	legacy_item_bar: Array = []
 ) -> String:
+	for field: String in ["pending_intel", "permanent_intel"]:
+		var error: String = INTEL_CATALOG.validate_ids(snapshot.get(field, []),field == "permanent_intel")
+		if not error.is_empty():
+			return error
+	var expedition_error: String = restore_expedition(snapshot)
+	if not expedition_error.is_empty():
+		return expedition_error
+	pending_intel.assign(snapshot.get("pending_intel", []))
+	permanent_intel.assign(snapshot.get("permanent_intel", []))
+	var recipe_error: String = restore_recipe_knowledge(snapshot.get("discovered_recipe_ids", []))
+	if not recipe_error.is_empty():
+		return recipe_error
 	var selected_value: Variant = snapshot.get("selected_party_ids", null)
 	var item_bar_value: Variant = snapshot.get(
 		"prepared_item_bar_slots",
@@ -1497,6 +1539,10 @@ func _copy_from(source: RefugeOwnershipState) -> void:
 	stash_equipment_instances = source.stash_equipment_instances.duplicate(true)
 	key_chain = source.key_chain.duplicate(true)
 	banked_materials = source.banked_materials.duplicate(true)
+	discovered_recipe_ids = source.discovered_recipe_ids.duplicate()
+	pending_intel = source.pending_intel.duplicate()
+	permanent_intel = source.permanent_intel.duplicate()
+	copy_expedition_from(source)
 
 
 func _copy_runtime_context(source: RefugeOwnershipState) -> void:
@@ -1725,6 +1771,73 @@ func _clear_backpack_equipment_reference(heroine_id: StringName, instance_id: St
 
 func execute_production_recipe(recipe_id: StringName) -> Dictionary:
 	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(recipe_id)
-	if recipe == null:
+	if recipe == null or not knows_recipe(recipe_id):
 		return {"error": "Unknown production recipe."}
 	return recipe.execute_production(RefugeProductionProvider.new(self))
+
+
+func knows_recipe(id: StringName) -> bool:
+	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(id)
+	return recipe != null and (recipe.starts_known or discovered_recipe_ids.has(id))
+
+func discover_recipe(id: StringName) -> String:
+	var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(id)
+	if recipe == null or recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM:
+		return "Unknown production recipe discovery."
+	if not discovered_recipe_ids.has(id):
+		discovered_recipe_ids.append(id)
+		discovered_recipe_ids.sort()
+	return ""
+
+
+func restore_recipe_knowledge(recipes_value: Variant) -> String:
+	if not recipes_value is Array:
+		return "Recipe knowledge must be an array."
+	var restored_recipes: Array[StringName] = []
+	for value: Variant in recipes_value:
+		if not (value is String or value is StringName) or String(value).is_empty() or restored_recipes.has(StringName(value)):
+			return "Recipe knowledge contains an invalid or duplicate ID."
+		var recipe: RefugeRecipeDefinition = RECIPE_CATALOG.get_recipe(StringName(value))
+		if recipe == null or recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM:
+			return "Recipe knowledge references an unknown production recipe."
+		restored_recipes.append(StringName(value))
+	discovered_recipe_ids = restored_recipes
+	return ""
+
+
+func owns_passage(layer: int) -> bool:
+	return pending_passage_layers.has(layer) or permanent_passage_layers.has(layer)
+
+func copy_expedition_from(source: RefugeOwnershipState) -> void:
+	pending_passage_layers = source.pending_passage_layers.duplicate()
+	permanent_passage_layers = source.permanent_passage_layers.duplicate()
+	selected_passage_layer = source.selected_passage_layer
+	castle_layouts = source.castle_layouts.duplicate(true)
+
+func restore_expedition(snapshot: Dictionary) -> String:
+	for field: String in ["pending_passage_layers", "permanent_passage_layers"]:
+		var values: Variant = snapshot.get(field, [])
+		if not values is Array:
+			return "Invalid Passage entitlements."
+		var seen: Array[int] = []
+		for value: Variant in values:
+			if typeof(value) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(value)) or float(value) != floorf(float(value)) or int(value) not in [1, 2] or seen.has(int(value)):
+				return "Invalid or duplicate Passage layer."
+			seen.append(int(value))
+	var selected: Variant = snapshot.get("selected_passage_layer", 0)
+	if typeof(selected) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(selected)) or float(selected) != floorf(float(selected)) or int(selected) not in [0, 1, 2]:
+		return "Invalid Passage selection."
+	var pending: Array[int] = []
+	var permanent: Array[int] = []
+	for value: Variant in snapshot.get("pending_passage_layers", []): pending.append(int(value))
+	for value: Variant in snapshot.get("permanent_passage_layers", []): permanent.append(int(value))
+	if int(selected) != 0 and not pending.has(int(selected)) and not permanent.has(int(selected)):
+		return "Passage selection is not owned."
+	var memory_error: String = CastleLayoutMemory.validate(snapshot.get("castle_layouts", {}))
+	if not memory_error.is_empty():
+		return memory_error
+	pending_passage_layers = pending
+	permanent_passage_layers = permanent
+	selected_passage_layer = int(selected)
+	castle_layouts = (snapshot.get("castle_layouts", {}) as Dictionary).duplicate(true)
+	return ""

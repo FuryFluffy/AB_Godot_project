@@ -1,0 +1,5 @@
+tests/test_combined_acceptance.gd
+tests/test_combined_acceptance.gd.uid
+tools/run_regression_suite.py
+tools/verify_combined_acceptance.gd
+tools/verify_combined_acceptance.gd.uid

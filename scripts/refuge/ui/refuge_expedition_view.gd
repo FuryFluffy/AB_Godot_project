@@ -2,17 +2,8 @@ class_name RefugeExpeditionView
 extends VBoxContainer
 
 const VISUALS = preload("res://data/presentation/battler_visual_profile_catalog.tres")
-const INTEL: Array[Array] = [
-	["Scouting", "Identify adjacent room types through discovery."],
-	["Battle Sense", "Identify Normal and Elite Combat nodes."],
-	["Smell of a Coin", "Identify a Treasury and reveal an actual route to it."],
-	["Pathfinding", "Reveal the layer's node connections."],
-	["Sanctuary Sense", "Identify Rest nodes."],
-	["Danger Sense", "Identify Trap rooms, without disarming trapped items."],
-	["Artisan’s Eye", "Identify Alchemy and Workshop nodes."],
-	["Castle Memory", "Reuse the last layout and its discovered map knowledge."],
-	["Conqueror’s Passage", "Start at an eligible permanently defeated boss. Floor access alone is insufficient."],
-]
+const MAP_ART = preload("res://scripts/map/map_art_library.gd")
+const INTEL_CATALOG = preload("res://data/intel/intel_catalog.tres")
 
 var screen: BloomRefugeScreen
 var section: StringName = &"hub"
@@ -39,6 +30,11 @@ var progress_heroine: StringName = &""
 var upgrade_button: Button
 var intel_tabs: TabBar
 var intel_list: VBoxContainer
+var intel_summary: Label
+var intel_buttons: Dictionary = {}
+var passage_purchase_selector: OptionButton
+var departure_selector: OptionButton
+var purchase_layer: int = 0
 
 func configure(owner_screen: BloomRefugeScreen) -> void:
 	screen = owner_screen
@@ -70,8 +66,16 @@ func _build_hub() -> void:
 	for entry: Array in [[&"party", "Party"], [&"intel", "Intel"], [&"level", "Level Up"]]:
 		navigation[entry[0]] = _button(actions, entry[1], show_section.bind(entry[0]))
 	party_summary = _label(actions, "")
-	_label(actions, "Intel: unavailable\nNo Intel purchases are active.")
-	_label(hub, "Departure: Layer 2 · Farthest Cell\nUnspent Bloom is discarded on departure. Stash and banked Materials remain safe.")
+	intel_summary = _label(actions, "")
+	_label(hub, "Departure")
+	departure_selector = OptionButton.new()
+	hub.add_child(departure_selector)
+	departure_selector.item_selected.connect(func(index: int) -> void:
+		var result: Dictionary = screen.management.select_passage(departure_selector.get_item_id(index))
+		if not String(result.error).is_empty(): screen.show_status(String(result.error), true)
+		screen._refresh_all()
+	)
+	_label(hub, "Unspent Bloom is discarded on departure. Unused paid Passages stay owned. Stash and banked Materials remain safe.")
 	# Keep the existing seed and run-launch signal, validation and application owner.
 	screen.seed_edit.get_parent().reparent(hub)
 	screen.seed_edit.get_parent().show()
@@ -97,7 +101,14 @@ func _build_intel() -> void:
 	intel_tabs.add_tab("This Run")
 	intel_tabs.add_tab("Permanent")
 	page.add_child(intel_tabs)
-	_label(page, "Intel services and prices are not available yet.")
+	_label(page, "Buy now with Bloom. Closing preparation gives no refund. This Run Intel applies to the next expedition; a Passage waits until its layer is chosen.")
+	_label(page, "Conqueror’s Passage purchase layer — requires its permanently defeated boss")
+	passage_purchase_selector = OptionButton.new()
+	page.add_child(passage_purchase_selector)
+	passage_purchase_selector.item_selected.connect(func(index: int) -> void:
+		purchase_layer = passage_purchase_selector.get_item_id(index)
+		_refresh_intel()
+	)
 	intel_list = VBoxContainer.new()
 	intel_list.add_theme_constant_override("separation", 14)
 	page.add_child(intel_list)
@@ -153,6 +164,7 @@ func refresh() -> void:
 	progress_heroine = progress_selector.present_heroines(screen.management.get_backpack_heroine_entries(), progress_heroine)
 	progress_selector.disabled = not enabled
 	_refresh_progression()
+	_refresh_intel()
 
 func _make_heroine_card(id: StringName, title: String) -> void:
 	var button := Button.new()
@@ -284,12 +296,64 @@ func _refresh_intel() -> void:
 	for child: Node in intel_list.get_children():
 		intel_list.remove_child(child)
 		child.queue_free()
-	var options: Array[Array] = INTEL.duplicate(true)
-	if intel_tabs.current_tab == 1:
-		options.append(["Submit during Struggle", "Unlock Submit while retaining Struggle eligibility rules."])
-	for entry: Array in options:
-		var option: Label = _label(intel_list, "%s\n%s\nCost: unavailable · Not purchasable" % [entry[0], entry[1]])
-		option.focus_mode = Control.FOCUS_ALL
+	intel_buttons.clear()
+	var permanent: bool = intel_tabs.current_tab == 1
+	var ownership: RefugeOwnershipState = screen.current_run_state.refuge_ownership if screen.current_run_state != null else null
+	_refresh_passage_selectors(ownership)
+	var summary: Array[String] = []
+	if ownership != null:
+		for layer: int in [1, 2]:
+			if ownership.owns_passage(layer): summary.append("Passage Layer %d" % layer)
+	for option: IntelOptionDefinition in INTEL_CATALOG.options:
+		if ownership != null and (ownership.pending_intel.has(option.option_id) or ownership.permanent_intel.has(option.option_id)):
+			summary.append(option.display_name)
+		if option.permanent_only and not permanent:
+			continue
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation",16)
+		intel_list.add_child(row)
+		var icon := TextureRect.new()
+		icon.texture = MAP_ART.texture("intel_assets","submit_unlock" if option.option_id == &"submit" else String(option.option_id))
+		icon.custom_minimum_size = Vector2(56,56)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		row.add_child(icon)
+		var label: Label = _label(row, option.display_name + "\n" + option.description)
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		if option.effect == IntelOptionDefinition.Effect.CASTLE_MEMORY and ownership != null:
+			var departure_layer: int = ownership.selected_passage_layer if ownership.selected_passage_layer != 0 else 2
+			if not ownership.castle_layouts.has("layer_%d" % departure_layer):
+				label.text += " No saved layout for the current departure yet; it will generate a new one."
+		var owned: bool = ownership != null and (ownership.permanent_intel.has(option.option_id) or (not permanent and ownership.pending_intel.has(option.option_id)))
+		var passage: bool = option.effect == IntelOptionDefinition.Effect.CONQUEROR_PASSAGE
+		var eligible: bool = not passage or (screen.current_run_state != null and screen.current_run_state.is_passage_eligible(purchase_layer))
+		var permanent_owned: bool = ownership != null and ownership.permanent_intel.has(option.option_id)
+		if passage and ownership != null:
+			permanent_owned = ownership.permanent_passage_layers.has(purchase_layer)
+			owned = permanent_owned or (not permanent and ownership.pending_passage_layers.has(purchase_layer))
+			label.text = option.display_name + (" · Layer %d" % purchase_layer if eligible else "") + "\n" + option.description
+		var price: int = option.price(permanent, purchase_layer)
+		var title: String = "Owned permanently" if permanent_owned else "Bought for next run"
+		if not owned:
+			title = "%d Bloom" % price if eligible and option.available else "No eligible boss"
+		var button: Button = _button(row,title,_purchase_intel.bind(option.option_id,permanent,price,purchase_layer if passage else 0))
+		button.custom_minimum_size.x = 220
+		button.disabled = not enabled or ownership == null or owned or not option.available or not eligible or screen.current_run_state.bloom < price
+		intel_buttons[option.option_id] = button
+	intel_summary.text = "Intel: " + (", ".join(summary) if not summary.is_empty() else "No purchases prepared.")
+
+func _purchase_intel(id: StringName, permanent: bool, price: int, layer: int = 0) -> void:
+	if not enabled or screen.management == null:
+		return
+	var result: Dictionary = screen.management.purchase_intel(id,permanent,price,layer)
+	if not String(result.error).is_empty():
+		screen.show_status(String(result.error),true)
+		return
+	screen._refresh_all()
+	screen.show_status("Intel purchase saved." if result.get("changed",false) else "Already owned.")
+	if intel_buttons.has(id):
+		intel_tabs.grab_focus()
+
 
 func _refresh_progression() -> void:
 	if screen.current_battler_catalog == null or progress_heroine == &"":
@@ -345,3 +409,25 @@ func _button(parent: Node, text: String, callback: Callable) -> Button:
 	if callback.is_valid():
 		button.pressed.connect(callback)
 	return button
+
+
+func _refresh_passage_selectors(ownership: RefugeOwnershipState) -> void:
+	passage_purchase_selector.clear()
+	departure_selector.clear()
+	departure_selector.add_item("Layer 2 · Farthest Cell", 0)
+	if ownership != null:
+		for layer: int in [1, 2]:
+			if not screen.current_run_state.is_passage_eligible(layer): continue
+			passage_purchase_selector.add_item("Layer %d · defeated boss room" % layer, layer)
+			if ownership.owns_passage(layer):
+				departure_selector.add_item("Layer %d · Conqueror’s Passage" % layer, layer)
+	if passage_purchase_selector.item_count == 0:
+		purchase_layer = 0
+		passage_purchase_selector.add_item("No eligible defeated boss", 0)
+	elif passage_purchase_selector.get_item_index(purchase_layer) < 0:
+		purchase_layer = passage_purchase_selector.get_item_id(0)
+	passage_purchase_selector.select(passage_purchase_selector.get_item_index(purchase_layer))
+	passage_purchase_selector.disabled = not enabled or purchase_layer == 0
+	var selected: int = ownership.selected_passage_layer if ownership != null else 0
+	departure_selector.select(maxi(0, departure_selector.get_item_index(selected)))
+	departure_selector.disabled = not enabled or ownership == null

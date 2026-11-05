@@ -1,0 +1,82 @@
+[gd_resource type="Resource" script_class="IntelCatalogDefinition" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/intel/intel_catalog_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/intel/intel_option_definition.gd" id="2"]
+
+[sub_resource type="Resource" id="scouting"]
+script = ExtResource("2")
+option_id = &"scouting"
+display_name = "Scouting"
+description = "Identify adjacent room types through eligible exits."
+effect = 0
+
+[sub_resource type="Resource" id="battle_sense"]
+script = ExtResource("2")
+option_id = &"battle_sense"
+display_name = "Battle Sense"
+description = "Identify all Normal and Elite Combat nodes."
+effect = 1
+
+[sub_resource type="Resource" id="smell_of_a_coin"]
+script = ExtResource("2")
+option_id = &"smell_of_a_coin"
+display_name = "Smell of a Coin"
+description = "Identify a Treasury and reveal a real route to it. Locks remain in force."
+effect = 2
+
+[sub_resource type="Resource" id="pathfinding"]
+script = ExtResource("2")
+option_id = &"pathfinding"
+display_name = "Pathfinding"
+description = "Reveal the layer connections without opening blocked passages."
+effect = 3
+
+[sub_resource type="Resource" id="sanctuary_sense"]
+script = ExtResource("2")
+option_id = &"sanctuary_sense"
+display_name = "Sanctuary Sense"
+description = "Identify Rest rooms."
+effect = 4
+
+[sub_resource type="Resource" id="danger_sense"]
+script = ExtResource("2")
+option_id = &"danger_sense"
+display_name = "Danger Sense"
+description = "Identify Trap rooms, without revealing or disarming item traps."
+effect = 5
+
+[sub_resource type="Resource" id="artisans_eye"]
+script = ExtResource("2")
+option_id = &"artisans_eye"
+display_name = "Artisan’s Eye"
+description = "Identify Alchemy and Workshop rooms."
+effect = 6
+
+[sub_resource type="Resource" id="castle_memory"]
+script = ExtResource("2")
+option_id = &"castle_memory"
+display_name = "Castle Memory"
+description = "Reuse the last saved layout and discovered knowledge. Rooms receive fresh contents; permanent boss defeats remain."
+effect = 7
+one_run_price = 10
+
+[sub_resource type="Resource" id="conquerors_passage"]
+script = ExtResource("2")
+option_id = &"conquerors_passage"
+display_name = "Conqueror’s Passage"
+description = "Start at the selected permanently defeated boss. Skipped rooms grant no rewards. Each layer is purchased separately."
+effect = 8
+one_run_price = 100
+
+[sub_resource type="Resource" id="submit"]
+script = ExtResource("2")
+option_id = &"submit"
+display_name = "Submit during Struggle"
+description = "Spend all remaining Actions to advance the main Grapple track and heal 1. Climax deals 25% enemy max HP damage and heals 2. Healing overflows to MP."
+effect = 9
+permanent_only = true
+permanent_price = 100
+
+[resource]
+script = ExtResource("1")
+options = Array[ExtResource("2")]([SubResource("scouting"), SubResource("battle_sense"), SubResource("smell_of_a_coin"), SubResource("pathfinding"), SubResource("sanctuary_sense"), SubResource("danger_sense"), SubResource("artisans_eye"), SubResource("castle_memory"), SubResource("conquerors_passage"), SubResource("submit")])

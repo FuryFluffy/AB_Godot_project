@@ -395,8 +395,8 @@ func _refresh_header_and_commands() -> void:
 	)
 	hud.set_grapple_context(
 		grapple_mode,
-		not commands_locked and active_heroine,
-		false
+		not commands_locked and active_heroine and not selected.is_stunned() and engine.battle_runtime.can_change_phase(),
+		engine.submit_unlocked
 	)
 	hud.set_command_availability(
 		not commands_locked and active_heroine and not grapple_mode,

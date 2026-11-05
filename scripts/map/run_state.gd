@@ -203,6 +203,7 @@ func initialize(
 	graph = new_graph
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = graph.start_node_id
+	graph.initialize_entry_knowledge(current_node_id)
 	selected_node_id = current_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -701,8 +702,8 @@ func can_travel_to(node_id: StringName) -> bool:
 	if not target.travel_enabled:
 		return false
 	if (
-		current.cleared
-		and _get_connected_node_ids(current_node_id).has(node_id)
+		(current.exit_completed or current.cleared)
+		and graph.is_connection_accessible(current_node_id, node_id)
 	):
 		return true
 	return target.visited and not get_backtrack_route(node_id).is_empty()
@@ -724,12 +725,12 @@ func get_backtrack_route(node_id: StringName) -> Array[StringName]:
 		for neighbor_id: StringName in _get_connected_node_ids(
 			route_node_id
 		):
-			if previous.has(neighbor_id):
+			if previous.has(neighbor_id) or not graph.is_connection_accessible(route_node_id, neighbor_id):
 				continue
 			var neighbor: MapNodeState = graph.get_map_node(neighbor_id)
 			if neighbor == null or not neighbor.visited:
 				continue
-			if neighbor_id != node_id and not neighbor.cleared:
+			if neighbor_id != node_id and not (neighbor.exit_completed or neighbor.cleared):
 				continue
 			previous[neighbor_id] = route_node_id
 			if neighbor_id == node_id:
@@ -782,8 +783,9 @@ func travel_to(
 	)
 
 	node.visited = true
+	node.type_known = true
 
-	if not node.cleared:
+	if not node.cleared or (node.has_encounter_content() and not node.encounter_cleared):
 		pending_node_id = node_id
 		pending_origin_node_id = origin_node_id
 		pending_node_seed = 0
@@ -826,7 +828,8 @@ func prepare_pending_node_seed() -> String:
 func rollback_pending_node_entry(
 	node_id: StringName,
 	target_was_visited: bool,
-	lifecycle_snapshot: Dictionary
+	lifecycle_snapshot: Dictionary,
+	target_type_was_known: bool = true
 ) -> String:
 	if pending_node_id != node_id or pending_origin_node_id == &"":
 		return "The pending node entry cannot be rolled back."
@@ -841,6 +844,7 @@ func rollback_pending_node_entry(
 	if not lifecycle_error.is_empty():
 		return lifecycle_error
 	node.visited = target_was_visited
+	node.type_known = target_type_was_known
 	current_node_id = origin.node_id
 	selected_node_id = node_id
 	pending_node_id = &""
@@ -859,7 +863,7 @@ func get_node_map_state(node_id: StringName) -> MapNodeState.MapState:
 		return MapNodeState.MapState.LOCKED
 	if node_id == selected_node_id:
 		return MapNodeState.MapState.SELECTED
-	if node.cleared:
+	if node.encounter_cleared or node.solved:
 		return MapNodeState.MapState.CLEARED
 	if node.visited:
 		return MapNodeState.MapState.VISITED
@@ -881,6 +885,7 @@ func make_encounter_definition() -> EncounterDefinition:
 	definition.party_ids = _make_current_party_ids()
 	if (
 		node.encounter_id == MIRA_RECRUITMENT_ENCOUNTER_ID
+		and not has_established_refuge()
 		and not definition.party_ids.has(&"mira")
 	):
 		# Mira is a scene-present ally for her recruitment battle. She is
@@ -888,6 +893,7 @@ func make_encounter_definition() -> EncounterDefinition:
 		definition.party_ids.append(&"mira")
 	if (
 		node.encounter_id == SERAPHINE_RECRUITMENT_ENCOUNTER_ID
+		and not has_established_refuge()
 		and not definition.party_ids.has(&"seraphine")
 	):
 		# Seraphine is physically present and fights beneath her ward, but the
@@ -1031,7 +1037,9 @@ func _make_enemy_composition(
 
 	var selector: int = absi(encounter_seed) % 6
 	if node.node_type == MapNodeState.NodeType.ELITE:
-		if selector % 2 == 0:
+		var template: EncounterTemplateDefinition = _get_encounter_template(node.encounter_template_id)
+		# Existing Layer 2 field supports the pair; never truncate a trio's spawns.
+		if selector % 2 == 0 or (template != null and template.enemy_spawn_slot_ids.size() < 3):
 			return [&"red_wax_acolyte", &"hollow_servant"]
 		# Preserve the validated prototype trio as a hard elite-grade
 		# formation, not as the ordinary room baseline.
@@ -1105,7 +1113,7 @@ func apply_encounter_outcome(outcome: EncounterOutcome) -> String:
 			)
 			if not item_reward_error.is_empty():
 				push_warning(item_reward_error)
-		complete_pending_node(outcome.bloom_reward, reward_claimed_now)
+		complete_pending_node(outcome.bloom_reward, reward_claimed_now, true)
 	else:
 		pending_node_id = &""
 		pending_origin_node_id = &""
@@ -1286,6 +1294,10 @@ func apply_blood_nun_aftermath(
 	# Everything above is validation. Commit the layer boundary as one state
 	# transaction so a malformed story result cannot half-complete Layer 1.
 	var completed_layer_graph: LayerMapGraph = graph
+	pending_boss_node.encounter_cleared = true
+	pending_boss_node.solved = true
+	pending_boss_node.exit_completed = true
+	graph.reveal_adjacency(pending_boss_node.node_id, get_run_intel_ids().has(&"scouting"))
 	pending_boss_node.cleared = true
 	pending_boss_node.reward_claimed = true
 	party_snapshot = story_outcome.party_snapshot.duplicate(true)
@@ -1306,11 +1318,14 @@ func apply_blood_nun_aftermath(
 	if not completed_layer_ids.has(&"layer_1"):
 		completed_layer_ids.append(&"layer_1")
 	archived_layer_graphs[&"layer_1"] = completed_layer_graph
+	CastleLayoutMemory.remember(refuge_ownership.castle_layouts, completed_layer_graph)
 
 	graph = next_graph
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	run_seed = next_graph.run_seed
 	current_node_id = graph.start_node_id
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
 	selected_node_id = graph.start_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -1455,6 +1470,10 @@ func apply_jailer_victory(
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	run_seed = reverse_layer_2_graph.run_seed
 	current_node_id = reverse_layer_2_graph.boss_node_id
+	graph.get_map_node(graph.start_node_id).visited = false
+	graph.get_map_node(current_node_id).visited = true
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
 	selected_node_id = reverse_layer_2_graph.boss_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -1553,6 +1572,9 @@ func establish_refuge_at_farthest_cell(
 	)
 	if not refuge_error.is_empty():
 		return refuge_error
+	staged_refuge.discovered_recipe_ids = refuge_ownership.discovered_recipe_ids.duplicate()
+	staged_refuge.copy_expedition_from(refuge_ownership)
+	CastleLayoutMemory.remember(staged_refuge.castle_layouts, graph)
 	var resolution: Dictionary = staged_refuge.make_run_return_transfer(
 		staged_inventory_result.get("state") as RunInventoryState,
 		run_equipment,
@@ -1576,6 +1598,8 @@ func establish_refuge_at_farthest_cell(
 	graph = refuge_graph
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = refuge_graph.start_node_id
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
 	selected_node_id = refuge_graph.start_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -1697,6 +1721,9 @@ func apply_refugeless_defeat_and_refuge_origin(
 	)
 	if not refuge_error.is_empty():
 		return refuge_error
+	staged_refuge.discovered_recipe_ids = refuge_ownership.discovered_recipe_ids.duplicate()
+	staged_refuge.copy_expedition_from(refuge_ownership)
+	CastleLayoutMemory.remember(staged_refuge.castle_layouts, graph)
 	var resolution: Dictionary = staged_refuge.make_run_return_transfer(
 		staged_inventory_result.get("state") as RunInventoryState,
 		run_equipment,
@@ -1723,6 +1750,8 @@ func apply_refugeless_defeat_and_refuge_origin(
 	graph = refuge_graph
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = graph.start_node_id
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
 	selected_node_id = graph.start_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -1906,6 +1935,8 @@ func restore_refuge_campaign_snapshot(
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	graph.run_seed = run_seed
 	current_node_id = graph.start_node_id
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
 	selected_node_id = graph.start_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -1927,10 +1958,18 @@ func validate_next_layer_2_run(next_graph: LayerMapGraph) -> String:
 		return "The Bloom Refuge must exist before beginning a Layer 2 run."
 	if graph == null or graph.layer_id != &"bloom_refuge":
 		return "The next run can only begin from the Bloom Refuge."
-	if next_graph == null or next_graph.layer_id != &"layer_2":
-		return "The Bloom Refuge requires a Layer 2 route."
-	if next_graph.start_node_id != &"l2_refuge_farthest_cell":
-		return "Layer 2 runs must begin at the farthest cell."
+	var passage_layer: int = refuge_ownership.selected_passage_layer
+	if next_graph == null:
+		return "The expedition requires a generated route."
+	if passage_layer == 0:
+		if next_graph.layer_id != &"layer_2" or next_graph.start_node_id != &"l2_refuge_farthest_cell":
+			return "Ordinary runs must begin at the farthest cell."
+	else:
+		if not is_passage_eligible(passage_layer) or not refuge_ownership.owns_passage(passage_layer) or next_graph.layer_id != StringName("layer_%d" % passage_layer):
+			return "The selected Passage is no longer owned or eligible."
+		var boss: MapNodeState = next_graph.get_map_node(next_graph.boss_node_id)
+		if boss == null or boss.has_encounter_content() or not boss.cleared:
+			return "Passage requires a permanently defeated boss room."
 	var graph_error: String = next_graph.validate_graph()
 	if not graph_error.is_empty():
 		return graph_error
@@ -1952,7 +1991,7 @@ func validate_next_layer_2_run(next_graph: LayerMapGraph) -> String:
 	return String(refuge_ownership.make_run_start_transfer().get("error", ""))
 
 
-func begin_next_layer_2_run(next_graph: LayerMapGraph) -> String:
+func begin_next_layer_2_run(next_graph: LayerMapGraph, generated_item_rules: Array[GeneratedRoomItemPlacementRule] = []) -> String:
 	var validation_error: String = validate_next_layer_2_run(next_graph)
 	if not validation_error.is_empty():
 		return validation_error
@@ -1968,6 +2007,10 @@ func begin_next_layer_2_run(next_graph: LayerMapGraph) -> String:
 	)
 	if not party_order_error.is_empty():
 		return party_order_error
+	var placement: GeneratedRoomItemPlacementResult = GeneratedRoomItemPlacementResolver.resolve(next_graph, generated_item_rules, next_graph.run_seed)
+	if not placement.succeeded():
+		return placement.get_error_text()
+	var passage_layer: int = refuge_ownership.selected_passage_layer
 	var refuge_boundary_snapshot: Dictionary = refuge_ownership.to_snapshot()
 	var transfer: Dictionary = refuge_ownership.make_run_start_transfer()
 	var transfer_error: String = String(transfer.get("error", ""))
@@ -1992,18 +2035,28 @@ func begin_next_layer_2_run(next_graph: LayerMapGraph) -> String:
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	run_seed = next_graph.run_seed
 	campaign_lifecycle.begin_refuge_run(next_graph.run_seed)
-	current_node_id = graph.start_node_id
-	selected_node_id = graph.start_node_id
+	current_node_id = graph.boss_node_id if passage_layer != 0 else graph.start_node_id
+	if passage_layer != 0:
+		var skipped_start: MapNodeState = graph.get_map_node(graph.start_node_id)
+		skipped_start.visited = false
+		skipped_start.type_known = false if not get_run_intel_ids().has(&"castle_memory") else skipped_start.type_known
+		skipped_start.cleared = false
+		skipped_start.exit_completed = false
+		skipped_start.reward_claimed = false
+		graph.get_map_node(current_node_id).visited = true
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
+	selected_node_id = current_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
 	pending_node_seed = 0
 	completed_encounters.clear()
 	event_room_snapshots.clear()
-	generated_room_item_requests.clear()
+	generated_room_item_requests = placement.requests_by_node.duplicate(true)
 	reward_resolutions.clear()
 	narrative_state = next_narrative
 	# Locked economy rule: only Bloom spent before departure persists as value.
-	# Spending is not active yet, so the hub warns before this is discarded.
+	# Intel is paid during preparation; departure does not charge again.
 	bloom = 0
 	opening_completed = true
 	run_changed.emit()
@@ -2109,6 +2162,7 @@ func _commit_refuge_return(
 		return "Refuge return produced incomplete ownership state."
 	if graph != null and graph.layer_id != &"bloom_refuge":
 		archived_layer_graphs[graph.layer_id] = graph
+		CastleLayoutMemory.remember(staged_refuge.castle_layouts, graph)
 	var reunited: Dictionary = inactive_party_snapshot.duplicate(true)
 	for heroine: Variant in recovered_party:
 		reunited[StringName(heroine)] = (recovered_party[heroine] as Dictionary).duplicate(true)
@@ -2122,6 +2176,8 @@ func _commit_refuge_return(
 	graph = refuge_graph
 	campaign_lifecycle.mark_layer_accessed(graph.layer_id)
 	current_node_id = graph.start_node_id
+	graph.initialize_entry_knowledge(current_node_id)
+	IntelMapEffects.apply(graph, get_run_intel_ids(), current_node_id)
 	selected_node_id = graph.start_node_id
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -2376,7 +2432,7 @@ func apply_seraphine_recruitment_aftermath(
 		)
 	narrative_state = next_narrative_state
 	bloom += story_outcome.bloom_delta
-	return complete_pending_node(combat_outcome.bloom_reward)
+	return complete_pending_node(combat_outcome.bloom_reward, true, true)
 
 
 func apply_mira_recruitment_aftermath(
@@ -2441,7 +2497,7 @@ func apply_mira_recruitment_aftermath(
 		)
 	narrative_state = next_narrative_state
 	bloom += story_outcome.bloom_delta
-	return complete_pending_node(combat_outcome.bloom_reward)
+	return complete_pending_node(combat_outcome.bloom_reward, true, true)
 
 
 func _merge_heroine_progression_snapshot(snapshot: Dictionary) -> void:
@@ -2458,7 +2514,8 @@ func _merge_heroine_progression_snapshot(snapshot: Dictionary) -> void:
 		)
 
 func apply_event_room_outcome(
-	outcome: EventRoomOutcome
+	outcome: EventRoomOutcome,
+	keep_room_open: bool = false
 ) -> String:
 	if outcome == null:
 		return "Event room outcome is missing"
@@ -2490,6 +2547,13 @@ func apply_event_room_outcome(
 		!= SixSlotInventoryState.SLOT_COUNT
 		):
 		return "Event room outcome has an invalid inventory snapshot"
+	var exits_error: String = _validate_room_exit_states(node, outcome.exit_states)
+	if not exits_error.is_empty():
+		return exits_error
+	if outcome.clear_node and pending_node_id != node.node_id and not node.cleared:
+		return "The uncleared Event room is not the pending map node."
+	if keep_room_open and outcome.clear_node:
+		return "An encounter handoff cannot simultaneously exit its room."
 	var staged_run_inventory := RunInventoryState.new()
 	var inventory_error: String = staged_run_inventory.initialize(
 		ITEM_CATALOG,
@@ -2540,7 +2604,21 @@ func apply_event_room_outcome(
 	)
 	
 	bloom += outcome.bloom_delta
+	for key: String in outcome.exit_states:
+		var state: Dictionary = graph.edge_states[key]
+		var update: Dictionary = outcome.exit_states[key]
+		state.unlocked = update.unlocked
+		state.exit_id = update.exit_id
+	if outcome.solved:
+		node.solved = true
+	if outcome.clear_node:
+		node.exit_completed = true
+		graph.reveal_adjacency(node.node_id, get_run_intel_ids().has(&"scouting"))
+
 	
+	if keep_room_open:
+		run_changed.emit()
+		return ""
 	if not outcome.clear_node:
 		if pending_node_id == node.node_id:
 			return retreat_from_pending_event_room(
@@ -2551,17 +2629,80 @@ func apply_event_room_outcome(
 		run_changed.emit()
 		return ""
 
-	if not node.cleared:
-		if pending_node_id != node.node_id:
-			return (
-				"The uncleared Event room is not "
-				+ "the pending map node."
-			)
-
+	if pending_node_id == node.node_id:
 		return complete_pending_node(0)
 
 	run_changed.emit()
 	return ""
+
+func _validate_room_exit_states(node: MapNodeState, states: Dictionary) -> String:
+	var allowed: Array[String] = []
+	for next_id: StringName in node.outgoing_ids:
+		allowed.append(graph.edge_id(node.node_id, next_id))
+	for key: Variant in states:
+		if not key is String or not allowed.has(key) or not states[key] is Dictionary:
+			return "Room outcome contains an invalid exit binding."
+		var update: Dictionary = states[key]
+		if not update.get("unlocked") is bool or not update.get("exit_id") is String or update.exit_id.is_empty():
+			return "Room outcome contains an invalid exit state."
+	return ""
+
+
+func make_room_alarm_encounter(trap_id: String) -> EncounterDefinition:
+	var snapshot: Dictionary = event_room_snapshots.get(current_node_id,{})
+	var trap: Dictionary = snapshot.get("local_state",{}).get("item_traps",{}).get(trap_id,{})
+	if trap.is_empty() or not trap.alarm_pending or trap.alarm_resolved:
+		return null
+	var encounter := EncounterDefinition.new()
+	encounter.source_node_id = current_node_id
+	encounter.authored_room_id = StringName(snapshot.room_id)
+	encounter.encounter_id = StringName("%s:alarm:%s" % [current_node_id,trap_id])
+	encounter.room_trap_id = trap_id
+	encounter.display_name = "Alarm"
+	encounter.encounter_seed = StableSeedMixer.make_seed(int(trap.seed),&"room_alarm",encounter.encounter_id)
+	encounter.party_ids = _make_current_party_ids()
+	var sources: Array[StringName] = []
+	for enemy: String in trap.definition.enemy_ids:
+		sources.append(StringName(enemy))
+	encounter.set_enemy_instances(sources)
+	encounter.template = RUINED_CHAPEL_TEMPLATE if graph.layer_number == 1 else LAYER_2_CHAIN_MAINTENANCE_TEMPLATE
+	if not encounter.ensure_spawn_assignments().is_empty():
+		return null
+	return encounter
+
+func prepare_room_continuation() -> void:
+	# Existing pre-node encoding also resumes the room around an alarm boundary.
+	if pending_origin_node_id == &"":
+		pending_origin_node_id = current_node_id
+	pending_node_id = current_node_id
+	selected_node_id = current_node_id
+	if pending_node_seed <= 0:
+		pending_node_seed = int(event_room_snapshots[current_node_id].generation_seed)
+
+func apply_room_alarm_victory(trap_id: String, outcome: EncounterOutcome) -> String:
+	if outcome == null or outcome.result != EncounterOutcome.Result.VICTORY or outcome.source_node_id != current_node_id:
+		return "Alarm outcome does not match the current room."
+	var snapshot: Dictionary = event_room_snapshots.get(current_node_id,{})
+	var trap: Dictionary = snapshot.get("local_state",{}).get("item_traps",{}).get(trap_id,{})
+	if trap.is_empty() or outcome.encounter_id != StringName("%s:alarm:%s" % [current_node_id,trap_id]):
+		return "Alarm outcome does not match its saved trap."
+	if trap.alarm_resolved:
+		return "" # Durable-write retry cannot award twice.
+	if not trap.alarm_pending or outcome.party_snapshot.is_empty() or outcome.bloom_reward < 0:
+		return "Alarm outcome has no pending source or valid party."
+	var inventory_error: String = run_inventory.restore_item_bar_snapshot(outcome.inventory_snapshot)
+	if not inventory_error.is_empty():
+		return inventory_error
+	party_snapshot = outcome.party_snapshot.duplicate(true)
+	_merge_heroine_progression_snapshot(outcome.heroine_progression_snapshot)
+	bloom += outcome.bloom_reward
+	completed_encounters[outcome.encounter_id] = true
+	trap.alarm_pending = false
+	trap.alarm_resolved = true
+	prepare_room_continuation()
+	run_changed.emit()
+	return ""
+
 
 func retreat_from_pending_event_room(
 	node_id: StringName
@@ -2593,7 +2734,8 @@ func retreat_from_pending_event_room(
 
 func complete_pending_node(
 	reward_bloom: int = 0,
-	mark_reward_claimed: bool = true
+	mark_reward_claimed: bool = true,
+	encounter_won: bool = false
 ) -> String:
 	var node: MapNodeState = graph.get_map_node(pending_node_id)
 	if node == null:
@@ -2609,12 +2751,19 @@ func complete_pending_node(
 		if not reward_error.is_empty():
 			push_warning(reward_error)
 	var was_cleared: bool = node.cleared
+	var encounter_was_cleared: bool = node.encounter_cleared
 	node.cleared = true
-	if not was_cleared:
+	node.exit_completed = true
+	if encounter_won or node.requires_battle():
+		node.encounter_cleared = true
+	if node.requires_battle():
+		node.solved = true
+	graph.reveal_adjacency(node.node_id, get_run_intel_ids().has(&"scouting"))
+	if (encounter_won and not encounter_was_cleared) or (not encounter_won and not was_cleared):
 		bloom += maxi(reward_bloom, 0)
 	if mark_reward_claimed:
 		node.reward_claimed = true
-	if node.encounter_id != &"":
+	if node.encounter_id != &"" and node.encounter_cleared:
 		completed_encounters[node.encounter_id] = true
 	pending_node_id = &""
 	pending_origin_node_id = &""
@@ -2838,6 +2987,8 @@ func make_active_run_snapshot(
 			"inactive_party_snapshot": inactive_party_snapshot.duplicate(true),
 			"party_display_order": get_party_display_order(),
 			"ordinary_rest_uses": ordinary_rest_uses,
+			"recipe_discoveries": refuge_ownership.discovered_recipe_ids.duplicate(),
+			"castle_layouts": refuge_ownership.castle_layouts.duplicate(true),
 		},
 		"selected_node_id": String(pending_node_id) if safe_point_kind == "pre_node" else null,
 		"selected_node_seed": pending_node_seed if safe_point_kind == "pre_node" else null,
@@ -3015,6 +3166,14 @@ func restore_active_run_snapshot(
 	elif restored_lifecycle.has_refuge() and restored_lifecycle.active_run_seed > 0:
 		return "Active Refuge run is missing its ownership boundary."
 
+	var memory_error: String = CastleLayoutMemory.validate(run_snapshot.get("castle_layouts", restored_refuge.castle_layouts))
+	if not memory_error.is_empty():
+		return memory_error
+	restored_refuge.castle_layouts = (run_snapshot.get("castle_layouts", restored_refuge.castle_layouts) as Dictionary).duplicate(true)
+	var recipe_error: String = restored_refuge.restore_recipe_knowledge(run_snapshot.get("recipe_discoveries",restored_refuge.discovered_recipe_ids))
+	if not recipe_error.is_empty():
+		return recipe_error
+
 	var restored_completed: Dictionary = {}
 	for entry_key: Variant in (run_snapshot.get("completed_encounters") as Dictionary).keys():
 		var entry_value: Variant = (run_snapshot.get("completed_encounters") as Dictionary)[entry_key]
@@ -3030,6 +3189,9 @@ func restore_active_run_snapshot(
 		var local_state_value: Variant = room_snapshot.get("local_state", {})
 		if not (local_state_value is Dictionary):
 			return "Active-run snapshot contains invalid Event-room local state."
+		var container_error: String = EventRoomInstanceState.validate_container_state(local_state_value)
+		if not container_error.is_empty():
+			return container_error
 		var item_spawns_value: Variant = (local_state_value as Dictionary).get(
 			"item_spawns",
 			[]
@@ -3346,3 +3508,127 @@ func apply_ordinary_rest(states: Dictionary, request: Dictionary) -> String:
 		state.state_changed.emit()
 	run_changed.emit()
 	return ""
+
+
+func room_rest_request(states: Dictionary) -> Dictionary:
+	var node: MapNodeState = graph.get_map_node(current_node_id) if graph != null else null
+	if node == null or node.node_type != MapNodeState.NodeType.REST or node.rest_offer_id == 0:
+		return {"error":"This room has no assigned Rest offer."}
+	if node.rest_used:
+		return {"error":"This room's Rest has already been used."}
+	var result: Dictionary = RoomRestRules.preview(node.rest_offer_id,states,get_party_display_order())
+	if not String(result.error).is_empty():
+		return result
+	result["node_id"] = String(node.node_id)
+	result["run_seed"] = run_seed
+	return result
+
+func prepare_room_rest(outcome: EventRoomOutcome, states: Dictionary, request: Dictionary, battlers: BattlerCatalogDefinition, knowledge: KnowledgeState) -> Dictionary:
+	var expected: Dictionary = room_rest_request(states)
+	if not String(expected.error).is_empty():
+		return {"error":expected.error}
+	if request != expected:
+		return {"error":"The party or offer changed. Preview Rest again."}
+	if outcome == null or outcome.source_node_id != current_node_id or outcome.clear_node:
+		return {"error":"Rest requires the current room's state."}
+	# Stage the current ownership pair, including room inventory/equipment edits.
+	var snapshot: Dictionary = make_active_run_snapshot("pre_node" if pending_node_id != &"" else "post_node",knowledge)
+	if snapshot.is_empty():
+		return {"error":"The current room cannot prepare a Rest checkpoint."}
+	snapshot.run_snapshot.run_inventory = outcome.run_inventory_snapshot.duplicate(true)
+	for id: StringName in expected.after:
+		if not outcome.party_snapshot.get(id) is Dictionary:
+			return {"error":"Rest room snapshot is missing a current heroine."}
+		for field: String in ["hp","mp","resolve","corruption"]:
+			outcome.party_snapshot[id][field] = expected.after[id][field]
+	snapshot.run_snapshot.party_snapshot = outcome.party_snapshot.duplicate(true)
+	var staged := RunState.new()
+	var error: String = staged.restore_active_run_snapshot(snapshot,battlers)
+	if error.is_empty():
+		error = staged.apply_event_room_outcome(outcome,true)
+	if not error.is_empty():
+		return {"error":error}
+	staged.archived_layer_graphs = archived_layer_graphs.duplicate()
+	staged.graph.get_map_node(current_node_id).rest_used = true
+	staged.prepare_room_continuation()
+	return {"error":"","state":staged}
+
+
+func prepare_field_station(outcome: EventRoomOutcome, definition: FieldStationDefinition, battlers: BattlerCatalogDefinition, knowledge: KnowledgeState, recipe_id: StringName = &"", recipient: StringName = &"", expected_inventory: Dictionary = {}) -> Dictionary:
+	var node: MapNodeState = graph.get_map_node(current_node_id) if graph != null else null
+	if node == null or node.node_type not in [MapNodeState.NodeType.ALCHEMY,MapNodeState.NodeType.WORKSHOP] or definition == null:
+		return {"error":"Field station is unavailable."}
+	var error: String = definition.validate_definition()
+	if not error.is_empty():
+		return {"error":error}
+	var expected_station: int = RefugeRecipeDefinition.Station.ALCHEMY if node.node_type == MapNodeState.NodeType.ALCHEMY else RefugeRecipeDefinition.Station.CRAFTING
+	if int(definition.station) != expected_station or outcome == null or outcome.source_node_id != current_node_id or outcome.clear_node:
+		return {"error":"Field station requires the current room."}
+	var snapshot: Dictionary = make_active_run_snapshot("pre_node" if pending_node_id != &"" else "post_node",knowledge)
+	if snapshot.is_empty():
+		return {"error":"Field station cannot prepare its checkpoint."}
+	snapshot.run_snapshot.run_inventory = outcome.run_inventory_snapshot.duplicate(true)
+	snapshot.run_snapshot.party_snapshot = outcome.party_snapshot.duplicate(true)
+	var staged := RunState.new()
+	error = staged.restore_active_run_snapshot(snapshot,battlers)
+	if error.is_empty():
+		error = staged.apply_event_room_outcome(outcome,true)
+	if not error.is_empty():
+		return {"error":error}
+	var room: EventRoomInstanceState = staged.get_event_room_state(current_node_id,node.room_definition_id)
+	if recipe_id == &"":
+		if bool(room.local_state.get("station_prepared",false)):
+			return {"error":"This station's first-visit supplies were already received."}
+		for id: Variant in definition.first_visit_materials:
+			error = staged.run_inventory.add_to_material_pouch(StringName(id),int(definition.first_visit_materials[id]))
+			if not error.is_empty():
+				return {"error":error}
+		for id: StringName in definition.recipe_discoveries:
+			error = staged.refuge_ownership.discover_recipe(id)
+			if not error.is_empty():
+				return {"error":error}
+		room.local_state["station_prepared"] = true
+		staged.event_room_snapshots[current_node_id] = room.to_snapshot()
+	else:
+		if not bool(room.local_state.get("station_prepared",false)) or expected_inventory != outcome.run_inventory_snapshot:
+			return {"error":"Station or inventory changed. Review the recipe again."}
+		var recipe: RefugeRecipeDefinition = RefugeOwnershipState.RECIPE_CATALOG.get_recipe(recipe_id)
+		if recipe == null or not staged.refuge_ownership.knows_recipe(recipe_id) or recipe.station != definition.station or recipe.action != RefugeRecipeDefinition.Action.PRODUCE_ITEM:
+			return {"error":"This recipe is unavailable at this station."}
+		var result: Dictionary = recipe.execute_production(FieldProductionProvider.new(staged.run_inventory,recipient))
+		if not String(result.error).is_empty():
+			return {"error":result.error}
+	staged.archived_layer_graphs = archived_layer_graphs.duplicate()
+	staged.prepare_room_continuation()
+	return {"error":"","state":staged}
+
+
+func get_run_intel_ids() -> Array[StringName]:
+	var result: Array[StringName] = []
+	if refuge_ownership != null:
+		for id: StringName in refuge_ownership.permanent_intel:
+			if id != &"submit":
+				result.append(id)
+	for raw: Variant in active_run_refuge_boundary_snapshot.get("pending_intel", []):
+		var id := StringName(raw)
+		if not result.has(id):
+			result.append(id)
+	return result
+
+
+func is_passage_eligible(layer: int) -> bool:
+	if not has_established_refuge() or campaign_lifecycle == null or layer not in [1, 2]:
+		return false
+	return campaign_lifecycle.is_boss_defeated(BLOOD_NUN_BOSS_ID if layer == 1 else JAILER_BOSS_ID)
+
+func generate_prepared_expedition(generator: RefCounted, seed_value: int) -> LayerMapGraph:
+	var layer: int = refuge_ownership.selected_passage_layer
+	if layer == 0:
+		layer = 2
+	var memory: Dictionary = {}
+	if refuge_ownership.pending_intel.has(&"castle_memory") or refuge_ownership.permanent_intel.has(&"castle_memory"):
+		memory = refuge_ownership.castle_layouts.get("layer_%d" % layer, {})
+	var prepared: LayerMapGraph = CastleLayoutMemory.generate(generator, layer, seed_value, get_defeated_boss_ids(), memory)
+	if prepared != null:
+		CastleLayoutMemory.refresh_authored_locks(prepared, load("res://data/exploration/rooms/event_room_catalog.tres"))
+	return prepared

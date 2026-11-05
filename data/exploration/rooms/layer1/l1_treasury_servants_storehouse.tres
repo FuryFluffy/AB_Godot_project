@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/event_room_definition.gd" id="definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/layer1/l1_treasury_servants_storehouse.tscn" id="scene"]
+[ext_resource type="Resource" path="res://data/exploration/loot_profiles/treasury_layer_1.tres" id="loot"]
+
+[resource]
+script = ExtResource("definition")
+room_id = &"l1_treasury_servants_storehouse"
+display_name = "Servants' Storehouse"
+presentation_scene = ExtResource("scene")
+fitted_source_size = Vector2(1659, 948)
+loot_profile = ExtResource("loot")
+solve_when_loot_exhausted = true

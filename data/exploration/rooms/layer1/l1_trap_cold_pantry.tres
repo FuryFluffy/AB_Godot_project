@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/event_room_definition.gd" id="definition"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/layer1/l1_trap_cold_pantry.tscn" id="scene"]
+[ext_resource type="Resource" path="res://data/exploration/loot_profiles/trap_layer_1.tres" id="loot"]
+
+[ext_resource type="Resource" path="res://data/exploration/traps/provisional_room_traps.tres" id="traps"]
+
+[resource]
+script = ExtResource("definition")
+room_id = &"l1_trap_cold_pantry"
+display_name = "Cold Pantry"
+presentation_scene = ExtResource("scene")
+fitted_source_size = Vector2(1344, 768)
+loot_profile = ExtResource("loot")
+solve_when_loot_exhausted = true
+trap_profile = ExtResource("traps")

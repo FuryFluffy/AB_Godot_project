@@ -984,3 +984,24 @@ static func _remove_if_present(path: String) -> void:
 	if not FileAccess.file_exists(path):
 		return
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+
+
+static func save_departure_slot(slot_id: int, refuge: RunState, active: RunState, knowledge: KnowledgeState) -> String:
+	if not is_valid_slot_id(slot_id):
+		return "Invalid campaign slot."
+	if not _find_incompatible_slot_file(slot_id).is_empty():
+		return INCOMPATIBLE_VERSION_ERROR
+	var campaign: Dictionary = CampaignSaveStore.make_campaign_snapshot(refuge,knowledge,true)
+	var ownership: Dictionary = refuge.make_refuge_ownership_snapshot()
+	var snapshot: Dictionary = active.make_active_run_snapshot("post_node",knowledge)
+	if campaign.is_empty() or ownership.is_empty() or snapshot.is_empty():
+		return "The expedition departure could not be prepared."
+	# The fallback Refuge has spent its temporary entitlements. The active run
+	# retains the paid departure boundary so Continue can reconstruct its benefits.
+	ownership.pending_intel = []
+	ownership.pending_passage_layers = active.refuge_ownership.pending_passage_layers.duplicate()
+	ownership.selected_passage_layer = 0
+	var now: int = int(Time.get_unix_time_from_system())
+	var created: int = _get_existing_created_at_utc(slot_id,now)
+	var envelope: Dictionary = make_v3_envelope(slot_id,campaign,active.campaign_lifecycle.campaign_seed,created,maxi(now,created),ownership,snapshot)
+	return _write_document_atomic(slot_id,envelope)

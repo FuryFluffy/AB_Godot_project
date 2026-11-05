@@ -3,6 +3,10 @@ class_name RoomItemSpawnAnchor
 extends Marker2D
 
 @export var anchor_id: StringName = &""
+# Empty means a visible world pickup; otherwise this item belongs to a container.
+@export var container_id: StringName = &""
+@export var trap_capable: bool = false
+@export var place_name: String = ""
 @export var anchor_tags: Array[StringName] = [&"small_item"]
 @export var item_visual_scale: Vector2 = Vector2.ONE
 @export var item_visual_rotation_degrees: float = 0.0

@@ -1,0 +1,106 @@
+Resuming interrupted cumulative suite at script 72/77; prior log: /tmp/ab-s20-suite.log
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battle_composition.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant, Knife Footman, Prayer-Rag Novice (3 enemy/enemies).
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Blood Nun Processing Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Blood Nun, Prayer-Rag Novice (2 enemy/enemies).
+Battle Composition tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+EXIT 0: tests/test_battle_composition.gd
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battlefield_authoring.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Visual Battlefield Authoring tests passed.
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+EXIT 0: tests/test_battlefield_authoring.gd
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battler_visual_profiles.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Battler Visual Profile tests passed.
+EXIT 0: tests/test_battler_visual_profiles.gd
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_static_png_combat_presentation.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant (1 enemy/enemies).
+Static-PNG combat presentation tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+EXIT 0: tests/test_static_png_combat_presentation.gd
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_combat_stage_triggers.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Combat-stage trigger lifecycle tests passed.
+EXIT 0: tests/test_combat_stage_triggers.gd
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_milestone_15_pilot_a.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_room (res://tests/test_milestone_15_pilot_a.gd:421)
+         [2] _test_dining_encounter_lifecycle (res://tests/test_milestone_15_pilot_a.gd:209)
+         [3] _run (res://tests/test_milestone_15_pilot_a.gd:36)
+         [4] _test_presentations_and_authored_battlefield (res://tests/test_milestone_15_pilot_a.gd:205)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=1952407491
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Reward resolved: source=l01_linen_sorting_servant_cloth channel=4 binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 seed=484337733
+Reward claimed: source=l01_linen_sorting_servant_cloth binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 domain=material_pouch
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_room (res://tests/test_milestone_15_pilot_a.gd:421)
+         [2] _test_bell_gallery_lifecycle (res://tests/test_milestone_15_pilot_a.gd:299)
+         [3] _run (res://tests/test_milestone_15_pilot_a.gd:37)
+         [4] _test_presentations_and_authored_battlefield (res://tests/test_milestone_15_pilot_a.gd:205)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=1952407491
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_room (res://tests/test_milestone_15_pilot_a.gd:421)
+         [2] _test_malformed_binding_is_transactional (res://tests/test_milestone_15_pilot_a.gd:382)
+         [3] _run (res://tests/test_milestone_15_pilot_a.gd:38)
+         [4] _test_presentations_and_authored_battlefield (res://tests/test_milestone_15_pilot_a.gd:205)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=1952407491
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Reward resolved: source=l01_linen_sorting_servant_cloth channel=4 binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 seed=484337733
+Reward claimed: source=l01_linen_sorting_servant_cloth binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 domain=material_pouch
+Milestone 15 Pilot A integration tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+EXIT 0: tests/test_milestone_15_pilot_a.gd
+Resumed 6 scripts; failures: []

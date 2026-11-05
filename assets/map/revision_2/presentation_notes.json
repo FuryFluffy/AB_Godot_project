@@ -1,0 +1,30 @@
+{
+  "revision": 2,
+  "recommended_node_size_at_1080p": 88,
+  "minimum_recommended_node_size": 64,
+  "review_sizes": [
+    48,
+    72,
+    96
+  ],
+  "recommended_map_safe_rect_normalized": [
+    0.12,
+    0.18,
+    0.76,
+    0.64
+  ],
+  "states": {
+    "current_bloom": "outer ring; draw before the medallion; 1.55 times medallion bounds",
+    "visited": "lower left",
+    "solved": "lower right",
+    "rest_exhausted": "upper left",
+    "known_lock": "on the relevant known locked edge; corner placement in the sheet is only a badge demonstration",
+    "selection": "precise border around the active selection",
+    "focus": "independent keyboard/controller focus border"
+  },
+  "routes": "Draw dynamic known routes behind nodes; hidden routes have no placeholder. Accessibility is a separate check. Example composition is a UI demo, not a gameplay seed.",
+  "intel": "Use manifest asset paths; five options reuse relevant room symbols, avoiding duplicate PNG bytes. Labels and purchase state are live UI.",
+  "effects": "Native Godot particles above the item, using the local Light Arrow implementation as reference. No full-screen fog textures are included. See NATIVE_TRAP_PARTICLES.md.",
+  "controls": "Existing functional SVG/PNG controls retained. Floor Up/Down reserved for the later cross-layer travel milestone.",
+  "scaling": "Preserve aspect ratio for every texture and room. Adjust hotspots to the displayed room rectangle; never stretch axes separately."
+}

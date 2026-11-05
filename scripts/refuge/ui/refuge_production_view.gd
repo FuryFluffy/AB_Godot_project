@@ -15,10 +15,29 @@ var entries: Array[Dictionary] = []
 var expected_snapshot: Dictionary = {}
 var selected_recipe: StringName = &""
 var enabled: bool = true
+var snapshot_provider: Callable
+var entries_provider: Callable
+var production_commit: Callable
+var status_sink: Callable
+var focus_refresh: Callable
+var ownership_hint: String = "Banked Materials → Stash"
+var success_destination: String = "Stash"
 
 func configure(owner_screen: BloomRefugeScreen, kind: RefugeRecipeDefinition.Station) -> void:
 	screen = owner_screen
+	configure_context(kind,
+		func() -> Dictionary: return screen.current_run_state.refuge_ownership.to_snapshot(),
+		func(value: RefugeRecipeDefinition.Station) -> Array[Dictionary]: return screen.management.get_production_entries(value),
+		func(value: RefugeRecipeDefinition.Station, id: StringName, expected: Dictionary) -> Dictionary: return screen.management.produce_item(value,id,expected),
+		screen.show_status,screen.room_shell._trap_focus)
+
+func configure_context(kind: RefugeRecipeDefinition.Station, snapshot: Callable, list_entries: Callable, commit: Callable, status: Callable, focus: Callable = Callable()) -> void:
 	station = kind
+	snapshot_provider = snapshot
+	entries_provider = list_entries
+	production_commit = commit
+	status_sink = status
+	focus_refresh = focus
 	add_theme_constant_override("separation", 22)
 	var column := VBoxContainer.new()
 	column.custom_minimum_size.x = 210
@@ -56,10 +75,10 @@ func configure(owner_screen: BloomRefugeScreen, kind: RefugeRecipeDefinition.Sta
 	action_button.pressed.connect(_produce)
 
 func refresh() -> void:
-	if screen == null or screen.management == null:
+	if not snapshot_provider.is_valid() or not entries_provider.is_valid():
 		return
-	expected_snapshot = screen.current_run_state.refuge_ownership.to_snapshot()
-	entries = screen.management.get_production_entries(station)
+	expected_snapshot = snapshot_provider.call()
+	entries = entries_provider.call(station)
 	recipes.clear()
 	var selection: int = 0
 	for index: int in range(entries.size()):
@@ -75,7 +94,7 @@ func refresh() -> void:
 		composition.add_child(_label("No recipes are available for this station yet."))
 		result_icon.texture = null
 		result_label.text = "Final Item\nNo result selected"
-		notice.text = "Banked Materials → Stash"
+		notice.text = ownership_hint
 		action_button.disabled = true
 		selected_recipe = &""
 	else:
@@ -128,9 +147,10 @@ func _preview(index: int) -> void:
 			checklist.add_child(_ingredient(input, false))
 	result_icon.texture = entry.output_icon
 	result_label.text = "Final Item\n%s ×%d" % [entry.output_name, entry.quantity]
-	notice.text = "Result goes to Stash. Uses banked Materials." if entry.can_pay else "Insufficient banked Materials."
+	notice.text = ownership_hint if entry.can_pay else "Insufficient Materials. " + ownership_hint
 	action_button.disabled = not enabled or not bool(entry.can_pay)
-	screen.room_shell._trap_focus.call_deferred()
+	if focus_refresh.is_valid():
+		focus_refresh.call_deferred()
 
 func _ingredient(input: Dictionary, alchemy: bool) -> Control:
 	var panel := PanelContainer.new()
@@ -152,12 +172,12 @@ func _ingredient(input: Dictionary, alchemy: bool) -> Control:
 func _produce() -> void:
 	if not enabled or action_button.disabled or selected_recipe == &"":
 		return
-	var result: Dictionary = screen.management.produce_item(station, selected_recipe, expected_snapshot)
+	var result: Dictionary = production_commit.call(station, selected_recipe, expected_snapshot)
 	if not String(result.error).is_empty():
-		screen.show_status(String(result.error), true)
+		status_sink.call(String(result.error), true)
 		refresh()
 		return
-	screen.show_status("Created %d item(s) in Stash." % int(result.quantity))
+	status_sink.call("Created %d item(s) in %s." % [int(result.quantity),success_destination],false)
 	refresh()
 
 func _clear_composition() -> void:

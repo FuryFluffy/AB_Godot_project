@@ -161,7 +161,31 @@ battlefield_id = &"dining_service_hall"
 display_name = "Dining Service Hall Combat Stage"
 background_texture = ExtResource("11_dining_bg")
 
+[sub_resource type="Resource" id="BindingGeneratedChapel"]
+script = ExtResource("4_binding")
+binding_id = &"ruined_chapel_generated_combat_binding"
+exploration_room_id = &"ruined_chapel"
+accepts_runtime_room_identity = true
+trigger_id = &"generated_combat_on_entry"
+encounter_template_id = &"ruined_chapel_regular"
+combat_stage_id = &"ruined_chapel_stage"
+battlefield_id = &"ruined_chapel"
+completion_state_id = &"generated_combat_resolved"
+return_target = &"node_map"
+
+[sub_resource type="Resource" id="BindingGeneratedDungeon"]
+script = ExtResource("4_binding")
+binding_id = &"layer_2_chain_maintenance_generated_combat_binding"
+exploration_room_id = &"layer_2_chain_maintenance"
+accepts_runtime_room_identity = true
+trigger_id = &"generated_combat_on_entry"
+encounter_template_id = &"layer_2_chain_maintenance_regular"
+combat_stage_id = &"layer_2_chain_maintenance_stage"
+battlefield_id = &"layer_2_chain_maintenance"
+completion_state_id = &"generated_combat_resolved"
+return_target = &"node_map"
+
 [resource]
 script = ExtResource("1_catalog")
 stages = Array[ExtResource("2_stage")]([SubResource("StageOpening"), SubResource("StageSelectedL1"), SubResource("StageChapel"), SubResource("StageBloodNun"), SubResource("StageJailer"), SubResource("StageChainMaintenance"), SubResource("StageDiningServiceHall")])
-bindings = Array[ExtResource("4_binding")]([SubResource("BindingOpening"), SubResource("BindingSelectedL1"), SubResource("BindingChapel"), SubResource("BindingBloodNun"), SubResource("BindingJailer"), SubResource("BindingChainMaintenance"), SubResource("BindingDiningServiceHall")])
+bindings = Array[ExtResource("4_binding")]([SubResource("BindingOpening"), SubResource("BindingSelectedL1"), SubResource("BindingChapel"), SubResource("BindingBloodNun"), SubResource("BindingJailer"), SubResource("BindingChainMaintenance"), SubResource("BindingDiningServiceHall"), SubResource("BindingGeneratedChapel"), SubResource("BindingGeneratedDungeon")])

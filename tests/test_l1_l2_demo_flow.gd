@@ -136,11 +136,15 @@ func _test_reverse_traversal_establishes_refuge_once() -> void:
 	var refuge_graph: LayerMapGraph = (
 		generator.generate_bloom_refuge_holding_state(run.run_seed)
 	)
+	var discovered: RefugeRecipeDefinition = preload("res://tests/field_production_test_fixtures.gd").register_discovery()
+	run.ensure_refuge_ownership_initialized()
+	run.refuge_ownership.discover_recipe(discovered.recipe_id)
 	var establish_error: String = run.establish_refuge_at_farthest_cell(
 		refuge_graph,
 		BATTLER_CATALOG,
 		DIALOGUE_FIXTURES.make_farthest_cell_outcome(run)
 	)
+	_expect(run.refuge_ownership.knows_recipe(discovered.recipe_id), "Recipe discovery survives living first Refuge establishment.")
 	var save_flags: Dictionary = run.narrative_state.flags_by_scope.get(
 		&"save",
 		{}
@@ -168,6 +172,8 @@ func _test_reverse_traversal_establishes_refuge_once() -> void:
 		and run.bloom == bloom_after_establishment,
 		"Reaching Farthest Cell alive must establish exactly one normal Refuge boundary."
 	)
+
+	RefugeOwnershipState.RECIPE_CATALOG.recipes.erase(discovered)
 
 
 func _travel_to_farthest_cell(run: RunState) -> String:

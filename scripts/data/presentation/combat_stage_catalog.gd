@@ -16,15 +16,21 @@ func get_stage(stage_id: StringName) -> CombatStageDefinition:
 
 func get_binding(
 	encounter_id: StringName,
-	runtime_room_id: StringName = &""
+	runtime_room_id: StringName = &"",
+	encounter_template_id: StringName = &""
 ) -> CombatStageBindingDefinition:
 	for binding: CombatStageBindingDefinition in bindings:
 		if (
 			binding != null
+			and binding.encounter_id != &""
 			and binding.encounter_id == encounter_id
 			and binding.matches_room(runtime_room_id)
 		):
 			return binding
+	if encounter_template_id != &"":
+		for binding: CombatStageBindingDefinition in bindings:
+			if binding != null and binding.encounter_id == &"" and binding.encounter_template_id == encounter_template_id and binding.matches_room(runtime_room_id):
+				return binding
 	return null
 
 
@@ -68,6 +74,7 @@ func validate_definition() -> String:
 		stage_ids[stage.stage_id] = stage
 	var binding_ids: Dictionary = {}
 	var encounter_ids: Dictionary = {}
+	var template_ids: Dictionary = {}
 	for binding: CombatStageBindingDefinition in bindings:
 		if binding == null:
 			return "Combat-stage catalog contains an empty binding."
@@ -76,7 +83,7 @@ func validate_definition() -> String:
 			return binding_error
 		if binding_ids.has(binding.binding_id):
 			return "Combat-stage catalog repeats binding '%s'." % binding.binding_id
-		if encounter_ids.has(binding.encounter_id):
+		if binding.encounter_id != &"" and encounter_ids.has(binding.encounter_id):
 			return "Combat-stage catalog repeats encounter '%s'." % binding.encounter_id
 		var stage: CombatStageDefinition = stage_ids.get(
 			binding.combat_stage_id
@@ -86,5 +93,10 @@ func validate_definition() -> String:
 		if stage.battlefield_id != binding.battlefield_id:
 			return "Combat-stage binding '%s' disagrees with its battlefield." % binding.binding_id
 		binding_ids[binding.binding_id] = true
-		encounter_ids[binding.encounter_id] = true
+		if binding.encounter_id != &"":
+			encounter_ids[binding.encounter_id] = true
+		else:
+			if template_ids.has(binding.encounter_template_id):
+				return "Combat-stage catalog repeats template fallback '%s'." % binding.encounter_template_id
+			template_ids[binding.encounter_template_id] = true
 	return ""

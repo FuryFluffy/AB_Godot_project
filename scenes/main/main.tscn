@@ -168,7 +168,7 @@ text = "Resolve Temporary Node"
 [node name="Legend" type="Label" parent="UILayer/MapScreen/Margin/VBox/DetailsPanel/Details/Actions" unique_id=962815574]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Full graph visible • Unknown locked types • Connected exploration • Route-wide free backtracking • First-clear rewards"
+text = "Unknown rooms: ? • Routes appear as you explore • Wheel: zoom • Middle drag: pan"
 horizontal_alignment = 2
 
 [node name="ReturnOverlay" type="Control" parent="UILayer" unique_id=1688976327]

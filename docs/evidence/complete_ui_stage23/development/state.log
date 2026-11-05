@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Invalid type in function 'begin_next_layer_2_run' in base 'RefCounted (RunState)'. The array of argument 2 (Array) does not have the same element type as the expected typed array argument.
+          at: _test_expedition (res://tests/test_castle_memory_passage.gd:107)
+          GDScript backtrace (most recent call first):
+              [0] _test_expedition (res://tests/test_castle_memory_passage.gd:107)
+              [1] _run (res://tests/test_castle_memory_passage.gd:15)
+SCRIPT ERROR: Invalid type in function 'begin_next_layer_2_run' in base 'RefCounted (RunState)'. The array of argument 2 (Array) does not have the same element type as the expected typed array argument.
+          at: _test_expedition (res://tests/test_castle_memory_passage.gd:107)
+          GDScript backtrace (most recent call first):
+              [0] _test_expedition (res://tests/test_castle_memory_passage.gd:107)
+              [1] _run (res://tests/test_castle_memory_passage.gd:15)
+Stage 23 Castle Memory / Passage: 1472 checks, 0 failures.
+WARNING: 42 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

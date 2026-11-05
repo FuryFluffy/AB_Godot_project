@@ -30,6 +30,7 @@ var dodge_step_controller: DodgeStepController
 var reaction_exchange_controller: ReactionExchangeController
 
 var is_initialized: bool = false
+var submit_unlocked: bool = false
 
 
 func initialize(
@@ -42,7 +43,8 @@ func initialize(
 	initial_item_ids: Array[StringName],
 	initial_item_quantities: Array[int],
 	heroine_progression_snapshots: Dictionary = {},
-	run_equipment: RunEquipmentState = null
+	run_equipment: RunEquipmentState = null,
+	permanent_submit: bool = false
 ) -> String:
 	_reset_systems()
 
@@ -83,6 +85,8 @@ func initialize(
 		dice_roller.resolver,
 		base_seed + 4000
 	)
+	submit_unlocked = permanent_submit
+	grapple_controller.submit_unlocked = permanent_submit
 	status_controller.initialize(
 		battler_states,
 		stable_battler_order
@@ -241,3 +245,12 @@ func backpack_mutation_error() -> String:
 		return error
 	var actor: BattlerState = get_battler_state(battle_runtime.selected_battler_id)
 	return "This change requires 1 Action." if actor.current_actions < 1 else ""
+
+
+func can_submit(heroine_id: StringName) -> bool:
+	return is_initialized and battle_runtime.battle_state.encounter_started and battle_runtime.battle_state.phase == BattleState.Phase.HERO and battle_runtime.can_change_phase() and grapple_controller.can_submit(heroine_id)
+
+func submit(heroine_id: StringName) -> GrappleActionResult:
+	if not can_submit(heroine_id):
+		return GrappleActionResult.new().fail("Submit is unavailable during this phase or resolution.")
+	return grapple_controller.submit(heroine_id)

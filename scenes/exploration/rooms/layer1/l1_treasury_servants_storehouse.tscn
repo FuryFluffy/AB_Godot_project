@@ -1,0 +1,112 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/exploration/treasuries/l1_treasury_servants_storehouse.png" id="background"]
+[ext_resource type="Script" path="res://scripts/exploration/items/room_item_spawn_anchor.gd" id="anchor"]
+[ext_resource type="Script" path="res://scripts/exploration/interactions/room_loot_container_hotspot.gd" id="container"]
+[ext_resource type="Script" path="res://scripts/exploration/room_exit_hotspot.gd" id="exit"]
+
+[sub_resource type="RectangleShape2D" id="ChestShape"]
+size = Vector2(170, 100)
+
+[sub_resource type="RectangleShape2D" id="DrawerShape"]
+size = Vector2(100, 45)
+
+[sub_resource type="RectangleShape2D" id="CacheShape"]
+size = Vector2(100, 65)
+
+[sub_resource type="RectangleShape2D" id="ExitShape"]
+size = Vector2(90, 180)
+
+[node name="TreasuryLayer1" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("background")
+centered = false
+
+[node name="WorldItemLayer" type="Node2D" parent="."]
+
+[node name="ItemSpawnAnchors" type="Node2D" parent="."]
+
+[node name="Supply0" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(220, 500)
+script = ExtResource("anchor")
+anchor_id = &"supply_0"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+
+[node name="Supply1" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(197, 345)
+script = ExtResource("anchor")
+anchor_id = &"supply_1"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+
+[node name="Supply2" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(1150, 410)
+script = ExtResource("anchor")
+anchor_id = &"supply_2"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+container_id = &"chest"
+
+[node name="Supply3" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(1150, 410)
+script = ExtResource("anchor")
+anchor_id = &"supply_3"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+container_id = &"chest"
+
+[node name="Supply4" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(750, 350)
+script = ExtResource("anchor")
+anchor_id = &"supply_4"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+container_id = &"drawer"
+
+[node name="Supply5" type="Marker2D" parent="ItemSpawnAnchors"]
+position = Vector2(1294, 630)
+script = ExtResource("anchor")
+anchor_id = &"supply_5"
+anchor_tags = Array[StringName]([&"treasury_supply"])
+pickup_size = Vector2(72, 72)
+container_id = &"floor_cache"
+
+[node name="chest" type="Area2D" parent="."]
+position = Vector2(1150, 410)
+script = ExtResource("container")
+container_id = &"chest"
+display_name = "Coffer"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chest"]
+shape = SubResource("ChestShape")
+
+[node name="drawer" type="Area2D" parent="."]
+position = Vector2(750, 350)
+script = ExtResource("container")
+container_id = &"drawer"
+display_name = "Drawer"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="drawer"]
+shape = SubResource("DrawerShape")
+
+[node name="floor_cache" type="Area2D" parent="."]
+position = Vector2(1294, 630)
+script = ExtResource("container")
+container_id = &"floor_cache"
+display_name = "Floor Cache"
+concealed = true
+inspection_name = "Floorboards"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor_cache"]
+shape = SubResource("CacheShape")
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(1080, 292)
+script = ExtResource("exit")
+display_name = "Passage"
+hover_prompt = "Return to the map"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("ExitShape")

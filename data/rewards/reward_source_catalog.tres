@@ -17,6 +17,13 @@
 [ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_2.tres" id="15_wine_optional_2"]
 [ext_resource type="Resource" path="res://data/exploration/loot_sources/wine_cellar_optional_3.tres" id="16_wine_optional_3"]
 
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/treasury_layer_1.tres" id="treasury1"]
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/treasury_layer_2.tres" id="treasury2"]
+
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/trap_layer_1.tres" id="trap1"]
+
+[ext_resource type="Resource" path="res://data/exploration/loot_sources/trap_layer_2.tres" id="trap2"]
+
 [resource]
 script = ExtResource("1_catalog")
-sources = Array[ExtResource("2_source")]([ExtResource("3_cache"), ExtResource("4_chain"), ExtResource("5_rusty"), ExtResource("6_wine"), ExtResource("7_butler"), ExtResource("8_common"), ExtResource("9_m8_bandage"), ExtResource("10_red_wax_material"), ExtResource("11_servant_cloth_material"), ExtResource("12_chain_links_material"), ExtResource("13_prison_iron_material"), ExtResource("14_wine_optional_1"), ExtResource("15_wine_optional_2"), ExtResource("16_wine_optional_3")])
+sources = Array[ExtResource("2_source")]([ExtResource("3_cache"), ExtResource("4_chain"), ExtResource("5_rusty"), ExtResource("6_wine"), ExtResource("7_butler"), ExtResource("8_common"), ExtResource("9_m8_bandage"), ExtResource("10_red_wax_material"), ExtResource("11_servant_cloth_material"), ExtResource("12_chain_links_material"), ExtResource("13_prison_iron_material"), ExtResource("14_wine_optional_1"), ExtResource("15_wine_optional_2"), ExtResource("16_wine_optional_3"), ExtResource("treasury1"), ExtResource("treasury2"), ExtResource("trap1"), ExtResource("trap2")])

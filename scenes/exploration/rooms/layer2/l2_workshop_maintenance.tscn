@@ -1,0 +1,25 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://assets/exploration/stations/workshop_castle_maintenance.png" id="background"]
+[ext_resource type="Script" path="res://scripts/exploration/production/field_station_hotspot.gd" id="station"]
+[ext_resource type="Script" path="res://scripts/exploration/room_exit_hotspot.gd" id="exit"]
+[sub_resource type="RectangleShape2D" id="StationShape"]
+size = Vector2(550,240)
+[sub_resource type="RectangleShape2D" id="ExitShape"]
+size = Vector2(110,240)
+[node name="FieldStationRoom" type="Node2D"]
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("background")
+centered = false
+[node name="Station" type="Area2D" parent="."]
+position = Vector2(568, 527)
+script = ExtResource("station")
+display_name = "Crafting Workbench"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station"]
+shape = SubResource("StationShape")
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(1338, 339)
+script = ExtResource("exit")
+display_name = "Passage"
+hover_prompt = "Return to the map"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("ExitShape")

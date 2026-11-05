@@ -9,9 +9,15 @@ extends Resource
 @export_group("Presentation")
 @export var presentation_scene: PackedScene
 @export var presentation_texture: Texture2D
+@export var fitted_source_size: Vector2 = Vector2.ZERO
 
 @export_group("Loot")
 @export var loot_profile: RoomLootProfileDefinition
+@export var solve_when_loot_exhausted: bool = false
+# For authored rooms whose only content-completion condition is their open exit.
+@export var solve_on_exit: bool = false
+@export var field_station: FieldStationDefinition
+@export var trap_profile: RoomTrapProfile
 
 @export_group("Events")
 @export var event_profile: RoomEventProfileDefinition
@@ -25,6 +31,16 @@ extends Resource
 
 
 func validate_definition() -> String:
+	if trap_profile != null:
+		var trap_error: String = trap_profile.validate_definition()
+		if not trap_error.is_empty():
+			return trap_error
+		if loot_profile == null:
+			return "Trap profile requires authored item contents."
+	if fitted_source_size != Vector2.ZERO and (fitted_source_size.x <= 0.0 or fitted_source_size.y <= 0.0):
+		return "Room presentation requires two positive source dimensions."
+	if solve_when_loot_exhausted and loot_profile == null:
+		return "Loot completion requires an authored loot profile."
 	if room_id == &"":
 		return "Event room requires a stable room_id."
 

@@ -1,0 +1,41 @@
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_spatial_battle.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Spatial battle tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_spatial_combat.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Spatial combat integration tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_position_contacts.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Position contact adjacency tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_enemy_ai.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Enemy AI rulebook tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battlefield_authoring.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Visual Battlefield Authoring tests passed.
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_static_png_combat_presentation.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant (1 enemy/enemies).
+Static-PNG combat presentation tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+Final chapel layout: 6/6 scripts passed. Failures: []

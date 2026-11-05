@@ -14,6 +14,8 @@ var corruption_applied: int = 0
 var resolve_applied: int = 0
 var detached: bool = false
 var climax_reached: bool = false
+var hp_restored: int = 0
+var mp_restored: int = 0
 
 var heroine_roll: RollResult
 var grappler_roll: RollResult

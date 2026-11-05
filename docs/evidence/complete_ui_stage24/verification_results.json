@@ -1,0 +1,27 @@
+{
+  "native_combined": {
+    "checks": 154,
+    "failures": 0,
+    "process_exit": 0
+  },
+  "native_recovery": {
+    "checks": 40,
+    "failures": 0,
+    "process_exit": 0
+  },
+  "native_traps": {
+    "checks": 25,
+    "failures": 0,
+    "process_exit": 0
+  },
+  "visually_reviewed_captures": 31,
+  "python_tests": 13,
+  "validator_named_classes": 270,
+  "physical_controller": "not run",
+  "manual_full_campaign": "not run",
+  "regression": {
+    "scripts": 85,
+    "exit_code": 0,
+    "gdscript_errors": 0
+  }
+}

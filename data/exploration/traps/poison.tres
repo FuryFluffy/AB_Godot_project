@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomTrapDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/traps/room_trap_definition.gd" id="definition"]
+
+[resource]
+script = ExtResource("definition")
+trap_id = &"poison"
+display_name = "Poison Fog"
+weight = 1
+detection_successes = 2
+automatic_detection_tier = 2
+disarm_successes = 2
+hp_delta = -1
+resolve_delta = -5
+visual_id = &"poison"

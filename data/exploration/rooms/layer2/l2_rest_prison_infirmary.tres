@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/exploration/event_room_definition.gd" id="room"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/layer2/l2_rest_prison_infirmary.tscn" id="scene"]
+[resource]
+script = ExtResource("room")
+room_id = &"l2_rest_prison_infirmary"
+display_name = "Prison Infirmary"
+presentation_scene = ExtResource("scene")
+fitted_source_size = Vector2(1344,768)
+solve_on_exit = true

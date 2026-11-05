@@ -19,6 +19,7 @@ var next_succession_order: int = 1
 var seed_counter: int = 0
 var base_seed: int = 1
 var reconciling_defeats: bool = false
+var submit_unlocked: bool = false
 
 
 func initialize(
@@ -1028,10 +1029,14 @@ func _resolve_climax(
 		return
 
 	var climax_damage: int = maxi(
-		ceili(float(grappler.get_max_hp()) * 0.15),
+		ceili(float(grappler.get_max_hp()) * (0.25 if submit_unlocked else 0.15)),
 		1
 	)
 	grappler.apply_damage(climax_damage)
+	if submit_unlocked:
+		var restored: Vector2i = _heal_grapple_instance(_get_battler(track.heroine_id),2)
+		result.hp_restored += restored.x
+		result.mp_restored += restored.y
 	_end_track(track, not grappler.is_defeated)
 	result.detached = true
 
@@ -1247,3 +1252,49 @@ func _next_seed() -> int:
 	var value: int = base_seed + seed_counter
 	seed_counter += 1
 	return value
+
+
+func can_submit(heroine_id: StringName) -> bool:
+	var heroine: BattlerState = _get_battler(heroine_id)
+	var track: GrappleTrackState = get_main_track_for_heroine(heroine_id)
+	return submit_unlocked and pending_attempt == null and heroine != null and heroine.definition.faction == BattlerDefinition.Faction.HEROINE and not heroine.is_defeated and not heroine.is_stunned() and heroine.current_actions > 0 and track != null and track.can_progress()
+
+func submit(heroine_id: StringName) -> GrappleActionResult:
+	var result := GrappleActionResult.new()
+	result.action_name = "Submit"
+	if not can_submit(heroine_id):
+		return result.fail("Submit requires its permanent unlock and an eligible active Grapple.")
+	var heroine: BattlerState = _get_battler(heroine_id)
+	var track: GrappleTrackState = get_main_track_for_heroine(heroine_id)
+	result.track = track
+	result.stage_before = track.get_stage_number()
+	result.actions_spent = heroine.current_actions
+	heroine.set_current_actions(0)
+	track.progress()
+	result.stage_after = track.get_stage_number()
+	var effects: Vector2i = _apply_stage_effects(track)
+	result.corruption_applied = effects.x
+	result.resolve_applied = effects.y
+	# The level-1 Submit recovery is a separate instance before Climax recovery.
+	var restored: Vector2i = _heal_grapple_instance(heroine,1)
+	result.hp_restored = restored.x
+	result.mp_restored = restored.y
+	result.climax_reached = track.is_at_climax()
+	_update_grappler_progress(track)
+	result.succeeded = true
+	if result.climax_reached:
+		_resolve_climax(track,result)
+	return result
+
+func _heal_grapple_instance(heroine: BattlerState, amount: int) -> Vector2i:
+	if heroine == null:
+		return Vector2i.ZERO
+	# Unlike ordinary item healing, the locked Grapple rule permits stored HP on
+	# a defeated heroine. It never changes is_defeated or restores participation.
+	var hp: int = mini(amount,maxi(0,heroine.get_max_hp()-heroine.current_hp))
+	var mp: int = mini(amount-hp,maxi(0,heroine.get_max_mp()-heroine.current_mp))
+	heroine.current_hp += hp
+	heroine.current_mp += mp
+	if hp > 0 or mp > 0:
+		heroine.state_changed.emit()
+	return Vector2i(hp,mp)

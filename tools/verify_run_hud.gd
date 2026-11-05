@@ -97,7 +97,7 @@ func _run() -> void:
 			var item_at: Vector2 = combat.item_bar.position
 			combat.set_grapple_context(true, true, false)
 			await _settle()
-			_check(combat.command_bar.struggle_button.visible and combat.command_bar.grapple_wait_button.visible and combat.command_bar.submit_button.disabled and not combat.command_bar.attack_button.visible, "Struggle command context and Submit gate")
+			_check(combat.command_bar.struggle_button.visible and combat.command_bar.grapple_wait_button.visible and combat.command_bar.submit_button.disabled and not combat.command_bar.submit_button.visible and not combat.command_bar.attack_button.visible, "Struggle command context and Submit gate")
 			_check(combat.dock.backpack_button.disabled and combat.dock.backpack_button.tooltip_text.contains("grappled"), "Grapple disables separate Backpack")
 			_check(combat.item_bar.position == item_at, "Mode keeps items fixed")
 			if count == 3:

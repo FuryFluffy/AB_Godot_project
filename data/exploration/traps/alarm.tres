@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoomTrapDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/exploration/traps/room_trap_definition.gd" id="definition"]
+
+[resource]
+script = ExtResource("definition")
+trap_id = &"alarm"
+display_name = "Alarm"
+weight = 1
+detection_successes = 2
+automatic_detection_tier = 2
+disarm_successes = 2
+effect_kind = 1
+enemy_ids = Array[StringName]([&"hollow_servant", &"hollow_servant"])
+visual_id = &"alarm"

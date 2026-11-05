@@ -101,12 +101,16 @@ func _test_immediate_jailer_and_refuge_origin() -> void:
 		recovered
 	)
 	var layer_2_graph: LayerMapGraph = run.graph
+	var discovered: RefugeRecipeDefinition = preload("res://tests/field_production_test_fixtures.gd").register_discovery()
+	run.ensure_refuge_ownership_initialized()
+	run.refuge_ownership.discover_recipe(discovered.recipe_id)
 	var apply_error: String = run.apply_first_jailer_defeat_and_refuge_origin(
 		defeat,
 		story_outcome,
 		generator.generate_bloom_refuge_holding_state(run.run_seed),
 		BATTLER_CATALOG
 	)
+	_expect(run.refuge_ownership.knows_recipe(discovered.recipe_id), "Recipe discovery survives first defeat and Refuge origin.")
 	var lysandra: Dictionary = run.party_snapshot.get(&"lysandra", {})
 	var save_flags: Dictionary = (
 		run.narrative_state.flags_by_scope.get(&"save", {}) as Dictionary
@@ -165,6 +169,8 @@ func _test_immediate_jailer_and_refuge_origin() -> void:
 		and not run.has_defeated_boss(RunState.JAILER_BOSS_ID),
 		"Jailer defeat must establish and save the Refuge once without resolving the boss or retaining Continue."
 	)
+
+	RefugeOwnershipState.RECIPE_CATALOG.recipes.erase(discovered)
 
 
 func _make_refuge_story_outcome(

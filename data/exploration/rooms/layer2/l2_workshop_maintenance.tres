@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EventRoomDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/exploration/event_room_definition.gd" id="room"]
+[ext_resource type="Script" path="res://scripts/exploration/production/field_station_definition.gd" id="station"]
+[ext_resource type="PackedScene" path="res://scenes/exploration/rooms/layer2/l2_workshop_maintenance.tscn" id="scene"]
+[sub_resource type="Resource" id="Station"]
+script = ExtResource("station")
+station = 2
+first_visit_materials = {"mat_l02_chain_links":2,"mat_l02_prison_iron":2}
+[resource]
+script = ExtResource("room")
+room_id = &"l2_workshop_maintenance"
+display_name = "Castle Maintenance Workshop"
+presentation_scene = ExtResource("scene")
+fitted_source_size = Vector2(1672,941)
+solve_on_exit = true
+field_station = SubResource("Station")

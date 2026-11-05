@@ -1,0 +1,12 @@
+Stage 24 final verification, 2026-11-05
+Official full regression: 85/85 scripts, exit 0; no GDScript parse/compile/runtime errors.
+Native combined journey: 154 checks, 0 failures, process exit 0.
+Native recovery: 40 checks, 0 failures, subprocess exit 0.
+Native trap interface: 25 checks, 0 failures, subprocess exit 0.
+All 31 final PNG captures visually inspected.
+Python tooling: 13 tests, OK, exit 0.
+Validator: 270 named GDScript classes, passed.
+Diff/source review: five source/test/UID files, no production changes; exact source and screenshot hashes verified.
+No migration or save-version bump. Existing shutdown and corrupt-save diagnostics remain.
+Normal-play full campaign and physical-controller acceptance not performed.
+Changes remain local and uncommitted.

@@ -1,0 +1,1213 @@
++ /usr/bin/python3 /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7/tools/validate_project.py --allow-generated-cache
+Project validation passed: 270 named GDScript classes.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_content_workbench.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Content Workbench: 341 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_combat_kernel.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Combat kernel tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battle_flow.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Battle flow tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_spatial_battle.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Spatial battle tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_spatial_combat.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Spatial combat integration tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_position_contacts.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Position contact adjacency tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_enemy_ai.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Enemy AI rulebook tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_ordinary_combat.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Ordinary combat completion tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_board_interaction.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Board interaction tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_cancel_input_routing.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Item targeting cancelled.
+[Combat Log] Attack targeting cancelled.
+[Combat Log] Move selection cancelled.
+[Combat Detail] Ability BattleZone selection cancelled.
+[Combat Log] Ability targeting cancelled.
+Central cancel-input routing tests passed.
+WARNING: 6 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 91 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 28 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: 4 RID allocations of type 'PN18TextServerAdvanced22ShapedTextDataAdvancedE' were leaked at exit.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_grapple_foundation.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Grapple foundation tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_grapple_move_reactions.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Grapple Move Reaction tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_item_system.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_run_inventory_domains_and_authored_loadout (res://tests/test_item_system.gd:129)
+         [2] _init (res://tests/test_item_system.gd:10)
+Item and run inventory state tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_canonical_item_ids.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Canonical item Stable-ID tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_reward_sources.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_catalog_channels_and_fixed_rewards (res://tests/test_reward_sources.gd:95)
+         [2] _init (res://tests/test_reward_sources.gd:19)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_material_rewards_route_once_to_material_pouch (res://tests/test_reward_sources.gd:220)
+         [2] _init (res://tests/test_reward_sources.gd:21)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n1 item=mat_l01_red_wax quantity=1 seed=3628381675
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n1 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3197432318
+Reward deferred: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 reason=Ordered inventory has insufficient capacity for 'l02_chain_oil'.
+WARNING: Ordered inventory has insufficient capacity for 'l02_chain_oil'.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] apply_encounter_outcome (res://scripts/map/run_state.gd:1115)
+         [1] _test_deferred_claim_round_trip_and_no_duplicate (res://tests/test_reward_sources.gd:292)
+         [2] _init (res://tests/test_reward_sources.gd:23)
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=109459207
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Deterministic reward-source and routing tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_item_sprite_library.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stable-ID item sprite library tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_node_map.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Layer 1 Node Map tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_map_discovery.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 15 map state: 1453 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_map_discovery_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 15 native map: 24 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_map_navigation_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 16 map navigation: 101 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_generated_combat_nodes.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n2 item=mat_l01_red_wax quantity=1 seed=1261764597
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n2 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Stage 17 generated combat: 3849 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_generated_combat_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Elite encounter: Hollow Servant, Knife Footman, Prayer-Rag Novice (3 enemy/enemies).
+[Combat Log] Party won the Order (4 vs 3). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+[Combat Detail] Selected combatant: Prayer-Rag Novice.
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Elite encounter: Hollow Servant, Knife Footman, Prayer-Rag Novice (3 enemy/enemies).
+[Combat Log] Enemies won the Order (3 vs 1). Enemies go first.
+[Combat Log] Round 1 — Enemy Phase
+[Combat Log] 
+[Combat Log] Enemy group rulebook selected its activation order.
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Elite encounter: Hollow Servant, Knife Footman, Prayer-Rag Novice (3 enemy/enemies).
+[Combat Log] Party won the Order (4 vs 3). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Elite encounter: Hollow Servant, Red-Wax Acolyte (2 enemy/enemies).
+[Combat Log] Party won the Order (4 vs 3). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Elite encounter: Hollow Servant, Red-Wax Acolyte (2 enemy/enemies).
+[Combat Log] Party won the Order (3 vs 3). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Chain Thrall, Iron-Masked Guard (2 enemy/enemies).
+[Combat Log] Party won the Order (2 vs 2). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=1877351014
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Elite encounter: Hollow Servant, Red-Wax Acolyte (2 enemy/enemies).
+[Combat Log] Party won the Order (3 vs 3). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+Stage 17 native combat: 98 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_treasury_rooms.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 18 Treasury state: 1012 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_treasury_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Treasury fixture layer 1 seed 333 node l1_c3_n3
+Treasury fixture layer 2 seed 333 node l2_c4_n2
+Stage 18 native Treasury: 75 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_room_traps.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 19 trap state: 1109 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_trap_interface.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 19 trap interface foundation: 25 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_trap_rooms_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant, Hollow Servant (2 enemy/enemies).
+[Combat Log] Party won the Order (3 vs 1). Party goes first.
+[Combat Log] Round 1 — Hero Phase
+[Combat Detail] Selected combatant: Hollow Servant.
+[Combat Detail] Selected combatant: Hollow Servant.
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant, Hollow Servant (2 enemy/enemies).
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant, Hollow Servant (2 enemy/enemies).
+[Combat Log] Party won the Order (5 vs 1). Party goes first with Momentum.
+[Combat Log] Round 1 — Hero Phase
+[Combat Detail] Selected combatant: Hollow Servant.
+[Combat Detail] Selected combatant: Hollow Servant.
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant, Hollow Servant (2 enemy/enemies).
+Stage 19 production trap rooms: 65 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_rest_rooms.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 20 Rest room state: 3998 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_rest_rooms_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 20 Rest room interface: 154 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_field_production.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 21 field production state: 824 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_field_production_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _restart_tutorial_with_recipe_knowledge (res://scripts/map/main_controller.gd:2321)
+         [2] _restart_failed_run_from_beginning (res://scripts/map/main_controller.gd:982)
+         [3] _room (res://tools/verify_field_production.gd:204)
+         [4] _settle (res://tools/verify_run_hud.gd:213)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _restart_tutorial_with_recipe_knowledge (res://scripts/map/main_controller.gd:2321)
+         [2] _restart_failed_run_from_beginning (res://scripts/map/main_controller.gd:982)
+         [3] _room (res://tools/verify_field_production.gd:207)
+         [4] _settle (res://tools/verify_run_hud.gd:213)
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Opening encounter: Hollow Servant (1 enemy/enemies).
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Opening encounter: Hollow Servant (1 enemy/enemies).
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Opening encounter: Hollow Servant (1 enemy/enemies).
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Opening encounter: Hollow Servant (1 enemy/enemies).
+Stage 21 field production interface: 162 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_intel_purchases.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 22 Intel state: 3680 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_submit_upgrade.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 22 Submit upgrade: 49 checks, 0 failures.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_intel_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Chain Thrall, Iron-Masked Guard (2 enemy/enemies).
+[Combat Log] Lysandra submitted to Chain Thrall, advancing to Stage 2.
+[Combat Log] Grapple recovery: +1 HP, +0 MP.
+Stage 22 native Intel/Submit: 49 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_castle_memory_passage.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 23 Castle Memory / Passage: 1524 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_castle_memory_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Recruitment Special encounter: Hollow Servant, Prayer-Rag Novice (2 enemy/enemies).
+Stage 23 native Memory/Passage: 37 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_layer_room_registry.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Layer 1–2 room registry tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_registered_room_presentations.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_reusable_registered_room_shell (res://tests/test_registered_room_presentations.gd:44)
+Registered room presentation tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_layer_generator_activation.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=156104209
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Layer 1–2 generator activation tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_opening_event_room_flow.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_canonical_solo_opening_handoff (res://tests/test_opening_event_room_flow.gd:56)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:29)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_butler_encounter (res://tests/test_opening_event_room_flow.gd:1064)
+         [2] _test_mira_recruitment_battle_and_aftermath (res://tests/test_opening_event_room_flow.gd:146)
+         [3] _run (res://tests/test_opening_event_room_flow.gd:30)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_butler_encounter (res://tests/test_opening_event_room_flow.gd:1064)
+         [2] _finish_mira_recruitment_test (res://tests/test_opening_event_room_flow.gd:643)
+         [3] _test_mira_recruitment_battle_and_aftermath (res://tests/test_opening_event_room_flow.gd:171)
+         [4] _run (res://tests/test_opening_event_room_flow.gd:30)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_seraphine_encounter (res://tests/test_opening_event_room_flow.gd:1082)
+         [2] _test_seraphine_ruined_chapel_recruitment (res://tests/test_opening_event_room_flow.gd:175)
+         [3] _run (res://tests/test_opening_event_room_flow.gd:31)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_seraphine_encounter (res://tests/test_opening_event_room_flow.gd:1082)
+         [2] _test_seraphine_ruined_chapel_recruitment (res://tests/test_opening_event_room_flow.gd:317)
+         [3] _run (res://tests/test_opening_event_room_flow.gd:31)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_blood_nun_full_wipe_recovery (res://tests/test_opening_event_room_flow.gd:371)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:32)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_blood_nun_full_wipe_recovery (res://tests/test_opening_event_room_flow.gd:422)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:32)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:516)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:35)
+         [3] _test_exploration_party_strip_reflow (res://tests/test_opening_event_room_flow.gd:469)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:521)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:35)
+         [3] _test_exploration_party_strip_reflow (res://tests/test_opening_event_room_flow.gd:469)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:516)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:521)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_deterministic_event_room_assignment_and_key_reachability (res://tests/test_opening_event_room_flow.gd:746)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:36)
+         [3] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:567)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_deterministic_event_room_assignment_and_key_reachability (res://tests/test_opening_event_room_flow.gd:746)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:36)
+         [3] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:567)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_deterministic_event_room_assignment_and_key_reachability (res://tests/test_opening_event_room_flow.gd:746)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:36)
+         [3] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:567)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_deterministic_event_room_assignment_and_key_reachability (res://tests/test_opening_event_room_flow.gd:746)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:36)
+         [3] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:567)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_event_room_back_completion_and_persistence (res://tests/test_opening_event_room_flow.gd:789)
+         [2] _run (res://tests/test_opening_event_room_flow.gd:37)
+         [3] _test_recovered_party_can_enter_butlers_office (res://tests/test_opening_event_room_flow.gd:567)
+Opening and Event-room flow tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_dialogue_foundation.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Dialogue foundation regression tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_production_dialogue_authoring.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _test_active_run_dialogue_session_round_trip (res://tests/test_production_dialogue_authoring.gd:243)
+         [2] _init (res://tests/test_production_dialogue_authoring.gd:38)
+Production dialogue authoring tests passed.
+WARNING: 7 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_layer1_novel_integration.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Layer 1 novel integration tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_layer_transition.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_blood_nun (res://tests/test_layer_transition.gd:246)
+         [2] _test_blood_nun_aftermath_route (res://tests/test_layer_transition.gd:42)
+         [3] _init (res://tests/test_layer_transition.gd:16)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_blood_nun (res://tests/test_layer_transition.gd:246)
+         [2] _test_blood_nun_aftermath_route (res://tests/test_layer_transition.gd:42)
+         [3] _init (res://tests/test_layer_transition.gd:21)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_blood_nun (res://tests/test_layer_transition.gd:246)
+         [2] _test_layer_boundary_discards_completed_layer_reward_state (res://tests/test_layer_transition.gd:147)
+         [3] _init (res://tests/test_layer_transition.gd:26)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n1 item=mat_l01_red_wax quantity=1 seed=3628381675
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n1 item=mat_l01_red_wax quantity=1 domain=material_pouch
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_blood_nun (res://tests/test_layer_transition.gd:246)
+         [2] _test_invalid_aftermath_is_atomic (res://tests/test_layer_transition.gd:119)
+         [3] _init (res://tests/test_layer_transition.gd:27)
+Layer 1 to Layer 2 transition tests passed.
+WARNING: 7 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_jailer_refuge_origin.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Immediate Jailer and Bloom Refuge origin tests passed.
+WARNING: 7 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_bloom_refuge_hub.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Bloom Refuge hub and campaign-boundary tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_production_save_slots.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] get_slot_summary (res://scripts/save/campaign_save_slot_store.gd:242)
+       [2] _test_atomic_backup_recovery (res://tests/test_production_save_slots.gd:333)
+       [3] _init (res://tests/test_production_save_slots.gd:20)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] read_document_for_load (res://scripts/save/campaign_save_slot_store.gd:350)
+       [2] _test_atomic_backup_recovery (res://tests/test_production_save_slots.gd:336)
+       [3] _init (res://tests/test_production_save_slots.gd:20)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] _find_incompatible_slot_file (res://scripts/save/campaign_save_slot_store.gd:846)
+       [2] save_refuge_slot (res://scripts/save/campaign_save_slot_store.gd:73)
+       [3] _test_atomic_backup_recovery (res://tests/test_production_save_slots.gd:364)
+       [4] _init (res://tests/test_production_save_slots.gd:20)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] _get_existing_created_at_utc (res://scripts/save/campaign_save_slot_store.gd:861)
+       [2] save_refuge_slot (res://scripts/save/campaign_save_slot_store.gd:91)
+       [3] _test_atomic_backup_recovery (res://tests/test_production_save_slots.gd:364)
+       [4] _init (res://tests/test_production_save_slots.gd:20)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] _is_valid_document_file (res://scripts/save/campaign_save_slot_store.gd:609)
+       [2] _write_document_atomic (res://scripts/save/campaign_save_slot_store.gd:561)
+       [3] save_refuge_slot (res://scripts/save/campaign_save_slot_store.gd:106)
+       [4] _test_atomic_backup_recovery (res://tests/test_production_save_slots.gd:364)
+       [5] _init (res://tests/test_production_save_slots.gd:20)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] read_document_for_load (res://scripts/save/campaign_save_slot_store.gd:350)
+       [2] _test_atomic_backup_recovery (res://tests/test_production_save_slots.gd:374)
+       [3] _init (res://tests/test_production_save_slots.gd:20)
+Production campaign save-slot tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_active_run_safe_points.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3901766672
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3901766672
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_polished_gallery_chain_links channel=4 binding=l2_c3_n1 item=mat_l02_chain_links quantity=1 seed=4067996089
+Reward claimed: source=l02_polished_gallery_chain_links binding=l2_c3_n1 item=mat_l02_chain_links quantity=1 domain=material_pouch
+Reward resolved: source=l02_punishment_room_prison_iron channel=4 binding=l2_c2_n0 item=mat_l02_prison_iron quantity=1 seed=1470350878
+Reward claimed: source=l02_punishment_room_prison_iron binding=l2_c2_n0 item=mat_l02_prison_iron quantity=1 domain=material_pouch
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3568875708
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3901766672
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] read_document_for_load (res://scripts/save/campaign_save_slot_store.gd:350)
+       [2] _test_backup_recovery_and_clear (res://tests/test_active_run_safe_points.gd:351)
+       [3] _init (res://tests/test_active_run_safe_points.gd:25)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] read_document_for_load (res://scripts/save/campaign_save_slot_store.gd:350)
+       [2] clear_active_run_snapshot (res://scripts/save/campaign_save_slot_store.gd:199)
+       [3] _test_backup_recovery_and_clear (res://tests/test_active_run_safe_points.gd:362)
+       [4] _init (res://tests/test_active_run_safe_points.gd:25)
+ERROR: Parse JSON failed. Error at line 0: Expected key
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _read_document_file (res://scripts/save/campaign_save_slot_store.gd:653)
+       [1] _is_valid_document_file (res://scripts/save/campaign_save_slot_store.gd:609)
+       [2] _write_document_atomic (res://scripts/save/campaign_save_slot_store.gd:561)
+       [3] clear_active_run_snapshot (res://scripts/save/campaign_save_slot_store.gd:215)
+       [4] _test_backup_recovery_and_clear (res://tests/test_active_run_safe_points.gd:362)
+       [5] _init (res://tests/test_active_run_safe_points.gd:25)
+Active-run safe-point tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_campaign_lifecycle.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Campaign lifecycle and seed-scope tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_l1_l2_demo_flow.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l02_punishment_room_prison_iron channel=4 binding=l2_c3_n1 item=mat_l02_prison_iron quantity=1 seed=1693621242
+Reward claimed: source=l02_punishment_room_prison_iron binding=l2_c3_n1 item=mat_l02_prison_iron quantity=1 domain=material_pouch
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3623249838
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Layer 1 to reverse Layer 2 demo-flow tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_layer_2_first_slice.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3197432318
+Reward claimed: source=l02_kept_watch_chain_oil binding=l2_c1_n0 item=l02_chain_oil quantity=1 domain=item_bar
+Layer 2 first playable slice tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_heroine_kits.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Starting party kit tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_ability_resources.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Ability Resource tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_weapon_resources.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Weapon Resource tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_salvage_recipes.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Refuge Material, salvage, and recipe tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_management_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Refuge management UI tests passed.
+WARNING: 27 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 24 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_shared_inventory_views.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 02 shared inventory tests: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_inventory_transfers.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 03 inventory transfers: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_loadouts.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 04 Refuge Loadouts: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_workbench.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 05 Refuge Workbench: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_production.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 06 Refuge production: 0 failures.
+WARNING: 13 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 9 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_rest.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 07 Refuge Rest: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_expedition.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 08 Refuge Expedition: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_refuge_records.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 09 Refuge Records: 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_weapon_techniques.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Weapon technique and progression tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_layer_1_enemy_roster.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Layer 1 enemy roster tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_combat_hud.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler, Hollow Servant (2 enemy/enemies).
+Combat HUD tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_hud.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler, Hollow Servant (2 enemy/enemies).
+[Combat Detail] Selected combatant: Lysandra.
+[Combat Log] Lysandra has no legal targets for Lysandra's Sword.
+[Combat Detail] Lysandra began Move selection. Choose a highlighted Engagement Area, then choose an exact Position.
+[Combat Log] Move selection cancelled.
+[Combat Detail] Lysandra began Move selection. Choose a highlighted Engagement Area, then choose an exact Position.
+[Combat Log] Move selection cancelled.
+[Combat Detail] Round 1 — Hero Phase ended.
+[Combat Log] Round 1 — Enemy Phase
+[Combat Log] 
+[Combat Log] Enemy group rulebook selected its activation order.
+Stage 10 native HUD fixture: 488 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_backpack.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 11 run Backpack: 39 checks, 0 failures.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_backpack_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler, Hollow Servant (2 enemy/enemies).
+Stage 11 native Backpack: 50 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_loot.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3197432318
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3197432318
+Stage 12 Loot transactions: 54 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_loot_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Chain Maintenance Room.
+[Combat Log] Enemy rulebooks ready: Farthest Cell Passage — Kept Watch.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Chain Thrall, Iron-Masked Guard (2 enemy/enemies).
+Reward resolved: source=l02_kept_watch_chain_oil channel=1 binding=l2_c1_n0 item=l02_chain_oil quantity=1 seed=3197432318
+Stage 12 native Loot: 30 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_party.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Stage 13 Party state: 22 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_party_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler, Hollow Servant (2 enemy/enemies).
+Stage 13 native Party: 52 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_recovery.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _rest (res://tests/test_run_recovery.gd:26)
+         [2] _run (res://tests/test_run_recovery.gd:7)
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _rest_safe_points (res://tests/test_run_recovery.gd:102)
+         [2] _run (res://tests/test_run_recovery.gd:8)
+Stage 14 Recovery: 40 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_run_recovery_ui.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _rest_ui (res://tools/verify_run_recovery.gd:33)
+         [2] _run (res://tools/verify_run_recovery.gd:14)
+Stage 14 native Recovery: 40 checks, 0 failures.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_reusable_merge.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Reusable merge tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_encounter_startup.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler, Hollow Servant (2 enemy/enemies).
+[Combat Log] Enemies won the Order (4 vs 1). Enemies go first with Momentum.
+[Combat Log] Round 1 — Enemy Phase
+[Combat Log] 
+[Combat Log] Enemy group rulebook selected its activation order.
+[Combat Log] 
+[Combat Log] Hollow Servant rulebook committed Move (1 Action): 2 steps: Far Door Left → Centre Gate → Lower Hall Left.
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Corrupted Butler (1 enemy/enemies).
+[Combat Log] Enemy Phase is skipped automatically: Momentum left that side with zero Actions.
+[Combat Detail] Round 1 — Enemy Phase ended.
+[Combat Log] Round 2 — Hero Phase
+Encounter startup test passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battle_composition.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Ruined Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant, Knife Footman, Prayer-Rag Novice (3 enemy/enemies).
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Blood Nun Processing Chapel.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Blood Nun, Prayer-Rag Novice (2 enemy/enemies).
+Battle Composition tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battlefield_authoring.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Visual Battlefield Authoring tests passed.
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_battler_visual_profiles.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Battler Visual Profile tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_static_png_combat_presentation.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Combat Log] Encounter ready.
+[Combat Log] Spatial battlefield ready: Opening Servant Corridor.
+[Combat Log] Enemy rulebooks ready: Ruined Chapel Test Group.
+[Combat Log] Ordinary combat systems ready: AOE, statuses, outcomes, Revival, and runtime controls.
+[Combat Log] Grapple multi-tracks ready: attachment, independent progress, Struggle selection, and succession.
+[Combat Log] Six-slot Item Bar ready: 33 catalog definitions (32 canonical plus one legacy), targeting, costs, stacks, and explicit Grapple hooks.
+[Combat Log] Choose Order, then begin the encounter.
+[Combat Log] Regular encounter: Hollow Servant (1 enemy/enemies).
+Static-PNG combat presentation tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_combat_stage_triggers.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Combat-stage trigger lifecycle tests passed.
++ /home/fluffy56/.local/bin/godot4 --headless --path /home/fluffy56/Desktop/abyssal_bloom_item_sprites_l1_l2_room_registry_2026-08-21_GODOT_4_7 --script res://tests/test_milestone_15_pilot_a.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_room (res://tests/test_milestone_15_pilot_a.gd:421)
+         [2] _test_dining_encounter_lifecycle (res://tests/test_milestone_15_pilot_a.gd:209)
+         [3] _run (res://tests/test_milestone_15_pilot_a.gd:36)
+         [4] _test_presentations_and_authored_battlefield (res://tests/test_milestone_15_pilot_a.gd:205)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=1952407491
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Reward resolved: source=l01_linen_sorting_servant_cloth channel=4 binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 seed=484337733
+Reward claimed: source=l01_linen_sorting_servant_cloth binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 domain=material_pouch
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_room (res://tests/test_milestone_15_pilot_a.gd:421)
+         [2] _test_bell_gallery_lifecycle (res://tests/test_milestone_15_pilot_a.gd:299)
+         [3] _run (res://tests/test_milestone_15_pilot_a.gd:37)
+         [4] _test_presentations_and_authored_battlefield (res://tests/test_milestone_15_pilot_a.gd:205)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=1952407491
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+WARNING: Generated room item rule 'layer_1_rusty_key_01': 'butlers_office: no matching node is reachable without passing through 'wine_cellar_warm_bottles''
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] initialize (res://scripts/map/run_state.gd:276)
+         [1] _make_run_at_room (res://tests/test_milestone_15_pilot_a.gd:421)
+         [2] _test_malformed_binding_is_transactional (res://tests/test_milestone_15_pilot_a.gd:382)
+         [3] _run (res://tests/test_milestone_15_pilot_a.gd:38)
+         [4] _test_presentations_and_authored_battlefield (res://tests/test_milestone_15_pilot_a.gd:205)
+Reward resolved: source=l01_wax_prep_red_wax_material channel=4 binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 seed=1952407491
+Reward claimed: source=l01_wax_prep_red_wax_material binding=l1_c2_n0 item=mat_l01_red_wax quantity=1 domain=material_pouch
+Reward resolved: source=l01_linen_sorting_servant_cloth channel=4 binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 seed=484337733
+Reward claimed: source=l01_linen_sorting_servant_cloth binding=l1_c3_n0 item=mat_l01_servant_cloth quantity=1 domain=material_pouch
+Milestone 15 Pilot A integration tests passed.
+WARNING: 5 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+All 84 regression scripts passed.

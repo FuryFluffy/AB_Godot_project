@@ -19,6 +19,20 @@ var party_ids: Array[StringName] = [
 ]
 var enemy_ids: Array[StringName] = []
 var spawn_assignments: Dictionary = {}
+# Optional per-encounter identities allow repeated authored enemy definitions.
+var instance_sources: Dictionary = {}
+var room_trap_id: String = ""
+
+func set_enemy_instances(sources: Array[StringName]) -> void:
+	enemy_ids.clear()
+	instance_sources.clear()
+	var counts: Dictionary = {}
+	for source: StringName in sources:
+		counts[source] = int(counts.get(source,0)) + 1
+		var id: StringName = source if counts[source] == 1 else StringName("%s_instance_%d" % [source,counts[source]])
+		enemy_ids.append(id)
+		if id != source:
+			instance_sources[id] = source
 
 
 func get_enemy_count() -> int:
