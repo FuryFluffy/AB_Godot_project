@@ -1,0 +1,8 @@
+Publication regression: 84/84, process exit 0.
+No GDScript parse/compile/runtime errors.
+Published Python tooling: 13/13, exit 0.
+Project validation: 270 named classes.
+Gameplay source/published tree identity verified.
+QA: 202 unchecked cases/matrix rows covering stages 01–24.
+No gameplay or save-format edits in checklist.
+Unrelated Content Workbench changes excluded and preserved.

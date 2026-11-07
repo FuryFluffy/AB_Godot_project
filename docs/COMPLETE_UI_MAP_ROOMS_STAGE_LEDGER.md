@@ -1,6 +1,6 @@
 # Combined UI, map and rooms stage ledger
 
-Updated 2026-11-05. This is the single Stage 00–24 ledger for `AB_Complete_UI_Map_and_Rooms_v1`; it replaces neither existing runtime state nor historical checkpoint evidence. Follow the supplied root `02_IMPLEMENTATION_STAGES.md`. Work proceeds one authorized stage at a time and pauses for user verification/continue after each stage. Corrections remain in the current stage.
+Updated 2026-11-07. This is the single Stage 00–24 ledger for `AB_Complete_UI_Map_and_Rooms_v1`; it replaces neither existing runtime state nor historical checkpoint evidence. Follow the supplied root `02_IMPLEMENTATION_STAGES.md`. Work proceeds one authorized stage at a time and pauses for user verification/continue after each stage. Corrections remain in the current stage.
 
 Stage 00 report: `COMPLETE_UI_MAP_ROOMS_STAGE_00_AUDIT_2026-10-09.md`.
 Executed evidence: `COMPLETE_UI_MAP_ROOMS_STAGE_00_BASELINE_2026-10-09.md`.
@@ -335,3 +335,10 @@ Record the actual authorized change, exact files/services, migration/default beh
 - This checkpoint adds completed Stages 15–24. Historical “uncommitted” handoff entries describe their original review state. The unrelated Content Workbench plugin, documents, test, project registration and runner entry remain local and excluded.
 - Development acceptance: 85/85 Godot scripts, 13/13 Python tests, validator 270 classes, 219 native checks and 31 reviewed Stage 24 captures. The published suite contains 84 scripts because the unrelated Workbench test is excluded. Publication verification and commit identifiers will be recorded with the full QA checklist after upload.
 - Normal-play campaign, physical-controller acceptance and intentionally unauthored content remain separate from implementation/fixture results. No gameplay or save migration is added by publication.
+
+## Publication and full QA checklist handoff — 2026-11-07
+
+- Completed stages committed locally as `a9a917db71854531d0943cbb32e080a333de9b18` and published as `06e4b802e8c2a331e72bf4cce3e0102f8921a27a` on `codex/complete-ui-map-rooms-stages-01-24`. Published and source trees match (`c1933e903a5366f83e9aafb755fa849a4478471e`); old remote branch retained. Local unrelated Workbench changes remain excluded and preserved.
+- Clean publishing-copy official regression: **84/84 scripts passed, exit 0**; validator **270 named classes**. This is one fewer script than development acceptance because the unrelated Workbench test is excluded. Raw publication results are retained in `evidence/complete_ui_stages01_24_publication/`. Existing shutdown/corrupt-save diagnostics remain documented; no GDScript parse/compile/runtime failures.
+- Full manual plan: `QA_CHECKLIST_STAGES_01_24.md`, **202 checkboxes** across all 24 stages, critical smoke route, prerequisites, save/rollback/loss cases, resolutions, physical input, fixture automation and sign-off. All manual cases start unrun; prior automated evidence is not substituted for player acceptance.
+- The checklist explicitly records current Off Hand/shield compatibility and the existing Refuge System Save/Load versus Main Menu-only target wording as alignment items. No gameplay or save-format change is made by this publication/QA task. Raw log/upstream-document whitespace is retained through narrow Git attributes; a whitespace-only verifier line was cleaned. Historical source hashes describe their tested checkpoint, not subsequent formatting or publication documentation.

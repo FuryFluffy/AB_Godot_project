@@ -1,0 +1,12 @@
+{
+  "regression_exit": 0,
+  "regression_scripts": 84,
+  "python_tests": 13,
+  "python_exit": 0,
+  "validator_classes": 270,
+  "source_commit": "a9a917db71854531d0943cbb32e080a333de9b18",
+  "published_gameplay_commit": "06e4b802e8c2a331e72bf4cce3e0102f8921a27a",
+  "matching_gameplay_tree": "c1933e903a5366f83e9aafb755fa849a4478471e",
+  "qa_checkboxes": 202,
+  "qa_manual_status": "not run"
+}
